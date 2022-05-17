@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Sudoku"
 		Width="600"
-		Height="600"
+        SizeToContent="Height"
 		MinWidth="400"
 		MinHeight="400"
         ResizeMode="CanResize">
@@ -97,7 +97,7 @@
                 
             <!-- Column 0, Row 0 -->
             <local:NumbersOuterGrid Grid.Column="1" Grid.Row="1">
-                <Button Grid.Column="0" Grid.Row="0" Click="Button_Click" Tag="Button0000" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0000" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][0][0][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][0][0][0][1][0]}" Style="{StaticResource Number}"/>
@@ -110,7 +110,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][0][0][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="0" Click="Button_Click" Tag="Button0010" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0010" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][0][1][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][0][1][0][1][0]}" Style="{StaticResource Number}"/>
@@ -123,7 +123,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][0][1][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="0" Click="Button_Click" Tag="Button0020" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0020" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][0][2][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][0][2][0][1][0]}" Style="{StaticResource Number}"/>
@@ -136,7 +136,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][0][2][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="2" Click="Button_Click" Tag="Button0001" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0001" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][0][0][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][0][0][1][1][0]}" Style="{StaticResource Number}"/>
@@ -149,7 +149,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][0][0][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="2" Click="Button_Click" Tag="Button0011" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0011" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][0][1][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][0][1][1][1][0]}" Style="{StaticResource Number}"/>
@@ -162,7 +162,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][0][1][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="2" Click="Button_Click" Tag="Button0021" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0021" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][0][2][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][0][2][1][1][0]}" Style="{StaticResource Number}"/>
@@ -175,7 +175,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][0][2][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="4" Click="Button_Click" Tag="Button0002" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0002" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][0][0][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][0][0][2][1][0]}" Style="{StaticResource Number}"/>
@@ -188,7 +188,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][0][0][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="4" Click="Button_Click" Tag="Button0012" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0012" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][0][1][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][0][1][2][1][0]}" Style="{StaticResource Number}"/>
@@ -201,7 +201,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][0][1][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="4" Click="Button_Click" Tag="Button0022" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0022" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][0][2][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][0][2][2][1][0]}" Style="{StaticResource Number}"/>
@@ -222,7 +222,7 @@
         
             <!-- Column 1, Row 0 -->
             <local:NumbersOuterGrid Grid.Column="3" Grid.Row="1">
-                <Button Grid.Column="0" Grid.Row="0" Click="Button_Click" Tag="Button1000" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1000" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][0][0][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][0][0][0][1][0]}" Style="{StaticResource Number}"/>
@@ -235,7 +235,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][0][0][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="0" Click="Button_Click" Tag="Button1010" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1010" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][0][1][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][0][1][0][1][0]}" Style="{StaticResource Number}"/>
@@ -248,7 +248,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][0][1][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="0" Click="Button_Click" Tag="Button1020" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1020" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][0][2][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][0][2][0][1][0]}" Style="{StaticResource Number}"/>
@@ -261,7 +261,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][0][2][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="2" Click="Button_Click" Tag="Button1001" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1001" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][0][0][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][0][0][1][1][0]}" Style="{StaticResource Number}"/>
@@ -274,7 +274,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][0][0][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="2" Click="Button_Click" Tag="Button1011" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1011" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][0][1][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][0][1][1][1][0]}" Style="{StaticResource Number}"/>
@@ -287,7 +287,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][0][1][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="2" Click="Button_Click" Tag="Button1021" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1021" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][0][2][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][0][2][1][1][0]}" Style="{StaticResource Number}"/>
@@ -300,7 +300,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][0][2][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="4" Click="Button_Click" Tag="Button1002" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1002" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][0][0][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][0][0][2][1][0]}" Style="{StaticResource Number}"/>
@@ -313,7 +313,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][0][0][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="4" Click="Button_Click" Tag="Button1012" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1012" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][0][1][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][0][1][2][1][0]}" Style="{StaticResource Number}"/>
@@ -326,7 +326,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][0][1][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="4" Click="Button_Click" Tag="Button1022" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1022" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][0][2][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][0][2][2][1][0]}" Style="{StaticResource Number}"/>
@@ -347,7 +347,7 @@
 
             <!-- Column 2, Row 0 -->
             <local:NumbersOuterGrid Grid.Column="5" Grid.Row="1">
-                <Button Grid.Column="0" Grid.Row="0" Click="Button_Click" Tag="Button2000" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2000" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][0][0][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][0][0][0][1][0]}" Style="{StaticResource Number}"/>
@@ -360,7 +360,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][0][0][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="0" Click="Button_Click" Tag="Button2010" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2010" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][0][1][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][0][1][0][1][0]}" Style="{StaticResource Number}"/>
@@ -373,7 +373,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][0][1][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="0" Click="Button_Click" Tag="Button2020" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2020" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][0][2][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][0][2][0][1][0]}" Style="{StaticResource Number}"/>
@@ -386,7 +386,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][0][2][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="2" Click="Button_Click" Tag="Button2001" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2001" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][0][0][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][0][0][1][1][0]}" Style="{StaticResource Number}"/>
@@ -399,7 +399,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][0][0][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="2" Click="Button_Click" Tag="Button2011" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2011" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][0][1][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][0][1][1][1][0]}" Style="{StaticResource Number}"/>
@@ -412,7 +412,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][0][1][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="2" Click="Button_Click" Tag="Button2021" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2021" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][0][2][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][0][2][1][1][0]}" Style="{StaticResource Number}"/>
@@ -425,7 +425,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][0][2][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="4" Click="Button_Click" Tag="Button2002" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2002" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][0][0][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][0][0][2][1][0]}" Style="{StaticResource Number}"/>
@@ -438,7 +438,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][0][0][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="4" Click="Button_Click" Tag="Button2012" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2012" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][0][1][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][0][1][2][1][0]}" Style="{StaticResource Number}"/>
@@ -451,7 +451,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][0][1][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="4" Click="Button_Click" Tag="Button2022" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2022" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][0][2][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][0][2][2][1][0]}" Style="{StaticResource Number}"/>
@@ -472,7 +472,7 @@
 
             <!-- Column 0, Row 1 -->
             <local:NumbersOuterGrid Grid.Column="1" Grid.Row="3">
-                <Button Grid.Column="0" Grid.Row="0" Click="Button_Click" Tag="Button0100" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0100" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][1][0][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][1][0][0][1][0]}" Style="{StaticResource Number}"/>
@@ -485,7 +485,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][1][0][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="0" Click="Button_Click" Tag="Button0110" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0110" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][1][1][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][1][1][0][1][0]}" Style="{StaticResource Number}"/>
@@ -498,7 +498,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][1][1][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="0" Click="Button_Click" Tag="Button0120" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0120" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][1][2][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][1][2][0][1][0]}" Style="{StaticResource Number}"/>
@@ -511,7 +511,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][1][2][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="2" Click="Button_Click" Tag="Button0101" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0101" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][1][0][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][1][0][1][1][0]}" Style="{StaticResource Number}"/>
@@ -524,7 +524,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][1][0][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="2" Click="Button_Click" Tag="Button0111" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0111" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][1][1][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][1][1][1][1][0]}" Style="{StaticResource Number}"/>
@@ -537,7 +537,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][1][1][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="2" Click="Button_Click" Tag="Button0121" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0121" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][1][2][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][1][2][1][1][0]}" Style="{StaticResource Number}"/>
@@ -550,7 +550,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][1][2][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="4" Click="Button_Click" Tag="Button0102" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0102" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][1][0][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][1][0][2][1][0]}" Style="{StaticResource Number}"/>
@@ -563,7 +563,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][1][0][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="4" Click="Button_Click" Tag="Button0112" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0112" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][1][1][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][1][1][2][1][0]}" Style="{StaticResource Number}"/>
@@ -576,7 +576,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][1][1][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="4" Click="Button_Click" Tag="Button0122" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0122" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][1][2][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][1][2][2][1][0]}" Style="{StaticResource Number}"/>
@@ -597,7 +597,7 @@
 
             <!-- Column 1, Row 1 -->
             <local:NumbersOuterGrid Grid.Column="3" Grid.Row="3">
-                <Button Grid.Column="0" Grid.Row="0" Click="Button_Click" Tag="Button1100" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1100" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][1][0][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][1][0][0][1][0]}" Style="{StaticResource Number}"/>
@@ -610,7 +610,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][1][0][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="0" Click="Button_Click" Tag="Button1110" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1110" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][1][1][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][1][1][0][1][0]}" Style="{StaticResource Number}"/>
@@ -623,7 +623,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][1][1][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="0" Click="Button_Click" Tag="Button1120" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1120" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][1][2][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][1][2][0][1][0]}" Style="{StaticResource Number}"/>
@@ -636,7 +636,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][1][2][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="2" Click="Button_Click" Tag="Button1101" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1101" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][1][0][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][1][0][1][1][0]}" Style="{StaticResource Number}"/>
@@ -649,7 +649,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][1][0][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="2" Click="Button_Click" Tag="Button1111" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1111" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][1][1][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][1][1][1][1][0]}" Style="{StaticResource Number}"/>
@@ -662,7 +662,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][1][1][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="2" Click="Button_Click" Tag="Button1121" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1121" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][1][2][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][1][2][1][1][0]}" Style="{StaticResource Number}"/>
@@ -675,7 +675,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][1][2][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="4" Click="Button_Click" Tag="Button1102" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1102" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][1][0][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][1][0][2][1][0]}" Style="{StaticResource Number}"/>
@@ -688,7 +688,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][1][0][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="4" Click="Button_Click" Tag="Button1112" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1112" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][1][1][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][1][1][2][1][0]}" Style="{StaticResource Number}"/>
@@ -701,7 +701,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][1][1][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="4" Click="Button_Click" Tag="Button1122" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1122" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][1][2][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][1][2][2][1][0]}" Style="{StaticResource Number}"/>
@@ -728,7 +728,7 @@
  
             <!-- Column 2, Row 1 -->
             <local:NumbersOuterGrid Grid.Column="5" Grid.Row="3">
-                <Button Grid.Column="0" Grid.Row="0" Click="Button_Click" Tag="Button2100" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2100" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][1][0][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][1][0][0][1][0]}" Style="{StaticResource Number}"/>
@@ -741,7 +741,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][1][0][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="0" Click="Button_Click" Tag="Button2110" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2110" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][1][1][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][1][1][0][1][0]}" Style="{StaticResource Number}"/>
@@ -754,7 +754,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][1][1][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="0" Click="Button_Click" Tag="Button2120" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2120" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][1][2][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][1][2][0][1][0]}" Style="{StaticResource Number}"/>
@@ -767,7 +767,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][1][2][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="2" Click="Button_Click" Tag="Button2101" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2101" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][1][0][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][1][0][1][1][0]}" Style="{StaticResource Number}"/>
@@ -780,7 +780,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][1][0][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="2" Click="Button_Click" Tag="Button2111" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2111" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][1][1][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][1][1][1][1][0]}" Style="{StaticResource Number}"/>
@@ -793,7 +793,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][1][1][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="2" Click="Button_Click" Tag="Button2121" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2121" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][1][2][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][1][2][1][1][0]}" Style="{StaticResource Number}"/>
@@ -806,7 +806,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][1][2][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="4" Click="Button_Click" Tag="Button2102" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2102" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][1][0][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][1][0][2][1][0]}" Style="{StaticResource Number}"/>
@@ -819,7 +819,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][1][0][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="4" Click="Button_Click" Tag="Button2112" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2112" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][1][1][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][1][1][2][1][0]}" Style="{StaticResource Number}"/>
@@ -832,7 +832,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][1][1][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="4" Click="Button_Click" Tag="Button2122" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2122" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][1][2][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][1][2][2][1][0]}" Style="{StaticResource Number}"/>
@@ -853,7 +853,7 @@
 
             <!-- Column 0, Row 2 -->
             <local:NumbersOuterGrid Grid.Column="1" Grid.Row="5">
-                <Button Grid.Column="0" Grid.Row="0" Click="Button_Click" Tag="Button0200" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0200" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][2][0][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][2][0][0][1][0]}" Style="{StaticResource Number}"/>
@@ -866,7 +866,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][2][0][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="0" Click="Button_Click" Tag="Button0210" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0210" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][2][1][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][2][1][0][1][0]}" Style="{StaticResource Number}"/>
@@ -879,7 +879,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][2][1][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="0" Click="Button_Click" Tag="Button0220" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0220" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][2][2][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][2][2][0][1][0]}" Style="{StaticResource Number}"/>
@@ -892,7 +892,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][2][2][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="2" Click="Button_Click" Tag="Button0201" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0201" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][2][0][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][2][0][1][1][0]}" Style="{StaticResource Number}"/>
@@ -905,7 +905,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][2][0][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="2" Click="Button_Click" Tag="Button0211" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0211" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][2][1][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][2][1][1][1][0]}" Style="{StaticResource Number}"/>
@@ -918,7 +918,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][2][1][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="2" Click="Button_Click" Tag="Button0221" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0221" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][2][2][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][2][2][1][1][0]}" Style="{StaticResource Number}"/>
@@ -931,7 +931,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][2][2][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="4" Click="Button_Click" Tag="Button0202" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0202" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][2][0][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][2][0][2][1][0]}" Style="{StaticResource Number}"/>
@@ -944,7 +944,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][2][0][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="4" Click="Button_Click" Tag="Button0212" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0212" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][2][1][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][2][1][2][1][0]}" Style="{StaticResource Number}"/>
@@ -957,7 +957,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[0][2][1][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="4" Click="Button_Click" Tag="Button0222" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button0222" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[0][2][2][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[0][2][2][2][1][0]}" Style="{StaticResource Number}"/>
@@ -978,7 +978,7 @@
 
             <!-- Column 1, Row 2 -->
             <local:NumbersOuterGrid Grid.Column="3" Grid.Row="5">
-                <Button Grid.Column="0" Grid.Row="0" Click="Button_Click" Tag="Button1200" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1200" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][2][0][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][2][0][0][1][0]}" Style="{StaticResource Number}"/>
@@ -991,7 +991,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][2][0][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="0" Click="Button_Click" Tag="Button1210" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1210" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][2][1][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][2][1][0][1][0]}" Style="{StaticResource Number}"/>
@@ -1004,7 +1004,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][2][1][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="0" Click="Button_Click" Tag="Button1220" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1220" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][2][2][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][2][2][0][1][0]}" Style="{StaticResource Number}"/>
@@ -1017,7 +1017,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][2][2][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="2" Click="Button_Click" Tag="Button1201" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1201" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][2][0][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][2][0][1][1][0]}" Style="{StaticResource Number}"/>
@@ -1030,7 +1030,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][2][0][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="2" Click="Button_Click" Tag="Button1211" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1211" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][2][1][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][2][1][1][1][0]}" Style="{StaticResource Number}"/>
@@ -1043,7 +1043,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][2][1][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="2" Click="Button_Click" Tag="Button1221" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1221" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][2][2][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][2][2][1][1][0]}" Style="{StaticResource Number}"/>
@@ -1056,7 +1056,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][2][2][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="4" Click="Button_Click" Tag="Button1202" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1202" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][2][0][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][2][0][2][1][0]}" Style="{StaticResource Number}"/>
@@ -1069,7 +1069,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][2][0][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="4" Click="Button_Click" Tag="Button1212" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1212" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][2][1][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][2][1][2][1][0]}" Style="{StaticResource Number}"/>
@@ -1082,7 +1082,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[1][2][1][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="4" Click="Button_Click" Tag="Button1222" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button1222" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[1][2][2][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[1][2][2][2][1][0]}" Style="{StaticResource Number}"/>
@@ -1103,7 +1103,7 @@
 
             <!-- Column 2, Row 2 -->
             <local:NumbersOuterGrid Grid.Column="5" Grid.Row="5">
-                <Button Grid.Column="0" Grid.Row="0" Click="Button_Click" Tag="Button2200" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2200" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][2][0][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][2][0][0][1][0]}" Style="{StaticResource Number}"/>
@@ -1116,7 +1116,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][2][0][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="0" Click="Button_Click" Tag="Button2210" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2210" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][2][1][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][2][1][0][1][0]}" Style="{StaticResource Number}"/>
@@ -1129,7 +1129,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][2][1][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="0" Click="Button_Click" Tag="Button2220" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2220" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][2][2][0][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][2][2][0][1][0]}" Style="{StaticResource Number}"/>
@@ -1142,7 +1142,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][2][2][0][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="2" Click="Button_Click" Tag="Button2201" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2201" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][2][0][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][2][0][1][1][0]}" Style="{StaticResource Number}"/>
@@ -1155,7 +1155,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][2][0][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="2" Click="Button_Click" Tag="Button2211" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2211" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][2][1][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][2][1][1][1][0]}" Style="{StaticResource Number}"/>
@@ -1168,7 +1168,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][2][1][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="2" Click="Button_Click" Tag="Button2221" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2221" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][2][2][1][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][2][2][1][1][0]}" Style="{StaticResource Number}"/>
@@ -1181,7 +1181,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][2][2][1][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="4" Click="Button_Click" Tag="Button2202" Style="{StaticResource Button}">
+                <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2202" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][2][0][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][2][0][2][1][0]}" Style="{StaticResource Number}"/>
@@ -1194,7 +1194,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][2][0][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="2" Grid.Row="4" Click="Button_Click" Tag="Button2212" Style="{StaticResource Button}">
+                <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2212" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][2][1][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][2][1][2][1][0]}" Style="{StaticResource Number}"/>
@@ -1207,7 +1207,7 @@
                         <Label Grid.Column="2" Grid.Row="2" Content="{Binding NumbersList[2][2][1][2][2][2]}" Style="{StaticResource Number}"/>
                     </local:NumbersInnerGrid>
                 </Button>
-                <Button Grid.Column="4" Grid.Row="4" Click="Button_Click" Tag="Button2222" Style="{StaticResource Button}">
+                <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="Button2222" Style="{StaticResource Button}">
                     <local:NumbersInnerGrid>
                         <Label Grid.Column="0" Grid.Row="0" Content="{Binding NumbersList[2][2][2][2][0][0]}" Style="{StaticResource Number}"/>
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding NumbersList[2][2][2][2][1][0]}" Style="{StaticResource Number}"/>

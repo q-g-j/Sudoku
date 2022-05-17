@@ -16,43 +16,43 @@ namespace Sudoku.ViewModels
         #region Constructor
         public MainWindowViewModel()
         {
-            _numbersList = new NumbersListModel();
-            _selectNumberVisibility = "Hidden";
+            numbersListValue = new NumbersListModel();
+            selectNumberVisibilityValue = "Hidden";
             MessengerService.OnMessageTransmitted += OnMessageReceived;
         }
         #endregion Constructor
 
         #region Properties
-        private NumbersListModel _numbersList;
+        private NumbersListModel numbersListValue;
         public NumbersListModel NumbersList
         {
             get
             {
-                return _numbersList;
+                return numbersListValue;
             }
             set
             {
-                _numbersList = value;
-                OnPropertyChanged("NumbersList");
+                numbersListValue = value;
+                OnPropertyChanged();
             }
         }
 
-        private string _selectNumberVisibility;
+        private string selectNumberVisibilityValue;
         public string SelectNumberVisibility
         {
             get
             {
-                return _selectNumberVisibility;
+                return selectNumberVisibilityValue;
             }
             set
             {
-                _selectNumberVisibility = value;
-                OnPropertyChanged("SelectNumberVisibility");
+                selectNumberVisibilityValue = value;
+                OnPropertyChanged();
             }
         }
         #endregion Properties
 
-        #region Member methods
+        #region Methods
         private void ChangeNumber(string button)
         {
             Int16 col1 = Int16.Parse(button[6].ToString());
@@ -65,8 +65,7 @@ namespace Sudoku.ViewModels
                 number = "";
             }
             NumbersListModel temp_numbersList;
-            temp_numbersList = _numbersList;
-            System.Diagnostics.Debug.WriteLine(col1.ToString() + row1.ToString() + col1.ToString() + row2.ToString());
+            temp_numbersList = numbersListValue;
             temp_numbersList[col1][row1][col2][row2][1][1] = number;
             NumbersList = temp_numbersList;
         }
@@ -90,17 +89,14 @@ namespace Sudoku.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged(string propertyName)
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
-            if (handler != null)
-            {
-                var e = new PropertyChangedEventArgs(propertyName);
-                handler(this, e);
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-        #endregion Member methods
+        #endregion Methods
+
+        #region Events
+        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion Events
     }
 }

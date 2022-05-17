@@ -16,9 +16,9 @@ using Sudoku.Services;
 
 namespace Sudoku.Views
 {
-    public partial class SelectNumberGrid : Grid
+    public partial class SelectMarkerGrid : Grid
     {
-        public SelectNumberGrid()
+        public SelectMarkerGrid()
         {
             InitializeComponent();
         }

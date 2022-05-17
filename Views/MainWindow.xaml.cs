@@ -24,12 +24,26 @@ namespace Sudoku.Views
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private string currentButtonDown;
+
+        private void MouseButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Button button = (Button)sender;
+            currentButtonDown = button.Tag.ToString();
+            e.Handled = true;
+        }
+
+        private void MouseButtonUp(object sender, MouseButtonEventArgs e)
         {
             Button button = (Button)sender;
             var buttonIndex = button.Tag.ToString();
             SelectNumberGrid.ButtonIndex = buttonIndex;
-            MessengerService.BroadCast("SelectNumberGridVisibility", "Visible");
+
+            if (e.ChangedButton == MouseButton.Left && currentButtonDown == buttonIndex)
+            {
+                MessengerService.BroadCast("SelectNumberGridVisibility", "Visible");
+                e.Handled = true;
+            }
         }
     }
 }
