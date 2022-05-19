@@ -63,9 +63,6 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -87,8 +84,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GameLogic\GeneratorGameLogic.cs" />
+    <Compile Include="GameLogic\SolverGameLogic.cs" />
     <Compile Include="GameLogic\ValidatorGameLogic.cs" />
     <Compile Include="Models\NumberListModel.cs" />
+    <Compile Include="Models\MarkersListModel.cs" />
     <Compile Include="Services\MessengerService.cs" />
     <Compile Include="Views\NumbersInnerGrid.xaml.cs">
       <DependentUpon>NumbersInnerGrid.xaml</DependentUpon>
@@ -150,6 +149,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Assets\Fonts\BowlbyOne-Regular.otf" />
+    <Resource Include="Assets\Fonts\JetBrainsMono-Regular.ttf" />
+    <Resource Include="Assets\Fonts\selawk.ttf" />
+    <Resource Include="Assets\Fonts\selawkb.ttf" />
+    <Resource Include="Assets\Fonts\selawkl.ttf" />
+    <Resource Include="Assets\Fonts\selawksb.ttf" />
+    <Resource Include="Assets\Fonts\selawksl.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -173,8 +179,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\Fonts\" />
     <Folder Include="Converters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\waste bin.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

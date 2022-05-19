@@ -37,8 +37,9 @@ namespace Sudoku.Views
 
             if (e.ChangedButton == MouseButton.Left)
             {
-                MessengerService.BroadCast("SelectNumberGridVisibility", "Hidden");
-                MessengerService.BroadCast("ChangeNumber", button);
+                System.Diagnostics.Debug.WriteLine(button);
+                MessengerService.BroadCast("SelectMarkerGridVisibility", "Hidden");
+                MessengerService.BroadCast("ChangeMarker", button);
                 e.Handled = true;
             }
         }

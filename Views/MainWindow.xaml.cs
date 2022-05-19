@@ -37,13 +37,32 @@ namespace Sudoku.Views
         {
             Button button = (Button)sender;
             var buttonIndex = button.Tag.ToString();
-            SelectNumberGrid.ButtonIndex = buttonIndex;
 
             if (e.ChangedButton == MouseButton.Left && currentButtonDown == buttonIndex)
             {
+                SelectNumberGrid.ButtonIndex = buttonIndex;
                 MessengerService.BroadCast("SelectNumberGridVisibility", "Visible");
                 e.Handled = true;
             }
+
+            else if (e.ChangedButton == MouseButton.Right && currentButtonDown == buttonIndex)
+            {
+                SelectMarkerGrid.ButtonIndex = buttonIndex;
+                MessengerService.BroadCast("SelectMarkerGridVisibility", "Visible");
+                e.Handled = true;
+            }
+        }
+
+        private void ButtonSolve(object sender, RoutedEventArgs e)
+        {
+            MessengerService.BroadCast("Solve", "");
+            e.Handled = true;
+        }
+
+        private void ButtonValidate(object sender, RoutedEventArgs e)
+        {
+            MessengerService.BroadCast("Validate", "");
+            e.Handled = true;
         }
     }
 }
