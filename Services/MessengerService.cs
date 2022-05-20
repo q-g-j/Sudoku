@@ -10,9 +10,15 @@ namespace Sudoku.Services
     {
         public static void BroadCast(string type, string message)
         {
-            OnMessageTransmitted?.Invoke(type, message);
+            OnMessageTransmittedTwoParams?.Invoke(type, message);
         }
 
-        public static Action<string, string> OnMessageTransmitted;
+        public static void BroadCastWithButton(string type, string message, string button)
+        {
+            OnMessageTransmittedThreeParams?.Invoke(type, message, button);
+        }
+
+        public static Action<string, string> OnMessageTransmittedTwoParams;
+        public static Action<string, string, string> OnMessageTransmittedThreeParams;
     }
 }

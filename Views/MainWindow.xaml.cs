@@ -40,17 +40,23 @@ namespace Sudoku.Views
 
             if (e.ChangedButton == MouseButton.Left && currentButtonDown == buttonIndex)
             {
-                SelectNumberGrid.ButtonIndex = buttonIndex;
-                MessengerService.BroadCast("SelectNumberGridVisibility", "Visible");
+                SelectNumberGridView.ButtonIndex = buttonIndex;
+                MessengerService.BroadCastWithButton("SelectNumberGridVisibility", "Visible", buttonIndex);
                 e.Handled = true;
             }
 
             else if (e.ChangedButton == MouseButton.Right && currentButtonDown == buttonIndex)
             {
-                SelectMarkerGrid.ButtonIndex = buttonIndex;
-                MessengerService.BroadCast("SelectMarkerGridVisibility", "Visible");
+                SelectMarkerGridView.ButtonIndex = buttonIndex;
+                MessengerService.BroadCastWithButton("SelectMarkerGridVisibility", "Visible", buttonIndex);
                 e.Handled = true;
             }
+        }
+
+        private void ButtonDifficulty(object sender, RoutedEventArgs e)
+        {
+            MessengerService.BroadCast("SelectDifficultyVisibility", "Visible");
+            e.Handled = true;
         }
 
         private void ButtonSolve(object sender, RoutedEventArgs e)

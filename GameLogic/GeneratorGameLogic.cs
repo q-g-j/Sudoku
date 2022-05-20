@@ -13,43 +13,34 @@ namespace Sudoku.GameLogic
         public GeneratorGameLogic()
         {
             random = new Random();
-            solverGameLogic = new SolverGameLogic();
             emptiedList = new List<string>();
         }
 
-        public int counter;
+        private readonly List<string> emptiedList;
         private readonly Random random;
-        public NumbersListModel numbersList;
-        private readonly SolverGameLogic solverGameLogic;
-        private List<string> emptiedList;
 
-        public void Inititialize()
-        {
-        }
+        public NumbersListModel numbersList;
+        public int RemoveNumbers;
+        public int counter = 1;
 
         public bool GenerateSudoku()
         {
-            List<int> intRowList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+            List<int> intRowList = new List<int>();
+            intRowList.AddRange(Enumerable.Range(0, 9));
             var shuffledIntRowList = intRowList.OrderBy(item => random.Next());
             foreach (var i in shuffledIntRowList)
             {
-                List<int> intColList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+                List<int> intColList = new List<int>();
+                intColList.AddRange(Enumerable.Range(0, 9));
                 var shuffledIntColList = intColList.OrderBy(item => random.Next());
                 foreach (var j in shuffledIntColList)
                 {
                     string coords = j.ToString();
                     coords += i.ToString();
 
-                    if (! emptiedList.Contains(coords) && counter < 60)
+                    if (! emptiedList.Contains(coords) && counter <= RemoveNumbers)
                     {
                         string oldNum = numbersList[j][i].ToString();
-                        //numbersList[j][i] = "";
-                        //NumbersListModel tempList = new NumbersListModel();
-                        //solverGameLogic.numbersList = tempList;
-                        //solverGameLogic.counter = 1;
-                        //bool isSolvable = solverGameLogic.Solver();
-                        //numbersList[j][i] = oldNum;
-                        //if (isSolvable)
                         {
                             numbersList[j][i] = "";
                             counter++;

@@ -86,20 +86,24 @@
     <Compile Include="GameLogic\GeneratorGameLogic.cs" />
     <Compile Include="GameLogic\SolverGameLogic.cs" />
     <Compile Include="GameLogic\ValidatorGameLogic.cs" />
+    <Compile Include="Models\NumberColorsListModel.cs" />
     <Compile Include="Models\NumberListModel.cs" />
     <Compile Include="Models\MarkersListModel.cs" />
     <Compile Include="Services\MessengerService.cs" />
-    <Compile Include="Views\NumbersInnerGrid.xaml.cs">
-      <DependentUpon>NumbersInnerGrid.xaml</DependentUpon>
+    <Compile Include="Views\NumbersInnerGridView.xaml.cs">
+      <DependentUpon>NumbersInnerGridView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NumbersOuterGrid.xaml.cs">
-      <DependentUpon>NumbersOuterGrid.xaml</DependentUpon>
+    <Compile Include="Views\NumbersOuterGridView.xaml.cs">
+      <DependentUpon>NumbersOuterGridView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SelectMarkerGrid.xaml.cs">
-      <DependentUpon>SelectMarkerGrid.xaml</DependentUpon>
+    <Compile Include="Views\SelectDifficultyView.xaml.cs">
+      <DependentUpon>SelectDifficultyView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SelectNumberGrid.xaml.cs">
-      <DependentUpon>SelectNumberGrid.xaml</DependentUpon>
+    <Compile Include="Views\SelectMarkerGridView.xaml.cs">
+      <DependentUpon>SelectMarkerGridView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SelectNumberGridView.xaml.cs">
+      <DependentUpon>SelectNumberGridView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -114,19 +118,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\NumbersInnerGrid.xaml">
+    <Page Include="Views\NumbersInnerGridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NumbersOuterGrid.xaml">
+    <Page Include="Views\NumbersOuterGridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SelectMarkerGrid.xaml">
+    <Page Include="Views\SelectDifficultyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SelectMarkerGridView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SelectNumberGrid.xaml">
+    <Page Include="Views\SelectNumberGridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

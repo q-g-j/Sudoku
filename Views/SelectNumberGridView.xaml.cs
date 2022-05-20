@@ -16,9 +16,9 @@ using Sudoku.Services;
 
 namespace Sudoku.Views
 {
-    public partial class SelectNumberGrid : Grid
+    public partial class SelectNumberGridView : Grid
     {
-        public SelectNumberGrid()
+        public SelectNumberGridView()
         {
             InitializeComponent();
         }
@@ -37,7 +37,7 @@ namespace Sudoku.Views
 
             if (e.ChangedButton == MouseButton.Left)
             {
-                MessengerService.BroadCast("SelectNumberGridVisibility", "Hidden");
+                MessengerService.BroadCastWithButton("SelectNumberGridVisibility", "Hidden", "");
                 MessengerService.BroadCast("ChangeNumber", button);
                 e.Handled = true;
             }

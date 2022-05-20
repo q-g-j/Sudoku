@@ -15,9 +15,12 @@ using System.Windows.Shapes;
 
 namespace Sudoku.Views
 {
-    public partial class NumbersOuterGrid : Grid
+    /// <summary>
+    /// Interaktionslogik für NumbersInnerGridView.xaml
+    /// </summary>
+    public partial class NumbersInnerGridView : Grid
     {
-        public NumbersOuterGrid()
+        public NumbersInnerGridView()
         {
             InitializeComponent();
         }

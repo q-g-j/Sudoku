@@ -16,9 +16,9 @@ using Sudoku.Services;
 
 namespace Sudoku.Views
 {
-    public partial class SelectMarkerGrid : Grid
+    public partial class SelectMarkerGridView : Grid
     {
-        public SelectMarkerGrid()
+        public SelectMarkerGridView()
         {
             InitializeComponent();
         }
@@ -38,7 +38,7 @@ namespace Sudoku.Views
             if (e.ChangedButton == MouseButton.Left)
             {
                 System.Diagnostics.Debug.WriteLine(button);
-                MessengerService.BroadCast("SelectMarkerGridVisibility", "Hidden");
+                MessengerService.BroadCastWithButton("SelectMarkerGridVisibility", "Hidden", "");
                 MessengerService.BroadCast("ChangeMarker", button);
                 e.Handled = true;
             }
