@@ -27,7 +27,7 @@ namespace Sudoku.ViewModels
 
 
             MessengerService.OnMessageTransmittedTwoParams += OnMessageReceivedTwoParams;
-            MessengerService.OnMessageTransmittedThreeParams += OnMessageWithButtonReceived;
+            MessengerService.OnMessageTransmittedThreeParams += OnMessageReceivedThreeParams;
         }
         #endregion Constructor
 
@@ -426,7 +426,7 @@ namespace Sudoku.ViewModels
             }
         }
 
-        protected void OnMessageWithButtonReceived(string type, string message, string button)
+        protected void OnMessageReceivedThreeParams(string type, string message, string button)
         {
             if (SelectDifficultyVisibility == "Visible")
             {
