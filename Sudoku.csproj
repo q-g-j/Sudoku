@@ -83,9 +83,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Debug\DebugPrint.cs" />
     <Compile Include="GameLogic\GeneratorGameLogic.cs" />
     <Compile Include="GameLogic\SolverGameLogic.cs" />
     <Compile Include="GameLogic\ValidatorGameLogic.cs" />
+    <Compile Include="Helpers\StaticMethods.cs" />
     <Compile Include="Models\NumberColorsListModel.cs" />
     <Compile Include="Models\NumberListModel.cs" />
     <Compile Include="Models\MarkersListModel.cs" />

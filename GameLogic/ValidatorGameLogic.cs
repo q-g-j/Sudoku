@@ -9,13 +9,22 @@ namespace Sudoku.GameLogic
 {
     public static class ValidatorGameLogic
     {
-        public static bool IsValid(NumbersListModel numbersList, string coords)
+        public static bool IsValid(NumbersListModel numbersList, int col, int row, string number)
         {
-            int col = int.Parse(coords[0].ToString());
-            int row = int.Parse(coords[1].ToString());
-            string number = numbersList[col][row];
+            List<List<string>> tempNumbersList = new List<List<string>>();
 
-            numbersList[col][row] = number;
+
+            for (int i = 0; i < 9; i++)
+            {
+                List<string> tempList = new List<string>();
+                for (int j = 0; j < 9; j++)
+                {
+                    tempList.Add(numbersList[i][j]);
+                }
+                tempNumbersList.Add(tempList);
+            }
+
+            tempNumbersList[col][row] = number;
 
             if (number == "")
             {
@@ -27,7 +36,7 @@ namespace Sudoku.GameLogic
             {
                 if (i != col)
                 {
-                    if (numbersList[i][row] == number)
+                    if (tempNumbersList[i][row] == number)
                     {
                         return false;
                     }
@@ -39,7 +48,7 @@ namespace Sudoku.GameLogic
             {
                 if (i != row)
                 {
-                    if (numbersList[col][i] == number)
+                    if (tempNumbersList[col][i] == number)
                     {
                         return false;
                     }
@@ -56,7 +65,7 @@ namespace Sudoku.GameLogic
                 {
                     if (i != row && j != col)
                     {
-                        if (numbersList[j][i] == number)
+                        if (tempNumbersList[j][i] == number)
                         {
                             return false;
                         }

@@ -1,106 +1,121 @@
-﻿using Sudoku.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using System.Linq;
+using Sudoku.Debug;
+using Sudoku.Models;
+using Sudoku.ViewModels;
+using Sudoku.Helpers;
 
 namespace Sudoku.GameLogic
 {
     public class SolverGameLogic
     {
-        public NumbersListModel numbersList;
-        public int counter = 1;
-        private readonly Random random;
+        private NumbersListModel numbersList;
+        public NumbersListModel NumbersListSolved;
+        public int counter;
 
-        public SolverGameLogic()
+        public SolverGameLogic(NumbersListModel list)
         {
-            random = new Random();
+            numbersList = NumbersListModel.CopyList(list);
+            counter = 0;
         }
 
-        public bool SolvePuzzle()
+        private bool IsFull(NumbersListModel numbersList)
         {
-            for (int i = 0; i < 9; i++)
+            bool isFull = true;
+            for (int row = 0; row < 9; row++)
             {
-                for (int j = 0; j < 9; j++)
+                for (int col = 0; col < 9; col++)
                 {
-                    if (numbersList[j][i] == "")
+                    if (numbersList[col][row] == "")
+                    {
+                        isFull = false;
+                    }
+                }
+            }
+            return isFull;
+        }
+
+        private void CopySolution(NumbersListModel numbersList)
+        {
+            NumbersListSolved = NumbersListModel.CopyList(numbersList);
+        }
+
+        public void FillSudoku()
+        {
+            for (int row = 0; row < 9; row++)
+            {
+                for (int col = 0; col < 9; col++)
+                {
+                    if (numbersList[col][row] == "")
                     {
                         List<int> intList = new List<int>();
                         intList.AddRange(Enumerable.Range(1, 9));
+                        Random random = new Random();
                         var shuffledIntList = intList.OrderBy(item => random.Next());
 
                         foreach (int item in shuffledIntList)
                         {
-                            string num = item.ToString();
-                            string coords = j.ToString();
-                            coords += i.ToString();
-                            numbersList[j][i] = num;
-                            bool isValid = ValidatorGameLogic.IsValid(numbersList, coords);
-                            numbersList[j][i] = "";
-                            if (isValid)
+                            string number = item.ToString();
+                            if (ValidatorGameLogic.IsValid(numbersList, col, row, number))
                             {
-                                numbersList[j][i] = num;
-
-                                if (SolvePuzzle())
+                                numbersList[col][row] = number;
+                                if (IsFull(numbersList))
                                 {
-                                    if (counter == 1)
-                                        return true;
-                                    //else if (counter == 100)
-                                    //    return false;
-                                    else
-                                        counter++;
+                                    CopySolution(numbersList);
                                 }
                                 else
-                                    numbersList[j][i] = "";
+                                {
+                                    FillSudoku();
+                                    numbersList[col][row] = "";
+                                }
                             }
                         }
-                        return false;
+                        return;
                     }
                 }
             }
-            return true;
         }
 
-        //public bool UniqueSolver()
-        //{
-        //    for (int i = 0; i < 9; i++)
-        //    {
-        //        for (int j = 0; j < 9; j++)
-        //        {
-        //            if (numbersList[j][i] == "")
-        //            {
-        //                List<int> intList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-        //                var shuffledIntList = intList.OrderBy(item => random.Next());
+        public void HasUniqueSolution()
+        {
+            if (!IsFull(numbersList))
+            {
+                for (int row = 0; row < 9; row++)
+                {
+                    for (int col = 0; col < 9; col++)
+                    {
+                        if (numbersList[col][row] == "")
+                        {
+                            List<int> intList = new List<int>();
+                            intList.AddRange(Enumerable.Range(1, 9));
 
-        //                foreach (int item in shuffledIntList)
-        //                {
-        //                    string num = item.ToString();
-        //                    string coords = j.ToString();
-        //                    coords += i.ToString();
-        //                    numbersList[j][i] = num;
-        //                    bool isValid = ValidatorGameLogic.IsValid(numbersList, coords);
-        //                    numbersList[j][i] = "";
-        //                    if (isValid)
-        //                    {
-        //                        numbersList[j][i] = num;
-
-        //                        if (SolvePuzzle())
-        //                        {
-        //                            if (counter == 1)
-        //                                return true;
-        //                            //else if (counter == 100)
-        //                            //    return false;
-        //                            else
-        //                                counter++;
-        //                        }
-        //                        else
-        //                            numbersList[j][i] = "";
-        //                    }
-        //                }
-        //                return false;
-        //            }
-        //        }
-        //    }
-        //    return true;
-        //}
+                            foreach (int item in intList)
+                            {
+                                string number = item.ToString();
+                                if (ValidatorGameLogic.IsValid(numbersList, col, row, number))
+                                {
+                                    numbersList[col][row] = number;
+                                    if (IsFull(numbersList))
+                                    {
+                                        counter++;
+                                    }
+                                    if (counter < 2)
+                                    {
+                                        HasUniqueSolution();
+                                        numbersList[col][row] = "";
+                                    }
+                                    else
+                                    {
+                                        return;
+                                    }
+                                }
+                            }
+                            return;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

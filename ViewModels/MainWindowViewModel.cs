@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Sudoku.GameLogic;
 using Sudoku.Models;
 using Sudoku.Services;
+using Sudoku.Debug;
+using Sudoku.Helpers;
 
 namespace Sudoku.ViewModels
 {
@@ -17,14 +19,9 @@ namespace Sudoku.ViewModels
         #region Constructor
         public MainWindowViewModel()
         {
-            numbersListValue = new NumbersListModel();
-            markersListValue = new MarkersListModel();
-            numbersColorsListValue = new NumbersColorsListModel();
-
             selectNumberVisibilityValue = "Hidden";
             selectMarkerVisibilityValue = "Hidden";
             selectDifficultyVisibilityValue = "Hidden";
-
 
             MessengerService.OnMessageTransmittedTwoParams += OnMessageReceivedTwoParams;
             MessengerService.OnMessageTransmittedThreeParams += OnMessageReceivedThreeParams;
@@ -94,12 +91,34 @@ namespace Sudoku.ViewModels
         #endregion Properties
 
         #region Methods
+        private void InititalizeValues()
+        {
+            if (numbersListValue == null)
+            {
+                numbersListValue = new NumbersListModel();
+                numbersListValue.InitializeList();
+            }
+            if (markersListValue == null)
+            {
+                markersListValue = new MarkersListModel();
+                markersListValue.InitializeList();
+            }
+            if (numbersColorsListValue == null)
+            {
+                numbersColorsListValue = new NumbersColorsListModel();
+                numbersColorsListValue.InitializeList();
+            }
+        }
+
         private void ChangeNumber(string button)
         {
+            InititalizeValues();
+
             if (generatorNumbers == null)
             {
                 generatorNumbers = new List<string>();
             }
+
             string coords = button.Substring(0, 2);
             if (! generatorNumbers.Contains(coords))
             {
@@ -219,6 +238,8 @@ namespace Sudoku.ViewModels
 
         private void ChangeMarker(string button)
         {
+            InititalizeValues();
+
             int col = int.Parse(button[0].ToString());
             int row = int.Parse(button[1].ToString());
             string number = button[2].ToString();
@@ -298,95 +319,87 @@ namespace Sudoku.ViewModels
 
         private void NewGame(string difficulty)
         {
-            SolverGameLogic solverGameLogic = new SolverGameLogic
-            {
-                numbersList = new NumbersListModel()
-            };
-            solverGameLogic.SolvePuzzle();
-            numbersListValue = solverGameLogic.numbersList;
-
             GeneratorGameLogic generatorGameLogic = new GeneratorGameLogic();
+
+            numbersListValue = new NumbersListModel();
+            markersListValue = new MarkersListModel();
+            numbersColorsListValue = new NumbersColorsListModel();
+            numbersListValue.InitializeList();
+            markersListValue.InitializeList();
+            numbersColorsListValue.InitializeList();
+            SolverGameLogic solverGameLogic = new SolverGameLogic(numbersListValue);
+
+            solverGameLogic.FillSudoku();
+
+            NumbersListModel numbersListModelSolved = solverGameLogic.NumbersListSolved;
 
             if (difficulty == "Easy")
             {
-                generatorGameLogic.RemoveNumbers = 25;
+                generatorGameLogic.RemoveNumbers = 35;
             }
             else if (difficulty == "Medium")
             {
-                generatorGameLogic.RemoveNumbers = 40;
+                generatorGameLogic.RemoveNumbers = 45;
             }
             else if (difficulty == "Hard")
             {
-                generatorGameLogic.RemoveNumbers = 57;
+                generatorGameLogic.RemoveNumbers = 55;
             }
-            generatorGameLogic.numbersList = new NumbersListModel(numbersListValue);
+
+            generatorGameLogic.NumbersList = NumbersListModel.CopyList(numbersListModelSolved);
             generatorGameLogic.GenerateSudoku();
-            NumbersList = generatorGameLogic.numbersList;
 
             generatorNumbers = new List<string>();
 
-            for (int i = 0; i < 9; i++)
+            for (int col = 0; col < 9; col++)
             {
-                for (int j = 0; j < 9; j++)
+                for (int row = 0; row < 9; row++)
                 {
-                    if (numbersListValue[i][j] != "")
+                    if (generatorGameLogic.NumbersList[col][row] != "")
                     {
-                        string coords = i.ToString();
-                        coords += j.ToString();
+                        string coords = col.ToString();
+                        coords += row.ToString();
                         generatorNumbers.Add(coords);
                     }
                 }
             }
 
-            NumbersColorsListModel tempList = new NumbersColorsListModel();
+            NumbersColorsListModel tempColorsList = new NumbersColorsListModel();
+            tempColorsList.InitializeList();
             foreach (string coords in generatorNumbers)
             {
                 int col = int.Parse(coords[0].ToString());
                 int row = int.Parse(coords[1].ToString());
 
-                tempList[col][row] = "Black";
+                tempColorsList[col][row] = "Black";
             }
-            NumbersColorsList = tempList;
+            NumbersColorsList = tempColorsList;
             LabelValidate = "";
+
+            NumbersList = generatorGameLogic.NumbersList;
         }
 
         private void ValidateAll()
         {
-            string coords;
-
-            for (int i = 0; i < 9; i++)
+            if (numbersListValue == null)
             {
-                for (int j = 0; j < 9; j++)
+                numbersListValue = new NumbersListModel();
+                numbersListValue.InitializeList();
+            }
+
+            for (int col = 0; col < 9; col++)
+            {
+                for (int row = 0; row < 9; row++)
                 {
-                    coords = i.ToString();
-                    coords += j.ToString();
-                    if (! ValidatorGameLogic.IsValid(numbersListValue, coords))
+                    string number = numbersListValue[col][row];
+                    if (! ValidatorGameLogic.IsValid(numbersListValue, col, row, number))
                     {
                         LabelValidate = "Konflikte gefunden!";
                         return;
                     }
                 }
             }
-
             LabelValidate = "Keine Konflikte!";
-        }
-
-        public static void DebugPrintNumbersList(NumbersListModel numbersList)
-        {
-            for (int row = 0; row < 9; row++)
-            {
-                for (int col = 0; col < 9; col++)
-                {
-                    if (numbersList[col][row] == "")
-                        System.Diagnostics.Debug.Write("0" + "  ");
-                    else
-                        System.Diagnostics.Debug.Write(numbersList[col][row] + "  ");
-
-                }
-                System.Diagnostics.Debug.Write("\n");
-            }
-            System.Diagnostics.Debug.Write("\n");
-            System.Diagnostics.Debug.Write("\n");
         }
 
         protected void OnMessageReceivedTwoParams(string type, string message)

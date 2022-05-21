@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sudoku.GameLogic;
 using Sudoku.Models;
+using Sudoku.Debug;
 
 namespace Sudoku.GameLogic
 {
@@ -19,7 +20,7 @@ namespace Sudoku.GameLogic
         private readonly List<string> emptiedList;
         private readonly Random random;
 
-        public NumbersListModel numbersList;
+        public NumbersListModel NumbersList;
         public int RemoveNumbers;
         public int counter = 1;
 
@@ -40,16 +41,13 @@ namespace Sudoku.GameLogic
 
                     if (! emptiedList.Contains(coords) && counter <= RemoveNumbers)
                     {
-                        string oldNum = numbersList[j][i].ToString();
-                        {
-                            numbersList[j][i] = "";
-                            counter++;
-                            emptiedList.Add(coords);
+                        NumbersList[j][i] = "";
+                        counter++;
+                        emptiedList.Add(coords);
 
-                            if (GenerateSudoku())
-                            {
-                                return true;
-                            }
+                        if (GenerateSudoku())
+                        {
+                            return true;
                         }
                         return false;
                     }
