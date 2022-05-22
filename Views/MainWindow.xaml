@@ -3,6 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:b="clr-namespace:Sudoku.Helpers"
         xmlns:local="clr-namespace:Sudoku.Views"
         xmlns:vm="clr-namespace:Sudoku.ViewModels"
         mc:Ignorable="d"
@@ -108,11 +110,15 @@
 
                     <!-- Column 0, Row 0 -->
                     <local:NumbersOuterGridView Grid.Column="1" Grid.Row="1">
-                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="00"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="00"/>
-                            </Button.InputBindings>
+                        <Button Tag="00" Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -125,11 +131,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="10"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="10"/>
-                            </Button.InputBindings>
+                        <Button Tag="10" Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -142,11 +152,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="20"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="20"/>
-                            </Button.InputBindings>
+                        <Button Tag="20" Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -159,11 +173,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[2][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="01"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="01"/>
-                            </Button.InputBindings>
+                        <Button Tag="01" Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -176,11 +194,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="11"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="11"/>
-                            </Button.InputBindings>
+                        <Button Tag="11" Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -193,11 +215,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="21"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="21"/>
-                            </Button.InputBindings>
+                        <Button Tag="21" Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -210,11 +236,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[2][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="02"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="02"/>
-                            </Button.InputBindings>
+                        <Button Tag="02" Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -227,11 +257,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][2][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="12"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="12"/>
-                            </Button.InputBindings>
+                        <Button Tag="12" Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -244,11 +278,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][2][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="22"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="22"/>
-                            </Button.InputBindings>
+                        <Button Tag="22" Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -269,11 +307,15 @@
 
                     <!-- Column 1, Row 0 -->
                     <local:NumbersOuterGridView Grid.Column="3" Grid.Row="1">
-                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="30"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="30"/>
-                            </Button.InputBindings>
+                        <Button Tag="30" Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -286,11 +328,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="40"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="40"/>
-                            </Button.InputBindings>
+                        <Button Tag="40" Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -303,11 +349,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="50"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="50"/>
-                            </Button.InputBindings>
+                        <Button Tag="50" Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -320,11 +370,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[5][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="31"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="31"/>
-                            </Button.InputBindings>
+                        <Button Tag="31" Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -337,11 +391,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="41"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="41"/>
-                            </Button.InputBindings>
+                        <Button Tag="41" Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -354,11 +412,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="51"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="51"/>
-                            </Button.InputBindings>
+                        <Button Tag="51" Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -371,11 +433,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[5][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="32"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="32"/>
-                            </Button.InputBindings>
+                        <Button Tag="32" Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -388,11 +454,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][2][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="42"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="42"/>
-                            </Button.InputBindings>
+                        <Button Tag="42" Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -405,11 +475,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][2][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="52"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="52"/>
-                            </Button.InputBindings>
+                        <Button Tag="52" Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -430,11 +504,15 @@
 
                     <!-- Column 2, Row 0 -->
                     <local:NumbersOuterGridView Grid.Column="5" Grid.Row="1">
-                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="60"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="60"/>
-                            </Button.InputBindings>
+                        <Button Tag="60" Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -447,11 +525,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="70"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="70"/>
-                            </Button.InputBindings>
+                        <Button Tag="70" Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -464,11 +546,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="80"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="80"/>
-                            </Button.InputBindings>
+                        <Button Tag="80" Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -481,11 +567,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[8][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="61"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="61"/>
-                            </Button.InputBindings>
+                        <Button Tag="61" Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -498,11 +588,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="71"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="71"/>
-                            </Button.InputBindings>
+                        <Button Tag="71" Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -515,11 +609,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="81"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="81"/>
-                            </Button.InputBindings>
+                        <Button Tag="81" Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -532,11 +630,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[8][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="62"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="62"/>
-                            </Button.InputBindings>
+                        <Button Tag="62" Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -549,11 +651,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][2][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="72"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="72"/>
-                            </Button.InputBindings>
+                        <Button Tag="72" Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -566,11 +672,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][2][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="82"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="82"/>
-                            </Button.InputBindings>
+                        <Button Tag="82" Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -591,11 +701,15 @@
 
                     <!-- Column 0, Row 1 -->
                     <local:NumbersOuterGridView Grid.Column="1" Grid.Row="3">
-                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="03"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="03"/>
-                            </Button.InputBindings>
+                        <Button Tag="03" Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -608,11 +722,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="13"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="13"/>
-                            </Button.InputBindings>
+                        <Button Tag="13" Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -625,11 +743,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="23"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="23"/>
-                            </Button.InputBindings>
+                        <Button Tag="23" Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -642,11 +764,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[2][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="04"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="04"/>
-                            </Button.InputBindings>
+                        <Button Tag="04" Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -659,11 +785,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="14"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="14"/>
-                            </Button.InputBindings>
+                        <Button Tag="14" Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -676,11 +806,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="24"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="24"/>
-                            </Button.InputBindings>
+                        <Button Tag="24" Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -693,11 +827,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[2][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="05"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="05"/>
-                            </Button.InputBindings>
+                        <Button Tag="05" Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -710,11 +848,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][5][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="15"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="15"/>
-                            </Button.InputBindings>
+                        <Button Tag="15" Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -727,11 +869,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][5][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="25"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="25"/>
-                            </Button.InputBindings>
+                        <Button Tag="25" Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -752,11 +898,15 @@
 
                     <!-- Column 1, Row 1 -->
                     <local:NumbersOuterGridView Grid.Column="3" Grid.Row="3">
-                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="33"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="33"/>
-                            </Button.InputBindings>
+                        <Button Tag="33" Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -769,11 +919,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="43"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="43"/>
-                            </Button.InputBindings>
+                        <Button Tag="43" Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -786,11 +940,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="53"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="53"/>
-                            </Button.InputBindings>
+                        <Button Tag="53" Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -803,11 +961,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[5][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="34"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="34"/>
-                            </Button.InputBindings>
+                        <Button Tag="34" Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -820,11 +982,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="44"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="44"/>
-                            </Button.InputBindings>
+                        <Button Tag="44" Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -837,11 +1003,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="54"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="54"/>
-                            </Button.InputBindings>
+                        <Button Tag="54" Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -854,11 +1024,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[5][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="35"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="35"/>
-                            </Button.InputBindings>
+                        <Button Tag="35" Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -871,11 +1045,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][5][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="45"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="45"/>
-                            </Button.InputBindings>
+                        <Button Tag="45" Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -888,11 +1066,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][5][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="55"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="55"/>
-                            </Button.InputBindings>
+                        <Button Tag="55" Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -913,11 +1095,15 @@
 
                     <!-- Column 2, Row 1 -->
                     <local:NumbersOuterGridView Grid.Column="5" Grid.Row="3">
-                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="63"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="63"/>
-                            </Button.InputBindings>
+                        <Button Tag="63" Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -930,11 +1116,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="73"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="73"/>
-                            </Button.InputBindings>
+                        <Button Tag="73" Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -947,11 +1137,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="83"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="83"/>
-                            </Button.InputBindings>
+                        <Button Tag="83" Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -964,11 +1158,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[8][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="64"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="64"/>
-                            </Button.InputBindings>
+                        <Button Tag="64" Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -981,11 +1179,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="74"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="74"/>
-                            </Button.InputBindings>
+                        <Button Tag="74" Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -998,11 +1200,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="84"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="84"/>
-                            </Button.InputBindings>
+                        <Button Tag="84" Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -1015,11 +1221,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[8][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="65"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="65"/>
-                            </Button.InputBindings>
+                        <Button Tag="65" Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -1032,11 +1242,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][5][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="75"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="75"/>
-                            </Button.InputBindings>
+                        <Button Tag="75" Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -1049,11 +1263,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][5][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="85"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="85"/>
-                            </Button.InputBindings>
+                        <Button Tag="85" Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -1074,11 +1292,15 @@
 
                     <!-- Column 0, Row 2 -->
                     <local:NumbersOuterGridView Grid.Column="1" Grid.Row="5">
-                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="06"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="06"/>
-                            </Button.InputBindings>
+                        <Button Tag="06" Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -1091,11 +1313,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="16"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="16"/>
-                            </Button.InputBindings>
+                        <Button Tag="16" Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -1108,11 +1334,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="26"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="26"/>
-                            </Button.InputBindings>
+                        <Button Tag="26" Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -1125,11 +1355,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[2][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="07"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="07"/>
-                            </Button.InputBindings>
+                        <Button Tag="07" Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -1142,11 +1376,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="17"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="17"/>
-                            </Button.InputBindings>
+                        <Button Tag="17" Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -1159,11 +1397,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="27"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="27"/>
-                            </Button.InputBindings>
+                        <Button Tag="27" Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -1176,11 +1418,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[2][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="08"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="08"/>
-                            </Button.InputBindings>
+                        <Button Tag="08" Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -1193,11 +1439,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][8][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="18"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="18"/>
-                            </Button.InputBindings>
+                        <Button Tag="18" Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -1210,11 +1460,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][8][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="28"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="28"/>
-                            </Button.InputBindings>
+                        <Button Tag="28" Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -1235,11 +1489,15 @@
 
                     <!-- Column 1, Row 2 -->
                     <local:NumbersOuterGridView Grid.Column="3" Grid.Row="5">
-                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="36"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="36"/>
-                            </Button.InputBindings>
+                        <Button Tag="36" Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -1252,11 +1510,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="46"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="46"/>
-                            </Button.InputBindings>
+                        <Button Tag="46" Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -1269,11 +1531,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="56"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="56"/>
-                            </Button.InputBindings>
+                        <Button Tag="56" Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -1286,11 +1552,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[5][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="37"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="37"/>
-                            </Button.InputBindings>
+                        <Button Tag="37" Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -1303,11 +1573,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="47"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="47"/>
-                            </Button.InputBindings>
+                        <Button Tag="47" Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -1320,11 +1594,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="57"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="57"/>
-                            </Button.InputBindings>
+                        <Button Tag="57" Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -1337,11 +1615,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[5][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="38"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="38"/>
-                            </Button.InputBindings>
+                        <Button Tag="38" Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -1354,11 +1636,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][8][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="48"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="48"/>
-                            </Button.InputBindings>
+                        <Button Tag="48" Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -1371,11 +1657,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][8][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="58"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="58"/>
-                            </Button.InputBindings>
+                        <Button Tag="58" Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -1396,11 +1686,15 @@
 
                     <!-- Column 2, Row 2 -->
                     <local:NumbersOuterGridView Grid.Column="5" Grid.Row="5">
-                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="66"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="66"/>
-                            </Button.InputBindings>
+                        <Button Tag="66" Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -1413,11 +1707,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="76"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="76"/>
-                            </Button.InputBindings>
+                        <Button Tag="76" Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -1430,11 +1728,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="86"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="86"/>
-                            </Button.InputBindings>
+                        <Button Tag="86" Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -1447,11 +1749,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[8][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="67"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="67"/>
-                            </Button.InputBindings>
+                        <Button Tag="67" Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -1464,11 +1770,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="77"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="77"/>
-                            </Button.InputBindings>
+                        <Button Tag="77" Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -1481,11 +1791,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="87"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="87"/>
-                            </Button.InputBindings>
+                        <Button Tag="87" Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -1498,11 +1812,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[8][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="68"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="68"/>
-                            </Button.InputBindings>
+                        <Button Tag="68" Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -1515,11 +1833,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][8][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="78"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="78"/>
-                            </Button.InputBindings>
+                        <Button Tag="78" Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -1532,11 +1854,15 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][8][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
-                            <Button.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="88"/>
-                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="88"/>
-                            </Button.InputBindings>
+                        <Button Tag="88" Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <behaviors:Interaction.Triggers>
+                                <behaviors:EventTrigger EventName="PreviewMouseDown" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareDownCommand}" PassEventArgsToCommand="True" CommandParameter="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                </behaviors:EventTrigger>
+                                <behaviors:EventTrigger EventName="PreviewMouseUp" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <b:AdvancedInvokeCommandAction Command="{Binding ButtonSquareUpCommand}" PassEventArgsToCommand="True"/>
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][8][1][0]}" Style="{StaticResource Marker}"/>

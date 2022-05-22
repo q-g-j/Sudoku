@@ -9,6 +9,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using System.Threading.Tasks;
 using System;
+using System.Diagnostics;
 
 namespace Sudoku.ViewModels
 {
@@ -23,15 +24,20 @@ namespace Sudoku.ViewModels
             selectDifficultyVisibilityValue = "Hidden";
             buttonDifficultyTextValue = "Neues Spiel";
 
+            generatorNumbers = new List<string>();
+            numbersListValue = new NumbersListModel();
+            numbersListValue.InitializeList();
+
             ButtonDifficultyCommand = new AsyncRelayCommand(ButtonDifficultyClick);
             ButtonValidateCommand = new AsyncRelayCommand(ButtonValidateClick);
             ButtonDifficultyEasyCommand = new AsyncRelayCommand(ButtonDifficultyEasyClick);
             ButtonDifficultyMediumCommand = new AsyncRelayCommand(ButtonDifficultyMediumClick);
             ButtonDifficultyHardCommand = new AsyncRelayCommand(ButtonDifficultyHardClick);
-            ButtonSquareLeftCommand = new AsyncRelayCommand<object>(o => ButtonSquareLeftClick(o));
-            ButtonSquareRightCommand = new AsyncRelayCommand<object>(o => ButtonSquareRightClick(o));
             ButtonSelectNumberCommand = new AsyncRelayCommand<object>(o => ButtonSelectNumberClick(o));
             ButtonSelectMarkerCommand = new AsyncRelayCommand<object>(o => ButtonSelectMarkerClick(o));
+
+            ButtonSquareDownCommand = new AsyncRelayCommand<CompositeCommandParameter>(o => ButtonSquareDown(o));
+            ButtonSquareUpCommand = new AsyncRelayCommand<CompositeCommandParameter>(o => ButtonSquareUp(o));
         }
         #endregion Constructor
 
@@ -60,6 +66,8 @@ namespace Sudoku.ViewModels
         public IAsyncRelayCommand ButtonSquareRightCommand { get; }
         public IAsyncRelayCommand ButtonSelectNumberCommand { get; }
         public IAsyncRelayCommand ButtonSelectMarkerCommand { get; }
+        public IAsyncRelayCommand ButtonSquareDownCommand { get; }
+        public IAsyncRelayCommand ButtonSquareUpCommand { get; }
 
         public NumbersListModel NumbersList
         {
@@ -172,74 +180,65 @@ namespace Sudoku.ViewModels
             });
         }
 
-        private async Task ButtonSquareLeftClick(object o)
+        private async Task ButtonSquareDown(CompositeCommandParameter o)
         {
+            var e = (MouseButtonEventArgs)o.EventArgs;
+            var param = (string)o.Parameter;
+
             await Task.Run(() =>
             {
-                var tag = (string)o;
-                currentButtonIndex = tag;
+                currentButtonIndex = param;
 
-                if (SelectDifficultyVisibility == "Visible")
+                if (e.ChangedButton == MouseButton.Left)
                 {
-                    SelectDifficultyVisibility = "Hidden";
-                    return;
-                }
+                    if (SelectDifficultyVisibility == "Visible")
+                    {
+                        SelectDifficultyVisibility = "Hidden";
+                        return;
+                    }
 
-                LabelValidate = "";
-
-                if (generatorNumbers == null)
-                {
-                    generatorNumbers = new List<string>();
-                }
-
-                if ((SelectNumberVisibility == "Visible") || (SelectMarkerVisibility == "Visible"))
-                {
-                    SelectMarkerVisibility = "Hidden";
-                    SelectNumberVisibility = "Hidden";
-                }
-                else
-                {
-                    if (!generatorNumbers.Contains(tag))
+                    if ((SelectNumberVisibility == "Visible") || (SelectMarkerVisibility == "Visible"))
+                    {
+                        SelectMarkerVisibility = "Hidden";
+                        SelectNumberVisibility = "Hidden";
+                    }
+                    else if (!generatorNumbers.Contains(param))
                     {
                         SelectNumberVisibility = "Visible";
                     }
                 }
-            });
-        }
-
-        private async Task ButtonSquareRightClick(object o)
-        {
-            await Task.Run(() =>
-            {
-                var tag = (string)o;
-                currentButtonIndex = tag;
-
-                if (SelectDifficultyVisibility == "Visible")
+                else if (e.ChangedButton == MouseButton.Right)
                 {
-                    SelectDifficultyVisibility = "Hidden";
-                    return;
-                }
-
-                LabelValidate = "";
-
-                if (generatorNumbers == null)
-                {
-                    generatorNumbers = new List<string>();
-                }
-
-                if ((SelectNumberVisibility == "Visible") || (SelectMarkerVisibility == "Visible"))
-                {
-                    SelectMarkerVisibility = "Hidden";
-                    SelectNumberVisibility = "Hidden";
-                }
-                else
-                {
-                    if (!generatorNumbers.Contains(tag))
+                    if (SelectDifficultyVisibility == "Visible")
+                    {
+                        SelectDifficultyVisibility = "Hidden";
+                        return;
+                    }
+                    if ((SelectNumberVisibility == "Visible") || (SelectMarkerVisibility == "Visible"))
+                    {
+                        SelectMarkerVisibility = "Hidden";
+                        SelectNumberVisibility = "Hidden";
+                    }
+                    else if (!generatorNumbers.Contains(param))
                     {
                         SelectMarkerVisibility = "Visible";
                     }
                 }
+
+                LabelValidate = "";
             });
+
+            e.Handled = true;
+        }
+
+        private async Task ButtonSquareUp(CompositeCommandParameter o)
+        {
+            var e = (MouseButtonEventArgs)o.EventArgs;
+            await Task.Run(() =>
+            {
+            });
+
+            e.Handled = true;
         }
 
         private async Task ButtonSelectNumberClick(object o)
