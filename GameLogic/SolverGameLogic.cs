@@ -79,40 +79,33 @@ namespace Sudoku.GameLogic
 
         public void HasUniqueSolution()
         {
-            if (!IsFull(numbersList))
+            for (int row = 0; row < 9; row++)
             {
-                for (int row = 0; row < 9; row++)
+                for (int col = 0; col < 9; col++)
                 {
-                    for (int col = 0; col < 9; col++)
+                    if (numbersList[col][row] == "")
                     {
-                        if (numbersList[col][row] == "")
-                        {
-                            List<int> intList = new List<int>();
-                            intList.AddRange(Enumerable.Range(1, 9));
+                        List<int> intList = new List<int>();
+                        intList.AddRange(Enumerable.Range(1, 9));
 
-                            foreach (int item in intList)
+                        foreach (int item in intList)
+                        {
+                            string number = item.ToString();
+                            if (ValidatorGameLogic.IsValid(numbersList, col, row, number))
                             {
-                                string number = item.ToString();
-                                if (ValidatorGameLogic.IsValid(numbersList, col, row, number))
+                                numbersList[col][row] = number;
+                                if (IsFull(numbersList))
                                 {
-                                    numbersList[col][row] = number;
-                                    if (IsFull(numbersList))
-                                    {
-                                        counter++;
-                                    }
-                                    if (counter < 2)
-                                    {
-                                        HasUniqueSolution();
-                                        numbersList[col][row] = "";
-                                    }
-                                    else
-                                    {
-                                        return;
-                                    }
+                                    counter++;
+                                }
+                                if (counter <= 2)
+                                {
+                                    HasUniqueSolution();
+                                    numbersList[col][row] = "";
                                 }
                             }
-                            return;
                         }
+                        return;
                     }
                 }
             }

@@ -319,64 +319,75 @@ namespace Sudoku.ViewModels
 
         private void NewGame(string difficulty)
         {
-            GeneratorGameLogic generatorGameLogic = new GeneratorGameLogic();
+            GeneratorGameLogic generatorGameLogic;
 
-            numbersListValue = new NumbersListModel();
-            markersListValue = new MarkersListModel();
-            numbersColorsListValue = new NumbersColorsListModel();
-            numbersListValue.InitializeList();
-            markersListValue.InitializeList();
-            numbersColorsListValue.InitializeList();
-            SolverGameLogic solverGameLogic = new SolverGameLogic(numbersListValue);
+            bool doRun = true;
 
-            solverGameLogic.FillSudoku();
-
-            NumbersListModel numbersListModelSolved = solverGameLogic.NumbersListSolved;
-
-            if (difficulty == "Easy")
+            while (doRun)
             {
-                generatorGameLogic.RemoveNumbers = 35;
-            }
-            else if (difficulty == "Medium")
-            {
-                generatorGameLogic.RemoveNumbers = 45;
-            }
-            else if (difficulty == "Hard")
-            {
-                generatorGameLogic.RemoveNumbers = 55;
-            }
+                numbersListValue = new NumbersListModel();
+                numbersListValue.InitializeList();
 
-            generatorGameLogic.NumbersList = NumbersListModel.CopyList(numbersListModelSolved);
-            generatorGameLogic.GenerateSudoku();
+                SolverGameLogic solverGameLogic = new SolverGameLogic(numbersListValue);
+                solverGameLogic.FillSudoku();
+                NumbersListModel numbersListSolved = solverGameLogic.NumbersListSolved;
 
-            generatorNumbers = new List<string>();
+                generatorGameLogic = new GeneratorGameLogic();
 
-            for (int col = 0; col < 9; col++)
-            {
-                for (int row = 0; row < 9; row++)
+                if (difficulty == "Easy")
                 {
-                    if (generatorGameLogic.NumbersList[col][row] != "")
+                    generatorGameLogic.RemoveNumbers = 35;
+                }
+                else if (difficulty == "Medium")
+                {
+                    generatorGameLogic.RemoveNumbers = 45;
+                }
+                else if (difficulty == "Hard")
+                {
+                    generatorGameLogic.RemoveNumbers = 50;
+                }
+
+                generatorGameLogic.NumbersList = NumbersListModel.CopyList(numbersListSolved);
+                generatorGameLogic.GenerateSudoku();
+
+                if (generatorGameLogic.tries < 21)
+                {
+                    doRun = false;
+                }
+
+                generatorNumbers = new List<string>();
+
+                for (int col = 0; col < 9; col++)
+                {
+                    for (int row = 0; row < 9; row++)
                     {
-                        string coords = col.ToString();
-                        coords += row.ToString();
-                        generatorNumbers.Add(coords);
+                        if (generatorGameLogic.NumbersList[col][row] != "")
+                        {
+                            string coords = col.ToString();
+                            coords += row.ToString();
+                            generatorNumbers.Add(coords);
+                        }
                     }
                 }
+
+                numbersColorsListValue = new NumbersColorsListModel();
+                numbersColorsListValue.InitializeList();
+                foreach (string coords in generatorNumbers)
+                {
+                    int col = int.Parse(coords[0].ToString());
+                    int row = int.Parse(coords[1].ToString());
+
+                    numbersColorsListValue[col][row] = "Black";
+                }
+                NumbersColorsList = numbersColorsListValue;
+
+                LabelValidate = "";
+
+                NumbersList = generatorGameLogic.NumbersList;
+
+                markersListValue = new MarkersListModel();
+                markersListValue.InitializeList();
             }
-
-            NumbersColorsListModel tempColorsList = new NumbersColorsListModel();
-            tempColorsList.InitializeList();
-            foreach (string coords in generatorNumbers)
-            {
-                int col = int.Parse(coords[0].ToString());
-                int row = int.Parse(coords[1].ToString());
-
-                tempColorsList[col][row] = "Black";
-            }
-            NumbersColorsList = tempColorsList;
-            LabelValidate = "";
-
-            NumbersList = generatorGameLogic.NumbersList;
         }
 
         private void ValidateAll()
