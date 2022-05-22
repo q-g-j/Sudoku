@@ -23,6 +23,9 @@ namespace Sudoku.GameLogic
         public int counter = 0;
         public int tries = 0;
 
+        private int uniqueCounter;
+        private NumbersListModel uniqueNumbersList;
+
         public void GenerateSudoku()
         {
             List<int> intRowList = new List<int>();
@@ -39,9 +42,10 @@ namespace Sudoku.GameLogic
                     {
                         string oldNumber = NumbersList[col][row];
                         NumbersList[col][row] = "";
-                        SolverGameLogic solverGameLogic = new SolverGameLogic(NumbersList);
-                        solverGameLogic.HasUniqueSolution();
-                        if (solverGameLogic.counter != 1)
+                        uniqueNumbersList = NumbersListModel.CopyList(NumbersList);
+                        uniqueCounter = 0;
+                        HasUniqueSolution();
+                        if (uniqueCounter != 1)
                         {
                             tries++;
                             NumbersList[col][row] = oldNumber;
@@ -53,6 +57,40 @@ namespace Sudoku.GameLogic
                         if (counter < RemoveNumbers && tries < 20)
                         {
                             GenerateSudoku();
+                        }
+                        return;
+                    }
+                }
+            }
+        }
+
+        private void HasUniqueSolution()
+        {
+            for (int row = 0; row < 9; row++)
+            {
+                for (int col = 0; col < 9; col++)
+                {
+                    if (uniqueNumbersList[col][row] == "")
+                    {
+                        List<int> intList = new List<int>();
+                        intList.AddRange(Enumerable.Range(1, 9));
+
+                        foreach (int item in intList)
+                        {
+                            string number = item.ToString();
+                            if (ValidatorGameLogic.IsValid(uniqueNumbersList, col, row, number))
+                            {
+                                uniqueNumbersList[col][row] = number;
+                                if (SolverGameLogic.IsFull(uniqueNumbersList))
+                                {
+                                    uniqueCounter++;
+                                }
+                                if (uniqueCounter < 2)
+                                {
+                                    HasUniqueSolution();
+                                    uniqueNumbersList[col][row] = "";
+                                }
+                            }
                         }
                         return;
                     }
