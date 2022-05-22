@@ -98,7 +98,7 @@ namespace Sudoku.GameLogic
                                 {
                                     counter++;
                                 }
-                                if (counter <= 2)
+                                if (counter < 2)
                                 {
                                     HasUniqueSolution();
                                     numbersList[col][row] = "";
