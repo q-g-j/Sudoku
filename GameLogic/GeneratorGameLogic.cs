@@ -20,7 +20,7 @@ namespace Sudoku.GameLogic
 
         public NumbersListModel NumbersList;
         public int RemoveNumbers;
-        public int counter = 1;
+        public int counter = 0;
         public int tries = 0;
 
         public void GenerateSudoku()
@@ -50,7 +50,7 @@ namespace Sudoku.GameLogic
                         {
                             counter++;
                         }
-                        if (counter <= RemoveNumbers && tries < 20)
+                        if (counter < RemoveNumbers && tries < 20)
                         {
                             GenerateSudoku();
                         }

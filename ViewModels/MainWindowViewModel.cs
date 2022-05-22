@@ -350,7 +350,7 @@ namespace Sudoku.ViewModels
                 generatorGameLogic.NumbersList = NumbersListModel.CopyList(numbersListSolved);
                 generatorGameLogic.GenerateSudoku();
 
-                if (generatorGameLogic.tries < 21)
+                if (generatorGameLogic.counter == generatorGameLogic.RemoveNumbers)
                 {
                     doRun = false;
                 }
