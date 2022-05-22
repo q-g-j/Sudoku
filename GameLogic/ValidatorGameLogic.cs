@@ -7,18 +7,7 @@ namespace Sudoku.GameLogic
     {
         public static bool IsValid(NumbersListModel numbersList, int col, int row, string number)
         {
-            List<List<string>> tempNumbersList = new List<List<string>>();
-
-
-            for (int i = 0; i < 9; i++)
-            {
-                List<string> tempList = new List<string>();
-                for (int j = 0; j < 9; j++)
-                {
-                    tempList.Add(numbersList[i][j]);
-                }
-                tempNumbersList.Add(tempList);
-            }
+            NumbersListModel tempNumbersList = NumbersListModel.CopyList(numbersList);
 
             tempNumbersList[col][row] = number;
 
