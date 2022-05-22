@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Sudoku.Debug;
 using Sudoku.GameLogic;
 using Sudoku.Models;
 using Sudoku.Helpers;
@@ -461,8 +462,9 @@ namespace Sudoku.ViewModels
             GeneratorGameLogic generatorGameLogic = null;
 
             bool doRun = true;
+            bool unique = false;
 
-            while (doRun)
+            do
             {
                 numbersListValue = new NumbersListModel();
                 numbersListValue.InitializeList();
@@ -475,15 +477,15 @@ namespace Sudoku.ViewModels
 
                 if (difficulty == "Easy")
                 {
-                    generatorGameLogic.RemoveNumbers = 35;
+                    generatorGameLogic.RemoveNumbers = 40;
                 }
                 else if (difficulty == "Medium")
                 {
-                    generatorGameLogic.RemoveNumbers = 45;
+                    generatorGameLogic.RemoveNumbers = 48;
                 }
                 else if (difficulty == "Hard")
                 {
-                    generatorGameLogic.RemoveNumbers = 50;
+                    generatorGameLogic.RemoveNumbers = 57;
                 }
 
                 generatorGameLogic.NumbersList = NumbersListModel.CopyList(numbersListSolved);
@@ -493,7 +495,7 @@ namespace Sudoku.ViewModels
                 {
                     doRun = false;
                 }
-            }
+            } while (doRun && unique);
 
             generatorNumbers = new List<string>();
 

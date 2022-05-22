@@ -1562,10 +1562,7 @@
                 </Grid>
             </Viewbox>
             
-            
-
             <Grid
-                x:Name="SelectNumberGridView"
                 Panel.ZIndex="1000"
                 Margin="0, -420, 0, 0"
                 HorizontalAlignment="Center"
@@ -1658,7 +1655,6 @@
             </Grid>
             
             <Grid
-                x:Name="SelectMarkerGridView"
                 Panel.ZIndex="1000"
                 Margin="0, -420, 0, 0"
                 HorizontalAlignment="Center"
