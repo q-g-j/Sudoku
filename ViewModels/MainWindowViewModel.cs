@@ -41,11 +41,12 @@ namespace Sudoku.ViewModels
         }
         #endregion Constructor
 
+        #region Private variables
         private string currentButtonIndex = "";
-
         private List<string> generatorNumbers;
+        #endregion Private variables
 
-        #region Properties
+        #region Property values
         private NumbersListModel numbersListValue;
         private MarkersListModel markersListValue;
         private NumbersColorsListModel numbersColorsListValue;
@@ -56,6 +57,9 @@ namespace Sudoku.ViewModels
         private string selectMarkerVisibilityValue;
         private string selectDifficultyVisibilityValue;
         private string buttonValidateVisibilityValue;
+        #endregion Property values
+
+        #region Properties
 
         public IAsyncRelayCommand ButtonDifficultyCommand { get; }
         public IAsyncRelayCommand ButtonValidateCommand { get; }
