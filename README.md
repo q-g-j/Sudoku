@@ -8,4 +8,3 @@
 - complete mouse input
 - left mouse button: set number
 - right mouse button: set marker (up to 8 markers in one square)
-- New: only generates sudokus with a single solution
