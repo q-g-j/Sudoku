@@ -11,9 +11,11 @@ using Sudoku.Models;
 using Sudoku.Services;
 using Sudoku.Debug;
 using Sudoku.Helpers;
+using System.Windows.Input;
 
 namespace Sudoku.ViewModels
 {
+
     public class MainWindowViewModel :INotifyPropertyChanged
     {
         #region Constructor
@@ -22,11 +24,21 @@ namespace Sudoku.ViewModels
             selectNumberVisibilityValue = "Hidden";
             selectMarkerVisibilityValue = "Hidden";
             selectDifficultyVisibilityValue = "Hidden";
+            buttonDifficultyTextValue = "Neues Spiel";
 
-            MessengerService.OnMessageTransmittedTwoParams += OnMessageReceivedTwoParams;
-            MessengerService.OnMessageTransmittedThreeParams += OnMessageReceivedThreeParams;
+            ButtonDifficultyCommand = new RelayCommand(o => ButtonDifficultyClick());
+            ButtonValidateCommand = new RelayCommand(o => ButtonValidateClick());
+            ButtonDifficultyEasyCommand = new RelayCommand(o => ButtonDifficultyEasyClick());
+            ButtonDifficultyMediumCommand = new RelayCommand(o => ButtonDifficultyMediumClick());
+            ButtonDifficultyHardCommand = new RelayCommand(o => ButtonDifficultyHardClick());
+            ButtonSquareLeftCommand = new RelayCommand(o => ButtonSquareLeftClick(o));
+            ButtonSquareRightCommand = new RelayCommand(o => ButtonSquareRightClick(o));
+            ButtonSelectNumberCommand = new RelayCommand(o => ButtonSelectNumberClick(o));
+            ButtonSelectMarkerCommand = new RelayCommand(o => ButtonSelectMarkerClick(o));
         }
         #endregion Constructor
+
+        private string currentButtonIndex = "";
 
         private List<string> generatorNumbers;
 
@@ -34,12 +46,23 @@ namespace Sudoku.ViewModels
         private NumbersListModel numbersListValue;
         private MarkersListModel markersListValue;
         private NumbersColorsListModel numbersColorsListValue;
+        private string buttonDifficultyTextValue;
         private string labelValidateValue;
 
         private string selectNumberVisibilityValue;
         private string selectMarkerVisibilityValue;
         private string selectDifficultyVisibilityValue;
         private string buttonValidateVisibilityValue;
+
+        public ICommand ButtonDifficultyCommand { get; }
+        public ICommand ButtonValidateCommand { get; }
+        public ICommand ButtonDifficultyEasyCommand { get; }
+        public ICommand ButtonDifficultyMediumCommand { get; }
+        public ICommand ButtonDifficultyHardCommand { get; }
+        public ICommand ButtonSquareLeftCommand { get; }
+        public ICommand ButtonSquareRightCommand { get; }
+        public ICommand ButtonSelectNumberCommand { get; }
+        public ICommand ButtonSelectMarkerCommand { get; }
 
         public NumbersListModel NumbersList
         {
@@ -83,14 +106,142 @@ namespace Sudoku.ViewModels
             set { buttonValidateVisibilityValue = value; OnPropertyChanged(); }
         }
 
+        public string ButtonDifficultyText
+        {
+            get => buttonDifficultyTextValue;
+            set { buttonDifficultyTextValue = value; OnPropertyChanged(); }
+        }
         public string LabelValidate
         {
             get => labelValidateValue;
             set { labelValidateValue = value; OnPropertyChanged(); }
         }
+
+
         #endregion Properties
 
         #region Methods
+        private void ButtonDifficultyClick()
+        {
+            if (SelectDifficultyVisibility == "Hidden")
+            {
+                SelectDifficultyVisibility = "Visible";
+            }
+            else
+            {
+                SelectDifficultyVisibility = "Hidden";
+            }
+        }
+
+        private void ButtonValidateClick()
+        {
+            ValidateAll();
+        }
+
+        private void ButtonDifficultyEasyClick()
+        {
+            SelectDifficultyVisibility = "Hidden";
+            SelectNumberVisibility = "Hidden";
+            SelectMarkerVisibility = "Hidden";
+            NewGame("Easy");
+        }
+
+        private void ButtonDifficultyMediumClick()
+        {
+            SelectDifficultyVisibility = "Hidden";
+            SelectNumberVisibility = "Hidden";
+            SelectMarkerVisibility = "Hidden";
+            NewGame("Medium");
+        }
+
+        private void ButtonDifficultyHardClick()
+        {
+            SelectDifficultyVisibility = "Hidden";
+            SelectNumberVisibility = "Hidden";
+            SelectMarkerVisibility = "Hidden";
+            NewGame("Hard");
+        }
+
+        private void ButtonSquareLeftClick(object o)
+        {
+            var tag = (string)o;
+            currentButtonIndex = tag;
+
+            if (SelectDifficultyVisibility == "Visible")
+            {
+                SelectDifficultyVisibility = "Hidden";
+                return;
+            }
+
+            LabelValidate = "";
+
+            if (generatorNumbers == null)
+            {
+                generatorNumbers = new List<string>();
+            }
+
+            if ((SelectNumberVisibility == "Visible") || (SelectMarkerVisibility == "Visible"))
+            {
+                SelectMarkerVisibility = "Hidden";
+                SelectNumberVisibility = "Hidden";
+            }
+            else
+            {
+                if (!generatorNumbers.Contains(tag))
+                {
+                    SelectNumberVisibility = "Visible";
+                }
+            }
+        }
+
+        private void ButtonSquareRightClick(object o)
+        {
+            var tag = (string)o;
+            currentButtonIndex = tag;
+
+            if (SelectDifficultyVisibility == "Visible")
+            {
+                SelectDifficultyVisibility = "Hidden";
+                return;
+            }
+
+            LabelValidate = "";
+
+            if (generatorNumbers == null)
+            {
+                generatorNumbers = new List<string>();
+            }
+
+            if ((SelectNumberVisibility == "Visible") || (SelectMarkerVisibility == "Visible"))
+            {
+                SelectMarkerVisibility = "Hidden";
+                SelectNumberVisibility = "Hidden";
+            }
+            else
+            {
+                if (!generatorNumbers.Contains(tag))
+                {
+                    SelectMarkerVisibility = "Visible";
+                }
+            }
+        }
+
+        private void ButtonSelectNumberClick(object o)
+        {
+            SelectNumberVisibility = "Hidden";
+            var tag = (string)o;
+            string param = currentButtonIndex + tag;
+            ChangeNumber(param);
+        }
+
+        private void ButtonSelectMarkerClick(object o)
+        {
+            SelectMarkerVisibility = "Hidden";
+            var tag = (string)o;
+            string param = currentButtonIndex + tag;
+            ChangeMarker(param);
+        }
+
         private void InititalizeValues()
         {
             if (numbersListValue == null)
@@ -312,14 +463,9 @@ namespace Sudoku.ViewModels
             }
         }
 
-        private void SelectDifficulty()
-        {
-            SelectDifficultyVisibility = "Visible";
-        }
-
         private void NewGame(string difficulty)
         {
-            GeneratorGameLogic generatorGameLogic;
+            GeneratorGameLogic generatorGameLogic = null;
 
             bool doRun = true;
 
@@ -354,40 +500,43 @@ namespace Sudoku.ViewModels
                 {
                     doRun = false;
                 }
+            }
 
-                generatorNumbers = new List<string>();
+            generatorNumbers = new List<string>();
 
-                for (int col = 0; col < 9; col++)
+            for (int col = 0; col < 9; col++)
+            {
+                for (int row = 0; row < 9; row++)
                 {
-                    for (int row = 0; row < 9; row++)
+                    if (generatorGameLogic.NumbersList[col][row] != "")
                     {
-                        if (generatorGameLogic.NumbersList[col][row] != "")
-                        {
-                            string coords = col.ToString();
-                            coords += row.ToString();
-                            generatorNumbers.Add(coords);
-                        }
+                        string coords = col.ToString();
+                        coords += row.ToString();
+                        generatorNumbers.Add(coords);
                     }
                 }
-
-                numbersColorsListValue = new NumbersColorsListModel();
-                numbersColorsListValue.InitializeList();
-                foreach (string coords in generatorNumbers)
-                {
-                    int col = int.Parse(coords[0].ToString());
-                    int row = int.Parse(coords[1].ToString());
-
-                    numbersColorsListValue[col][row] = "Black";
-                }
-                NumbersColorsList = numbersColorsListValue;
-
-                LabelValidate = "";
-
-                NumbersList = generatorGameLogic.NumbersList;
-
-                markersListValue = new MarkersListModel();
-                markersListValue.InitializeList();
             }
+
+            numbersColorsListValue = new NumbersColorsListModel();
+            numbersColorsListValue.InitializeList();
+            foreach (string coords in generatorNumbers)
+            {
+                int col = int.Parse(coords[0].ToString());
+                int row = int.Parse(coords[1].ToString());
+
+                numbersColorsListValue[col][row] = "Black";
+            }
+            NumbersColorsList = numbersColorsListValue;
+
+            LabelValidate = "";
+
+            NumbersList = generatorGameLogic.NumbersList;
+
+            markersListValue = new MarkersListModel();
+            markersListValue.InitializeList();
+            MarkersList = markersListValue;
+
+            ButtonDifficultyText = "Neues Spiel";
         }
 
         private void ValidateAll()
@@ -411,92 +560,6 @@ namespace Sudoku.ViewModels
                 }
             }
             LabelValidate = "Keine Konflikte!";
-        }
-
-        protected void OnMessageReceivedTwoParams(string type, string message)
-        {
-            if (type == "SelectDifficultyVisibility")
-            {
-                if (SelectDifficultyVisibility == "Visible")
-                {
-                    SelectDifficultyVisibility = "Hidden";
-                }
-                else
-                {
-                    SelectDifficulty();
-                }
-            }
-            else if (type == "Validate")
-            {
-                SelectDifficultyVisibility = "Hidden";
-                SelectNumberVisibility = "Hidden";
-                SelectMarkerVisibility = "Hidden";
-                ValidateAll();
-            }
-            else if (type == "NewGame")
-            {
-                SelectDifficultyVisibility = "Hidden";
-                SelectNumberVisibility = "Hidden";
-                SelectMarkerVisibility = "Hidden";
-                NewGame(message);
-            }
-            else if (type == "ChangeNumber")
-            {
-                ChangeNumber(message);
-            }
-            else if (type == "ChangeMarker")
-            {
-                ChangeMarker(message);
-            }
-        }
-
-        protected void OnMessageReceivedThreeParams(string type, string message, string button)
-        {
-            if (SelectDifficultyVisibility == "Visible")
-            {
-                SelectDifficultyVisibility = "Hidden";
-                return;
-            }
-
-            LabelValidate = "";
-
-            if (generatorNumbers == null)
-            {
-                generatorNumbers = new List<string>();
-            }
-
-            if (type == "SelectNumberGridVisibility")
-            {
-                if ((SelectNumberVisibility == "Visible" && message == "Visible")
-                    || (SelectMarkerVisibility == "Visible" && message == "Visible"))
-                {
-                    SelectMarkerVisibility = "Hidden";
-                    SelectNumberVisibility = "Hidden";
-                }
-                else
-                {
-                    if (!generatorNumbers.Contains(button))
-                    {
-                        SelectNumberVisibility = message;
-                    }
-                }
-            }
-            else if (type == "SelectMarkerGridVisibility")
-            {
-                if ((SelectNumberVisibility == "Visible" && message == "Visible")
-                    || (SelectMarkerVisibility == "Visible" && message == "Visible"))
-                {
-                    SelectMarkerVisibility = "Hidden";
-                    SelectNumberVisibility = "Hidden";
-                }
-                else
-                {
-                    if (!generatorNumbers.Contains(button))
-                    {
-                        SelectMarkerVisibility = message;
-                    }
-                }
-            }
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)

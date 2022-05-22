@@ -108,7 +108,11 @@
 
                     <!-- Column 0, Row 0 -->
                     <local:NumbersOuterGridView Grid.Column="1" Grid.Row="1">
-                        <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="00" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="00"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="00"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -121,7 +125,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="10" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="10"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="10"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -134,7 +142,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="20" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="20"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="20"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -147,7 +159,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[2][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="01" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="01"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="01"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -160,7 +176,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="11" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="11"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="11"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -173,7 +193,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="21" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="21"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="21"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -186,7 +210,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[2][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="02" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="02"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="02"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -199,7 +227,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][2][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="12" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="12"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="12"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -212,7 +244,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][2][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="22" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="22"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="22"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -233,7 +269,11 @@
 
                     <!-- Column 1, Row 0 -->
                     <local:NumbersOuterGridView Grid.Column="3" Grid.Row="1">
-                        <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="30" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="30"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="30"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -246,7 +286,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="40" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="40"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="40"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -259,7 +303,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="50" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="50"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="50"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -272,7 +320,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[5][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="31" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="31"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="31"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -285,7 +337,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="41" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="41"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="41"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -298,7 +354,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="51" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="51"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="51"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -311,7 +371,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[5][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="32" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="32"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="32"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -324,7 +388,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][2][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="42" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="42"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="42"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -337,7 +405,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][2][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="52" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="52"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="52"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -358,7 +430,11 @@
 
                     <!-- Column 2, Row 0 -->
                     <local:NumbersOuterGridView Grid.Column="5" Grid.Row="1">
-                        <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="60" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="60"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="60"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -371,7 +447,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="70" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="70"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="70"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -384,7 +464,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="80" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="80"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="80"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][0][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][0][1][0]}" Style="{StaticResource Marker}"/>
@@ -397,7 +481,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[8][0][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="61" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="61"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="61"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -410,7 +498,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="71" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="71"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="71"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -423,7 +515,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="81" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="81"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="81"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][1][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][1][1][0]}" Style="{StaticResource Marker}"/>
@@ -436,7 +532,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[8][1][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="62" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="62"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="62"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -449,7 +549,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][2][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="72" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="72"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="72"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -462,7 +566,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][2][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="82" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="82"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="82"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][2][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][2][1][0]}" Style="{StaticResource Marker}"/>
@@ -483,7 +591,11 @@
 
                     <!-- Column 0, Row 1 -->
                     <local:NumbersOuterGridView Grid.Column="1" Grid.Row="3">
-                        <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="03" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="03"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="03"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -496,7 +608,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="13" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="13"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="13"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -509,7 +625,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="23" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="23"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="23"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -522,7 +642,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[2][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="04" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="04"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="04"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -535,7 +659,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="14" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="14"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="14"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -548,7 +676,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="24" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="24"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="24"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -561,7 +693,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[2][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="05" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="05"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="05"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -574,7 +710,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][5][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="15" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="15"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="15"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -587,7 +727,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][5][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="25" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="25"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="25"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -608,7 +752,11 @@
 
                     <!-- Column 1, Row 1 -->
                     <local:NumbersOuterGridView Grid.Column="3" Grid.Row="3">
-                        <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="33" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="33"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="33"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -621,7 +769,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="43" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="43"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="43"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -634,7 +786,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="53" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="53"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="53"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -647,7 +803,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[5][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="34" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="34"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="34"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -660,7 +820,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="44" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="44"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="44"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -673,7 +837,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="54" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="54"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="54"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -686,7 +854,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[5][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="35" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="35"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="35"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -699,7 +871,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][5][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="45" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="45"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="45"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -712,7 +888,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][5][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="55" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="55"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="55"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -733,7 +913,11 @@
 
                     <!-- Column 2, Row 1 -->
                     <local:NumbersOuterGridView Grid.Column="5" Grid.Row="3">
-                        <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="63" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="63"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="63"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -746,7 +930,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="73" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="73"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="73"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -759,7 +947,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="83" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="83"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="83"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][3][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][3][1][0]}" Style="{StaticResource Marker}"/>
@@ -772,7 +964,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[8][3][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="64" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="64"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="64"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -785,7 +981,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="74" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="74"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="74"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -798,7 +998,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="84" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="84"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="84"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][4][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][4][1][0]}" Style="{StaticResource Marker}"/>
@@ -811,7 +1015,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[8][4][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="65" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="65"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="65"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -824,7 +1032,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][5][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="75" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="75"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="75"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -837,7 +1049,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][5][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="85" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="85"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="85"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][5][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][5][1][0]}" Style="{StaticResource Marker}"/>
@@ -858,7 +1074,11 @@
 
                     <!-- Column 0, Row 2 -->
                     <local:NumbersOuterGridView Grid.Column="1" Grid.Row="5">
-                        <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="06" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="06"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="06"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -871,7 +1091,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="16" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="16"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="16"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -884,7 +1108,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="26" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="26"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="26"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -897,7 +1125,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[2][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="07" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="07"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="07"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -910,7 +1142,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="17" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="17"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="17"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -923,7 +1159,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="27" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="27"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="27"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -936,7 +1176,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[2][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="08" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="08"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="08"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[0][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[0][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -949,7 +1193,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[0][8][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="18" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="18"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="18"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[1][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[1][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -962,7 +1210,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[1][8][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="28" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="28"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="28"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[2][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[2][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -983,7 +1235,11 @@
 
                     <!-- Column 1, Row 2 -->
                     <local:NumbersOuterGridView Grid.Column="3" Grid.Row="5">
-                        <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="36" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="36"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="36"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -996,7 +1252,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="46" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="46"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="46"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -1009,7 +1269,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="56" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="56"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="56"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -1022,7 +1286,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[5][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="37" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="37"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="37"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -1035,7 +1303,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="47" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="47"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="47"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -1048,7 +1320,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="57" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="57"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="57"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -1061,7 +1337,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[5][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="38" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="38"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="38"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[3][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[3][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -1074,7 +1354,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[3][8][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="48" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="48"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="48"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[4][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[4][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -1087,7 +1371,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[4][8][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="58" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="58"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="58"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[5][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[5][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -1108,7 +1396,11 @@
 
                     <!-- Column 2, Row 2 -->
                     <local:NumbersOuterGridView Grid.Column="5" Grid.Row="5">
-                        <Button Grid.Column="0" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="66" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="66"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="66"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -1121,7 +1413,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="76" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="76"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="76"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -1134,7 +1430,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="0" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="86" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="86"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="86"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][6][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][6][1][0]}" Style="{StaticResource Marker}"/>
@@ -1147,7 +1447,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[8][6][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="67" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="67"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="67"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -1160,7 +1464,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="77" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="77"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="77"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -1173,7 +1481,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="2" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="87" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="2" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="87"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="87"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][7][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][7][1][0]}" Style="{StaticResource Marker}"/>
@@ -1186,7 +1498,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[8][7][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="68" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="0" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="68"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="68"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[6][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[6][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -1199,7 +1515,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[6][8][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="2" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="78" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="78"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="78"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[7][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[7][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -1212,7 +1532,11 @@
                                 <Label Grid.Column="2" Grid.Row="2" Content="{Binding MarkersList[7][8][2][2]}" Style="{StaticResource Marker}"/>
                             </local:NumbersInnerGridView>
                         </Button>
-                        <Button Grid.Column="4" Grid.Row="4" PreviewMouseDown="MouseButtonDown" PreviewMouseUp="MouseButtonUp" Tag="88" Style="{StaticResource NumberButton}">
+                        <Button Grid.Column="4" Grid.Row="4" Style="{StaticResource NumberButton}">
+                            <Button.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding ButtonSquareLeftCommand}" CommandParameter="88"/>
+                                <MouseBinding MouseAction="RightClick" Command="{Binding ButtonSquareRightCommand}" CommandParameter="88"/>
+                            </Button.InputBindings>
                             <local:NumbersInnerGridView>
                                 <Label Grid.Column="0" Grid.Row="0" Content="{Binding MarkersList[8][8][0][0]}" Style="{StaticResource Marker}"/>
                                 <Label Grid.Column="1" Grid.Row="0" Content="{Binding MarkersList[8][8][1][0]}" Style="{StaticResource Marker}"/>
@@ -1237,25 +1561,199 @@
                     <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" Grid.RowSpan="7" Style="{StaticResource BorderOutermost}"/>
                 </Grid>
             </Viewbox>
+            
+            
 
-            <local:SelectNumberGridView
+            <Grid
                 x:Name="SelectNumberGridView"
                 Panel.ZIndex="1000"
                 Margin="0, -420, 0, 0"
                 HorizontalAlignment="Center"
                 Visibility="{Binding SelectNumberVisibility}">
-            </local:SelectNumberGridView>
-            <local:SelectMarkerGridView
+                <Grid.Resources>
+                    <Style x:Key="Title" TargetType="Label">
+                        <Setter Property="Margin" Value="0"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="FontFamily" Value="{StaticResource MainBold}"/>
+                        <Setter Property="FontSize" Value="30"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Background" Value="White"/>
+                        <!--<Setter Property="FontFamily" Value="/Assets/Fonts/selawk.ttf#Selawik"/>-->
+                    </Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Margin" Value="0"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Width" Value="90"/>
+                        <Setter Property="Height" Value="90"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        <Setter Property="VerticalAlignment" Value="Stretch"/>
+                        <Setter Property="FontSize" Value="40"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <!--<Setter Property="FontFamily" Value="/Assets/Fonts/selawk.ttf#Selawik"/>-->
+                    </Style>
+                    <Style x:Key="BorderOuter" TargetType="Border">
+                        <Setter Property="BorderBrush" Value="Black"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="CornerRadius" Value="0"/>
+                    </Style>
+                    <Style x:Key="LineInner" TargetType="Line">
+                        <Setter Property="Stroke" Value="#a6a6a6"/>
+                        <Setter Property="StrokeThickness" Value="1"/>
+                        <Setter Property="Stretch" Value="Fill"/>
+                    </Style>
+                </Grid.Resources>
+                <StackPanel>
+                    <Label Content="Zahl wählen" Style="{StaticResource Title}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Button Grid.Column="1" Grid.Row="1" Content="1" Tag="1" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="1"/>
+                        <Button Grid.Column="3" Grid.Row="1" Content="2" Tag="2" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="2"/>
+                        <Button Grid.Column="5" Grid.Row="1" Content="3" Tag="3" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="3"/>
+                        <Button Grid.Column="7" Grid.Row="1" Content="4" Tag="4" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="4"/>
+                        <Button Grid.Column="9" Grid.Row="1" Content="5" Tag="5" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="5"/>
+                        <Button Grid.Column="1" Grid.Row="3" Content="6" Tag="6" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="6"/>
+                        <Button Grid.Column="3" Grid.Row="3" Content="7" Tag="7" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="7"/>
+                        <Button Grid.Column="5" Grid.Row="3" Content="8" Tag="8" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="8"/>
+                        <Button Grid.Column="7" Grid.Row="3" Content="9" Tag="9" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="9"/>
+                        <Button Grid.Column="9" Grid.Row="3" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="X">
+                            <Image Source="{StaticResource ImageWasteBin}" Margin="20"/>
+                        </Button>
+                        <Line Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="11" X1="0" Y1="0" X2="1" Y2="0" Style="{StaticResource LineInner}"/>
+                        <Line Grid.Column="2" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
+                        <Line Grid.Column="4" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
+                        <Line Grid.Column="6" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
+                        <Line Grid.Column="8" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
+                        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="11" Grid.RowSpan="5" Style="{StaticResource BorderOuter}"/>
+                        <Grid.Effect>
+                            <DropShadowEffect/>
+                        </Grid.Effect>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+            
+            <Grid
                 x:Name="SelectMarkerGridView"
                 Panel.ZIndex="1000"
                 Margin="0, -420, 0, 0"
                 HorizontalAlignment="Center"
                 Visibility="{Binding SelectMarkerVisibility}">
-            </local:SelectMarkerGridView>            
+                <Grid.Resources>
+                    <Style x:Key="Title" TargetType="Label">
+                        <Setter Property="Margin" Value="0"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="FontFamily" Value="{StaticResource MainBold}"/>
+                        <Setter Property="FontSize" Value="30"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Background" Value="White"/>
+                        <!--<Setter Property="FontFamily" Value="/Assets/Fonts/selawk.ttf#Selawik"/>-->
+                    </Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Margin" Value="0"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Width" Value="90"/>
+                        <Setter Property="Height" Value="90"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        <Setter Property="VerticalAlignment" Value="Stretch"/>
+                        <Setter Property="FontSize" Value="40"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <!--<Setter Property="FontFamily" Value="/Assets/Fonts/selawk.ttf#Selawik"/>-->
+                    </Style>
+                    <Style x:Key="BorderOuter" TargetType="Border">
+                        <Setter Property="BorderBrush" Value="Black"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="CornerRadius" Value="0"/>
+                    </Style>
+                    <Style x:Key="LineInner" TargetType="Line">
+                        <Setter Property="Stroke" Value="#a6a6a6"/>
+                        <Setter Property="StrokeThickness" Value="1"/>
+                        <Setter Property="Stretch" Value="Fill"/>
+                    </Style>
+                </Grid.Resources>
+                <StackPanel>
+                    <Label Content="Marker setzen" Style="{StaticResource Title}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Button Grid.Column="1" Grid.Row="1" Content="1" Tag="1" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="1"/>
+                        <Button Grid.Column="3" Grid.Row="1" Content="2" Tag="2" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="2"/>
+                        <Button Grid.Column="5" Grid.Row="1" Content="3" Tag="3" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="3"/>
+                        <Button Grid.Column="7" Grid.Row="1" Content="4" Tag="4" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="4"/>
+                        <Button Grid.Column="9" Grid.Row="1" Content="5" Tag="5" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="5"/>
+                        <Button Grid.Column="1" Grid.Row="3" Content="6" Tag="6" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="6"/>
+                        <Button Grid.Column="3" Grid.Row="3" Content="7" Tag="7" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="7"/>
+                        <Button Grid.Column="5" Grid.Row="3" Content="8" Tag="8" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="8"/>
+                        <Button Grid.Column="7" Grid.Row="3" Content="9" Tag="9" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="9"/>
+                        <Button Grid.Column="9" Grid.Row="3" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="X">
+                            <Image Source="{StaticResource ImageWasteBin}" Margin="20"/>
+                        </Button>
+                        <Line Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="11" X1="0" Y1="0" X2="1" Y2="0" Style="{StaticResource LineInner}"/>
+                        <Line Grid.Column="2" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
+                        <Line Grid.Column="4" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
+                        <Line Grid.Column="6" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
+                        <Line Grid.Column="8" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
+                        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="11" Grid.RowSpan="5" Style="{StaticResource BorderOuter}"/>
+                        <Grid.Effect>
+                            <DropShadowEffect/>
+                        </Grid.Effect>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+            
             <Button
+                Command="{Binding ButtonDifficultyCommand}"
                 Margin="20, 20, 20, 10"
-                Click="ButtonDifficulty"
-                Content="Neues Spiel"
+                Content="{Binding ButtonDifficultyText}"
                 Style="{StaticResource GameButton}">
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -1264,8 +1762,8 @@
                 </Button.Resources>
             </Button>
             <Button
+                Command="{Binding ButtonValidateCommand}"
                 Margin="20, 0, 20, 10"
-                Click="ButtonValidate"
                 Content="Überprüfen"
                 Style="{StaticResource GameButton}"
                 Visibility="{Binding ButtonValidateVisibility}">
@@ -1283,11 +1781,62 @@
                 FontSize="22"
                 HorizontalContentAlignment="Center">
             </Label>
-            <local:SelectDifficultyView
+            <StackPanel
                 HorizontalAlignment="Center"
                 Margin="20, -330, 20, 0"
                 Visibility="{Binding SelectDifficultyVisibility}">
-            </local:SelectDifficultyView>
+                <StackPanel.Resources>
+                    <Style x:Key="GameButton" TargetType="Button">
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Width" Value="400"/>
+                        <Setter Property="Height" Value="40"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="Background" Value="#eda374"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="FontFamily" Value="{StaticResource MainSemiBold}"/>
+                        <Setter Property="FontSize" Value="22"/>
+                    </Style>
+                </StackPanel.Resources>
+                <Button
+                    Command="{Binding ButtonDifficultyEasyCommand}"
+                    Margin="0, 0, 0, 10"
+                    Content="Leicht"
+                    Style="{StaticResource GameButton}">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="Border.CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button
+                    Command="{Binding ButtonDifficultyMediumCommand}"
+                    Margin="0, 0, 0, 10"
+                    Content="Mittel"
+                    Style="{StaticResource GameButton}">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="Border.CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button
+                    Margin="0, 0, 0, 0"
+                    Content="Schwierig"
+                    Style="{StaticResource GameButton}">
+                    <Button.InputBindings>
+                        <MouseBinding
+                            MouseAction="LeftClick"
+                            Command="{Binding ButtonDifficultyHardCommand}">
+                        </MouseBinding>
+                    </Button.InputBindings>
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="Border.CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
         </StackPanel>
     </Viewbox>
 </Window>

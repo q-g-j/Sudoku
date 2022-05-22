@@ -23,52 +23,5 @@ namespace Sudoku.Views
         {
             InitializeComponent();
         }
-
-        private string currentButtonDown;
-
-        private void MouseButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Button button = (Button)sender;
-            currentButtonDown = button.Tag.ToString();
-            e.Handled = true;
-        }
-
-        private void MouseButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            Button button = (Button)sender;
-            var buttonIndex = button.Tag.ToString();
-
-            if (e.ChangedButton == MouseButton.Left && currentButtonDown == buttonIndex)
-            {
-                SelectNumberGridView.ButtonIndex = buttonIndex;
-                MessengerService.BroadCastWithButton("SelectNumberGridVisibility", "Visible", buttonIndex);
-                e.Handled = true;
-            }
-
-            else if (e.ChangedButton == MouseButton.Right && currentButtonDown == buttonIndex)
-            {
-                SelectMarkerGridView.ButtonIndex = buttonIndex;
-                MessengerService.BroadCastWithButton("SelectMarkerGridVisibility", "Visible", buttonIndex);
-                e.Handled = true;
-            }
-        }
-
-        private void ButtonDifficulty(object sender, RoutedEventArgs e)
-        {
-            MessengerService.BroadCast("SelectDifficultyVisibility", "Visible");
-            e.Handled = true;
-        }
-
-        private void ButtonSolve(object sender, RoutedEventArgs e)
-        {
-            MessengerService.BroadCast("Solve", "");
-            e.Handled = true;
-        }
-
-        private void ButtonValidate(object sender, RoutedEventArgs e)
-        {
-            MessengerService.BroadCast("Validate", "");
-            e.Handled = true;
-        }
     }
 }
