@@ -1,4 +1,10 @@
-﻿
+﻿// Modified version of class InvokeCommandAction from Microsoft.Xaml.Behaviors 
+// to support passing both an event and a parameter from a view to the viewmodel.
+//
+// Snippet taken from:
+// https://stackoverflow.com/questions/66465149/pass-extra-argument-to-command-with-invokecommandaction
+
+
 
 // Copyright (c) Microsoft. All rights reserved. 
 // Licensed under the MIT license. See LICENSE file in the project root for full license information. 
