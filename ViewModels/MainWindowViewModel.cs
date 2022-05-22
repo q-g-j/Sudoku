@@ -6,6 +6,9 @@ using Sudoku.GameLogic;
 using Sudoku.Models;
 using Sudoku.Helpers;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
+using System.Threading.Tasks;
+using System;
 
 namespace Sudoku.ViewModels
 {
@@ -20,15 +23,15 @@ namespace Sudoku.ViewModels
             selectDifficultyVisibilityValue = "Hidden";
             buttonDifficultyTextValue = "Neues Spiel";
 
-            ButtonDifficultyCommand = new RelayCommand(o => ButtonDifficultyClick());
-            ButtonValidateCommand = new RelayCommand(o => ButtonValidateClick());
-            ButtonDifficultyEasyCommand = new RelayCommand(o => ButtonDifficultyEasyClick());
-            ButtonDifficultyMediumCommand = new RelayCommand(o => ButtonDifficultyMediumClick());
-            ButtonDifficultyHardCommand = new RelayCommand(o => ButtonDifficultyHardClick());
-            ButtonSquareLeftCommand = new RelayCommand(o => ButtonSquareLeftClick(o));
-            ButtonSquareRightCommand = new RelayCommand(o => ButtonSquareRightClick(o));
-            ButtonSelectNumberCommand = new RelayCommand(o => ButtonSelectNumberClick(o));
-            ButtonSelectMarkerCommand = new RelayCommand(o => ButtonSelectMarkerClick(o));
+            ButtonDifficultyCommand = new AsyncRelayCommand(ButtonDifficultyClick);
+            ButtonValidateCommand = new AsyncRelayCommand(ButtonValidateClick);
+            ButtonDifficultyEasyCommand = new AsyncRelayCommand(ButtonDifficultyEasyClick);
+            ButtonDifficultyMediumCommand = new AsyncRelayCommand(ButtonDifficultyMediumClick);
+            ButtonDifficultyHardCommand = new AsyncRelayCommand(ButtonDifficultyHardClick);
+            ButtonSquareLeftCommand = new AsyncRelayCommand<object>(o => ButtonSquareLeftClick(o));
+            ButtonSquareRightCommand = new AsyncRelayCommand<object>(o => ButtonSquareRightClick(o));
+            ButtonSelectNumberCommand = new AsyncRelayCommand<object>(o => ButtonSelectNumberClick(o));
+            ButtonSelectMarkerCommand = new AsyncRelayCommand<object>(o => ButtonSelectMarkerClick(o));
         }
         #endregion Constructor
 
@@ -48,15 +51,15 @@ namespace Sudoku.ViewModels
         private string selectDifficultyVisibilityValue;
         private string buttonValidateVisibilityValue;
 
-        public ICommand ButtonDifficultyCommand { get; }
-        public ICommand ButtonValidateCommand { get; }
-        public ICommand ButtonDifficultyEasyCommand { get; }
-        public ICommand ButtonDifficultyMediumCommand { get; }
-        public ICommand ButtonDifficultyHardCommand { get; }
-        public ICommand ButtonSquareLeftCommand { get; }
-        public ICommand ButtonSquareRightCommand { get; }
-        public ICommand ButtonSelectNumberCommand { get; }
-        public ICommand ButtonSelectMarkerCommand { get; }
+        public IAsyncRelayCommand ButtonDifficultyCommand { get; }
+        public IAsyncRelayCommand ButtonValidateCommand { get; }
+        public IAsyncRelayCommand ButtonDifficultyEasyCommand { get; }
+        public IAsyncRelayCommand ButtonDifficultyMediumCommand { get; }
+        public IAsyncRelayCommand ButtonDifficultyHardCommand { get; }
+        public IAsyncRelayCommand ButtonSquareLeftCommand { get; }
+        public IAsyncRelayCommand ButtonSquareRightCommand { get; }
+        public IAsyncRelayCommand ButtonSelectNumberCommand { get; }
+        public IAsyncRelayCommand ButtonSelectMarkerCommand { get; }
 
         public NumbersListModel NumbersList
         {
@@ -115,125 +118,150 @@ namespace Sudoku.ViewModels
         #endregion Properties
 
         #region Methods
-        private void ButtonDifficultyClick()
+        private async Task ButtonDifficultyClick()
         {
-            if (SelectDifficultyVisibility == "Hidden")
-            {
-                SelectDifficultyVisibility = "Visible";
-            }
-            else
-            {
-                SelectDifficultyVisibility = "Hidden";
-            }
+            await Task.Run(() => {
+                if (SelectDifficultyVisibility == "Hidden")
+                {
+                    SelectDifficultyVisibility = "Visible";
+                }
+                else
+                {
+                    SelectDifficultyVisibility = "Hidden";
+                }
+            });
         }
 
-        private void ButtonValidateClick()
+        private async Task ButtonValidateClick()
         {
-            ValidateAll();
+            await Task.Run(() =>
+            {
+                ValidateAll();
+            });
         }
 
-        private void ButtonDifficultyEasyClick()
+        private async Task ButtonDifficultyEasyClick()
         {
+            await Task.Run(() => {
             SelectDifficultyVisibility = "Hidden";
             SelectNumberVisibility = "Hidden";
             SelectMarkerVisibility = "Hidden";
             NewGame("Easy");
+            });
         }
 
-        private void ButtonDifficultyMediumClick()
+        private async Task ButtonDifficultyMediumClick()
         {
-            SelectDifficultyVisibility = "Hidden";
-            SelectNumberVisibility = "Hidden";
-            SelectMarkerVisibility = "Hidden";
-            NewGame("Medium");
-        }
-
-        private void ButtonDifficultyHardClick()
-        {
-            SelectDifficultyVisibility = "Hidden";
-            SelectNumberVisibility = "Hidden";
-            SelectMarkerVisibility = "Hidden";
-            NewGame("Hard");
-        }
-
-        private void ButtonSquareLeftClick(object o)
-        {
-            var tag = (string)o;
-            currentButtonIndex = tag;
-
-            if (SelectDifficultyVisibility == "Visible")
+            await Task.Run(() =>
             {
                 SelectDifficultyVisibility = "Hidden";
-                return;
-            }
-
-            LabelValidate = "";
-
-            if (generatorNumbers == null)
-            {
-                generatorNumbers = new List<string>();
-            }
-
-            if ((SelectNumberVisibility == "Visible") || (SelectMarkerVisibility == "Visible"))
-            {
-                SelectMarkerVisibility = "Hidden";
                 SelectNumberVisibility = "Hidden";
-            }
-            else
-            {
-                if (!generatorNumbers.Contains(tag))
-                {
-                    SelectNumberVisibility = "Visible";
-                }
-            }
+                SelectMarkerVisibility = "Hidden";
+                NewGame("Medium");
+            });
         }
 
-        private void ButtonSquareRightClick(object o)
+        private async Task ButtonDifficultyHardClick()
         {
-            var tag = (string)o;
-            currentButtonIndex = tag;
-
-            if (SelectDifficultyVisibility == "Visible")
+            await Task.Run(() =>
             {
                 SelectDifficultyVisibility = "Hidden";
-                return;
-            }
+                SelectNumberVisibility = "Hidden";
+                SelectMarkerVisibility = "Hidden";
+                NewGame("Hard");
+            });
+        }
 
-            LabelValidate = "";
-
-            if (generatorNumbers == null)
+        private async Task ButtonSquareLeftClick(object o)
+        {
+            await Task.Run(() =>
             {
-                generatorNumbers = new List<string>();
-            }
+                var tag = (string)o;
+                currentButtonIndex = tag;
 
-            if ((SelectNumberVisibility == "Visible") || (SelectMarkerVisibility == "Visible"))
+                if (SelectDifficultyVisibility == "Visible")
+                {
+                    SelectDifficultyVisibility = "Hidden";
+                    return;
+                }
+
+                LabelValidate = "";
+
+                if (generatorNumbers == null)
+                {
+                    generatorNumbers = new List<string>();
+                }
+
+                if ((SelectNumberVisibility == "Visible") || (SelectMarkerVisibility == "Visible"))
+                {
+                    SelectMarkerVisibility = "Hidden";
+                    SelectNumberVisibility = "Hidden";
+                }
+                else
+                {
+                    if (!generatorNumbers.Contains(tag))
+                    {
+                        SelectNumberVisibility = "Visible";
+                    }
+                }
+            });
+        }
+
+        private async Task ButtonSquareRightClick(object o)
+        {
+            await Task.Run(() =>
+            {
+                var tag = (string)o;
+                currentButtonIndex = tag;
+
+                if (SelectDifficultyVisibility == "Visible")
+                {
+                    SelectDifficultyVisibility = "Hidden";
+                    return;
+                }
+
+                LabelValidate = "";
+
+                if (generatorNumbers == null)
+                {
+                    generatorNumbers = new List<string>();
+                }
+
+                if ((SelectNumberVisibility == "Visible") || (SelectMarkerVisibility == "Visible"))
+                {
+                    SelectMarkerVisibility = "Hidden";
+                    SelectNumberVisibility = "Hidden";
+                }
+                else
+                {
+                    if (!generatorNumbers.Contains(tag))
+                    {
+                        SelectMarkerVisibility = "Visible";
+                    }
+                }
+            });
+        }
+
+        private async Task ButtonSelectNumberClick(object o)
+        {
+            await Task.Run(() =>
+            {
+                SelectNumberVisibility = "Hidden";
+                var tag = (string)o;
+                string param = currentButtonIndex + tag;
+                ChangeNumber(param);
+            });
+        }
+
+        private async Task ButtonSelectMarkerClick(object o)
+        {
+            await Task.Run(() =>
             {
                 SelectMarkerVisibility = "Hidden";
-                SelectNumberVisibility = "Hidden";
-            }
-            else
-            {
-                if (!generatorNumbers.Contains(tag))
-                {
-                    SelectMarkerVisibility = "Visible";
-                }
-            }
-        }
-
-        private void ButtonSelectNumberClick(object o)
-        {
-            SelectNumberVisibility = "Hidden";
-            var tag = (string)o;
-            string param = currentButtonIndex + tag;
-            ChangeNumber(param);
-        }
-
-        private void ButtonSelectMarkerClick(object o)
-        {
-            SelectMarkerVisibility = "Hidden";
-            var tag = (string)o;
-            string param = currentButtonIndex + tag;
-            ChangeMarker(param);
+                var tag = (string)o;
+                string param = currentButtonIndex + tag;
+                ChangeMarker(param);
+            });
         }
 
         private void InititalizeValues()
@@ -459,7 +487,7 @@ namespace Sudoku.ViewModels
 
         private void NewGame(string difficulty)
         {
-            GeneratorGameLogic generatorGameLogic = null;
+            GeneratorGameLogic generatorGameLogic;
 
             bool doRun = true;
             bool unique = false;
