@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>8F7E550608CF71F95BE500F0D4E14AC442178E37</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>4950280B7311DBFEF5C486E661D4345791288686</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>Sudoku_TemporaryKey.pfx</ManifestKeyFile>
@@ -60,7 +60,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommunityToolkit.Mvvm, Version=7.1.0.0, Culture=neutral, PublicKeyToken=4aff67a105548ee2, processorArchitecture=MSIL">
@@ -167,7 +167,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Sudoku_TemporaryKey.pfx" />
     <Resource Include="Assets\Fonts\BowlbyOne-Regular.otf" />
     <Resource Include="Assets\Fonts\JetBrainsMono-Regular.ttf" />
     <Resource Include="Assets\Fonts\selawk.ttf" />

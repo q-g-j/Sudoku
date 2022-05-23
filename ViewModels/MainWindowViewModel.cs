@@ -12,7 +12,6 @@ using System.Diagnostics;
 
 namespace Sudoku.ViewModels
 {
-
     public class MainWindowViewModel :INotifyPropertyChanged
     {
         #region Constructor
@@ -21,7 +20,11 @@ namespace Sudoku.ViewModels
             selectNumberVisibilityValue = "Hidden";
             selectMarkerVisibilityValue = "Hidden";
             selectDifficultyVisibilityValue = "Hidden";
+            buttonValidateVisibilityValue = "Collapsed";
+            labelValidateVisibilityValue = "Collapsed";
             buttonDifficultyTextValue = "Neues Spiel";
+            labelValidateTextValue = "";
+            buttonDifficultyWidthValue = "250";
 
             generatorNumbers = new List<string>();
             numbersListValue = new NumbersListModel();
@@ -50,16 +53,17 @@ namespace Sudoku.ViewModels
         private MarkersListModel markersListValue;
         private NumbersColorsListModel numbersColorsListValue;
         private string buttonDifficultyTextValue;
-        private string labelValidateValue;
+        private string labelValidateTextValue;
+        private string buttonDifficultyWidthValue;
 
         private string selectNumberVisibilityValue;
         private string selectMarkerVisibilityValue;
         private string selectDifficultyVisibilityValue;
         private string buttonValidateVisibilityValue;
+        private string labelValidateVisibilityValue;
         #endregion Property values
 
         #region Properties
-
         public IAsyncRelayCommand ButtonDifficultyCommand { get; }
         public IAsyncRelayCommand ButtonValidateCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyEasyCommand { get; }
@@ -75,63 +79,68 @@ namespace Sudoku.ViewModels
         public NumbersListModel NumbersList
         {
             get => numbersListValue;
-            set { numbersListValue = value; OnPropertyChanged(); }
+            set { numbersListValue = value; OnPropertyChanged();
+            }
         }
-
         public MarkersListModel MarkersList
         {
             get => markersListValue;
             set {  markersListValue = value; OnPropertyChanged(); }
         }
-
         public NumbersColorsListModel NumbersColorsList
         {
             get => numbersColorsListValue;
             set { numbersColorsListValue = value; OnPropertyChanged(); }
         }
-
         public string SelectNumberVisibility
         {
             get => selectNumberVisibilityValue;
             set { selectNumberVisibilityValue = value; OnPropertyChanged(); }
         }
-
         public string SelectMarkerVisibility
         {
             get => selectMarkerVisibilityValue;
             set { selectMarkerVisibilityValue = value; OnPropertyChanged(); }
         }
-
         public string SelectDifficultyVisibility
         {
             get => selectDifficultyVisibilityValue;
             set { selectDifficultyVisibilityValue = value; OnPropertyChanged(); }
         }
-
         public string ButtonValidateVisibility
         {
             get => buttonValidateVisibilityValue;
             set { buttonValidateVisibilityValue = value; OnPropertyChanged(); }
         }
-
+        public string LabelValidateVisibility
+        {
+            get => labelValidateVisibilityValue;
+            set { labelValidateVisibilityValue = value; OnPropertyChanged(); }
+        }
         public string ButtonDifficultyText
         {
             get => buttonDifficultyTextValue;
             set { buttonDifficultyTextValue = value; OnPropertyChanged(); }
         }
-        public string LabelValidate
+        public string ButtonDifficultyWidth
         {
-            get => labelValidateValue;
-            set { labelValidateValue = value; OnPropertyChanged(); }
+            get => buttonDifficultyWidthValue;
+            set { buttonDifficultyWidthValue = value; OnPropertyChanged(); }
         }
-
-
+        public string LabelValidateText
+        {
+            get => labelValidateTextValue;
+            set { labelValidateTextValue = value; OnPropertyChanged(); }
+        }
         #endregion Properties
 
         #region Methods
         private async Task ButtonDifficultyClick()
         {
             await Task.Run(() => {
+                SelectNumberVisibility = "Hidden";
+                SelectMarkerVisibility = "Hidden";
+
                 if (SelectDifficultyVisibility == "Hidden")
                 {
                     SelectDifficultyVisibility = "Visible";
@@ -142,7 +151,6 @@ namespace Sudoku.ViewModels
                 }
             });
         }
-
         private async Task ButtonValidateClick()
         {
             await Task.Run(() =>
@@ -150,7 +158,6 @@ namespace Sudoku.ViewModels
                 ValidateAll();
             });
         }
-
         private async Task ButtonDifficultyEasyClick()
         {
             await Task.Run(() => {
@@ -160,7 +167,6 @@ namespace Sudoku.ViewModels
             NewGame("Easy");
             });
         }
-
         private async Task ButtonDifficultyMediumClick()
         {
             await Task.Run(() =>
@@ -171,7 +177,6 @@ namespace Sudoku.ViewModels
                 NewGame("Medium");
             });
         }
-
         private async Task ButtonDifficultyHardClick()
         {
             await Task.Run(() =>
@@ -182,7 +187,6 @@ namespace Sudoku.ViewModels
                 NewGame("Hard");
             });
         }
-
         private async Task ButtonSquareDown(CompositeCommandParameter o)
         {
             var e = (MouseButtonEventArgs)o.EventArgs;
@@ -228,12 +232,21 @@ namespace Sudoku.ViewModels
                     }
                 }
 
-                LabelValidate = "";
+                if (!SolverGameLogic.IsFull(numbersListValue))
+                {
+                    LabelValidateVisibility = "Collapsed";
+                    ButtonValidateVisibility = "Collapsed";
+                    ButtonDifficultyWidth = "350";
+                }
+                else
+                {
+                    LabelValidateVisibility = "Collapsed";
+                    ButtonValidateVisibility = "Visible";
+                }
             });
 
             e.Handled = true;
         }
-
         private async Task ButtonSquareUp(CompositeCommandParameter o)
         {
             var e = (MouseButtonEventArgs)o.EventArgs;
@@ -243,7 +256,6 @@ namespace Sudoku.ViewModels
 
             e.Handled = true;
         }
-
         private async Task ButtonSelectNumberClick(object o)
         {
             await Task.Run(() =>
@@ -254,7 +266,6 @@ namespace Sudoku.ViewModels
                 ChangeNumber(param);
             });
         }
-
         private async Task ButtonSelectMarkerClick(object o)
         {
             await Task.Run(() =>
@@ -265,7 +276,6 @@ namespace Sudoku.ViewModels
                 ChangeMarker(param);
             });
         }
-
         private void InititalizeValues()
         {
             if (numbersListValue == null)
@@ -284,7 +294,19 @@ namespace Sudoku.ViewModels
                 numbersColorsListValue.InitializeList();
             }
         }
-
+        private void ChangeButtonValidateVisibility()
+        {
+            if (SolverGameLogic.IsFull(numbersListValue))
+            {
+                ButtonDifficultyWidth = "250";
+                ButtonValidateVisibility = "Visible";
+            }
+            else
+            {
+                ButtonValidateVisibility = "Collapsed";
+                ButtonDifficultyWidth = "350";
+            }
+        }
         private void ChangeNumber(string button)
         {
             InititalizeValues();
@@ -308,12 +330,14 @@ namespace Sudoku.ViewModels
                     temp_numbersList[col][row] = number;
                     temp_numbersList[col][row] = "";
                     NumbersList = temp_numbersList;
+                    ChangeButtonValidateVisibility();
                     return;
                 }
                 else
                 {
                     temp_numbersList[col][row] = number;
                     NumbersList = temp_numbersList;
+                    ChangeButtonValidateVisibility();
                     for (int j = 0; j < 3; j++)
                     {
                         for (int i = 0; i < 3; i++)
@@ -410,7 +434,6 @@ namespace Sudoku.ViewModels
                 }
             }
         }
-
         private void ChangeMarker(string button)
         {
             InititalizeValues();
@@ -486,7 +509,6 @@ namespace Sudoku.ViewModels
                 }
             }
         }
-
         private void NewGame(string difficulty)
         {
             GeneratorGameLogic generatorGameLogic;
@@ -507,11 +529,11 @@ namespace Sudoku.ViewModels
 
                 if (difficulty == "Easy")
                 {
-                    generatorGameLogic.RemoveNumbers = 40;
+                    generatorGameLogic.RemoveNumbers = 42;
                 }
                 else if (difficulty == "Medium")
                 {
-                    generatorGameLogic.RemoveNumbers = 48;
+                    generatorGameLogic.RemoveNumbers = 50;
                 }
                 else if (difficulty == "Hard")
                 {
@@ -553,7 +575,7 @@ namespace Sudoku.ViewModels
             }
             NumbersColorsList = numbersColorsListValue;
 
-            LabelValidate = "";
+            LabelValidateText = "";
 
             NumbersList = generatorGameLogic.NumbersList;
 
@@ -563,9 +585,11 @@ namespace Sudoku.ViewModels
 
             ButtonDifficultyText = "Neues Spiel";
         }
-
         private void ValidateAll()
         {
+            ButtonValidateVisibility = "Collapsed";
+            LabelValidateVisibility = "Visible";
+
             if (numbersListValue == null)
             {
                 numbersListValue = new NumbersListModel();
@@ -579,12 +603,12 @@ namespace Sudoku.ViewModels
                     string number = numbersListValue[col][row];
                     if (! ValidatorGameLogic.IsValid(numbersListValue, col, row, number))
                     {
-                        LabelValidate = "Konflikte gefunden!";
+                        LabelValidateText = "Konflikte gefunden!";
                         return;
                     }
                 }
             }
-            LabelValidate = "Keine Konflikte!";
+            LabelValidateText = "Keine Konflikte!";
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)

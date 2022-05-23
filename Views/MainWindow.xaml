@@ -32,12 +32,8 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
         </Style>
-        <Style x:Key="NumberButtonPressed" TargetType="Button">
-            <Setter Property="Background" Value="LightBlue"/>
-        </Style>
         <Style x:Key="GameButton" TargetType="Button">
             <Setter Property="Padding" Value="0"/>
-            <Setter Property="Width" Value="400"/>
             <Setter Property="Height" Value="40"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Background" Value="LightSkyBlue"/>
@@ -1890,7 +1886,7 @@
             
             <Grid
                 Panel.ZIndex="1000"
-                Margin="0, -420, 0, 0"
+                Margin="0, -530, 0, 0"
                 HorizontalAlignment="Center"
                 Visibility="{Binding SelectNumberVisibility}">
                 <Grid.Resources>
@@ -1903,7 +1899,7 @@
                         <Setter Property="FontFamily" Value="{StaticResource MainBold}"/>
                         <Setter Property="FontSize" Value="30"/>
                         <Setter Property="FontWeight" Value="Bold"/>
-                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Background" Value="LightSkyBlue"/>
                         <!--<Setter Property="FontFamily" Value="/Assets/Fonts/selawk.ttf#Selawik"/>-->
                     </Style>
                     <Style TargetType="Button">
@@ -1912,7 +1908,7 @@
                         <Setter Property="Width" Value="90"/>
                         <Setter Property="Height" Value="90"/>
                         <Setter Property="BorderThickness" Value="0"/>
-                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Background" Value="#d8effd"/>
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
                         <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -1921,68 +1917,95 @@
                         <Setter Property="FontWeight" Value="Bold"/>
                         <!--<Setter Property="FontFamily" Value="/Assets/Fonts/selawk.ttf#Selawik"/>-->
                     </Style>
-                    <Style x:Key="BorderOuter" TargetType="Border">
-                        <Setter Property="BorderBrush" Value="Black"/>
-                        <Setter Property="BorderThickness" Value="1"/>
-                        <Setter Property="CornerRadius" Value="0"/>
-                    </Style>
                     <Style x:Key="LineInner" TargetType="Line">
-                        <Setter Property="Stroke" Value="#a6a6a6"/>
+                        <Setter Property="Stroke" Value="Black"/>
                         <Setter Property="StrokeThickness" Value="1"/>
                         <Setter Property="Stretch" Value="Fill"/>
                     </Style>
                 </Grid.Resources>
                 <StackPanel>
-                    <Label Content="Zahl wählen" Style="{StaticResource Title}"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <Button Grid.Column="1" Grid.Row="1" Content="1" Tag="1" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="1"/>
-                        <Button Grid.Column="3" Grid.Row="1" Content="2" Tag="2" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="2"/>
-                        <Button Grid.Column="5" Grid.Row="1" Content="3" Tag="3" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="3"/>
-                        <Button Grid.Column="7" Grid.Row="1" Content="4" Tag="4" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="4"/>
-                        <Button Grid.Column="9" Grid.Row="1" Content="5" Tag="5" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="5"/>
-                        <Button Grid.Column="1" Grid.Row="3" Content="6" Tag="6" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="6"/>
-                        <Button Grid.Column="3" Grid.Row="3" Content="7" Tag="7" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="7"/>
-                        <Button Grid.Column="5" Grid.Row="3" Content="8" Tag="8" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="8"/>
-                        <Button Grid.Column="7" Grid.Row="3" Content="9" Tag="9" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="9"/>
-                        <Button Grid.Column="9" Grid.Row="3" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="X">
-                            <Image Source="{StaticResource ImageWasteBin}" Margin="20"/>
-                        </Button>
-                        <Line Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="11" X1="0" Y1="0" X2="1" Y2="0" Style="{StaticResource LineInner}"/>
-                        <Line Grid.Column="2" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
-                        <Line Grid.Column="4" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
-                        <Line Grid.Column="6" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
-                        <Line Grid.Column="8" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
-                        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="11" Grid.RowSpan="5" Style="{StaticResource BorderOuter}"/>
-                        <Grid.Effect>
+                    <Label Margin="30" Padding="12, 5, 12, 5" Content="Zahl wählen" Style="{StaticResource Title}"
+                           BorderBrush="Black"
+                           BorderThickness="1">
+                        <Label.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="20"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <Border
+                        Background="Transparent"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        CornerRadius="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Button Grid.Column="0" Grid.Row="0" Content="1" Tag="1" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="1">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5, 0, 0, 0"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                            <Button Grid.Column="2" Grid.Row="0" Content="2" Tag="2" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="2"/>
+                            <Button Grid.Column="4" Grid.Row="0" Content="3" Tag="3" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="3"/>
+                            <Button Grid.Column="6" Grid.Row="0" Content="4" Tag="4" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="4"/>
+                            <Button Grid.Column="8" Grid.Row="0" Content="5" Tag="5" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="5">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="0, 5, 0, 0"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                            <Button Grid.Column="0" Grid.Row="2" Content="6" Tag="6" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="6">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="0, 0, 0, 5"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                            <Button Grid.Column="2" Grid.Row="2" Content="7" Tag="7" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="7"/>
+                            <Button Grid.Column="4" Grid.Row="2" Content="8" Tag="8" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="8"/>
+                            <Button Grid.Column="6" Grid.Row="2" Content="9" Tag="9" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="9"/>
+                            <Button Grid.Column="8" Grid.Row="2" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="X">
+                                <Image Source="{StaticResource ImageWasteBin}" Margin="20"/>
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="0, 0, 5, 0"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                            <Line Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="11" X1="0" Y1="0" X2="1" Y2="0" Style="{StaticResource LineInner}"/>
+                            <Line Grid.Column="1" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
+                            <Line Grid.Column="3" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
+                            <Line Grid.Column="5" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
+                            <Line Grid.Column="7" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
+                        </Grid>
+                        <Border.Effect>
                             <DropShadowEffect/>
-                        </Grid.Effect>
-                    </Grid>
+                        </Border.Effect>
+                    </Border>
                 </StackPanel>
             </Grid>
             
             <Grid
                 Panel.ZIndex="1000"
-                Margin="0, -420, 0, 0"
+                Margin="0, -530, 0, 0"
                 HorizontalAlignment="Center"
                 Visibility="{Binding SelectMarkerVisibility}">
                 <Grid.Resources>
@@ -1995,7 +2018,7 @@
                         <Setter Property="FontFamily" Value="{StaticResource MainBold}"/>
                         <Setter Property="FontSize" Value="30"/>
                         <Setter Property="FontWeight" Value="Bold"/>
-                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Background" Value="#eda374"/>
                         <!--<Setter Property="FontFamily" Value="/Assets/Fonts/selawk.ttf#Selawik"/>-->
                     </Style>
                     <Style TargetType="Button">
@@ -2004,7 +2027,7 @@
                         <Setter Property="Width" Value="90"/>
                         <Setter Property="Height" Value="90"/>
                         <Setter Property="BorderThickness" Value="0"/>
-                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Background" Value="#d8effd"/>
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
                         <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -2013,99 +2036,143 @@
                         <Setter Property="FontWeight" Value="Bold"/>
                         <!--<Setter Property="FontFamily" Value="/Assets/Fonts/selawk.ttf#Selawik"/>-->
                     </Style>
-                    <Style x:Key="BorderOuter" TargetType="Border">
-                        <Setter Property="BorderBrush" Value="Black"/>
-                        <Setter Property="BorderThickness" Value="1"/>
-                        <Setter Property="CornerRadius" Value="0"/>
-                    </Style>
                     <Style x:Key="LineInner" TargetType="Line">
-                        <Setter Property="Stroke" Value="#a6a6a6"/>
+                        <Setter Property="Stroke" Value="Black"/>
                         <Setter Property="StrokeThickness" Value="1"/>
                         <Setter Property="Stretch" Value="Fill"/>
                     </Style>
                 </Grid.Resources>
                 <StackPanel>
-                    <Label Content="Marker setzen" Style="{StaticResource Title}"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <Button Grid.Column="1" Grid.Row="1" Content="1" Tag="1" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="1"/>
-                        <Button Grid.Column="3" Grid.Row="1" Content="2" Tag="2" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="2"/>
-                        <Button Grid.Column="5" Grid.Row="1" Content="3" Tag="3" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="3"/>
-                        <Button Grid.Column="7" Grid.Row="1" Content="4" Tag="4" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="4"/>
-                        <Button Grid.Column="9" Grid.Row="1" Content="5" Tag="5" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="5"/>
-                        <Button Grid.Column="1" Grid.Row="3" Content="6" Tag="6" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="6"/>
-                        <Button Grid.Column="3" Grid.Row="3" Content="7" Tag="7" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="7"/>
-                        <Button Grid.Column="5" Grid.Row="3" Content="8" Tag="8" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="8"/>
-                        <Button Grid.Column="7" Grid.Row="3" Content="9" Tag="9" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="9"/>
-                        <Button Grid.Column="9" Grid.Row="3" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="X">
-                            <Image Source="{StaticResource ImageWasteBin}" Margin="20"/>
-                        </Button>
-                        <Line Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="11" X1="0" Y1="0" X2="1" Y2="0" Style="{StaticResource LineInner}"/>
-                        <Line Grid.Column="2" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
-                        <Line Grid.Column="4" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
-                        <Line Grid.Column="6" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
-                        <Line Grid.Column="8" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
-                        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="11" Grid.RowSpan="5" Style="{StaticResource BorderOuter}"/>
-                        <Grid.Effect>
+                    <Label Margin="30" Padding="12, 5, 12, 5" Content="Marker setzen" Style="{StaticResource Title}"
+                           BorderBrush="Black"
+                           BorderThickness="1">
+                        <Label.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="20"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <Border
+                        Background="Transparent"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        CornerRadius="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Button Grid.Column="0" Grid.Row="0" Content="1" Tag="1" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="1">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5, 0, 0, 0"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                            <Button Grid.Column="2" Grid.Row="0" Content="2" Tag="2" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="2"/>
+                            <Button Grid.Column="4" Grid.Row="0" Content="3" Tag="3" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="3"/>
+                            <Button Grid.Column="6" Grid.Row="0" Content="4" Tag="4" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="4"/>
+                            <Button Grid.Column="8" Grid.Row="0" Content="5" Tag="5" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="5">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="0, 5, 0, 0"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                            <Button Grid.Column="0" Grid.Row="2" Content="6" Tag="6" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="6">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="0, 0, 0, 5"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                            <Button Grid.Column="2" Grid.Row="2" Content="7" Tag="7" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="7"/>
+                            <Button Grid.Column="4" Grid.Row="2" Content="8" Tag="8" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="8"/>
+                            <Button Grid.Column="6" Grid.Row="2" Content="9" Tag="9" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="9"/>
+                            <Button Grid.Column="8" Grid.Row="2" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="X">
+                                <Image Source="{StaticResource ImageWasteBin}" Margin="20"/>
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="0, 0, 5, 0"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                            <Line Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="11" X1="0" Y1="0" X2="1" Y2="0" Style="{StaticResource LineInner}"/>
+                            <Line Grid.Column="1" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
+                            <Line Grid.Column="3" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
+                            <Line Grid.Column="5" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
+                            <Line Grid.Column="7" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
+                        </Grid>
+                        <Border.Effect>
                             <DropShadowEffect/>
-                        </Grid.Effect>
-                    </Grid>
+                        </Border.Effect>
+                    </Border>
                 </StackPanel>
             </Grid>
-            
-            <Button
-                Command="{Binding ButtonDifficultyCommand}"
-                Margin="20, 20, 20, 10"
-                Content="{Binding ButtonDifficultyText}"
-                Style="{StaticResource GameButton}">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="Border.CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button
-                Command="{Binding ButtonValidateCommand}"
-                Margin="20, 0, 20, 10"
-                Content="Überprüfen"
-                Style="{StaticResource GameButton}"
-                Visibility="{Binding ButtonValidateVisibility}">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="Border.CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Label
-                Margin="20, 0, 20, 0"
-                Height="40"
-                Content="{Binding LabelValidate}"
-                FontFamily="{StaticResource MainSemiBold}"
-                FontSize="22"
-                HorizontalContentAlignment="Center">
-            </Label>
+
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Center">
+                <Button
+                    Margin="20, 20, 20, 0"
+                    HorizontalAlignment="Center"
+                    Command="{Binding ButtonDifficultyCommand}"
+                    Content="{Binding ButtonDifficultyText}"
+                    Style="{StaticResource GameButton}"
+                    Width="{Binding ButtonDifficultyWidth}">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="Border.CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button
+                    Margin="20, 20, 20, 0"
+                    Command="{Binding ButtonValidateCommand}"
+                    Content="Überprüfen"
+                    Style="{StaticResource GameButton}"
+                    Width="250"
+                    Visibility="{Binding ButtonValidateVisibility}">                    
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="Border.CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Label
+                    Margin="20, 20, 20, 0"
+                    Content="{Binding LabelValidateText}"
+                    FontFamily="{StaticResource MainSemiBold}"
+                    FontSize="22"
+                    Width="250"
+                    HorizontalContentAlignment="Center"
+                    Visibility="{Binding LabelValidateVisibility}">
+                    <Label.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="Border.CornerRadius" Value="10"/>
+                        </Style>
+                    </Label.Resources>
+                </Label>
+            </StackPanel>
             <StackPanel
                 HorizontalAlignment="Center"
-                Margin="20, -330, 20, 0"
+                Margin="20, -457, 20, 0"
                 Visibility="{Binding SelectDifficultyVisibility}">
                 <StackPanel.Resources>
                     <Style x:Key="GameButton" TargetType="Button">
