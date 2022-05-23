@@ -1887,16 +1887,15 @@
 
             <Grid
                 Panel.ZIndex="1000"
-                Margin="0, -530, 0, 0"
+                Margin="0, -516, 0, 0"
                 HorizontalAlignment="Center"
                 Visibility="{Binding SelectNumberVisibility}">
                 <Grid.Resources>
-                    <Style x:Key="Title" TargetType="Label">
-                        <Setter Property="Margin" Value="0"/>
-                        <Setter Property="Padding" Value="0"/>
+                    <Style x:Key="LabelSelectNumber" TargetType="Label">
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
                         <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
                         <Setter Property="FontFamily" Value="{StaticResource MainBold}"/>
                         <Setter Property="FontSize" Value="30"/>
                         <Setter Property="FontWeight" Value="Bold"/>
@@ -1924,36 +1923,54 @@
                         <Setter Property="Stretch" Value="Fill"/>
                     </Style>
                 </Grid.Resources>
+                
                 <StackPanel>
-                    <Grid UseLayoutRounding = "True">
+                    <Grid HorizontalAlignment="Center">
                         <Border
-                        HorizontalAlignment="Center"
-                        Margin="30"
-                        BorderBrush="Black"
-                        BorderThickness="1"
-                        CornerRadius="20">
-                            <Label Margin="0" Padding="12, 5, 12, 5" Content="Zahl wählen" Style="{StaticResource Title}">
+                            Margin="15"
+                            BorderThickness="1"
+                            CornerRadius="25"
+                            Background="White"
+                            BorderBrush="Black">
+                            <Border.Effect>
+                                <DropShadowEffect/>
+                            </Border.Effect>
+                        </Border>
+                        <Border
+                            Margin="15"
+                            BorderThickness="1"
+                            BorderBrush="Black"
+                            CornerRadius="25">
+                            <Label Margin="0" Padding="15, 5, 15, 5" Content="Zahl wählen" Style="{StaticResource LabelSelectNumber}">
                                 <Label.Resources>
                                     <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="20"/>
+                                        <Setter Property="CornerRadius" Value="25"/>
                                     </Style>
                                 </Label.Resources>
                             </Label>
                         </Border>
-                        <Grid.Effect>
-                            <DropShadowEffect RenderingBias="Quality"/>
-                        </Grid.Effect>
                     </Grid>
 
-                    <Grid UseLayoutRounding = "True">
+                    <Grid HorizontalAlignment="Center">
                         <Border
-                            HorizontalAlignment="Center"
-                            Background="Transparent"
-                            BorderBrush="Black"
+                            Margin="15"
                             BorderThickness="1"
-                            CornerRadius="5">
+                            CornerRadius="10"
+                            Background="White"
+                            BorderBrush="Black">
+                            <Border.Effect>
+                                <DropShadowEffect/>
+                            </Border.Effect>
+                        </Border>
+                        <Border
+                            Margin="15"
+                            BorderThickness="1"
+                            BorderBrush="Black"
+                            CornerRadius="10">
                             <Grid>
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="auto"/>
@@ -1968,11 +1985,13 @@
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
                                 <Button Grid.Column="0" Grid.Row="0" Content="1" Tag="1" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="1">
                                     <Button.Resources>
                                         <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="5, 0, 0, 0"/>
+                                            <Setter Property="CornerRadius" Value="10, 0, 0, 0"/>
                                         </Style>
                                     </Button.Resources>
                                 </Button>
@@ -1982,14 +2001,14 @@
                                 <Button Grid.Column="8" Grid.Row="0" Content="5" Tag="5" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="5">
                                     <Button.Resources>
                                         <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="0, 5, 0, 0"/>
+                                            <Setter Property="CornerRadius" Value="0, 10, 0, 0"/>
                                         </Style>
                                     </Button.Resources>
                                 </Button>
                                 <Button Grid.Column="0" Grid.Row="2" Content="6" Tag="6" Command="{Binding ButtonSelectNumberCommand}" CommandParameter="6">
                                     <Button.Resources>
                                         <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="0, 0, 0, 5"/>
+                                            <Setter Property="CornerRadius" Value="0, 0, 0, 10"/>
                                         </Style>
                                     </Button.Resources>
                                 </Button>
@@ -2000,7 +2019,7 @@
                                     <Image Source="{StaticResource ImageWasteBin}" Margin="20"/>
                                     <Button.Resources>
                                         <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="0, 0, 5, 0"/>
+                                            <Setter Property="CornerRadius" Value="0, 0, 10, 0"/>
                                         </Style>
                                     </Button.Resources>
                                 </Button>
@@ -2011,25 +2030,21 @@
                                 <Line Grid.Column="7" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
                             </Grid>
                         </Border>
-                        <Grid.Effect>
-                            <DropShadowEffect/>
-                        </Grid.Effect>
                     </Grid>
                 </StackPanel>
             </Grid>
             
             <Grid
                 Panel.ZIndex="1000"
-                Margin="0, -530, 0, 0"
+                Margin="0, -516, 0, 0"
                 HorizontalAlignment="Center"
                 Visibility="{Binding SelectMarkerVisibility}">
                 <Grid.Resources>
-                    <Style x:Key="Title" TargetType="Label">
-                        <Setter Property="Margin" Value="0"/>
-                        <Setter Property="Padding" Value="0"/>
+                    <Style x:Key="LabelSelectMarker" TargetType="Label">
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
                         <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
                         <Setter Property="FontFamily" Value="{StaticResource MainBold}"/>
                         <Setter Property="FontSize" Value="30"/>
                         <Setter Property="FontWeight" Value="Bold"/>
@@ -2057,33 +2072,50 @@
                         <Setter Property="Stretch" Value="Fill"/>
                     </Style>
                 </Grid.Resources>
+
                 <StackPanel>
-                        <Grid UseLayoutRounding = "True">
+                    <Grid HorizontalAlignment="Center">
                         <Border
-                            HorizontalAlignment="Center"
-                            Margin="30"
-                            BorderBrush="Black"
+                            Margin="15"
                             BorderThickness="1"
-                            CornerRadius="20">
-                        <Label Margin="0" Padding="12, 5, 12, 5" Content="Marker setzen" Style="{StaticResource Title}">
-                            <Label.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="20"/>
-                                </Style>
-                            </Label.Resources>
-                        </Label>
+                            CornerRadius="25"
+                            Background="White"
+                            BorderBrush="Black">
+                            <Border.Effect>
+                                <DropShadowEffect/>
+                            </Border.Effect>
                         </Border>
-                        <Grid.Effect>
-                            <DropShadowEffect RenderingBias="Quality"/>
-                        </Grid.Effect>
-                    </Grid>
-                    <Grid UseLayoutRounding = "True">
                         <Border
-                            HorizontalAlignment="Center"
-                            Background="Transparent"
-                            BorderBrush="Black"
+                            Margin="15"
                             BorderThickness="1"
-                            CornerRadius="5">
+                            BorderBrush="Black"
+                            CornerRadius="25">
+                            <Label Margin="0" Padding="15, 5, 15, 5" Content="Marker setzen" Style="{StaticResource LabelSelectMarker}">
+                                <Label.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="25"/>
+                                    </Style>
+                                </Label.Resources>
+                            </Label>
+                        </Border>
+                    </Grid>
+
+                    <Grid HorizontalAlignment="Center">
+                        <Border
+                            Margin="15"
+                            BorderThickness="1"
+                            CornerRadius="10"
+                            Background="White"
+                            BorderBrush="Black">
+                            <Border.Effect>
+                                <DropShadowEffect/>
+                            </Border.Effect>
+                        </Border>
+                        <Border
+                            Margin="15"
+                            BorderThickness="1"
+                            BorderBrush="Black"
+                            CornerRadius="10">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
@@ -2108,7 +2140,7 @@
                                 <Button Grid.Column="0" Grid.Row="0" Content="1" Tag="1" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="1">
                                     <Button.Resources>
                                         <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="5, 0, 0, 0"/>
+                                            <Setter Property="CornerRadius" Value="10, 0, 0, 0"/>
                                         </Style>
                                     </Button.Resources>
                                 </Button>
@@ -2118,14 +2150,14 @@
                                 <Button Grid.Column="8" Grid.Row="0" Content="5" Tag="5" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="5">
                                     <Button.Resources>
                                         <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="0, 5, 0, 0"/>
+                                            <Setter Property="CornerRadius" Value="0, 10, 0, 0"/>
                                         </Style>
                                     </Button.Resources>
                                 </Button>
                                 <Button Grid.Column="0" Grid.Row="2" Content="6" Tag="6" Command="{Binding ButtonSelectMarkerCommand}" CommandParameter="6">
                                     <Button.Resources>
                                         <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="0, 0, 0, 5"/>
+                                            <Setter Property="CornerRadius" Value="0, 0, 0, 10"/>
                                         </Style>
                                     </Button.Resources>
                                 </Button>
@@ -2136,7 +2168,7 @@
                                     <Image Source="{StaticResource ImageWasteBin}" Margin="20"/>
                                     <Button.Resources>
                                         <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="0, 0, 5, 0"/>
+                                            <Setter Property="CornerRadius" Value="0, 0, 10, 0"/>
                                         </Style>
                                     </Button.Resources>
                                 </Button>
@@ -2147,9 +2179,6 @@
                                 <Line Grid.Column="7" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource LineInner}"/>
                             </Grid>
                         </Border>
-                        <Grid.Effect>
-                            <DropShadowEffect/>
-                        </Grid.Effect>
                     </Grid>
                 </StackPanel>
             </Grid>
@@ -2199,60 +2228,114 @@
                 </Label>
             </StackPanel>
             <StackPanel
+                Height="210"
+                Background="Transparent"
                 HorizontalAlignment="Center"
-                Margin="20, -457, 20, 0"
+                Margin="20, -774, 20, 0"
                 Visibility="{Binding SelectDifficultyVisibility}">
                 <StackPanel.Resources>
                     <Style x:Key="GameButton" TargetType="Button">
-                        <Setter Property="Padding" Value="0"/>
                         <Setter Property="Width" Value="400"/>
                         <Setter Property="Height" Value="40"/>
-                        <Setter Property="BorderThickness" Value="1"/>
                         <Setter Property="Background" Value="#eda374"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
                         <Setter Property="HorizontalAlignment" Value="Center"/>
                         <Setter Property="VerticalAlignment" Value="Center"/>
                         <Setter Property="FontFamily" Value="{StaticResource MainSemiBold}"/>
                         <Setter Property="FontSize" Value="22"/>
                     </Style>
                 </StackPanel.Resources>
-                <Button
-                    Command="{Binding ButtonDifficultyEasyCommand}"
-                    Margin="0, 0, 0, 10"
-                    Content="Leicht"
-                    Style="{StaticResource GameButton}">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="Border.CornerRadius" Value="10"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button
-                    Command="{Binding ButtonDifficultyMediumCommand}"
-                    Margin="0, 0, 0, 10"
-                    Content="Mittel"
-                    Style="{StaticResource GameButton}">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="Border.CornerRadius" Value="10"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <Button
-                    Margin="0, 0, 0, 0"
-                    Content="Schwierig"
-                    Style="{StaticResource GameButton}">
-                    <Button.InputBindings>
-                        <MouseBinding
-                            MouseAction="LeftClick"
-                            Command="{Binding ButtonDifficultyHardCommand}">
-                        </MouseBinding>
-                    </Button.InputBindings>
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="Border.CornerRadius" Value="10"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+                
+                <Grid HorizontalAlignment="Center">
+                    <Border
+                        Margin="15"
+                        BorderThickness="1"
+                        CornerRadius="10"
+                        Background="Black"
+                        BorderBrush="Black">
+                        <Border.Effect>
+                            <DropShadowEffect/>
+                        </Border.Effect>
+                    </Border>
+                    <Border
+                        Margin="15"
+                        BorderThickness="0"
+                        BorderBrush="Black"
+                        CornerRadius="10">
+                        <Button
+                            Command="{Binding ButtonDifficultyEasyCommand}"
+                            Content="Leicht"
+                            Style="{StaticResource GameButton}">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderThickness" Value="0" />
+                                    <Setter Property="CornerRadius" Value="10" />
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Border>
+                </Grid>
+
+                <Grid HorizontalAlignment="Center">
+                    <Border
+                        Margin="15"
+                        BorderThickness="1"
+                        Background="Black"
+                        BorderBrush="Black"
+                        CornerRadius="10">
+                        <Border.Effect>
+                            <DropShadowEffect/>
+                        </Border.Effect>
+                    </Border>
+                    <Border
+                        Margin="15"
+                        BorderThickness="0"
+                        BorderBrush="Black"
+                        CornerRadius="10">
+                        <Button
+                            Command="{Binding ButtonDifficultyMediumCommand}"
+                            Content="Mittel"
+                            Style="{StaticResource GameButton}">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderThickness" Value="0" />
+                                    <Setter Property="CornerRadius" Value="10" />
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Border>
+                </Grid>
+
+                <Grid HorizontalAlignment="Center">
+                    <Border
+                        Margin="15"
+                        BorderThickness="1"
+                        CornerRadius="10"
+                        Background="Black"
+                        BorderBrush="Black">
+                        <Border.Effect>
+                            <DropShadowEffect/>
+                        </Border.Effect>
+                    </Border>
+                    <Border
+                        Margin="15"
+                        BorderThickness="0"
+                        BorderBrush="Black"
+                        CornerRadius="10">
+                        <Button
+                            Command="{Binding ButtonDifficultyHardCommand}"
+                            Content="Schwer"
+                            Style="{StaticResource GameButton}">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderThickness" Value="0" />
+                                    <Setter Property="CornerRadius" Value="10" />
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Border>
+                </Grid>
             </StackPanel>
         </StackPanel>
     </Viewbox>
