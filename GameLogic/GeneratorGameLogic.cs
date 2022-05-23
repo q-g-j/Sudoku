@@ -36,8 +36,11 @@ namespace Sudoku.GameLogic
                 {
                     if (NumbersList[col][row] != "")
                     {
-                        counter++;
-                        NumbersList[col][row] = "";
+                        if (!HasCurrentSquareTooFewNumbers(col, row) && !HasAnotherSquareTooManyNumbers(col, row))
+                        {
+                            counter++;
+                            NumbersList[col][row] = "";
+                        }
                         if (counter < RemoveNumbers)
                         {
                             GenerateSudoku();
@@ -84,6 +87,84 @@ namespace Sudoku.GameLogic
                     }
                 }
             }
+        }
+
+        private bool HasCurrentSquareTooFewNumbers(int col, int row)
+        {
+            int squareCol = (int)(col / 3) * 3;
+            int squareRow = (int)(row / 3) * 3;
+            int countNumbers = 0;
+
+            for (int i = squareCol; i < squareCol + 3; i++)
+            {
+                for (int j = squareRow; j < squareRow + 3; j++)
+                {
+                    if (NumbersList[i][j] != "")
+                    {
+                        countNumbers++;
+                    }
+                }
+            }
+            if (countNumbers <= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool HasAnotherSquareTooManyNumbers(int col, int row)
+        {
+            int currentSquareCol = (int)(col / 3) * 3;
+            int currentSquareRow = (int)(row / 3) * 3;
+            int currentCountNumbers = 0;
+
+            for (int k = currentSquareCol; k < currentSquareCol + 3; k++)
+            {
+                for (int l = currentSquareRow; l < currentSquareRow + 3; l++)
+                {
+                    if (NumbersList[k][l] != "")
+                    {
+                        currentCountNumbers++;
+                    }
+                }
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    int squareCol = (int)(i / 3) * 3;
+                    int squareRow = (int)(j / 3) * 3;
+                    int countNumbers = 0;
+
+                    for (int k = squareCol; k < squareCol + 3; k++)
+                    {
+                        for (int l = squareRow; l < squareRow + 3; l++)
+                        {
+                            if (NumbersList[k][l] != "")
+                            {
+                                if (squareCol == currentSquareCol && squareRow == currentSquareRow)
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    countNumbers++;
+                                }
+                            }
+                        }
+                    }
+
+                    if (countNumbers > 8 && countNumbers > currentCountNumbers)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         private void HasUniqueSolution()

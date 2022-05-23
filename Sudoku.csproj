@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>A1FD8635D12D5BAD2796C5566E033FE4D968D094</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>8F7E550608CF71F95BE500F0D4E14AC442178E37</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>Sudoku_TemporaryKey.pfx</ManifestKeyFile>
@@ -110,7 +110,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Debug\DebugPrint.cs" />
     <Compile Include="GameLogic\GeneratorGameLogic.cs" />
     <Compile Include="GameLogic\SolverGameLogic.cs" />
     <Compile Include="GameLogic\ValidatorGameLogic.cs" />
@@ -168,6 +167,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Sudoku_TemporaryKey.pfx" />
     <Resource Include="Assets\Fonts\BowlbyOne-Regular.otf" />
     <Resource Include="Assets\Fonts\JetBrainsMono-Regular.ttf" />
     <Resource Include="Assets\Fonts\selawk.ttf" />
@@ -180,7 +180,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Sudoku_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -199,6 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
+    <Folder Include="Debug\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\waste bin.png" />

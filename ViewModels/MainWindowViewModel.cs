@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Sudoku.Debug;
 using Sudoku.GameLogic;
 using Sudoku.Models;
 using Sudoku.Helpers;
