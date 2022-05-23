@@ -24,7 +24,7 @@ namespace Sudoku.ViewModels
             labelValidateVisibilityValue = "Collapsed";
             buttonDifficultyTextValue = "Neues Spiel";
             labelValidateTextValue = "";
-            buttonDifficultyWidthValue = "250";
+            buttonDifficultyWidthValue = "350";
 
             generatorNumbers = new List<string>();
             numbersListValue = new NumbersListModel();

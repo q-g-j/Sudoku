@@ -2246,22 +2246,22 @@
                         <Setter Property="FontSize" Value="22"/>
                     </Style>
                 </StackPanel.Resources>
-                
+
                 <Grid HorizontalAlignment="Center">
                     <Border
                         Margin="15"
+                        Background="White"
+                        BorderBrush="Black"
                         BorderThickness="1"
-                        CornerRadius="10"
-                        Background="Black"
-                        BorderBrush="Black">
+                        CornerRadius="10">
                         <Border.Effect>
-                            <DropShadowEffect/>
+                            <DropShadowEffect />
                         </Border.Effect>
                     </Border>
                     <Border
                         Margin="15"
-                        BorderThickness="0"
                         BorderBrush="Black"
+                        BorderThickness="0"
                         CornerRadius="10">
                         <Button
                             Command="{Binding ButtonDifficultyEasyCommand}"
@@ -2269,7 +2269,6 @@
                             Style="{StaticResource GameButton}">
                             <Button.Resources>
                                 <Style TargetType="Border">
-                                    <Setter Property="BorderThickness" Value="0" />
                                     <Setter Property="CornerRadius" Value="10" />
                                 </Style>
                             </Button.Resources>
@@ -2280,18 +2279,18 @@
                 <Grid HorizontalAlignment="Center">
                     <Border
                         Margin="15"
-                        BorderThickness="1"
-                        Background="Black"
+                        Background="White"
                         BorderBrush="Black"
+                        BorderThickness="1"
                         CornerRadius="10">
                         <Border.Effect>
-                            <DropShadowEffect/>
+                            <DropShadowEffect />
                         </Border.Effect>
                     </Border>
                     <Border
                         Margin="15"
-                        BorderThickness="0"
                         BorderBrush="Black"
+                        BorderThickness="0"
                         CornerRadius="10">
                         <Button
                             Command="{Binding ButtonDifficultyMediumCommand}"
@@ -2299,7 +2298,6 @@
                             Style="{StaticResource GameButton}">
                             <Button.Resources>
                                 <Style TargetType="Border">
-                                    <Setter Property="BorderThickness" Value="0" />
                                     <Setter Property="CornerRadius" Value="10" />
                                 </Style>
                             </Button.Resources>
@@ -2310,18 +2308,18 @@
                 <Grid HorizontalAlignment="Center">
                     <Border
                         Margin="15"
+                        Background="White"
+                        BorderBrush="Black"
                         BorderThickness="1"
-                        CornerRadius="10"
-                        Background="Black"
-                        BorderBrush="Black">
+                        CornerRadius="10">
                         <Border.Effect>
-                            <DropShadowEffect/>
+                            <DropShadowEffect />
                         </Border.Effect>
                     </Border>
                     <Border
                         Margin="15"
-                        BorderThickness="0"
                         BorderBrush="Black"
+                        BorderThickness="0"
                         CornerRadius="10">
                         <Button
                             Command="{Binding ButtonDifficultyHardCommand}"
@@ -2329,7 +2327,6 @@
                             Style="{StaticResource GameButton}">
                             <Button.Resources>
                                 <Style TargetType="Border">
-                                    <Setter Property="BorderThickness" Value="0" />
                                     <Setter Property="CornerRadius" Value="10" />
                                 </Style>
                             </Button.Resources>
