@@ -20,6 +20,7 @@ namespace Sudoku.ViewModels
         {
             selectNumberVisibilityValue = "Hidden";
             selectMarkerVisibilityValue = "Hidden";
+            selectDifficultyVisibilityValue = "Visible";
             buttonValidateVisibilityValue = "Collapsed";
             labelValidateVisibilityValue = "Collapsed";
             buttonDifficultyTextValue = "Neues Spiel";
