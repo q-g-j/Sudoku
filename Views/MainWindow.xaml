@@ -2228,10 +2228,10 @@
                 </Label>
             </StackPanel>
             <StackPanel
-                Height="210"
+                Height="266"
                 Background="Transparent"
                 HorizontalAlignment="Center"
-                Margin="20, -774, 20, 0"
+                Margin="0, -774, 0, 0"
                 Visibility="{Binding SelectDifficultyVisibility}">
                 <StackPanel.Resources>
                     <Style x:Key="GameButton" TargetType="Button">
@@ -2249,7 +2249,7 @@
 
                 <Grid HorizontalAlignment="Center">
                     <Border
-                        Margin="15"
+                        Margin="40, 40, 40, 30"
                         Background="White"
                         BorderBrush="Black"
                         BorderThickness="1"
@@ -2259,7 +2259,7 @@
                         </Border.Effect>
                     </Border>
                     <Border
-                        Margin="15"
+                        Margin="40, 40, 40, 30"
                         BorderBrush="Black"
                         BorderThickness="0"
                         CornerRadius="10">
@@ -2278,7 +2278,7 @@
 
                 <Grid HorizontalAlignment="Center">
                     <Border
-                        Margin="15"
+                        Margin="40, 0, 40, 30"
                         Background="White"
                         BorderBrush="Black"
                         BorderThickness="1"
@@ -2288,7 +2288,7 @@
                         </Border.Effect>
                     </Border>
                     <Border
-                        Margin="15"
+                        Margin="40, 0, 40, 30"
                         BorderBrush="Black"
                         BorderThickness="0"
                         CornerRadius="10">
@@ -2307,7 +2307,7 @@
 
                 <Grid HorizontalAlignment="Center">
                     <Border
-                        Margin="15"
+                        Margin="40, 0, 40, 40"
                         Background="White"
                         BorderBrush="Black"
                         BorderThickness="1"
@@ -2317,7 +2317,7 @@
                         </Border.Effect>
                     </Border>
                     <Border
-                        Margin="15"
+                        Margin="40, 0, 40, 40"
                         BorderBrush="Black"
                         BorderThickness="0"
                         CornerRadius="10">
