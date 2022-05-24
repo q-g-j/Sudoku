@@ -81,7 +81,7 @@ namespace Sudoku.GameLogic
                         }
                         if (counter < RemoveNumbers && tries < 20)
                         {
-                            GenerateSudoku();
+                            GenerateUniqueSudoku();
                         }
                         return;
                     }

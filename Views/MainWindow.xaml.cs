@@ -8,5 +8,10 @@ namespace Sudoku.Views
         {
             InitializeComponent();
         }
+
+        public void MenuQuitClick(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

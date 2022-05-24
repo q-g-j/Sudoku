@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Threading.Tasks;
 using System;
 using System.Diagnostics;
+using System.Windows;
 
 namespace Sudoku.ViewModels
 {
@@ -19,7 +20,6 @@ namespace Sudoku.ViewModels
         {
             selectNumberVisibilityValue = "Hidden";
             selectMarkerVisibilityValue = "Hidden";
-            selectDifficultyVisibilityValue = "Hidden";
             buttonValidateVisibilityValue = "Collapsed";
             labelValidateVisibilityValue = "Collapsed";
             buttonDifficultyTextValue = "Neues Spiel";
@@ -30,16 +30,17 @@ namespace Sudoku.ViewModels
             numbersListValue = new NumbersListModel();
             numbersListValue.InitializeList();
 
-            ButtonDifficultyCommand = new AsyncRelayCommand(ButtonDifficultyClick);
-            ButtonValidateCommand = new AsyncRelayCommand(ButtonValidateClick);
-            ButtonDifficultyEasyCommand = new AsyncRelayCommand(ButtonDifficultyEasyClick);
-            ButtonDifficultyMediumCommand = new AsyncRelayCommand(ButtonDifficultyMediumClick);
-            ButtonDifficultyHardCommand = new AsyncRelayCommand(ButtonDifficultyHardClick);
-            ButtonSelectNumberCommand = new AsyncRelayCommand<object>(o => ButtonSelectNumberClick(o));
-            ButtonSelectMarkerCommand = new AsyncRelayCommand<object>(o => ButtonSelectMarkerClick(o));
+            MenuNewCommand = new AsyncRelayCommand(MenuNewAction);
+            ButtonDifficultyCommand = new AsyncRelayCommand(ButtonDifficultyAction);
+            ButtonValidateCommand = new AsyncRelayCommand(ButtonValidateAction);
+            ButtonDifficultyEasyCommand = new AsyncRelayCommand(ButtonDifficultyEasyAction);
+            ButtonDifficultyMediumCommand = new AsyncRelayCommand(ButtonDifficultyMediumAction);
+            ButtonDifficultyHardCommand = new AsyncRelayCommand(ButtonDifficultyHardAction);
+            ButtonSelectNumberCommand = new AsyncRelayCommand<object>(o => ButtonSelectNumberAction(o));
+            ButtonSelectMarkerCommand = new AsyncRelayCommand<object>(o => ButtonSelectMarkerAction(o));
 
-            ButtonSquareDownCommand = new AsyncRelayCommand<CompositeCommandParameter>(o => ButtonSquareDown(o));
-            ButtonSquareUpCommand = new AsyncRelayCommand<CompositeCommandParameter>(o => ButtonSquareUp(o));
+            ButtonSquareDownCommand = new AsyncRelayCommand<CompositeCommandParameter>(o => ButtonSquareDownAction(o));
+            ButtonSquareUpCommand = new AsyncRelayCommand<CompositeCommandParameter>(o => ButtonSquareUpAction(o));
         }
         #endregion Constructor
 
@@ -52,6 +53,7 @@ namespace Sudoku.ViewModels
         private NumbersListModel numbersListValue;
         private MarkersListModel markersListValue;
         private NumbersColorsListModel numbersColorsListValue;
+
         private string buttonDifficultyTextValue;
         private string labelValidateTextValue;
         private string buttonDifficultyWidthValue;
@@ -64,6 +66,7 @@ namespace Sudoku.ViewModels
         #endregion Property values
 
         #region Properties
+        public IAsyncRelayCommand MenuNewCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyCommand { get; }
         public IAsyncRelayCommand ButtonValidateCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyEasyCommand { get; }
@@ -135,7 +138,16 @@ namespace Sudoku.ViewModels
         #endregion Properties
 
         #region Methods
-        private async Task ButtonDifficultyClick()
+        private async Task MenuNewAction()
+        {
+            await Task.Run(() =>
+            {
+                numbersListValue = new NumbersListModel();
+                numbersListValue.InitializeList();
+                NumbersList = numbersListValue;
+            });
+        }
+        private async Task ButtonDifficultyAction()
         {
             await Task.Run(() => {
                 SelectNumberVisibility = "Hidden";
@@ -151,14 +163,14 @@ namespace Sudoku.ViewModels
                 }
             });
         }
-        private async Task ButtonValidateClick()
+        private async Task ButtonValidateAction()
         {
             await Task.Run(() =>
             {
                 ValidateAll();
             });
         }
-        private async Task ButtonDifficultyEasyClick()
+        private async Task ButtonDifficultyEasyAction()
         {
             await Task.Run(() => {
             SelectDifficultyVisibility = "Hidden";
@@ -167,7 +179,7 @@ namespace Sudoku.ViewModels
             NewGame("Easy");
             });
         }
-        private async Task ButtonDifficultyMediumClick()
+        private async Task ButtonDifficultyMediumAction()
         {
             await Task.Run(() =>
             {
@@ -177,7 +189,7 @@ namespace Sudoku.ViewModels
                 NewGame("Medium");
             });
         }
-        private async Task ButtonDifficultyHardClick()
+        private async Task ButtonDifficultyHardAction()
         {
             await Task.Run(() =>
             {
@@ -187,7 +199,7 @@ namespace Sudoku.ViewModels
                 NewGame("Hard");
             });
         }
-        private async Task ButtonSquareDown(CompositeCommandParameter o)
+        private async Task ButtonSquareDownAction(CompositeCommandParameter o)
         {
             var e = (MouseButtonEventArgs)o.EventArgs;
             var param = (string)o.Parameter;
@@ -247,7 +259,7 @@ namespace Sudoku.ViewModels
 
             e.Handled = true;
         }
-        private async Task ButtonSquareUp(CompositeCommandParameter o)
+        private async Task ButtonSquareUpAction(CompositeCommandParameter o)
         {
             var e = (MouseButtonEventArgs)o.EventArgs;
             await Task.Run(() =>
@@ -256,7 +268,7 @@ namespace Sudoku.ViewModels
 
             e.Handled = true;
         }
-        private async Task ButtonSelectNumberClick(object o)
+        private async Task ButtonSelectNumberAction(object o)
         {
             await Task.Run(() =>
             {
@@ -266,7 +278,7 @@ namespace Sudoku.ViewModels
                 ChangeNumber(param);
             });
         }
-        private async Task ButtonSelectMarkerClick(object o)
+        private async Task ButtonSelectMarkerAction(object o)
         {
             await Task.Run(() =>
             {

@@ -1,4 +1,5 @@
 ﻿<Window x:Class="Sudoku.Views.MainWindow"
+        x:Name="Main"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -19,7 +20,7 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
 
-    <Window.Resources>
+        <Window.Resources>
         <Style x:Key="NumberButton" TargetType="Button">
             <Setter Property="Margin" Value="0"/>
             <Setter Property="Padding" Value="0"/>
@@ -79,7 +80,32 @@
             <Setter Property="CornerRadius" Value="3"/>
         </Style>
     </Window.Resources>
-    
+
+
+    <DockPanel>
+        <Menu
+            Padding="3"
+            FontSize="14"
+            FontFamily="{StaticResource Main}"
+            DockPanel.Dock="Top">
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
+            <MenuItem Header="_Spiel">
+                <MenuItem Header="_Leeres Spielfeld" Command="{Binding MenuNewCommand}"></MenuItem>
+                <!--<MenuItem Header="Sudoku öffnen..."></MenuItem>
+                <MenuItem Header="Sudoku speichern..."></MenuItem>
+                <MenuItem Header="Sudoku drucken"></MenuItem>-->
+                <Separator></Separator>
+                <MenuItem Header="Programm _beenden" Click="MenuQuitClick"></MenuItem>
+            </MenuItem>
+            <MenuItem HorizontalAlignment="Right" Header="_Hilfe">
+                <MenuItem Header="Sudoku-_Regeln"></MenuItem>
+                <MenuItem Header="_Über dieses Programm"></MenuItem>
+            </MenuItem>
+        </Menu>
     <Viewbox>
         <StackPanel
             Margin="20">
@@ -2336,4 +2362,5 @@
             </StackPanel>
         </StackPanel>
     </Viewbox>
+    </DockPanel>
 </Window>
