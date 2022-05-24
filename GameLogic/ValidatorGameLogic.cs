@@ -7,22 +7,22 @@ namespace Sudoku.GameLogic
     {
         public static bool IsValid(NumbersListModel numbersList, int col, int row, string number)
         {
-            NumbersListModel tempNumbersList = NumbersListModel.CopyList(numbersList);
-
-            tempNumbersList[col][row] = number;
-
             if (number == "")
             {
                 return true;
             }
+
+            string oldNum = numbersList[col][row];
+            numbersList[col][row] = number;
 
             // validate row:
             for (int i = 0; i < 9; i++)
             {
                 if (i != col)
                 {
-                    if (tempNumbersList[i][row] == number)
+                    if (numbersList[i][row] == number)
                     {
+                        numbersList[col][row] = oldNum;
                         return false;
                     }
                 }
@@ -33,8 +33,9 @@ namespace Sudoku.GameLogic
             {
                 if (i != row)
                 {
-                    if (tempNumbersList[col][i] == number)
+                    if (numbersList[col][i] == number)
                     {
+                        numbersList[col][row] = oldNum;
                         return false;
                     }
                 }
@@ -50,14 +51,16 @@ namespace Sudoku.GameLogic
                 {
                     if (i != row && j != col)
                     {
-                        if (tempNumbersList[j][i] == number)
+                        if (numbersList[j][i] == number)
                         {
+                            numbersList[col][row] = oldNum;
                             return false;
                         }
                     }
                 }
             }
 
+            numbersList[col][row] = oldNum;
             return true;
         }
     }
