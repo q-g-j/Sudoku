@@ -143,6 +143,9 @@ namespace Sudoku.ViewModels
         {
             await Task.Run(() =>
             {
+                SelectDifficultyVisibility = "Hidden";
+                SelectNumberVisibility = "Hidden";
+                SelectMarkerVisibility = "Hidden";
                 numbersListValue = new NumbersListModel();
                 numbersListValue.InitializeList();
                 NumbersList = numbersListValue;
