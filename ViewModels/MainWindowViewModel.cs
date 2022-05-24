@@ -147,8 +147,12 @@ namespace Sudoku.ViewModels
                 SelectNumberVisibility = "Hidden";
                 SelectMarkerVisibility = "Hidden";
                 numbersListValue = new NumbersListModel();
+                numbersColorsListValue = new NumbersColorsListModel();
+                generatorNumbers = new List<string>();
                 numbersListValue.InitializeList();
+                numbersColorsListValue.InitializeList();
                 NumbersList = numbersListValue;
+                NumbersColorsList = numbersColorsListValue;
             });
         }
         private async Task ButtonDifficultyAction()
