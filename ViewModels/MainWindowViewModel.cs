@@ -4,10 +4,13 @@ using System.Runtime.CompilerServices;
 using Sudoku.GameLogic;
 using Sudoku.Models;
 using Sudoku.Helpers;
+using Sudoku.Settings;
+using Sudoku.SaveGame;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using System.Threading.Tasks;
 using System;
+using System.IO;
 using System.Diagnostics;
 using System.Windows;
 
@@ -23,15 +26,23 @@ namespace Sudoku.ViewModels
             selectDifficultyVisibilityValue = "Visible";
             buttonValidateVisibilityValue = "Collapsed";
             labelValidateVisibilityValue = "Collapsed";
-            buttonDifficultyTextValue = "Neues Spiel";
             labelValidateTextValue = "";
             buttonDifficultyWidthValue = "350";
+            currentButtonIndex = "";
+            folderAppSettings = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SudokuGame");
+
+            if (!Directory.Exists(folderAppSettings))
+            {
+                Directory.CreateDirectory(folderAppSettings);
+            }
 
             generatorNumbers = new List<string>();
             numbersListValue = new NumbersListModel();
             numbersListValue.InitializeList();
 
             MenuNewCommand = new AsyncRelayCommand(MenuNewAction);
+            MenuSaveToSlotCommand = new AsyncRelayCommand<object>(o => MenuSaveToSlotAction(o));
+            MenuLoadFromSlotCommand = new AsyncRelayCommand<object>(o => MenuLoadFromSlotAction(o));
             ButtonDifficultyCommand = new AsyncRelayCommand(ButtonDifficultyAction);
             ButtonValidateCommand = new AsyncRelayCommand(ButtonValidateAction);
             ButtonDifficultyEasyCommand = new AsyncRelayCommand(ButtonDifficultyEasyAction);
@@ -46,8 +57,9 @@ namespace Sudoku.ViewModels
         #endregion Constructor
 
         #region Private variables
-        private string currentButtonIndex = "";
+        private string currentButtonIndex;
         private List<string> generatorNumbers;
+        string folderAppSettings;
         #endregion Private variables
 
         #region Property values
@@ -68,6 +80,8 @@ namespace Sudoku.ViewModels
 
         #region Properties
         public IAsyncRelayCommand MenuNewCommand { get; }
+        public IAsyncRelayCommand MenuSaveToSlotCommand { get; }
+        public IAsyncRelayCommand MenuLoadFromSlotCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyCommand { get; }
         public IAsyncRelayCommand ButtonValidateCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyEasyCommand { get; }
@@ -143,16 +157,46 @@ namespace Sudoku.ViewModels
         {
             await Task.Run(() =>
             {
-                SelectDifficultyVisibility = "Hidden";
-                SelectNumberVisibility = "Hidden";
-                SelectMarkerVisibility = "Hidden";
+                HideAll();
                 numbersListValue = new NumbersListModel();
+                markersListValue = new MarkersListModel();
                 numbersColorsListValue = new NumbersColorsListModel();
                 generatorNumbers = new List<string>();
                 numbersListValue.InitializeList();
+                markersListValue.InitializeList();
                 numbersColorsListValue.InitializeList();
                 NumbersList = numbersListValue;
+                MarkersList = markersListValue;
                 NumbersColorsList = numbersColorsListValue;
+            });
+        }
+        private async Task MenuSaveToSlotAction(object o)
+        {
+            await Task.Run(() =>
+            {
+                if (numbersListValue != null && markersListValue != null && numbersColorsListValue != null)
+                {
+                    string slotNumber = (string)o;
+                    SaveSlots saveSlots = new SaveSlots(folderAppSettings);
+                    saveSlots.SaveAll(numbersListValue, markersListValue, numbersColorsListValue, slotNumber);
+                }
+            });
+        }
+        private async Task MenuLoadFromSlotAction(object o)
+        {
+            await Task.Run(() =>
+            {
+                string slotNumber = (string)o;
+                string filename = Path.Combine(folderAppSettings, "slot" + slotNumber + ".json");
+                if (File.Exists(filename))
+                {
+                    HideAll();
+                    SaveSlots saveSlots = new SaveSlots(folderAppSettings);
+                    SaveSlots.ListsStruct listsStruct = saveSlots.LoadAll(slotNumber);
+                    NumbersList = listsStruct.NumbersList;
+                    MarkersList = listsStruct.MarkersList;
+                    NumbersColorsList = listsStruct.NumbersColorsList;
+                }
             });
         }
         private async Task ButtonDifficultyAction()
@@ -181,19 +225,15 @@ namespace Sudoku.ViewModels
         private async Task ButtonDifficultyEasyAction()
         {
             await Task.Run(() => {
-            SelectDifficultyVisibility = "Hidden";
-            SelectNumberVisibility = "Hidden";
-            SelectMarkerVisibility = "Hidden";
-            NewGame("Easy");
+                HideAll();
+                NewGame("Easy");
             });
         }
         private async Task ButtonDifficultyMediumAction()
         {
             await Task.Run(() =>
             {
-                SelectDifficultyVisibility = "Hidden";
-                SelectNumberVisibility = "Hidden";
-                SelectMarkerVisibility = "Hidden";
+                HideAll();
                 NewGame("Medium");
             });
         }
@@ -201,9 +241,7 @@ namespace Sudoku.ViewModels
         {
             await Task.Run(() =>
             {
-                SelectDifficultyVisibility = "Hidden";
-                SelectNumberVisibility = "Hidden";
-                SelectMarkerVisibility = "Hidden";
+                HideAll();
                 NewGame("Hard");
             });
         }
@@ -549,15 +587,15 @@ namespace Sudoku.ViewModels
 
                 if (difficulty == "Easy")
                 {
-                    generatorGameLogic.RemoveNumbers = 42;
+                    generatorGameLogic.RemoveNumbers = 42; // 42
                 }
                 else if (difficulty == "Medium")
                 {
-                    generatorGameLogic.RemoveNumbers = 50;
+                    generatorGameLogic.RemoveNumbers = 50; // 50
                 }
                 else if (difficulty == "Hard")
                 {
-                    generatorGameLogic.RemoveNumbers = 57;
+                    generatorGameLogic.RemoveNumbers = 57; // 57
                 }
 
                 generatorGameLogic.NumbersList = NumbersListModel.CopyList(numbersListSolved);
@@ -629,6 +667,12 @@ namespace Sudoku.ViewModels
                 }
             }
             LabelValidateText = "Keine Konflikte!";
+        }
+        private void HideAll()
+        {
+            SelectDifficultyVisibility = "Hidden";
+            SelectNumberVisibility = "Hidden";
+            SelectMarkerVisibility = "Hidden";
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)

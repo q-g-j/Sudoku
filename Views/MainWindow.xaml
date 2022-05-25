@@ -96,9 +96,22 @@
             <MenuItem Header="_Spiel">
                 <MenuItem Header="_Leeres Spielfeld" Command="{Binding MenuNewCommand}"></MenuItem>
                 <!--<MenuItem Header="Sudoku öffnen..."></MenuItem>
-                <MenuItem Header="Sudoku speichern..."></MenuItem>
-                <MenuItem Header="Sudoku drucken"></MenuItem>-->
+                <MenuItem Header="Sudoku speichern..."></MenuItem>-->
+                <!--<MenuItem Header="Sudoku drucken"></MenuItem>-->
                 <Separator></Separator>
+                <MenuItem Header="Speicher-Slots">
+                    <MenuItem Header="Slot 1: speichern" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="1"></MenuItem>
+                    <MenuItem Header="Slot 2: speichern" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="2"></MenuItem>
+                    <MenuItem Header="Slot 3: speichern" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="3"></MenuItem>
+                    <MenuItem Header="Slot 4: speichern" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="4"></MenuItem>
+                    <MenuItem Header="Slot 5: speichern" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="5"></MenuItem>
+                    <Separator></Separator>
+                    <MenuItem Header="Slot 1: laden" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="1"></MenuItem>
+                    <MenuItem Header="Slot 2: laden" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="2"></MenuItem>
+                    <MenuItem Header="Slot 3: laden" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="3"></MenuItem>
+                    <MenuItem Header="Slot 4: laden" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="4"></MenuItem>
+                    <MenuItem Header="Slot 5: laden" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="5"></MenuItem>
+                </MenuItem>
                 <MenuItem Header="Programm _beenden" Click="MenuQuitClick"></MenuItem>
             </MenuItem>
             <MenuItem HorizontalAlignment="Right" Header="_Hilfe">
@@ -2216,7 +2229,7 @@
                     Margin="20, 20, 20, 0"
                     HorizontalAlignment="Center"
                     Command="{Binding ButtonDifficultyCommand}"
-                    Content="{Binding ButtonDifficultyText}"
+                    Content="Neues Spiel"
                     Style="{StaticResource GameButton}"
                     Width="{Binding ButtonDifficultyWidth}">
                     <Button.Resources>
