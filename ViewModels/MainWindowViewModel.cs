@@ -11,8 +11,10 @@ using CommunityToolkit.Mvvm.Input;
 using System.Threading.Tasks;
 using System;
 using System.IO;
+using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Windows;
+using Newtonsoft.Json.Linq;
 
 namespace Sudoku.ViewModels
 {
@@ -35,6 +37,26 @@ namespace Sudoku.ViewModels
             {
                 Directory.CreateDirectory(folderAppSettings);
             }
+
+            List<string> list = new List<string>();
+            for (int i = 0; i < 5; i++)
+            {
+                list.Add("Slot " + (i + 1).ToString() + ": laden");
+                string filename = Path.Combine(folderAppSettings, "slot" + (i + 1).ToString() + ".json");
+                if (File.Exists(filename))
+                {
+                    using (var file = File.OpenText(filename))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        Dictionary<string, object> listsDict = (Dictionary<string, object>)serializer.Deserialize(file, typeof(Dictionary<string, object>));
+
+                        DateTime dateAndTime = (DateTime)listsDict["DateAndTime"];
+                        list[i] += " (" + dateAndTime.ToString() + ")";
+                    }
+                }
+            }
+
+            MenuSaveSlotsText = list;
 
             generatorNumbers = new List<string>();
             numbersListValue = new NumbersListModel();
@@ -59,13 +81,15 @@ namespace Sudoku.ViewModels
         #region Private variables
         private string currentButtonIndex;
         private List<string> generatorNumbers;
-        string folderAppSettings;
+        readonly string folderAppSettings;
         #endregion Private variables
 
         #region Property values
         private NumbersListModel numbersListValue;
         private MarkersListModel markersListValue;
         private NumbersColorsListModel numbersColorsListValue;
+
+        private List<string> menuSaveSlotsTextValue;
 
         private string buttonDifficultyTextValue;
         private string labelValidateTextValue;
@@ -94,11 +118,15 @@ namespace Sudoku.ViewModels
         public IAsyncRelayCommand ButtonSquareDownCommand { get; }
         public IAsyncRelayCommand ButtonSquareUpCommand { get; }
 
+        public List<string> MenuSaveSlotsText
+        {
+            get => menuSaveSlotsTextValue;
+            set { menuSaveSlotsTextValue = value; OnPropertyChanged(); }
+        }
         public NumbersListModel NumbersList
         {
             get => numbersListValue;
-            set { numbersListValue = value; OnPropertyChanged();
-            }
+            set { numbersListValue = value; OnPropertyChanged(); }
         }
         public MarkersListModel MarkersList
         {
@@ -174,11 +202,15 @@ namespace Sudoku.ViewModels
         {
             await Task.Run(() =>
             {
-                if (numbersListValue != null && markersListValue != null && numbersColorsListValue != null)
+                if (numbersListValue != null && markersListValue != null && numbersColorsListValue != null && generatorNumbers != null)
                 {
+                    DateTime now = DateTime.Now;
                     string slotNumber = (string)o;
                     SaveSlots saveSlots = new SaveSlots(folderAppSettings);
-                    saveSlots.SaveAll(numbersListValue, markersListValue, numbersColorsListValue, generatorNumbers, slotNumber);
+                    saveSlots.SaveAll(numbersListValue, markersListValue, numbersColorsListValue, generatorNumbers, now, slotNumber);
+                    List<string> tempList = menuSaveSlotsTextValue;
+                    tempList[int.Parse(slotNumber) - 1] = "Slot " + slotNumber + ": laden (" + now + ")";
+                    MenuSaveSlotsText = tempList;
                 }
             });
         }

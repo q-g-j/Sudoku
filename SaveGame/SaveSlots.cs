@@ -20,18 +20,20 @@ namespace Sudoku.SaveGame
 
         internal struct ListsStruct
         {
+            internal DateTime DateAndTime;
             internal NumbersListModel NumbersList;
             internal MarkersListModel MarkersList;
             internal NumbersColorsListModel NumbersColorsList;
             internal List<string> GeneratorNumbers;
         }
 
-        internal void SaveAll(NumbersListModel numbersList, MarkersListModel markersList, NumbersColorsListModel numbersColorsList, List<String> generatorNumbers, string slotNumber)
+        internal void SaveAll(NumbersListModel numbersList, MarkersListModel markersList, NumbersColorsListModel numbersColorsList, List<String> generatorNumbers, DateTime now, string slotNumber)
         {
             string filename = Path.Combine(folderAppSettings, "slot" + slotNumber + ".json");
 
             Dictionary<string, object> listsDict = new Dictionary<string, object>
             {
+                ["DateAndTime"] = now,
                 ["NumbersList"] = numbersList,
                 ["MarkersList"] = markersList,
                 ["NumbersColorsList"] = numbersColorsList,
@@ -55,6 +57,7 @@ namespace Sudoku.SaveGame
                 JsonSerializer serializer = new JsonSerializer();
                 Dictionary<string, object> listsDict = (Dictionary<string, object>)serializer.Deserialize(file, typeof(Dictionary<string, object>));
 
+                listsStruct.DateAndTime = (DateTime)listsDict["DateAndTime"];
                 listsStruct.NumbersList = ((JArray)listsDict["NumbersList"]).ToObject<NumbersListModel>();
                 listsStruct.MarkersList = ((JArray)listsDict["MarkersList"]).ToObject<MarkersListModel>();
                 listsStruct.NumbersColorsList = ((JArray)listsDict["NumbersColorsList"]).ToObject<NumbersColorsListModel>();

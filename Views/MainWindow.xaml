@@ -106,11 +106,11 @@
                     <MenuItem Header="Slot 4: speichern" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="4"></MenuItem>
                     <MenuItem Header="Slot 5: speichern" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="5"></MenuItem>
                     <Separator></Separator>
-                    <MenuItem Header="Slot 1: laden" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="1"></MenuItem>
-                    <MenuItem Header="Slot 2: laden" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="2"></MenuItem>
-                    <MenuItem Header="Slot 3: laden" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="3"></MenuItem>
-                    <MenuItem Header="Slot 4: laden" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="4"></MenuItem>
-                    <MenuItem Header="Slot 5: laden" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="5"></MenuItem>
+                    <MenuItem Header="{Binding MenuSaveSlotsText[0]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="1"></MenuItem>
+                    <MenuItem Header="{Binding MenuSaveSlotsText[1]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="2"></MenuItem>
+                    <MenuItem Header="{Binding MenuSaveSlotsText[2]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="3"></MenuItem>
+                    <MenuItem Header="{Binding MenuSaveSlotsText[3]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="4"></MenuItem>
+                    <MenuItem Header="{Binding MenuSaveSlotsText[4]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="5"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Programm _beenden" Click="MenuQuitClick"></MenuItem>
             </MenuItem>
