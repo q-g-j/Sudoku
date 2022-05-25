@@ -23,9 +23,10 @@ namespace Sudoku.SaveGame
             internal NumbersListModel NumbersList;
             internal MarkersListModel MarkersList;
             internal NumbersColorsListModel NumbersColorsList;
+            internal List<string> GeneratorNumbers;
         }
 
-        internal void SaveAll(NumbersListModel numbersList, MarkersListModel markersList, NumbersColorsListModel numbersColorsList, string slotNumber)
+        internal void SaveAll(NumbersListModel numbersList, MarkersListModel markersList, NumbersColorsListModel numbersColorsList, List<String> generatorNumbers, string slotNumber)
         {
             string filename = Path.Combine(folderAppSettings, "slot" + slotNumber + ".json");
 
@@ -34,6 +35,7 @@ namespace Sudoku.SaveGame
                 ["NumbersList"] = numbersList,
                 ["MarkersList"] = markersList,
                 ["NumbersColorsList"] = numbersColorsList,
+                ["GeneratorNumbers"] = generatorNumbers
             };
 
             using (var file = File.CreateText(@filename))
@@ -56,6 +58,7 @@ namespace Sudoku.SaveGame
                 listsStruct.NumbersList = ((JArray)listsDict["NumbersList"]).ToObject<NumbersListModel>();
                 listsStruct.MarkersList = ((JArray)listsDict["MarkersList"]).ToObject<MarkersListModel>();
                 listsStruct.NumbersColorsList = ((JArray)listsDict["NumbersColorsList"]).ToObject<NumbersColorsListModel>();
+                listsStruct.GeneratorNumbers = ((JArray)listsDict["GeneratorNumbers"]).ToObject<List<string>>();
             }
 
             return listsStruct;

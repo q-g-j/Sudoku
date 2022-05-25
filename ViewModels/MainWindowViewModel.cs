@@ -178,7 +178,7 @@ namespace Sudoku.ViewModels
                 {
                     string slotNumber = (string)o;
                     SaveSlots saveSlots = new SaveSlots(folderAppSettings);
-                    saveSlots.SaveAll(numbersListValue, markersListValue, numbersColorsListValue, slotNumber);
+                    saveSlots.SaveAll(numbersListValue, markersListValue, numbersColorsListValue, generatorNumbers, slotNumber);
                 }
             });
         }
@@ -196,6 +196,7 @@ namespace Sudoku.ViewModels
                     NumbersList = listsStruct.NumbersList;
                     MarkersList = listsStruct.MarkersList;
                     NumbersColorsList = listsStruct.NumbersColorsList;
+                    generatorNumbers = listsStruct.GeneratorNumbers;
                 }
             });
         }
