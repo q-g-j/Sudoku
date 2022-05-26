@@ -1,21 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
+using Newtonsoft.Json;
 using Sudoku.GameLogic;
 using Sudoku.Models;
 using Sudoku.Helpers;
-using Sudoku.Settings;
-using Sudoku.SaveGame;
 using Sudoku.Properties;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.Input;
-using System.Threading.Tasks;
-using System;
-using System.IO;
-using Newtonsoft.Json;
-using System.Diagnostics;
-using System.Windows;
-using Newtonsoft.Json.Linq;
 
 namespace Sudoku.ViewModels
 {
@@ -250,7 +246,7 @@ namespace Sudoku.ViewModels
                 {
                     DateTime now = DateTime.Now;
                     string slotNumber = (string)o;
-                    SaveSlots saveSlots = new SaveSlots(folderAppSettings);
+                    SaveSlotsModel saveSlots = new SaveSlotsModel(folderAppSettings);
                     saveSlots.SaveAll(numbersListValue, markersListValue, numbersColorsListValue, generatorNumbers, now, slotNumber);
                     List<string> tempList = menuSaveSlotsTextValue;
                     tempList[int.Parse(slotNumber) - 1] = "Slot " + slotNumber + ": laden (" + now + ")";
@@ -267,8 +263,8 @@ namespace Sudoku.ViewModels
                 if (File.Exists(filename))
                 {
                     HideOverlays();
-                    SaveSlots saveSlots = new SaveSlots(folderAppSettings);
-                    SaveSlots.ListsStruct listsStruct = saveSlots.LoadAll(slotNumber);
+                    SaveSlotsModel saveSlots = new SaveSlotsModel(folderAppSettings);
+                    SaveSlotsModel.ListsStruct listsStruct = saveSlots.LoadAll(slotNumber);
                     NumbersList = listsStruct.NumbersList;
                     MarkersList = listsStruct.MarkersList;
                     NumbersColorsList = listsStruct.NumbersColorsList;

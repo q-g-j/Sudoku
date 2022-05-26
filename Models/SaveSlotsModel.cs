@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Sudoku.Models;
 using System.IO;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Sudoku.SaveGame
+namespace Sudoku.Models
 {
-    internal class SaveSlots
+    internal class SaveSlotsModel
     {
-        internal SaveSlots(string _folderAppSettings)
+        internal SaveSlotsModel(string _folderAppSettings)
         {
             folderAppSettings = _folderAppSettings;
         }

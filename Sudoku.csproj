@@ -122,7 +122,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="SaveGame\SaveSlots.cs" />
+    <Compile Include="Models\SaveSlotsModel.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="GameLogic\GeneratorGameLogic.cs" />
     <Compile Include="GameLogic\SolverGameLogic.cs" />

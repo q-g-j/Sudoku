@@ -6,18 +6,18 @@
 
 
 
+using System;
+using System.Reflection;
+using System.Windows;
+using System.Windows.Input;
+using System.Globalization;
+using System.Windows.Data;
+using Microsoft.Xaml.Behaviors;
+
 // Copyright (c) Microsoft. All rights reserved. 
 // Licensed under the MIT license. See LICENSE file in the project root for full license information. 
 namespace Sudoku.Helpers
 {
-    using System;
-    using System.Diagnostics;
-    using System.Reflection;
-    using System.Windows;
-    using System.Windows.Input;
-    using System.Globalization;
-    using System.Windows.Data;
-    using Microsoft.Xaml.Behaviors;
 
     /// <summary>
     /// Executes a specified ICommand when invoked.

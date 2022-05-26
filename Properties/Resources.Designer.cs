@@ -70,7 +70,7 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Medium.
+        ///   Looks up a localized string similar to Hard.
         /// </summary>
         public static string ButtonDifficultyHard {
             get {
@@ -79,7 +79,7 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hard.
+        ///   Looks up a localized string similar to Medium.
         /// </summary>
         public static string ButtonDifficultyMedium {
             get {
