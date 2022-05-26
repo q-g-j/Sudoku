@@ -79,7 +79,7 @@ namespace Sudoku.GameLogic
                         {
                             counter++;
                         }
-                        if (counter < RemoveNumbers && tries < 20)
+                        if (counter > (81 - RemoveNumbers) / 9 + 2 && tries < 20)
                         {
                             GenerateUniqueSudoku();
                         }
@@ -158,7 +158,7 @@ namespace Sudoku.GameLogic
                         }
                     }
 
-                    if (countNumbers > 8 && countNumbers > currentCountNumbers)
+                    if (countNumbers > (81 - RemoveNumbers) / 9 + 2 && countNumbers > currentCountNumbers)
                     {
                         return true;
                     }

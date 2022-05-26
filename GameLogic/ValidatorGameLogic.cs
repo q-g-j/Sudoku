@@ -12,9 +12,6 @@ namespace Sudoku.GameLogic
                 return true;
             }
 
-            string oldNum = numbersList[col][row];
-            numbersList[col][row] = number;
-
             // validate row:
             for (int i = 0; i < 9; i++)
             {
@@ -22,7 +19,6 @@ namespace Sudoku.GameLogic
                 {
                     if (numbersList[i][row] == number)
                     {
-                        numbersList[col][row] = oldNum;
                         return false;
                     }
                 }
@@ -35,7 +31,6 @@ namespace Sudoku.GameLogic
                 {
                     if (numbersList[col][i] == number)
                     {
-                        numbersList[col][row] = oldNum;
                         return false;
                     }
                 }
@@ -53,14 +48,12 @@ namespace Sudoku.GameLogic
                     {
                         if (numbersList[j][i] == number)
                         {
-                            numbersList[col][row] = oldNum;
                             return false;
                         }
                     }
                 }
             }
 
-            numbersList[col][row] = oldNum;
             return true;
         }
     }
