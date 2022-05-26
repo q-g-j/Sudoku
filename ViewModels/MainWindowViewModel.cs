@@ -204,24 +204,27 @@ namespace Sudoku.ViewModels
         {
             await Task.Run(() =>
             {
-                HideAll();
-                SolverGameLogic solverGameLogic = new SolverGameLogic(numbersListValue);
-                solverGameLogic.FillSudoku();
-                markersListValue = new MarkersListModel();
-                numbersColorsListValue = new NumbersColorsListModel();
-                markersListValue.InitializeList();
-                numbersColorsListValue.InitializeList();
-                foreach (string coords in generatorNumbers)
+                if (!SolverGameLogic.IsFull(numbersListValue))
                 {
-                    int col = int.Parse(coords[0].ToString());
-                    int row = int.Parse(coords[1].ToString());
+                    HideAll();
+                    SolverGameLogic solverGameLogic = new SolverGameLogic(numbersListValue);
+                    solverGameLogic.FillSudoku();
+                    markersListValue = new MarkersListModel();
+                    numbersColorsListValue = new NumbersColorsListModel();
+                    markersListValue.InitializeList();
+                    numbersColorsListValue.InitializeList();
+                    foreach (string coords in generatorNumbers)
+                    {
+                        int col = int.Parse(coords[0].ToString());
+                        int row = int.Parse(coords[1].ToString());
 
-                    numbersColorsListValue[col][row] = "Black";
+                        numbersColorsListValue[col][row] = "Black";
+                    }
+                    MarkersList = markersListValue;
+                    NumbersColorsList = numbersColorsListValue;
+                    NumbersList = NumbersListModel.CopyList(solverGameLogic.NumbersListSolved);
+                    ChangeButtonValidateVisibility();
                 }
-                MarkersList = markersListValue;
-                NumbersColorsList = numbersColorsListValue;
-                NumbersList = NumbersListModel.CopyList(solverGameLogic.NumbersListSolved);
-                ChangeButtonValidateVisibility();
             });
         }
         private async Task MenuSaveToSlotAction(object o)
