@@ -117,11 +117,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Properties\Resources.de.Designer.cs">
-      <DependentUpon>Resources.de.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Models\SaveSlotsModel.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="GameLogic\GeneratorGameLogic.cs" />

@@ -718,6 +718,7 @@ namespace Sudoku.ViewModels
             markersListValue = new MarkersListModel();
             markersListValue.InitializeList();
             MarkersList = markersListValue;
+            HideValidation();
         }
         private void ValidateAll()
         {
