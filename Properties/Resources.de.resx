@@ -133,10 +133,10 @@
     <value>Überprüfen</value>
   </data>
   <data name="LabelOverlayChooseMarker" xml:space="preserve">
-    <value>Zahl setzen</value>
+    <value>Marker setzen</value>
   </data>
   <data name="LabelOverlayChooseNumber" xml:space="preserve">
-    <value>Marker setzen</value>
+    <value>Zahl setzen</value>
   </data>
   <data name="LabelValidateConflicts" xml:space="preserve">
     <value>Konflikte gefunden!</value>
