@@ -121,10 +121,10 @@
     <value>Easy</value>
   </data>
   <data name="ButtonDifficultyHard" xml:space="preserve">
-    <value>Medium</value>
+    <value>Hard</value>
   </data>
   <data name="ButtonDifficultyMedium" xml:space="preserve">
-    <value>Hard</value>
+    <value>Medium</value>
   </data>
   <data name="ButtonNewGame" xml:space="preserve">
     <value>New Game</value>
