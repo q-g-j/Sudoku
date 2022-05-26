@@ -1,13 +1,15 @@
 # Sudoku
 
-### Written in C# with WPF and .NET Framework 4.7
+**Written in C# with WPF and .NET Framework 4.7**
 
-#### Features:
+### Features:
 
 - random puzzle generator with 3 difficulties
 - 5 save slots (keyboard shortcuts in the works...)
 - solve current Sudoku from the menu
 - complete mouse input
+
+***Texts are currently in German***
 
 Controls:
 ---------
