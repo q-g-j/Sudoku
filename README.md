@@ -5,7 +5,7 @@
 ### Features:
 
 - random puzzle generator with 3 difficulties
-- 5 save slots (keyboard shortcuts in the works...)
+- 5 save slots
 - solve current Sudoku from the menu
 - complete mouse input
 
@@ -17,3 +17,9 @@ Controls:
 |-|-|
 |Left click|place a number|
 |Right click|place a marker (up to 8 in one square)|
+
+***In the works:***
+-------------
+- *program icon*
+- *English translation*
+- *keyboard shortcuts for saving / loading*
