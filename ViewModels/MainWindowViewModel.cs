@@ -249,7 +249,11 @@ namespace Sudoku.ViewModels
                     SaveSlotsModel saveSlots = new SaveSlotsModel(folderAppSettings);
                     saveSlots.SaveAll(numbersListValue, markersListValue, numbersColorsListValue, generatorNumbers, now, slotNumber);
                     List<string> tempList = menuSaveSlotsTextValue;
-                    tempList[int.Parse(slotNumber) - 1] = "Slot " + slotNumber + ": laden (" + now + ")";
+                    if      (slotNumber == "1") tempList[0] = Resources.MenuGameSaveSlotsLoadFromSlot1 + " (" + now + ")";
+                    else if (slotNumber == "2") tempList[1] = Resources.MenuGameSaveSlotsLoadFromSlot2 + " (" + now + ")";
+                    else if (slotNumber == "3") tempList[2] = Resources.MenuGameSaveSlotsLoadFromSlot3 + " (" + now + ")";
+                    else if (slotNumber == "4") tempList[3] = Resources.MenuGameSaveSlotsLoadFromSlot4 + " (" + now + ")";
+                    else if (slotNumber == "5") tempList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5 + " (" + now + ")";
                     MenuSaveSlotsText = tempList;
                 }
             });
