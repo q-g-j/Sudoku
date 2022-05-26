@@ -207,7 +207,9 @@ namespace Sudoku.ViewModels
                 HideAll();
                 SolverGameLogic solverGameLogic = new SolverGameLogic(numbersListValue);
                 solverGameLogic.FillSudoku();
+                markersListValue = new MarkersListModel();
                 numbersColorsListValue = new NumbersColorsListModel();
+                markersListValue.InitializeList();
                 numbersColorsListValue.InitializeList();
                 foreach (string coords in generatorNumbers)
                 {
@@ -216,6 +218,7 @@ namespace Sudoku.ViewModels
 
                     numbersColorsListValue[col][row] = "Black";
                 }
+                MarkersList = markersListValue;
                 NumbersColorsList = numbersColorsListValue;
                 NumbersList = NumbersListModel.CopyList(solverGameLogic.NumbersListSolved);
                 ChangeButtonValidateVisibility();
