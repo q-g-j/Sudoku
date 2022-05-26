@@ -124,6 +124,24 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Conflicts found!.
+        /// </summary>
+        public static string LabelValidateConflicts {
+            get {
+                return ResourceManager.GetString("LabelValidateConflicts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No conflicts found.
+        /// </summary>
+        public static string LabelValidateNoConflicts {
+            get {
+                return ResourceManager.GetString("LabelValidateNoConflicts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game.
         /// </summary>
         public static string MenuGame {

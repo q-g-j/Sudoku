@@ -138,6 +138,12 @@
   <data name="LabelOverlayChooseNumber" xml:space="preserve">
     <value>Place a number</value>
   </data>
+  <data name="LabelValidateConflicts" xml:space="preserve">
+    <value>Conflicts found!</value>
+  </data>
+  <data name="LabelValidateNoConflicts" xml:space="preserve">
+    <value>No conflicts found</value>
+  </data>
   <data name="MenuGame" xml:space="preserve">
     <value>Game</value>
   </data>

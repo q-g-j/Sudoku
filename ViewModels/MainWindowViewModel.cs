@@ -738,12 +738,12 @@ namespace Sudoku.ViewModels
                     string number = numbersListValue[col][row];
                     if (! ValidatorGameLogic.IsValid(numbersListValue, col, row, number))
                     {
-                        LabelValidateText = "Konflikte gefunden!";
+                        LabelValidateText = Resources.LabelValidateConflicts;
                         return;
                     }
                 }
             }
-            LabelValidateText = "Keine Konflikte!";
+            LabelValidateText = Resources.LabelValidateNoConflicts;
         }
         private void HideOverlays()
         {
