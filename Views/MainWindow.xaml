@@ -95,8 +95,7 @@
             </Menu.ItemsPanel>
             <MenuItem Header="_Spiel">
                 <MenuItem Header="_Leeres Spielfeld" Command="{Binding MenuNewCommand}"></MenuItem>
-                <!--<MenuItem Header="Sudoku öffnen..."></MenuItem>
-                <MenuItem Header="Sudoku speichern..."></MenuItem>-->
+                <MenuItem Header="Sudoku lösen" Command="{Binding MenuSolveCommand}" ></MenuItem>
                 <!--<MenuItem Header="Sudoku drucken"></MenuItem>-->
                 <Separator></Separator>
                 <MenuItem Header="Speicher-Slots">
@@ -112,6 +111,7 @@
                     <MenuItem Header="{Binding MenuSaveSlotsText[3]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="4"></MenuItem>
                     <MenuItem Header="{Binding MenuSaveSlotsText[4]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="5"></MenuItem>
                 </MenuItem>
+                <Separator></Separator>
                 <MenuItem Header="Programm _beenden" Click="MenuQuitClick"></MenuItem>
             </MenuItem>
             <MenuItem HorizontalAlignment="Right" Header="_Hilfe">

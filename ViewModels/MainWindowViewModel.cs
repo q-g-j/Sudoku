@@ -63,6 +63,7 @@ namespace Sudoku.ViewModels
             numbersListValue.InitializeList();
 
             MenuNewCommand = new AsyncRelayCommand(MenuNewAction);
+            MenuSolveCommand = new AsyncRelayCommand(MenuSolveAction);
             MenuSaveToSlotCommand = new AsyncRelayCommand<object>(o => MenuSaveToSlotAction(o));
             MenuLoadFromSlotCommand = new AsyncRelayCommand<object>(o => MenuLoadFromSlotAction(o));
             ButtonDifficultyCommand = new AsyncRelayCommand(ButtonDifficultyAction);
@@ -104,6 +105,7 @@ namespace Sudoku.ViewModels
 
         #region Properties
         public IAsyncRelayCommand MenuNewCommand { get; }
+        public IAsyncRelayCommand MenuSolveCommand { get; }
         public IAsyncRelayCommand MenuSaveToSlotCommand { get; }
         public IAsyncRelayCommand MenuLoadFromSlotCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyCommand { get; }
@@ -196,6 +198,27 @@ namespace Sudoku.ViewModels
                 NumbersList = numbersListValue;
                 MarkersList = markersListValue;
                 NumbersColorsList = numbersColorsListValue;
+            });
+        }
+        private async Task MenuSolveAction()
+        {
+            await Task.Run(() =>
+            {
+                HideAll();
+                SolverGameLogic solverGameLogic = new SolverGameLogic(numbersListValue);
+                solverGameLogic.FillSudoku();
+                numbersColorsListValue = new NumbersColorsListModel();
+                numbersColorsListValue.InitializeList();
+                foreach (string coords in generatorNumbers)
+                {
+                    int col = int.Parse(coords[0].ToString());
+                    int row = int.Parse(coords[1].ToString());
+
+                    numbersColorsListValue[col][row] = "Black";
+                }
+                NumbersColorsList = numbersColorsListValue;
+                NumbersList = NumbersListModel.CopyList(solverGameLogic.NumbersListSolved);
+                ChangeButtonValidateVisibility();
             });
         }
         private async Task MenuSaveToSlotAction(object o)
@@ -703,6 +726,7 @@ namespace Sudoku.ViewModels
         }
         private void HideAll()
         {
+            LabelValidateVisibility = "Collapsed";
             SelectDifficultyVisibility = "Hidden";
             SelectNumberVisibility = "Hidden";
             SelectMarkerVisibility = "Hidden";
