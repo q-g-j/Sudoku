@@ -5,7 +5,7 @@
 ### Features:
 
 - random puzzle generator with 3 difficulties
-- 5 save slots
+- 5 save slots *(save files location: %APPDATA%\SudokuGame)*
 - solve current Sudoku from the menu
 - complete mouse input
 
