@@ -9,8 +9,6 @@
 - solve current Sudoku from the menu
 - complete mouse input
 
-***Texts are currently in German***
-
 Controls:
 ---------
 |Mouse button|Action|
@@ -21,5 +19,4 @@ Controls:
 ***In the works:***
 -------------
 - *program icon*
-- *English translation*
 - *keyboard shortcuts for saving / loading*
