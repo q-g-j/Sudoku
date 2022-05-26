@@ -2,7 +2,8 @@
 
 **Written in C# with WPF and .NET Framework 4.7**
 
-### Features:
+Features:
+---------
 
 - random puzzle generator with 3 difficulties
 - 5 save slots *(save files location: %APPDATA%\SudokuGame)*
