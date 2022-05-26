@@ -118,84 +118,84 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonDifficultyEasy" xml:space="preserve">
-    <value>Easy</value>
+    <value>Leicht</value>
   </data>
   <data name="ButtonDifficultyHard" xml:space="preserve">
-    <value>Medium</value>
+    <value>Mittel</value>
   </data>
   <data name="ButtonDifficultyMedium" xml:space="preserve">
-    <value>Hard</value>
+    <value>Schwer</value>
   </data>
   <data name="ButtonNewGame" xml:space="preserve">
-    <value>New Game</value>
+    <value>Neues Spiel</value>
   </data>
   <data name="ButtonValidate" xml:space="preserve">
-    <value>Validate</value>
+    <value>Überprüfen</value>
   </data>
   <data name="LabelOverlayChooseMarker" xml:space="preserve">
-    <value>Place a marker</value>
+    <value>Zahl setzen</value>
   </data>
   <data name="LabelOverlayChooseNumber" xml:space="preserve">
-    <value>Place a number</value>
+    <value>Marker setzen</value>
   </data>
   <data name="MenuGame" xml:space="preserve">
-    <value>Game</value>
+    <value>Spiel</value>
   </data>
   <data name="MenuGameEmptySudoku" xml:space="preserve">
-    <value>Empty Sudoku</value>
+    <value>Leeres Sudoku</value>
   </data>
   <data name="MenuGameQuitProgram" xml:space="preserve">
-    <value>Quit program</value>
+    <value>Programm beenden</value>
   </data>
   <data name="MenuGameSaveSlots" xml:space="preserve">
-    <value>Save Slots</value>
+    <value>Speicher-Slots</value>
   </data>
   <data name="MenuGameSaveSlotsDeleteAll" xml:space="preserve">
-    <value>Delete all slots</value>
+    <value>Lösche alle Slots</value>
   </data>
   <data name="MenuGameSaveSlotsLoadFromSlot1" xml:space="preserve">
-    <value>Slot 1: Load</value>
+    <value>Slot 1: Laden</value>
   </data>
   <data name="MenuGameSaveSlotsLoadFromSlot2" xml:space="preserve">
-    <value>Slot 2: Load</value>
+    <value>Slot 2: Laden</value>
   </data>
   <data name="MenuGameSaveSlotsLoadFromSlot3" xml:space="preserve">
-    <value>Slot 3: Load</value>
+    <value>Slot 3: Laden</value>
   </data>
   <data name="MenuGameSaveSlotsLoadFromSlot4" xml:space="preserve">
-    <value>Slot 4: Load</value>
+    <value>Slot 4: Laden</value>
   </data>
   <data name="MenuGameSaveSlotsLoadFromSlot5" xml:space="preserve">
-    <value>Slot 5: Load</value>
+    <value>Slot 5: Laden</value>
   </data>
   <data name="MenuGameSaveSlotsSaveToSlot1" xml:space="preserve">
-    <value>Slot 1: Save</value>
+    <value>Slot 1: Speichern</value>
   </data>
   <data name="MenuGameSaveSlotsSaveToSlot2" xml:space="preserve">
-    <value>Slot 2: Save</value>
+    <value>Slot 2: Speichern</value>
   </data>
   <data name="MenuGameSaveSlotsSaveToSlot3" xml:space="preserve">
-    <value>Slot 3: Save</value>
+    <value>Slot 3: Speichern</value>
   </data>
   <data name="MenuGameSaveSlotsSaveToSlot4" xml:space="preserve">
-    <value>Slot 4: Save</value>
+    <value>Slot 4: Speichern</value>
   </data>
   <data name="MenuGameSaveSlotsSaveToSlot5" xml:space="preserve">
-    <value>Slot 5: Save</value>
+    <value>Slot 5: Speichern</value>
   </data>
   <data name="MenuGameSettings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Einstellungen</value>
   </data>
   <data name="MenuGameSolveSudoku" xml:space="preserve">
-    <value>Solve this Sudoku</value>
+    <value>Sudoku lösen</value>
   </data>
   <data name="MenuHelp" xml:space="preserve">
-    <value>Help</value>
+    <value>Hilfe</value>
   </data>
   <data name="MenuHelpAbout" xml:space="preserve">
-    <value>About</value>
+    <value>Über</value>
   </data>
   <data name="MenuHelpRules" xml:space="preserve">
-    <value>Soduku rules</value>
+    <value>Sudoku-Regeln</value>
   </data>
 </root>

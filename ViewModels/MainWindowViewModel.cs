@@ -6,6 +6,7 @@ using Sudoku.Models;
 using Sudoku.Helpers;
 using Sudoku.Settings;
 using Sudoku.SaveGame;
+using Sudoku.Properties;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using System.Threading.Tasks;
@@ -41,7 +42,11 @@ namespace Sudoku.ViewModels
             List<string> list = new List<string>();
             for (int i = 0; i < 5; i++)
             {
-                list.Add("Slot " + (i + 1).ToString() + ": laden");
+                if      (i == 0) list.Add(Resources.MenuGameSaveSlotsLoadFromSlot1);
+                else if (i == 1) list.Add(Resources.MenuGameSaveSlotsLoadFromSlot2);
+                else if (i == 2) list.Add(Resources.MenuGameSaveSlotsLoadFromSlot3);
+                else if (i == 3) list.Add(Resources.MenuGameSaveSlotsLoadFromSlot4);
+                else if (i == 4) list.Add(Resources.MenuGameSaveSlotsLoadFromSlot5);
                 string filename = Path.Combine(folderAppSettings, "slot" + (i + 1).ToString() + ".json");
                 if (File.Exists(filename))
                 {
@@ -64,6 +69,7 @@ namespace Sudoku.ViewModels
 
             MenuNewCommand = new AsyncRelayCommand(MenuNewAction);
             MenuSolveCommand = new AsyncRelayCommand(MenuSolveAction);
+            MenuSettingsCommand = new AsyncRelayCommand(MenuSettingsAction);
             MenuSaveToSlotCommand = new AsyncRelayCommand<object>(o => MenuSaveToSlotAction(o));
             MenuLoadFromSlotCommand = new AsyncRelayCommand<object>(o => MenuLoadFromSlotAction(o));
             ButtonDifficultyCommand = new AsyncRelayCommand(ButtonDifficultyAction);
@@ -106,6 +112,7 @@ namespace Sudoku.ViewModels
         #region Properties
         public IAsyncRelayCommand MenuNewCommand { get; }
         public IAsyncRelayCommand MenuSolveCommand { get; }
+        public IAsyncRelayCommand MenuSettingsCommand { get; }
         public IAsyncRelayCommand MenuSaveToSlotCommand { get; }
         public IAsyncRelayCommand MenuLoadFromSlotCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyCommand { get; }
@@ -226,6 +233,13 @@ namespace Sudoku.ViewModels
                     NumbersList = NumbersListModel.CopyList(solverGameLogic.NumbersListSolved);
                     ChangeButtonValidateVisibility();
                 }
+            });
+        }
+        private async Task MenuSettingsAction()
+        {
+            await Task.Run(() =>
+            {
+                ;
             });
         }
         private async Task MenuSaveToSlotAction(object o)
@@ -708,8 +722,6 @@ namespace Sudoku.ViewModels
             markersListValue = new MarkersListModel();
             markersListValue.InitializeList();
             MarkersList = markersListValue;
-
-            ButtonDifficultyText = "Neues Spiel";
         }
         private void ValidateAll()
         {

@@ -7,6 +7,7 @@
         xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:b="clr-namespace:Sudoku.Helpers"
         xmlns:local="clr-namespace:Sudoku.Views"
+        xmlns:p="clr-namespace:Sudoku.Properties"
         xmlns:vm="clr-namespace:Sudoku.ViewModels"
         mc:Ignorable="d"
         Title="Sudoku"
@@ -93,30 +94,33 @@
                     <DockPanel HorizontalAlignment="Stretch"/>
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
-            <MenuItem Header="_Spiel">
-                <MenuItem Header="_Leeres Spielfeld" Command="{Binding MenuNewCommand}"></MenuItem>
-                <MenuItem Header="Sudoku lösen" Command="{Binding MenuSolveCommand}" ></MenuItem>
+            <MenuItem Header="{x:Static p:Resources.MenuGame}">
+                <MenuItem Header="{x:Static p:Resources.MenuGameEmptySudoku}" Command="{Binding MenuNewCommand}"></MenuItem>
+                <MenuItem Header="{x:Static p:Resources.MenuGameSolveSudoku}" Command="{Binding MenuSolveCommand}" ></MenuItem>
+                <!--<MenuItem Header="{x:Static p:Resources.MenuGameSettings}" Command="{Binding MenuSettingsCommand}" ></MenuItem>-->
                 <!--<MenuItem Header="Sudoku drucken"></MenuItem>-->
                 <Separator></Separator>
-                <MenuItem Header="Speicher-Slots">
-                    <MenuItem Header="Slot 1: speichern" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="1"></MenuItem>
-                    <MenuItem Header="Slot 2: speichern" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="2"></MenuItem>
-                    <MenuItem Header="Slot 3: speichern" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="3"></MenuItem>
-                    <MenuItem Header="Slot 4: speichern" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="4"></MenuItem>
-                    <MenuItem Header="Slot 5: speichern" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="5"></MenuItem>
+                <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlots}">
+                    <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlotsSaveToSlot1}" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="1"></MenuItem>
+                    <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlotsSaveToSlot2}" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="2"></MenuItem>
+                    <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlotsSaveToSlot3}" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="3"></MenuItem>
+                    <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlotsSaveToSlot4}" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="4"></MenuItem>
+                    <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlotsSaveToSlot5}" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="5"></MenuItem>
                     <Separator></Separator>
                     <MenuItem Header="{Binding MenuSaveSlotsText[0]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="1"></MenuItem>
                     <MenuItem Header="{Binding MenuSaveSlotsText[1]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="2"></MenuItem>
                     <MenuItem Header="{Binding MenuSaveSlotsText[2]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="3"></MenuItem>
                     <MenuItem Header="{Binding MenuSaveSlotsText[3]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="4"></MenuItem>
                     <MenuItem Header="{Binding MenuSaveSlotsText[4]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="5"></MenuItem>
+                    <!--<Separator></Separator>
+                    <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlotsDeleteAll}" Command="{Binding MenuDeleteAllSlotsCommand}" CommandParameter="5"></MenuItem>-->
                 </MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="Programm _beenden" Click="MenuQuitClick"></MenuItem>
+                <MenuItem Header="{x:Static p:Resources.MenuGameQuitProgram}" Click="MenuQuitClick"></MenuItem>
             </MenuItem>
-            <MenuItem HorizontalAlignment="Right" Header="_Hilfe">
-                <MenuItem Header="Sudoku-_Regeln"></MenuItem>
-                <MenuItem Header="_Über dieses Programm"></MenuItem>
+            <MenuItem HorizontalAlignment="Right" Header="{x:Static p:Resources.MenuHelp}">
+                <MenuItem Header="{x:Static p:Resources.MenuHelpRules}"></MenuItem>
+                <MenuItem Header="{x:Static p:Resources.MenuHelpAbout}"></MenuItem>
             </MenuItem>
         </Menu>
     <Viewbox>
@@ -1980,7 +1984,7 @@
                             BorderThickness="1"
                             BorderBrush="Black"
                             CornerRadius="25">
-                            <Label Margin="0" Padding="15, 5, 15, 5" Content="Zahl wählen" Style="{StaticResource LabelSelectNumber}">
+                                <Label Margin="0" Padding="15, 5, 15, 5" Content="{x:Static p:Resources.LabelOverlayChooseNumber}" Style="{StaticResource LabelSelectNumber}">
                                 <Label.Resources>
                                     <Style TargetType="Border">
                                         <Setter Property="CornerRadius" Value="25"/>
@@ -2129,7 +2133,7 @@
                             BorderThickness="1"
                             BorderBrush="Black"
                             CornerRadius="25">
-                            <Label Margin="0" Padding="15, 5, 15, 5" Content="Marker setzen" Style="{StaticResource LabelSelectMarker}">
+                                <Label Margin="0" Padding="15, 5, 15, 5" Content="{x:Static p:Resources.LabelOverlayChooseMarker}" Style="{StaticResource LabelSelectMarker}">
                                 <Label.Resources>
                                     <Style TargetType="Border">
                                         <Setter Property="CornerRadius" Value="25"/>
@@ -2229,7 +2233,7 @@
                     Margin="20, 20, 20, 0"
                     HorizontalAlignment="Center"
                     Command="{Binding ButtonDifficultyCommand}"
-                    Content="Neues Spiel"
+                    Content="{x:Static p:Resources.ButtonNewGame}"
                     Style="{StaticResource GameButton}"
                     Width="{Binding ButtonDifficultyWidth}">
                     <Button.Resources>
@@ -2241,7 +2245,7 @@
                 <Button
                     Margin="20, 20, 20, 0"
                     Command="{Binding ButtonValidateCommand}"
-                    Content="Überprüfen"
+                    Content="{x:Static p:Resources.ButtonValidate}"
                     Style="{StaticResource GameButton}"
                     Width="250"
                     Visibility="{Binding ButtonValidateVisibility}">                    
@@ -2304,7 +2308,7 @@
                         CornerRadius="10">
                         <Button
                             Command="{Binding ButtonDifficultyEasyCommand}"
-                            Content="Leicht"
+                            Content="{x:Static p:Resources.ButtonDifficultyEasy}"
                             Style="{StaticResource GameButton}">
                             <Button.Resources>
                                 <Style TargetType="Border">
@@ -2333,7 +2337,7 @@
                         CornerRadius="10">
                         <Button
                             Command="{Binding ButtonDifficultyMediumCommand}"
-                            Content="Mittel"
+                            Content="{x:Static p:Resources.ButtonDifficultyMedium}"
                             Style="{StaticResource GameButton}">
                             <Button.Resources>
                                 <Style TargetType="Border">
@@ -2362,7 +2366,7 @@
                         CornerRadius="10">
                         <Button
                             Command="{Binding ButtonDifficultyHardCommand}"
-                            Content="Schwer"
+                            Content="{x:Static p:Resources.ButtonDifficultyHard}"
                             Style="{StaticResource GameButton}">
                             <Button.Resources>
                                 <Style TargetType="Border">
