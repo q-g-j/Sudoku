@@ -5,6 +5,13 @@
 #### Features:
 
 - random puzzle generator with 3 difficulties
+- 5 save slots (keyboard shortcuts in the works...)
+- solve current Sudoku from the menu
 - complete mouse input
-- left mouse button: set number
-- right mouse button: set marker (up to 8 markers in one square)
+
+Controls:
+---------
+|Mouse button|Action|
+|-|-|
+|Left click|place a number|
+|Right click|place a marker (up to 8 in one square)|
