@@ -187,7 +187,8 @@ namespace Sudoku.ViewModels
         {
             await Task.Run(() =>
             {
-                HideAll();
+                HideOverlays();
+                HideValidation();
                 numbersListValue = new NumbersListModel();
                 markersListValue = new MarkersListModel();
                 numbersColorsListValue = new NumbersColorsListModel();
@@ -206,7 +207,7 @@ namespace Sudoku.ViewModels
             {
                 if (!SolverGameLogic.IsFull(numbersListValue))
                 {
-                    HideAll();
+                    HideOverlays();
                     SolverGameLogic solverGameLogic = new SolverGameLogic(numbersListValue);
                     solverGameLogic.FillSudoku();
                     markersListValue = new MarkersListModel();
@@ -251,13 +252,21 @@ namespace Sudoku.ViewModels
                 string filename = Path.Combine(folderAppSettings, "slot" + slotNumber + ".json");
                 if (File.Exists(filename))
                 {
-                    HideAll();
+                    HideOverlays();
                     SaveSlots saveSlots = new SaveSlots(folderAppSettings);
                     SaveSlots.ListsStruct listsStruct = saveSlots.LoadAll(slotNumber);
                     NumbersList = listsStruct.NumbersList;
                     MarkersList = listsStruct.MarkersList;
                     NumbersColorsList = listsStruct.NumbersColorsList;
                     generatorNumbers = listsStruct.GeneratorNumbers;
+                    if (SolverGameLogic.IsFull(numbersListValue))
+                    {
+                        ShowValidation();
+                    }
+                    else 
+                    {
+                        HideValidation();
+                    }
                 }
             });
         }
@@ -287,7 +296,7 @@ namespace Sudoku.ViewModels
         private async Task ButtonDifficultyEasyAction()
         {
             await Task.Run(() => {
-                HideAll();
+                HideOverlays();
                 NewGame("Easy");
             });
         }
@@ -295,7 +304,7 @@ namespace Sudoku.ViewModels
         {
             await Task.Run(() =>
             {
-                HideAll();
+                HideOverlays();
                 NewGame("Medium");
             });
         }
@@ -303,7 +312,7 @@ namespace Sudoku.ViewModels
         {
             await Task.Run(() =>
             {
-                HideAll();
+                HideOverlays();
                 NewGame("Hard");
             });
         }
@@ -354,14 +363,11 @@ namespace Sudoku.ViewModels
 
                 if (!SolverGameLogic.IsFull(numbersListValue))
                 {
-                    LabelValidateVisibility = "Collapsed";
-                    ButtonValidateVisibility = "Collapsed";
-                    ButtonDifficultyWidth = "350";
+                    HideValidation();
                 }
                 else
                 {
-                    LabelValidateVisibility = "Collapsed";
-                    ButtonValidateVisibility = "Visible";
+                    ShowValidation();
                 }
             });
 
@@ -730,15 +736,24 @@ namespace Sudoku.ViewModels
             }
             LabelValidateText = "Keine Konflikte!";
         }
-        private void HideAll()
+        private void HideOverlays()
         {
-            ButtonValidateVisibility = "Collapsed";
-            LabelValidateVisibility = "Collapsed";
             SelectDifficultyVisibility = "Hidden";
             SelectNumberVisibility = "Hidden";
             SelectMarkerVisibility = "Hidden";
         }
-
+        private void ShowValidation()
+        {
+            LabelValidateVisibility = "Collapsed";
+            ButtonValidateVisibility = "Visible";
+            ButtonDifficultyWidth = "250";
+        }
+        private void HideValidation()
+        {
+            ButtonValidateVisibility = "Collapsed";
+            LabelValidateVisibility = "Collapsed";
+            ButtonDifficultyWidth = "350";
+        }
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
