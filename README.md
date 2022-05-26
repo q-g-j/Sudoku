@@ -8,6 +8,7 @@
 - 5 save slots *(save files location: %APPDATA%\SudokuGame)*
 - solve current Sudoku from the menu
 - complete mouse input
+- English and German localization (according to the system language)
 
 Controls:
 ---------
