@@ -726,6 +726,7 @@ namespace Sudoku.ViewModels
         }
         private void HideAll()
         {
+            ButtonValidateVisibility = "Collapsed";
             LabelValidateVisibility = "Collapsed";
             SelectDifficultyVisibility = "Hidden";
             SelectNumberVisibility = "Hidden";
