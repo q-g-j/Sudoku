@@ -61,7 +61,9 @@ namespace Sudoku.ViewModels
 
             generatorNumbers = new List<string>();
             numbersListValue = new NumbersListModel();
+            numbersColorsListValue = new NumbersColorsListModel();
             numbersListValue.InitializeList();
+            numbersColorsListValue.InitializeList();
 
             MenuNewCommand = new AsyncRelayCommand(MenuNewAction);
             MenuSolveCommand = new AsyncRelayCommand(MenuSolveAction);
