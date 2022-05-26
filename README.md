@@ -20,3 +20,4 @@ Controls:
 -------------
 - *program icon*
 - *keyboard shortcuts for saving / loading*
+- *add content to the help menu*
