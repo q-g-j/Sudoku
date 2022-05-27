@@ -10,6 +10,7 @@ namespace Sudoku.GameLogic
         public GeneratorGameLogic()
         {
             random = new Random();
+            checkedList = new List<string>();
         }
 
         private readonly Random random;
@@ -21,6 +22,8 @@ namespace Sudoku.GameLogic
 
         private int uniqueCounter;
         private NumbersListModel uniqueNumbersList;
+
+        private List<string> checkedList;
 
         public void GenerateSudoku()
         {
@@ -36,10 +39,18 @@ namespace Sudoku.GameLogic
                 {
                     if (NumbersList[col][row] != "")
                     {
-                        if (!HasCurrentSquareTooFewNumbers(col, row) && !HasAnotherSquareTooManyNumbers(col, row))
+                        if (!HasCurrentColTooFewNumbers(col) && !HasCurrentRowTooFewNumbers(row) && !HasCurrentSquareTooFewNumbers(col, row))
                         {
-                            counter++;
-                            NumbersList[col][row] = "";
+                            if (!HasAnotherColTooManyNumbers(col) && !HasAnotherRowTooManyNumbers(row) && !HasAnotherSquareTooManyNumbers(col, row))
+                            {
+                                counter++;
+                                NumbersList[col][row] = "";
+                                checkedList.Clear();
+                            }
+                            else
+                            {
+                                checkedList.Add(col.ToString() + row.ToString());
+                            }
                         }
                         if (counter < RemoveNumbers)
                         {
@@ -89,17 +100,55 @@ namespace Sudoku.GameLogic
             }
         }
 
-        private bool HasCurrentSquareTooFewNumbers(int col, int row)
+        private bool HasCurrentColTooFewNumbers(int currentCol)
         {
-            int squareCol = (int)(col / 3) * 3;
-            int squareRow = (int)(row / 3) * 3;
+            int countNumbers = 0;
+            for (int row = 0; row < 9; row++)
+            {
+                if (NumbersList[currentCol][row] != "")
+                {
+                    countNumbers++;
+                }
+            }
+            if (countNumbers < 2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private bool HasCurrentRowTooFewNumbers(int currentRow)
+        {
+            int countNumbers = 0;
+            for (int col = 0; col < 9; col++)
+            {
+                if (NumbersList[col][currentRow] != "")
+                {
+                    countNumbers++;
+                }
+            }
+            if (countNumbers < 2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private bool HasCurrentSquareTooFewNumbers(int currentCol, int currentRow)
+        {
+            int squareCol = (int)(currentCol / 3) * 3;
+            int squareRow = (int)(currentRow / 3) * 3;
             int countNumbers = 0;
 
-            for (int i = squareCol; i < squareCol + 3; i++)
+            for (int innerCol = squareCol; innerCol < squareCol + 3; innerCol++)
             {
-                for (int j = squareRow; j < squareRow + 3; j++)
+                for (int innerRow = squareRow; innerRow < squareRow + 3; innerRow++)
                 {
-                    if (NumbersList[i][j] != "")
+                    if (NumbersList[innerCol][innerRow] != "")
                     {
                         countNumbers++;
                     }
@@ -114,51 +163,41 @@ namespace Sudoku.GameLogic
                 return false;
             }
         }
-
-        private bool HasAnotherSquareTooManyNumbers(int col, int row)
+        private bool HasAnotherColTooManyNumbers(int currentCol)
         {
-            int currentSquareCol = (int)(col / 3) * 3;
-            int currentSquareRow = (int)(row / 3) * 3;
-            int currentCountNumbers = 0;
-
-            for (int k = currentSquareCol; k < currentSquareCol + 3; k++)
+            int countCurrentColNumbers = 0;
+            for (int row = 0; row < 9; row++)
             {
-                for (int l = currentSquareRow; l < currentSquareRow + 3; l++)
+                if (NumbersList[currentCol][row] != "")
                 {
-                    if (NumbersList[k][l] != "")
+                    string coords = currentCol.ToString();
+                    coords += row.ToString();
+                    if (!checkedList.Contains(coords))
                     {
-                        currentCountNumbers++;
+                        countCurrentColNumbers++;
                     }
                 }
             }
 
-            for (int i = 0; i < 9; i++)
+            for (int col = 0; col < 9; col++)
             {
-                for (int j = 0; j < 9; j++)
+                if (col != currentCol)
                 {
-                    int squareCol = (int)(i / 3) * 3;
-                    int squareRow = (int)(j / 3) * 3;
                     int countNumbers = 0;
-
-                    for (int k = squareCol; k < squareCol + 3; k++)
+                    for (int row = 0; row < 9; row++)
                     {
-                        for (int l = squareRow; l < squareRow + 3; l++)
+                        if (NumbersList[col][row] != "")
                         {
-                            if (NumbersList[k][l] != "")
+                            string coords = currentCol.ToString();
+                            coords += row.ToString();
+                            if (!checkedList.Contains(coords))
                             {
-                                if (squareCol == currentSquareCol && squareRow == currentSquareRow)
-                                {
-                                    continue;
-                                }
-                                else
-                                {
-                                    countNumbers++;
-                                }
+                                countNumbers++;
                             }
                         }
                     }
-
-                    if (countNumbers > (81 - RemoveNumbers) / 9 + 2 && countNumbers > currentCountNumbers)
+                    // (81 - RemoveNumbers) / 9 + 1
+                    if (countNumbers > (81 - RemoveNumbers) / 9 + 2 && countCurrentColNumbers < countNumbers)
                     {
                         return true;
                     }
@@ -166,7 +205,105 @@ namespace Sudoku.GameLogic
             }
             return false;
         }
+        private bool HasAnotherRowTooManyNumbers(int currentRow)
+        {
+            int countCurrentRowNumbers = 0;
+            for (int col = 0; col < 9; col++)
+            {
+                if (NumbersList[col][currentRow] != "")
+                {
+                    string coords = col.ToString();
+                    coords += currentRow.ToString();
+                    if (!checkedList.Contains(coords))
+                    {
+                        countCurrentRowNumbers++;
+                    }
+                }
+            }
 
+            for (int row = 0; row < 9; row++)
+            {
+                if (row != currentRow)
+                {
+                    int countNumbers = 0;
+                    for (int col = 0; col < 9; col++)
+                    {
+                        if (NumbersList[col][row] != "")
+                        {
+                            string coords = col.ToString();
+                            coords += row.ToString();
+                            if (!checkedList.Contains(coords))
+                            {
+                                countNumbers++;
+                            }
+                        }
+                    }
+                    // (81 - RemoveNumbers) / 9 + 1
+                    if (countNumbers > (81 - RemoveNumbers) / 9 + 2 && countCurrentRowNumbers < countNumbers)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        private bool HasAnotherSquareTooManyNumbers(int currentCol, int currentRow)
+        {
+            int currentSquareCol = (int)(currentCol / 3) * 3;
+            int currentSquareRow = (int)(currentRow / 3) * 3;
+            int currentCountNumbers = 0;
+
+            for (int col = currentSquareCol; col < currentSquareCol + 3; col++)
+            {
+                for (int row = currentSquareRow; row < currentSquareRow + 3; row++)
+                {
+                    if (NumbersList[col][row] != "")
+                    {
+                        string coords = col.ToString();
+                        coords += row.ToString();
+                        if (!checkedList.Contains(coords))
+                        {
+                            currentCountNumbers++;
+                        }
+                    }
+                }
+            }
+
+            for (int col = 0; col < 9; col++)
+            {
+                for (int row = 0; row < 9; row++)
+                {
+                    int squareCol = (int)(col / 3) * 3;
+                    int squareRow = (int)(row / 3) * 3;
+                    int countNumbers = 0;
+
+                    if (squareCol != currentSquareCol && squareRow != currentSquareRow)
+                    {
+                        for (int innerCol = squareCol; innerCol < squareCol + 3; innerCol++)
+                        {
+                            for (int innerRow = squareRow; innerRow < squareRow + 3; innerRow++)
+                            {
+                                if (NumbersList[innerCol][innerRow] != "")
+                                {
+                                    string coords = innerCol.ToString();
+                                    coords += innerRow.ToString();
+                                    if (!checkedList.Contains(coords))
+                                    {
+                                        countNumbers++;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (countNumbers > (81 - RemoveNumbers) / 9 + 2 && currentCountNumbers < countNumbers)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
         private void HasUniqueSolution()
         {
             for (int row = 0; row < 9; row++)
