@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sudoku.Models;
+using Sudoku.Helpers;
 
 namespace Sudoku.GameLogic
 {
@@ -17,11 +18,11 @@ namespace Sudoku.GameLogic
 
         public NumbersListModel NumbersList;
         public int RemoveNumbers;
-        public int counter = 0;
-        public int tries = 0;
+        public int Counter = 0;
+        public int Tries = 0;
 
-        private int uniqueCounter;
-        private NumbersListModel uniqueNumbersList;
+        public int UniqueCounter;
+        public NumbersListModel UniqueNumbersList;
 
         private List<string> checkedList;
 
@@ -39,20 +40,18 @@ namespace Sudoku.GameLogic
                 {
                     if (NumbersList[col][row] != "")
                     {
-                        if (!HasCurrentColTooFewNumbers(col) && !HasCurrentRowTooFewNumbers(row) && !HasCurrentSquareTooFewNumbers(col, row))
+                        if (!HasCurrentColTooFewNumbers(col) && !HasCurrentRowTooFewNumbers(row) && !HasCurrentSquareTooFewNumbers(col, row) &&
+                            !HasAnotherColTooManyNumbers(col) && !HasAnotherRowTooManyNumbers(row) && !HasAnotherSquareTooManyNumbers(col, row))
                         {
-                            if (!HasAnotherColTooManyNumbers(col) && !HasAnotherRowTooManyNumbers(row) && !HasAnotherSquareTooManyNumbers(col, row))
-                            {
-                                counter++;
-                                NumbersList[col][row] = "";
-                                checkedList.Clear();
-                            }
-                            else
-                            {
-                                checkedList.Add(col.ToString() + row.ToString());
-                            }
+                            Counter++;
+                            NumbersList[col][row] = "";
+                            checkedList.Clear();
                         }
-                        if (counter < RemoveNumbers)
+                        else
+                        {
+                            checkedList.Add(col.ToString() + row.ToString());
+                        }
+                        if (Counter < RemoveNumbers)
                         {
                             GenerateSudoku();
                         }
@@ -76,21 +75,30 @@ namespace Sudoku.GameLogic
                 {
                     if (NumbersList[col][row] != "")
                     {
-                        string oldNumber = NumbersList[col][row];
-                        NumbersList[col][row] = "";
-                        uniqueNumbersList = NumbersListModel.CopyList(NumbersList);
-                        uniqueCounter = 0;
-                        HasUniqueSolution();
-                        if (uniqueCounter != 1)
+                        if (!HasCurrentColTooFewNumbers(col) && !HasCurrentRowTooFewNumbers(row) && !HasCurrentSquareTooFewNumbers(col, row) &&
+                            !HasAnotherColTooManyNumbers(col) && !HasAnotherRowTooManyNumbers(row) && !HasAnotherSquareTooManyNumbers(col, row))
                         {
-                            tries++;
-                            NumbersList[col][row] = oldNumber;
+                            UniqueNumbersList = NumbersListModel.CopyList(NumbersList);
+                            UniqueNumbersList[col][row] = "";
+                            UniqueCounter = 0;
+                            HasUniqueSolution();
+                            
+                            if (UniqueCounter < 2)
+                            {
+                                Counter++;
+                                NumbersList[col][row] = "";
+                                checkedList.Clear();
+                            }
+                            else
+                            {
+                                Tries++;
+                            }
                         }
                         else
                         {
-                            counter++;
+                            checkedList.Add(col.ToString() + row.ToString());
                         }
-                        if (counter > (81 - RemoveNumbers) / 9 + 2 && tries < 20)
+                        if (Counter < RemoveNumbers && Tries < 20)
                         {
                             GenerateUniqueSudoku();
                         }
@@ -304,13 +312,13 @@ namespace Sudoku.GameLogic
             }
             return false;
         }
-        private void HasUniqueSolution()
+        public void HasUniqueSolution()
         {
             for (int row = 0; row < 9; row++)
             {
                 for (int col = 0; col < 9; col++)
                 {
-                    if (uniqueNumbersList[col][row] == "")
+                    if (UniqueNumbersList[col][row] == "")
                     {
                         List<int> intList = new List<int>();
                         intList.AddRange(Enumerable.Range(1, 9));
@@ -318,17 +326,17 @@ namespace Sudoku.GameLogic
                         foreach (int item in intList)
                         {
                             string number = item.ToString();
-                            if (ValidatorGameLogic.IsValid(uniqueNumbersList, col, row, number))
+                            if (ValidatorGameLogic.IsValid(UniqueNumbersList, col, row, number))
                             {
-                                uniqueNumbersList[col][row] = number;
-                                if (SolverGameLogic.IsFull(uniqueNumbersList))
+                                UniqueNumbersList[col][row] = number;
+                                if (SolverGameLogic.IsFull(UniqueNumbersList))
                                 {
-                                    uniqueCounter++;
+                                    UniqueCounter++;
                                 }
-                                if (uniqueCounter < 2)
+                                if (UniqueCounter < 2)
                                 {
                                     HasUniqueSolution();
-                                    uniqueNumbersList[col][row] = "";
+                                    UniqueNumbersList[col][row] = "";
                                 }
                             }
                         }

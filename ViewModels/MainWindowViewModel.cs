@@ -653,12 +653,11 @@ namespace Sudoku.ViewModels
         }
         private void NewGame(string difficulty)
         {
-            GeneratorGameLogic generatorGameLogic;
+            GeneratorGameLogic generatorGameLogic = null;
 
             bool doRun = true;
-            bool unique = false;
 
-            do
+            while (doRun)
             {
                 numbersListValue = new NumbersListModel();
                 numbersListValue.InitializeList();
@@ -679,17 +678,24 @@ namespace Sudoku.ViewModels
                 }
                 else if (difficulty == "Hard")
                 {
-                    generatorGameLogic.RemoveNumbers = 57; // 57
+                    generatorGameLogic.RemoveNumbers = 56; // 57
                 }
 
-                generatorGameLogic.NumbersList = NumbersListModel.CopyList(numbersListSolved);
+                generatorGameLogic.NumbersList = numbersListSolved;
+
+                //Stopwatch stopwatch = new Stopwatch();
+                //stopwatch.Start();
+
                 generatorGameLogic.GenerateSudoku();
 
-                if (generatorGameLogic.counter == generatorGameLogic.RemoveNumbers)
+                //stopwatch.Stop();
+                //Console.WriteLine("Elapsed Time is {0} ms", stopwatch.ElapsedMilliseconds);
+
+                if (generatorGameLogic.Counter == generatorGameLogic.RemoveNumbers)
                 {
                     doRun = false;
                 }
-            } while (doRun && unique);
+            }
 
             generatorNumbers = new List<string>();
 
