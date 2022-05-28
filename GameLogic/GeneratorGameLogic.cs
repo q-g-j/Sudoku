@@ -107,7 +107,7 @@ namespace Sudoku.GameLogic
                         {
                             checkedList.Add(col.ToString() + row.ToString());
                         }
-                        if (Counter < RemoveNumbers && Tries < 40)
+                        if (Counter < RemoveNumbers && Tries < 25)
                         {
                             GenerateUniqueSudoku();
                         }

@@ -20,6 +20,7 @@ namespace Sudoku.ViewModels
         #region Constructor
         public MainWindowViewModel()
         {
+            doBlockInput = false;
             selectNumberVisibility = "Hidden";
             selectMarkerVisibility = "Hidden";
             labelUniqueWaitVisibility = "Hidden";
@@ -88,6 +89,7 @@ namespace Sudoku.ViewModels
         private string currentButtonIndex;
         private List<string> generatorNumbers;
         readonly string folderAppSettings;
+        private bool doBlockInput;
         #endregion Private variables
 
         #region Property values
@@ -197,7 +199,7 @@ namespace Sudoku.ViewModels
         #region Methods
         private async Task MenuNewAction()
         {
-            if (labelUniqueWaitVisibility != "Visible")
+            if (! doBlockInput)
             {
                 await Task.Run(() =>
                 {
@@ -218,7 +220,7 @@ namespace Sudoku.ViewModels
         }
         private async Task MenuSolveAction()
         {
-            if (labelUniqueWaitVisibility != "Visible")
+            if (! doBlockInput)
             {
                 await Task.Run(() =>
                 {
@@ -248,7 +250,7 @@ namespace Sudoku.ViewModels
         }
         private async Task MenuSettingsAction()
         {
-            if (labelUniqueWaitVisibility != "Visible")
+            if (! doBlockInput)
             {
                 await Task.Run(() =>
                 {
@@ -258,7 +260,7 @@ namespace Sudoku.ViewModels
         }
         private async Task MenuSaveToSlotAction(object o)
         {
-            if (labelUniqueWaitVisibility != "Visible")
+            if (! doBlockInput)
             {
                 await Task.Run(() =>
                 {
@@ -281,7 +283,7 @@ namespace Sudoku.ViewModels
         }
         private async Task MenuLoadFromSlotAction(object o)
         {
-            if (labelUniqueWaitVisibility != "Visible")
+            if (! doBlockInput)
             {
                 await Task.Run(() =>
                 {
@@ -310,7 +312,7 @@ namespace Sudoku.ViewModels
         }
         private async Task ButtonDifficultyAction()
         {
-            if (labelUniqueWaitVisibility != "Visible")
+            if (! doBlockInput)
             {
                 await Task.Run(() =>
                 {
@@ -330,7 +332,7 @@ namespace Sudoku.ViewModels
         }
         private async Task ButtonValidateAction()
         {
-            if (labelUniqueWaitVisibility != "Visible")
+            if (! doBlockInput)
             {
                 await Task.Run(() =>
                 {
@@ -340,7 +342,7 @@ namespace Sudoku.ViewModels
         }
         private async Task ButtonDifficultyEasyAction()
         {
-            if (labelUniqueWaitVisibility != "Visible")
+            if (! doBlockInput)
             {
                 await Task.Run(() =>
                 {
@@ -351,7 +353,7 @@ namespace Sudoku.ViewModels
         }
         private async Task ButtonDifficultyMediumAction()
         {
-            if (labelUniqueWaitVisibility != "Visible")
+            if (! doBlockInput)
             {
                 await Task.Run(() =>
                 {
@@ -362,7 +364,7 @@ namespace Sudoku.ViewModels
         }
         private async Task ButtonDifficultyHardAction()
         {
-            if (labelUniqueWaitVisibility != "Visible")
+            if (! doBlockInput)
             {
                 await Task.Run(() =>
                 {
@@ -374,7 +376,7 @@ namespace Sudoku.ViewModels
         private async Task ButtonSquareDownAction(CompositeCommandParameter o)
         {
             var e = (MouseButtonEventArgs)o.EventArgs;
-            if (labelUniqueWaitVisibility != "Visible")
+            if (! doBlockInput)
             {
                 var param = (string)o.Parameter;
 
@@ -434,7 +436,7 @@ namespace Sudoku.ViewModels
         private async Task ButtonSquareUpAction(CompositeCommandParameter o)
         {
             var e = (MouseButtonEventArgs)o.EventArgs;
-            if (labelUniqueWaitVisibility != "Visible")
+            if (! doBlockInput)
             {
                 await Task.Run(() =>
                 {
@@ -445,7 +447,7 @@ namespace Sudoku.ViewModels
         }
         private async Task ButtonSelectNumberAction(object o)
         {
-            if (labelUniqueWaitVisibility != "Visible")
+            if (! doBlockInput)
             {
                 await Task.Run(() =>
                 {
@@ -458,7 +460,7 @@ namespace Sudoku.ViewModels
         }
         private async Task ButtonSelectMarkerAction(object o)
         {
-            if (labelUniqueWaitVisibility != "Visible")
+            if (! doBlockInput)
             {
                 await Task.Run(() =>
                 {
@@ -704,6 +706,8 @@ namespace Sudoku.ViewModels
         }
         private void NewGame(string difficulty)
         {
+            doBlockInput = true;
+
             if (difficulty == "Hard")
             {
                 LabelUniqueWaitVisibility = "Visible";
@@ -791,6 +795,8 @@ namespace Sudoku.ViewModels
             HideValidation();
 
             LabelUniqueWaitVisibility = "Hidden";
+
+            doBlockInput = false;
         }
         private void ValidateAll()
         {
