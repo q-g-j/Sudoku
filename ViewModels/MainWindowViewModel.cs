@@ -738,7 +738,7 @@ namespace Sudoku.ViewModels
                 }
                 else if (difficulty == "Hard")
                 {
-                    generatorGameLogic.RemoveNumbers = 56; // 57
+                    generatorGameLogic.RemoveNumbers = 55; // 57
                 }
 
                 generatorGameLogic.NumbersList = numbersListSolved;
@@ -749,11 +749,13 @@ namespace Sudoku.ViewModels
 
                 generatorGameLogic.GenerateUniqueSudoku();
 
+
                 //// DEBUG:
                 //stopwatch.Stop();
                 //Console.WriteLine("Elapsed Time is {0} ms" + " " + stopwatch.ElapsedMilliseconds + ", " + generatorGameLogic.Tries);
+                //Console.WriteLine(generatorGameLogic.Counter.ToString());
 
-                if (generatorGameLogic.Counter == generatorGameLogic.RemoveNumbers && generatorGameLogic.UniqueCounter <= 1)
+                if (generatorGameLogic.Counter == generatorGameLogic.RemoveNumbers)
                 {
                     doRun = false;
                 }

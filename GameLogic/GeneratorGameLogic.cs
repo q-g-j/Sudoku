@@ -25,7 +25,7 @@ namespace Sudoku.GameLogic
         public int UniqueCounter = 0;
         public NumbersListModel UniqueNumbersList;
 
-        private List<string> checkedList;
+        private readonly List<string> checkedList;
 
         public void GenerateSudoku()
         {
@@ -86,13 +86,15 @@ namespace Sudoku.GameLogic
                             UniqueNumbersList = NumbersListModel.CopyList(NumbersList);
                             UniqueNumbersList[col][row] = "";
                             UniqueCounter = 0;
-                            HasUniqueSolution();
+
+                            HasUniqueSolution();                            
 
                             if (UniqueCounter < 2)
                             {
                                 //// DEBUG:
                                 //stopwatch.Stop();
                                 //Console.WriteLine("Elapsed Time is {0} ms" + " " + stopwatch.Elapsed.TotalMilliseconds + ", " + Tries);
+                                //Console.WriteLine(Counter.ToString() + ", " + Tries.ToString());
 
                                 Counter++;
                                 NumbersList[col][row] = "";
@@ -107,9 +109,42 @@ namespace Sudoku.GameLogic
                         {
                             checkedList.Add(col.ToString() + row.ToString());
                         }
-                        if (Counter < RemoveNumbers && Tries < 25)
+                        if (Counter < RemoveNumbers && Tries < 20)
                         {
                             GenerateUniqueSudoku();
+                        }
+                        return;
+                    }
+                }
+            }
+        }
+        public void HasUniqueSolution()
+        {
+            for (int row = 0; row < 9; row++)
+            {
+                for (int col = 0; col < 9; col++)
+                {
+                    if (UniqueNumbersList[col][row] == "")
+                    {
+                        List<int> intList = new List<int>();
+                        intList.AddRange(Enumerable.Range(1, 9));
+
+                        foreach (int item in intList)
+                        {
+                            string number = item.ToString();
+                            if (ValidatorGameLogic.IsValid(UniqueNumbersList, col, row, number))
+                            {
+                                UniqueNumbersList[col][row] = number;
+                                if (SolverGameLogic.IsFull(UniqueNumbersList))
+                                {
+                                    UniqueCounter++;
+                                }
+                                if (UniqueCounter < 2)
+                                {
+                                    HasUniqueSolution();
+                                    UniqueNumbersList[col][row] = "";
+                                }
+                            }
                         }
                         return;
                     }
@@ -320,39 +355,6 @@ namespace Sudoku.GameLogic
                 }
             }
             return false;
-        }
-        public void HasUniqueSolution()
-        {
-            for (int row = 0; row < 9; row++)
-            {
-                for (int col = 0; col < 9; col++)
-                {
-                    if (UniqueNumbersList[col][row] == "")
-                    {
-                        List<int> intList = new List<int>();
-                        intList.AddRange(Enumerable.Range(1, 9));
-
-                        foreach (int item in intList)
-                        {
-                            string number = item.ToString();
-                            if (ValidatorGameLogic.IsValid(UniqueNumbersList, col, row, number))
-                            {
-                                UniqueNumbersList[col][row] = number;
-                                if (SolverGameLogic.IsFull(UniqueNumbersList))
-                                {
-                                    UniqueCounter++;
-                                }
-                                if (UniqueCounter < 2)
-                                {
-                                    HasUniqueSolution();
-                                    UniqueNumbersList[col][row] = "";
-                                }
-                            }
-                        }
-                        return;
-                    }
-                }
-            }
         }
     }
 }
