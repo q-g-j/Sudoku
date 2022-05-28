@@ -10,6 +10,8 @@ Features:
 - 5 save slots *(save files location: %APPDATA%\SudokuGame)*
 - solve current Sudoku from the menu
 - complete mouse input
+- place up to 9 markers in each square
+- markers now have a fixed position for better comparability
 - English and German localization (according to the system language)
 
 Controls:
@@ -17,7 +19,7 @@ Controls:
 |Mouse button|Action|
 |-|-|
 |Left click|place a number|
-|Right click|place a marker (up to 9 in one square)|
+|Right click|place a marker|
 
 ***In the works:***
 -------------
