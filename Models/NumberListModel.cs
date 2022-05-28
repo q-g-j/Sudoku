@@ -34,12 +34,7 @@ namespace Sudoku.Models
             NumbersListModel returnList = new NumbersListModel();
             for (int i = 0; i < 9; i++)
             {
-                List<string> tempList = new List<string>();
-                for (int j = 0; j < 9; j++)
-                {
-                    tempList.Add(list[i][j]);
-                }
-                returnList.Add(tempList);
+                returnList.Add(new List<string>(list[i]));
             }
             return returnList;
         }

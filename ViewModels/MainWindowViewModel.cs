@@ -20,13 +20,14 @@ namespace Sudoku.ViewModels
         #region Constructor
         public MainWindowViewModel()
         {
-            selectNumberVisibilityValue = "Hidden";
-            selectMarkerVisibilityValue = "Hidden";
-            selectDifficultyVisibilityValue = "Visible";
-            buttonValidateVisibilityValue = "Collapsed";
-            labelValidateVisibilityValue = "Collapsed";
-            labelValidateTextValue = "";
-            buttonDifficultyWidthValue = "350";
+            selectNumberVisibility = "Hidden";
+            selectMarkerVisibility = "Hidden";
+            labelUniqueWaitVisibility = "Hidden";
+            selectDifficultyVisibility = "Visible";
+            buttonValidateVisibility = "Collapsed";
+            labelValidateVisibility = "Collapsed";
+            labelValidateText = "";
+            buttonDifficultyWidth = "350";
             currentButtonIndex = "";
             folderAppSettings = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SudokuGame");
 
@@ -60,10 +61,10 @@ namespace Sudoku.ViewModels
             MenuSaveSlotsText = list;
 
             generatorNumbers = new List<string>();
-            numbersListValue = new NumbersListModel();
-            numbersColorsListValue = new NumbersColorsListModel();
-            numbersListValue.InitializeList();
-            numbersColorsListValue.InitializeList();
+            numbersList = new NumbersListModel();
+            numbersColorsList = new NumbersColorsListModel();
+            numbersList.InitializeList();
+            numbersColorsList.InitializeList();
 
             MenuNewCommand = new AsyncRelayCommand(MenuNewAction);
             MenuSolveCommand = new AsyncRelayCommand(MenuSolveAction);
@@ -90,21 +91,22 @@ namespace Sudoku.ViewModels
         #endregion Private variables
 
         #region Property values
-        private NumbersListModel numbersListValue;
-        private MarkersListModel markersListValue;
-        private NumbersColorsListModel numbersColorsListValue;
+        private NumbersListModel numbersList;
+        private MarkersListModel markersList;
+        private NumbersColorsListModel numbersColorsList;
 
-        private List<string> menuSaveSlotsTextValue;
+        private List<string> menuSaveSlotsText;
 
-        private string buttonDifficultyTextValue;
-        private string labelValidateTextValue;
-        private string buttonDifficultyWidthValue;
+        private string buttonDifficultyText;
+        private string labelValidateText;
+        private string buttonDifficultyWidth;
 
-        private string selectNumberVisibilityValue;
-        private string selectMarkerVisibilityValue;
-        private string selectDifficultyVisibilityValue;
-        private string buttonValidateVisibilityValue;
-        private string labelValidateVisibilityValue;
+        private string selectNumberVisibility;
+        private string selectMarkerVisibility;
+        private string selectDifficultyVisibility;
+        private string buttonValidateVisibility;
+        private string labelValidateVisibility;
+        private string labelUniqueWaitVisibility;
         #endregion Property values
 
         #region Properties
@@ -127,318 +129,367 @@ namespace Sudoku.ViewModels
 
         public List<string> MenuSaveSlotsText
         {
-            get => menuSaveSlotsTextValue;
-            set { menuSaveSlotsTextValue = value; OnPropertyChanged(); }
+            get => menuSaveSlotsText;
+            set { menuSaveSlotsText = value; OnPropertyChanged(); }
         }
         public NumbersListModel NumbersList
         {
-            get => numbersListValue;
-            set { numbersListValue = value; OnPropertyChanged(); }
+            get => numbersList;
+            set { numbersList = value; OnPropertyChanged(); }
         }
         public MarkersListModel MarkersList
         {
-            get => markersListValue;
-            set {  markersListValue = value; OnPropertyChanged(); }
+            get => markersList;
+            set {  markersList = value; OnPropertyChanged(); }
         }
         public NumbersColorsListModel NumbersColorsList
         {
-            get => numbersColorsListValue;
-            set { numbersColorsListValue = value; OnPropertyChanged(); }
+            get => numbersColorsList;
+            set { numbersColorsList = value; OnPropertyChanged(); }
         }
         public string SelectNumberVisibility
         {
-            get => selectNumberVisibilityValue;
-            set { selectNumberVisibilityValue = value; OnPropertyChanged(); }
+            get => selectNumberVisibility;
+            set { selectNumberVisibility = value; OnPropertyChanged(); }
         }
         public string SelectMarkerVisibility
         {
-            get => selectMarkerVisibilityValue;
-            set { selectMarkerVisibilityValue = value; OnPropertyChanged(); }
+            get => selectMarkerVisibility;
+            set { selectMarkerVisibility = value; OnPropertyChanged(); }
         }
         public string SelectDifficultyVisibility
         {
-            get => selectDifficultyVisibilityValue;
-            set { selectDifficultyVisibilityValue = value; OnPropertyChanged(); }
+            get => selectDifficultyVisibility;
+            set { selectDifficultyVisibility = value; OnPropertyChanged(); }
         }
         public string ButtonValidateVisibility
         {
-            get => buttonValidateVisibilityValue;
-            set { buttonValidateVisibilityValue = value; OnPropertyChanged(); }
+            get => buttonValidateVisibility;
+            set { buttonValidateVisibility = value; OnPropertyChanged(); }
         }
         public string LabelValidateVisibility
         {
-            get => labelValidateVisibilityValue;
-            set { labelValidateVisibilityValue = value; OnPropertyChanged(); }
+            get => labelValidateVisibility;
+            set { labelValidateVisibility = value; OnPropertyChanged(); }
+        }
+        public string LabelUniqueWaitVisibility
+        {
+            get => labelUniqueWaitVisibility;
+            set { labelUniqueWaitVisibility = value; OnPropertyChanged(); }
         }
         public string ButtonDifficultyText
         {
-            get => buttonDifficultyTextValue;
-            set { buttonDifficultyTextValue = value; OnPropertyChanged(); }
+            get => buttonDifficultyText;
+            set { buttonDifficultyText = value; OnPropertyChanged(); }
         }
         public string ButtonDifficultyWidth
         {
-            get => buttonDifficultyWidthValue;
-            set { buttonDifficultyWidthValue = value; OnPropertyChanged(); }
+            get => buttonDifficultyWidth;
+            set { buttonDifficultyWidth = value; OnPropertyChanged(); }
         }
         public string LabelValidateText
         {
-            get => labelValidateTextValue;
-            set { labelValidateTextValue = value; OnPropertyChanged(); }
+            get => labelValidateText;
+            set { labelValidateText = value; OnPropertyChanged(); }
         }
         #endregion Properties
 
         #region Methods
         private async Task MenuNewAction()
         {
-            await Task.Run(() =>
+            if (labelUniqueWaitVisibility != "Visible")
             {
-                HideOverlays();
-                HideValidation();
-                numbersListValue = new NumbersListModel();
-                markersListValue = new MarkersListModel();
-                numbersColorsListValue = new NumbersColorsListModel();
-                generatorNumbers = new List<string>();
-                numbersListValue.InitializeList();
-                markersListValue.InitializeList();
-                numbersColorsListValue.InitializeList();
-                NumbersList = numbersListValue;
-                MarkersList = markersListValue;
-                NumbersColorsList = numbersColorsListValue;
-            });
+                await Task.Run(() =>
+                {
+                    HideOverlays();
+                    HideValidation();
+                    numbersList = new NumbersListModel();
+                    markersList = new MarkersListModel();
+                    numbersColorsList = new NumbersColorsListModel();
+                    generatorNumbers = new List<string>();
+                    numbersList.InitializeList();
+                    markersList.InitializeList();
+                    numbersColorsList.InitializeList();
+                    NumbersList = numbersList;
+                    MarkersList = markersList;
+                    NumbersColorsList = numbersColorsList;
+                });
+            }
         }
         private async Task MenuSolveAction()
         {
-            await Task.Run(() =>
+            if (labelUniqueWaitVisibility != "Visible")
             {
-                if (!SolverGameLogic.IsFull(numbersListValue))
+                await Task.Run(() =>
                 {
-                    HideOverlays();
-                    SolverGameLogic solverGameLogic = new SolverGameLogic(numbersListValue);
-                    solverGameLogic.FillSudoku();
-                    markersListValue = new MarkersListModel();
-                    numbersColorsListValue = new NumbersColorsListModel();
-                    markersListValue.InitializeList();
-                    numbersColorsListValue.InitializeList();
-                    foreach (string coords in generatorNumbers)
+                    if (!SolverGameLogic.IsFull(numbersList))
                     {
-                        int col = int.Parse(coords[0].ToString());
-                        int row = int.Parse(coords[1].ToString());
+                        HideOverlays();
+                        SolverGameLogic solverGameLogic = new SolverGameLogic(numbersList);
+                        solverGameLogic.FillSudoku();
+                        markersList = new MarkersListModel();
+                        numbersColorsList = new NumbersColorsListModel();
+                        markersList.InitializeList();
+                        numbersColorsList.InitializeList();
+                        foreach (string coords in generatorNumbers)
+                        {
+                            int col = int.Parse(coords[0].ToString());
+                            int row = int.Parse(coords[1].ToString());
 
-                        numbersColorsListValue[col][row] = "Black";
+                            numbersColorsList[col][row] = "Black";
+                        }
+                        MarkersList = markersList;
+                        NumbersColorsList = numbersColorsList;
+                        NumbersList = NumbersListModel.CopyList(solverGameLogic.NumbersListSolved);
+                        ChangeButtonValidateVisibility();
                     }
-                    MarkersList = markersListValue;
-                    NumbersColorsList = numbersColorsListValue;
-                    NumbersList = NumbersListModel.CopyList(solverGameLogic.NumbersListSolved);
-                    ChangeButtonValidateVisibility();
-                }
-            });
+                });
+            }
         }
         private async Task MenuSettingsAction()
         {
-            await Task.Run(() =>
+            if (labelUniqueWaitVisibility != "Visible")
             {
-                ;
-            });
+                await Task.Run(() =>
+                {
+                    ;
+                });
+            }
         }
         private async Task MenuSaveToSlotAction(object o)
         {
-            await Task.Run(() =>
+            if (labelUniqueWaitVisibility != "Visible")
             {
-                if (numbersListValue != null && markersListValue != null && numbersColorsListValue != null && generatorNumbers != null)
+                await Task.Run(() =>
                 {
-                    DateTime now = DateTime.Now;
-                    string slotNumber = (string)o;
-                    SaveSlotsModel saveSlots = new SaveSlotsModel(folderAppSettings);
-                    saveSlots.SaveAll(numbersListValue, markersListValue, numbersColorsListValue, generatorNumbers, now, slotNumber);
-                    List<string> tempList = menuSaveSlotsTextValue;
-                    if      (slotNumber == "1") tempList[0] = Resources.MenuGameSaveSlotsLoadFromSlot1 + " (" + now + ")";
-                    else if (slotNumber == "2") tempList[1] = Resources.MenuGameSaveSlotsLoadFromSlot2 + " (" + now + ")";
-                    else if (slotNumber == "3") tempList[2] = Resources.MenuGameSaveSlotsLoadFromSlot3 + " (" + now + ")";
-                    else if (slotNumber == "4") tempList[3] = Resources.MenuGameSaveSlotsLoadFromSlot4 + " (" + now + ")";
-                    else if (slotNumber == "5") tempList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5 + " (" + now + ")";
-                    MenuSaveSlotsText = tempList;
-                }
-            });
+                    if (numbersList != null && markersList != null && numbersColorsList != null && generatorNumbers != null)
+                    {
+                        DateTime now = DateTime.Now;
+                        string slotNumber = (string)o;
+                        SaveSlotsModel saveSlots = new SaveSlotsModel(folderAppSettings);
+                        saveSlots.SaveAll(numbersList, markersList, numbersColorsList, generatorNumbers, now, slotNumber);
+                        List<string> tempList = menuSaveSlotsText;
+                        if (slotNumber == "1") tempList[0] = Resources.MenuGameSaveSlotsLoadFromSlot1 + " (" + now + ")";
+                        else if (slotNumber == "2") tempList[1] = Resources.MenuGameSaveSlotsLoadFromSlot2 + " (" + now + ")";
+                        else if (slotNumber == "3") tempList[2] = Resources.MenuGameSaveSlotsLoadFromSlot3 + " (" + now + ")";
+                        else if (slotNumber == "4") tempList[3] = Resources.MenuGameSaveSlotsLoadFromSlot4 + " (" + now + ")";
+                        else if (slotNumber == "5") tempList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5 + " (" + now + ")";
+                        MenuSaveSlotsText = tempList;
+                    }
+                });
+            }
         }
         private async Task MenuLoadFromSlotAction(object o)
         {
-            await Task.Run(() =>
+            if (labelUniqueWaitVisibility != "Visible")
             {
-                string slotNumber = (string)o;
-                string filename = Path.Combine(folderAppSettings, "slot" + slotNumber + ".json");
-                if (File.Exists(filename))
+                await Task.Run(() =>
                 {
-                    HideOverlays();
-                    SaveSlotsModel saveSlots = new SaveSlotsModel(folderAppSettings);
-                    SaveSlotsModel.ListsStruct listsStruct = saveSlots.LoadAll(slotNumber);
-                    NumbersList = listsStruct.NumbersList;
-                    MarkersList = listsStruct.MarkersList;
-                    NumbersColorsList = listsStruct.NumbersColorsList;
-                    generatorNumbers = listsStruct.GeneratorNumbers;
-                    if (SolverGameLogic.IsFull(numbersListValue))
+                    string slotNumber = (string)o;
+                    string filename = Path.Combine(folderAppSettings, "slot" + slotNumber + ".json");
+                    if (File.Exists(filename))
                     {
-                        ShowValidation();
+                        HideOverlays();
+                        SaveSlotsModel saveSlots = new SaveSlotsModel(folderAppSettings);
+                        SaveSlotsModel.ListsStruct listsStruct = saveSlots.LoadAll(slotNumber);
+                        NumbersList = listsStruct.NumbersList;
+                        MarkersList = listsStruct.MarkersList;
+                        NumbersColorsList = listsStruct.NumbersColorsList;
+                        generatorNumbers = listsStruct.GeneratorNumbers;
+                        if (SolverGameLogic.IsFull(numbersList))
+                        {
+                            ShowValidation();
+                        }
+                        else
+                        {
+                            HideValidation();
+                        }
                     }
-                    else 
-                    {
-                        HideValidation();
-                    }
-                }
-            });
+                });
+            }
         }
         private async Task ButtonDifficultyAction()
         {
-            await Task.Run(() => {
-                SelectNumberVisibility = "Hidden";
-                SelectMarkerVisibility = "Hidden";
+            if (labelUniqueWaitVisibility != "Visible")
+            {
+                await Task.Run(() =>
+                {
+                    SelectNumberVisibility = "Hidden";
+                    SelectMarkerVisibility = "Hidden";
 
-                if (SelectDifficultyVisibility == "Hidden")
-                {
-                    SelectDifficultyVisibility = "Visible";
-                }
-                else
-                {
-                    SelectDifficultyVisibility = "Hidden";
-                }
-            });
+                    if (SelectDifficultyVisibility == "Hidden")
+                    {
+                        SelectDifficultyVisibility = "Visible";
+                    }
+                    else
+                    {
+                        SelectDifficultyVisibility = "Hidden";
+                    }
+                });
+            }
         }
         private async Task ButtonValidateAction()
         {
-            await Task.Run(() =>
+            if (labelUniqueWaitVisibility != "Visible")
             {
-                ValidateAll();
-            });
+                await Task.Run(() =>
+                {
+                    ValidateAll();
+                });
+            }
         }
         private async Task ButtonDifficultyEasyAction()
         {
-            await Task.Run(() => {
-                HideOverlays();
-                NewGame("Easy");
-            });
+            if (labelUniqueWaitVisibility != "Visible")
+            {
+                await Task.Run(() =>
+                {
+                    HideOverlays();
+                    NewGame("Easy");
+                });
+            }
         }
         private async Task ButtonDifficultyMediumAction()
         {
-            await Task.Run(() =>
+            if (labelUniqueWaitVisibility != "Visible")
             {
-                HideOverlays();
-                NewGame("Medium");
-            });
+                await Task.Run(() =>
+                {
+                    HideOverlays();
+                    NewGame("Medium");
+                });
+            }
         }
         private async Task ButtonDifficultyHardAction()
         {
-            await Task.Run(() =>
+            if (labelUniqueWaitVisibility != "Visible")
             {
-                HideOverlays();
-                NewGame("Hard");
-            });
+                await Task.Run(() =>
+                {
+                    HideOverlays();
+                    NewGame("Hard");
+                });
+            }
         }
         private async Task ButtonSquareDownAction(CompositeCommandParameter o)
         {
             var e = (MouseButtonEventArgs)o.EventArgs;
-            var param = (string)o.Parameter;
-
-            await Task.Run(() =>
+            if (labelUniqueWaitVisibility != "Visible")
             {
-                currentButtonIndex = param;
+                var param = (string)o.Parameter;
 
-                if (e.ChangedButton == MouseButton.Left)
+                await Task.Run(() =>
                 {
-                    if (SelectDifficultyVisibility == "Visible")
+                    currentButtonIndex = param;
+
+                    if (e.ChangedButton == MouseButton.Left)
                     {
-                        SelectDifficultyVisibility = "Hidden";
-                        return;
+                        if (SelectDifficultyVisibility == "Visible")
+                        {
+                            SelectDifficultyVisibility = "Hidden";
+                            return;
+                        }
+
+                        if ((SelectNumberVisibility == "Visible") || (SelectMarkerVisibility == "Visible"))
+                        {
+                            SelectMarkerVisibility = "Hidden";
+                            SelectNumberVisibility = "Hidden";
+                        }
+                        else if (!generatorNumbers.Contains(param))
+                        {
+                            SelectNumberVisibility = "Visible";
+                        }
+                    }
+                    else if (e.ChangedButton == MouseButton.Right)
+                    {
+                        if (SelectDifficultyVisibility == "Visible")
+                        {
+                            SelectDifficultyVisibility = "Hidden";
+                            return;
+                        }
+                        if ((SelectNumberVisibility == "Visible") || (SelectMarkerVisibility == "Visible"))
+                        {
+                            SelectMarkerVisibility = "Hidden";
+                            SelectNumberVisibility = "Hidden";
+                        }
+                        else if (!generatorNumbers.Contains(param))
+                        {
+                            SelectMarkerVisibility = "Visible";
+                        }
                     }
 
-                    if ((SelectNumberVisibility == "Visible") || (SelectMarkerVisibility == "Visible"))
+                    if (!SolverGameLogic.IsFull(numbersList))
                     {
-                        SelectMarkerVisibility = "Hidden";
-                        SelectNumberVisibility = "Hidden";
+                        HideValidation();
                     }
-                    else if (!generatorNumbers.Contains(param))
+                    else
                     {
-                        SelectNumberVisibility = "Visible";
+                        ShowValidation();
                     }
-                }
-                else if (e.ChangedButton == MouseButton.Right)
-                {
-                    if (SelectDifficultyVisibility == "Visible")
-                    {
-                        SelectDifficultyVisibility = "Hidden";
-                        return;
-                    }
-                    if ((SelectNumberVisibility == "Visible") || (SelectMarkerVisibility == "Visible"))
-                    {
-                        SelectMarkerVisibility = "Hidden";
-                        SelectNumberVisibility = "Hidden";
-                    }
-                    else if (!generatorNumbers.Contains(param))
-                    {
-                        SelectMarkerVisibility = "Visible";
-                    }
-                }
-
-                if (!SolverGameLogic.IsFull(numbersListValue))
-                {
-                    HideValidation();
-                }
-                else
-                {
-                    ShowValidation();
-                }
-            });
+                });
+            }
 
             e.Handled = true;
         }
         private async Task ButtonSquareUpAction(CompositeCommandParameter o)
         {
             var e = (MouseButtonEventArgs)o.EventArgs;
-            await Task.Run(() =>
+            if (labelUniqueWaitVisibility != "Visible")
             {
-            });
+                await Task.Run(() =>
+                {
+                });
+            }
 
             e.Handled = true;
         }
         private async Task ButtonSelectNumberAction(object o)
         {
-            await Task.Run(() =>
+            if (labelUniqueWaitVisibility != "Visible")
             {
-                SelectNumberVisibility = "Hidden";
-                var tag = (string)o;
-                string param = currentButtonIndex + tag;
-                ChangeNumber(param);
-            });
+                await Task.Run(() =>
+                {
+                    SelectNumberVisibility = "Hidden";
+                    var tag = (string)o;
+                    string param = currentButtonIndex + tag;
+                    ChangeNumber(param);
+                });
+            }
         }
         private async Task ButtonSelectMarkerAction(object o)
         {
-            await Task.Run(() =>
+            if (labelUniqueWaitVisibility != "Visible")
             {
-                SelectMarkerVisibility = "Hidden";
-                var tag = (string)o;
-                string param = currentButtonIndex + tag;
-                ChangeMarker(param);
-            });
+                await Task.Run(() =>
+                {
+                    SelectMarkerVisibility = "Hidden";
+                    var tag = (string)o;
+                    string param = currentButtonIndex + tag;
+                    ChangeMarker(param);
+                });
+            }
         }
-        private void InititalizeValues()
+        private void Inititalizes()
         {
-            if (numbersListValue == null)
+            if (numbersList == null)
             {
-                numbersListValue = new NumbersListModel();
-                numbersListValue.InitializeList();
+                numbersList = new NumbersListModel();
+                numbersList.InitializeList();
             }
-            if (markersListValue == null)
+            if (markersList == null)
             {
-                markersListValue = new MarkersListModel();
-                markersListValue.InitializeList();
+                markersList = new MarkersListModel();
+                markersList.InitializeList();
             }
-            if (numbersColorsListValue == null)
+            if (numbersColorsList == null)
             {
-                numbersColorsListValue = new NumbersColorsListModel();
-                numbersColorsListValue.InitializeList();
+                numbersColorsList = new NumbersColorsListModel();
+                numbersColorsList.InitializeList();
             }
         }
         private void ChangeButtonValidateVisibility()
         {
-            if (SolverGameLogic.IsFull(numbersListValue))
+            if (SolverGameLogic.IsFull(numbersList))
             {
                 ButtonDifficultyWidth = "250";
                 ButtonValidateVisibility = "Visible";
@@ -451,7 +502,7 @@ namespace Sudoku.ViewModels
         }
         private void ChangeNumber(string button)
         {
-            InititalizeValues();
+            Inititalizes();
 
             if (generatorNumbers == null)
             {
@@ -465,7 +516,7 @@ namespace Sudoku.ViewModels
                 int row = int.Parse(button[1].ToString());
                 string number = button[2].ToString();
                 NumbersListModel temp_numbersList;
-                temp_numbersList = numbersListValue;
+                temp_numbersList = numbersList;
 
                 if (number == "X")
                 {
@@ -491,7 +542,7 @@ namespace Sudoku.ViewModels
                             else
                             {
                                 MarkersListModel temp_markersList;
-                                temp_markersList = markersListValue;
+                                temp_markersList = markersList;
                                 temp_markersList[col][row][i][j] = "";
                                 MarkersList = temp_markersList;
                             }
@@ -510,7 +561,7 @@ namespace Sudoku.ViewModels
                                 else
                                 {
                                     MarkersListModel temp_markersList;
-                                    temp_markersList = markersListValue;
+                                    temp_markersList = markersList;
                                     if (temp_markersList[col][k][i][j] == number)
                                     {
                                         temp_markersList[col][k][i][j] = "";
@@ -533,7 +584,7 @@ namespace Sudoku.ViewModels
                                 else
                                 {
                                     MarkersListModel temp_markersList;
-                                    temp_markersList = markersListValue;
+                                    temp_markersList = markersList;
                                     if (temp_markersList[k][row][i][j] == number)
                                     {
                                         temp_markersList[k][row][i][j] = "";
@@ -562,7 +613,7 @@ namespace Sudoku.ViewModels
                                     else
                                     {
                                         MarkersListModel temp_markersList;
-                                        temp_markersList = markersListValue;
+                                        temp_markersList = markersList;
                                         if (temp_markersList[j][i][k][l] == number)
                                         {
                                             temp_markersList[j][i][k][l] = "";
@@ -578,13 +629,13 @@ namespace Sudoku.ViewModels
         }
         private void ChangeMarker(string button)
         {
-            InititalizeValues();
+            Inititalizes();
 
             int col = int.Parse(button[0].ToString());
             int row = int.Parse(button[1].ToString());
             string number = button[2].ToString();
 
-            if (numbersListValue[col][row] != "")
+            if (numbersList[col][row] != "")
             {
                 return;
             }
@@ -602,7 +653,7 @@ namespace Sudoku.ViewModels
                         else
                         {
                             MarkersListModel temp_numbersList;
-                            temp_numbersList = markersListValue;
+                            temp_numbersList = markersList;
                             temp_numbersList[col][row][i][j] = "";
                             MarkersList = temp_numbersList;
                         }
@@ -620,10 +671,10 @@ namespace Sudoku.ViewModels
                         {
                             continue;
                         }
-                        else if (markersListValue[col][row][i][j] == number)
+                        else if (markersList[col][row][i][j] == number)
                         {
                             MarkersListModel temp_numbersList;
-                            temp_numbersList = markersListValue;
+                            temp_numbersList = markersList;
                             temp_numbersList[col][row][i][j] = "";
                             MarkersList = temp_numbersList;
                             return;
@@ -640,7 +691,7 @@ namespace Sudoku.ViewModels
                             continue;
                         }
                         MarkersListModel temp_numbersList;
-                        temp_numbersList = markersListValue;
+                        temp_numbersList = markersList;
                         if (temp_numbersList[col][row][i][j] == "")
                         {
                             temp_numbersList[col][row][i][j] = number;
@@ -653,16 +704,21 @@ namespace Sudoku.ViewModels
         }
         private void NewGame(string difficulty)
         {
+            if (difficulty == "Hard")
+            {
+                LabelUniqueWaitVisibility = "Visible";
+            }
+
             GeneratorGameLogic generatorGameLogic = null;
 
             bool doRun = true;
 
             while (doRun)
             {
-                numbersListValue = new NumbersListModel();
-                numbersListValue.InitializeList();
+                numbersList = new NumbersListModel();
+                numbersList.InitializeList();
 
-                SolverGameLogic solverGameLogic = new SolverGameLogic(numbersListValue);
+                SolverGameLogic solverGameLogic = new SolverGameLogic(numbersList);
                 solverGameLogic.FillSudoku();
                 NumbersListModel numbersListSolved = solverGameLogic.NumbersListSolved;
 
@@ -683,15 +739,17 @@ namespace Sudoku.ViewModels
 
                 generatorGameLogic.NumbersList = numbersListSolved;
 
+                //// DEBUG:
                 //Stopwatch stopwatch = new Stopwatch();
                 //stopwatch.Start();
 
-                generatorGameLogic.GenerateSudoku();
+                generatorGameLogic.GenerateUniqueSudoku();
 
+                //// DEBUG:
                 //stopwatch.Stop();
-                //Console.WriteLine("Elapsed Time is {0} ms", stopwatch.ElapsedMilliseconds);
+                //Console.WriteLine("Elapsed Time is {0} ms" + " " + stopwatch.ElapsedMilliseconds + ", " + generatorGameLogic.Tries);
 
-                if (generatorGameLogic.Counter == generatorGameLogic.RemoveNumbers)
+                if (generatorGameLogic.Counter == generatorGameLogic.RemoveNumbers && generatorGameLogic.UniqueCounter <= 1)
                 {
                     doRun = false;
                 }
@@ -712,43 +770,45 @@ namespace Sudoku.ViewModels
                 }
             }
 
-            numbersColorsListValue = new NumbersColorsListModel();
-            numbersColorsListValue.InitializeList();
+            numbersColorsList = new NumbersColorsListModel();
+            numbersColorsList.InitializeList();
             foreach (string coords in generatorNumbers)
             {
                 int col = int.Parse(coords[0].ToString());
                 int row = int.Parse(coords[1].ToString());
 
-                numbersColorsListValue[col][row] = "Black";
+                numbersColorsList[col][row] = "Black";
             }
-            NumbersColorsList = numbersColorsListValue;
+            NumbersColorsList = numbersColorsList;
 
             LabelValidateText = "";
 
             NumbersList = generatorGameLogic.NumbersList;
 
-            markersListValue = new MarkersListModel();
-            markersListValue.InitializeList();
-            MarkersList = markersListValue;
+            markersList = new MarkersListModel();
+            markersList.InitializeList();
+            MarkersList = markersList;
             HideValidation();
+
+            LabelUniqueWaitVisibility = "Hidden";
         }
         private void ValidateAll()
         {
             ButtonValidateVisibility = "Collapsed";
             LabelValidateVisibility = "Visible";
 
-            if (numbersListValue == null)
+            if (numbersList == null)
             {
-                numbersListValue = new NumbersListModel();
-                numbersListValue.InitializeList();
+                numbersList = new NumbersListModel();
+                numbersList.InitializeList();
             }
 
             for (int col = 0; col < 9; col++)
             {
                 for (int row = 0; row < 9; row++)
                 {
-                    string number = numbersListValue[col][row];
-                    if (! ValidatorGameLogic.IsValid(numbersListValue, col, row, number))
+                    string number = numbersList[col][row];
+                    if (! ValidatorGameLogic.IsValid(numbersList, col, row, number))
                     {
                         LabelValidateText = Resources.LabelValidateConflicts;
                         return;

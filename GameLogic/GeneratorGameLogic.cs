@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sudoku.Models;
 using Sudoku.Helpers;
+using System.Diagnostics;
 
 namespace Sudoku.GameLogic
 {
@@ -21,7 +22,7 @@ namespace Sudoku.GameLogic
         public int Counter = 0;
         public int Tries = 0;
 
-        public int UniqueCounter;
+        public int UniqueCounter = 0;
         public NumbersListModel UniqueNumbersList;
 
         private List<string> checkedList;
@@ -78,13 +79,21 @@ namespace Sudoku.GameLogic
                         if (!HasCurrentColTooFewNumbers(col) && !HasCurrentRowTooFewNumbers(row) && !HasCurrentSquareTooFewNumbers(col, row) &&
                             !HasAnotherColTooManyNumbers(col) && !HasAnotherRowTooManyNumbers(row) && !HasAnotherSquareTooManyNumbers(col, row))
                         {
+                            //// DEBUG:
+                            //Stopwatch stopwatch = new Stopwatch();
+                            //stopwatch.Start();
+
                             UniqueNumbersList = NumbersListModel.CopyList(NumbersList);
                             UniqueNumbersList[col][row] = "";
                             UniqueCounter = 0;
                             HasUniqueSolution();
-                            
+
                             if (UniqueCounter < 2)
                             {
+                                //// DEBUG:
+                                //stopwatch.Stop();
+                                //Console.WriteLine("Elapsed Time is {0} ms" + " " + stopwatch.Elapsed.TotalMilliseconds + ", " + Tries);
+
                                 Counter++;
                                 NumbersList[col][row] = "";
                                 checkedList.Clear();
@@ -98,7 +107,7 @@ namespace Sudoku.GameLogic
                         {
                             checkedList.Add(col.ToString() + row.ToString());
                         }
-                        if (Counter < RemoveNumbers && Tries < 20)
+                        if (Counter < RemoveNumbers && Tries < 40)
                         {
                             GenerateUniqueSudoku();
                         }

@@ -138,6 +138,9 @@
   <data name="LabelOverlayChooseNumber" xml:space="preserve">
     <value>Zahl setzen</value>
   </data>
+  <data name="LabelOverlayUniqueWait" xml:space="preserve">
+    <value>Bitte warten...</value>
+  </data>
   <data name="LabelValidateConflicts" xml:space="preserve">
     <value>Konflikte gefunden!</value>
   </data>
