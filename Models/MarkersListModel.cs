@@ -24,7 +24,7 @@ namespace Sudoku.Models
                 for (int j = 0; j < 9; j++)
                 {
                     List<List<string>> tempList2 = new List<List<string>>();
-                    for (int k = 0; k < 3; k++)
+                    for (int k = 0; k < 4; k++)
                     {
                         List<string> tempList3 = new List<string>();
                         for (int l = 0; l < 3; l++)
@@ -48,7 +48,7 @@ namespace Sudoku.Models
                 for (int j = 0; j < 9; j++)
                 {
                     List<List<string>> tempList2 = new List<List<string>>();
-                    for (int k = 0; k < 3; k++)
+                    for (int k = 0; k < 4; k++)
                     {
                         List<string> tempList3 = new List<string>();
                         for (int l = 0; l < 3; l++)

@@ -535,7 +535,7 @@ namespace Sudoku.ViewModels
                     ChangeButtonValidateVisibility();
                     for (int j = 0; j < 3; j++)
                     {
-                        for (int i = 0; i < 3; i++)
+                        for (int i = 0; i < 4; i++)
                         {
                             if (i == 1 && j == 1)
                             {
@@ -554,7 +554,7 @@ namespace Sudoku.ViewModels
                     {
                         for (int j = 0; j < 3; j++)
                         {
-                            for (int i = 0; i < 3; i++)
+                            for (int i = 0; i < 4; i++)
                             {
                                 if (i == 1 && j == 1)
                                 {
@@ -577,7 +577,7 @@ namespace Sudoku.ViewModels
                     {
                         for (int j = 0; j < 3; j++)
                         {
-                            for (int i = 0; i < 3; i++)
+                            for (int i = 0; i < 4; i++)
                             {
                                 if (i == 1 && j == 1)
                                 {
@@ -604,7 +604,7 @@ namespace Sudoku.ViewModels
                     {
                         for (int j = col2; j < col2 + 3; j++)
                         {
-                            for (int k = 0; k < 3; k++)
+                            for (int k = 0; k < 4; k++)
                             {
                                 for (int l = 0; l < 3; l++)
                                 {
@@ -646,9 +646,9 @@ namespace Sudoku.ViewModels
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < 4; i++)
                     {
-                        if (i == 1 && j == 1)
+                        if ((i == 1 && j == 1) || (i == 2 && j == 1) || (i == 3 && j == 1))
                         {
                             continue;
                         }
@@ -665,43 +665,54 @@ namespace Sudoku.ViewModels
             }
             else
             {
-                for (int j = 0; j < 3; j++)
+                MarkersListModel temp_numbersList;
+                temp_numbersList = markersList;
+                if (number == "1")
                 {
-                    for (int i = 0; i < 3; i++)
-                    {
-                        if (i == 1 && j == 1)
-                        {
-                            continue;
-                        }
-                        else if (markersList[col][row][i][j] == number)
-                        {
-                            MarkersListModel temp_numbersList;
-                            temp_numbersList = markersList;
-                            temp_numbersList[col][row][i][j] = "";
-                            MarkersList = temp_numbersList;
-                            return;
-                        }
-                    }
+                    if (markersList[col][row][3][0] != "") { temp_numbersList[col][row][3][0] = ""; }
+                    else { temp_numbersList[col][row][3][0] = "1"; }
                 }
-         
-                for (int j = 0; j < 3; j++)
+                else if (number == "2")
                 {
-                    for (int i = 0; i < 3; i++)
-                    {
-                        if (i == 1 && j == 1)
-                        {
-                            continue;
-                        }
-                        MarkersListModel temp_numbersList;
-                        temp_numbersList = markersList;
-                        if (temp_numbersList[col][row][i][j] == "")
-                        {
-                            temp_numbersList[col][row][i][j] = number;
-                            MarkersList = temp_numbersList;
-                            return;
-                        }
-                    }
+                    if (markersList[col][row][2][0] != "") { temp_numbersList[col][row][2][0] = ""; }
+                    else { temp_numbersList[col][row][2][0] = "2"; }
                 }
+                else if (number == "3")
+                {
+                    if (markersList[col][row][1][0] != "") { temp_numbersList[col][row][1][0] = ""; }
+                    else { temp_numbersList[col][row][1][0] = "3"; }
+                }
+                else if (number == "4")
+                {
+                    if (markersList[col][row][0][0] != "") { temp_numbersList[col][row][0][0] = ""; }
+                    else { temp_numbersList[col][row][0][0] = "4"; }
+                }
+                else if (number == "5")
+                {
+                    if (markersList[col][row][0][1] != "") { temp_numbersList[col][row][0][1] = ""; }
+                    else { temp_numbersList[col][row][0][1] = "5"; }
+                }
+                else if (number == "6")
+                {
+                    if (markersList[col][row][0][2] != "") { temp_numbersList[col][row][0][2] = ""; }
+                    else { temp_numbersList[col][row][0][2] = "6"; }
+                }
+                else if (number == "7")
+                {
+                    if (markersList[col][row][1][2] != "") { temp_numbersList[col][row][1][2] = ""; }
+                    else { temp_numbersList[col][row][1][2] = "7"; }
+                }
+                else if (number == "8")
+                {
+                    if (markersList[col][row][2][2] != "") { temp_numbersList[col][row][2][2] = ""; }
+                    else { temp_numbersList[col][row][2][2] = "8"; }
+                }
+                else if (number == "9")
+                {
+                    if (markersList[col][row][3][2] != "") { temp_numbersList[col][row][3][2] = ""; }
+                    else { temp_numbersList[col][row][3][2] = "9"; }
+                }
+                MarkersList = temp_numbersList;
             }
         }
         private void NewGame(string difficulty)
