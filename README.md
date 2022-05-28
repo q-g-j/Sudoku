@@ -6,6 +6,7 @@ Features:
 ---------
 
 - random puzzle generator with 3 difficulties
+- generate only Sudokus with a single solution
 - 5 save slots *(save files location: %APPDATA%\SudokuGame)*
 - solve current Sudoku from the menu
 - complete mouse input
@@ -16,7 +17,7 @@ Controls:
 |Mouse button|Action|
 |-|-|
 |Left click|place a number|
-|Right click|place a marker (up to 8 in one square)|
+|Right click|place a marker (up to 9 in one square)|
 
 ***In the works:***
 -------------
