@@ -399,20 +399,20 @@ namespace Sudoku.ViewModels
                         DateTime now = DateTime.Now;
                         string slotNumber = (string)o;
                         saveSlotsModel.SaveAll(numbersList, markersList, numbersColorsList, generatorNumbers, now, slotNumber);
-                        List<string> tempSaveList = menuSaveSlotsSaveText;
-                        if (slotNumber == "1") tempSaveList[0] = Resources.MenuGameSaveSlotsLoadFromSlot1 + " (" + now + ")";
-                        else if (slotNumber == "2") tempSaveList[1] = Resources.MenuGameSaveSlotsLoadFromSlot2 + " (" + now + ")";
-                        else if (slotNumber == "3") tempSaveList[2] = Resources.MenuGameSaveSlotsLoadFromSlot3 + " (" + now + ")";
-                        else if (slotNumber == "4") tempSaveList[3] = Resources.MenuGameSaveSlotsLoadFromSlot4 + " (" + now + ")";
-                        else if (slotNumber == "5") tempSaveList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5 + " (" + now + ")";
-                        MenuSaveSlotsSaveText = tempSaveList;
-                        //List<string> tempLoadList = menuSaveSlotsLoadText;
-                        //if (slotNumber == "1") tempLoadList[0] = Resources.MenuGameSaveSlotsLoadFromSlot1 + " (" + now + ")";
-                        //else if (slotNumber == "2") tempLoadList[1] = Resources.MenuGameSaveSlotsLoadFromSlot2 + " (" + now + ")";
-                        //else if (slotNumber == "3") tempLoadList[2] = Resources.MenuGameSaveSlotsLoadFromSlot3 + " (" + now + ")";
-                        //else if (slotNumber == "4") tempLoadList[3] = Resources.MenuGameSaveSlotsLoadFromSlot4 + " (" + now + ")";
-                        //else if (slotNumber == "5") tempLoadList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5 + " (" + now + ")";
-                        //MenuSaveSlotsLoadText = tempLoadList;
+                        //List<string> tempSaveList = menuSaveSlotsSaveText;
+                        //if (slotNumber == "1") tempSaveList[0] = Resources.MenuGameSaveSlotsLoadFromSlot1 + " (" + now + ")";
+                        //else if (slotNumber == "2") tempSaveList[1] = Resources.MenuGameSaveSlotsLoadFromSlot2 + " (" + now + ")";
+                        //else if (slotNumber == "3") tempSaveList[2] = Resources.MenuGameSaveSlotsLoadFromSlot3 + " (" + now + ")";
+                        //else if (slotNumber == "4") tempSaveList[3] = Resources.MenuGameSaveSlotsLoadFromSlot4 + " (" + now + ")";
+                        //else if (slotNumber == "5") tempSaveList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5 + " (" + now + ")";
+                        //MenuSaveSlotsSaveText = tempSaveList;
+                        List<string> tempLoadList = menuSaveSlotsLoadText;
+                        if (slotNumber == "1") tempLoadList[0] = Resources.MenuGameSaveSlotsLoadFromSlot1 + " (" + now + ")";
+                        else if (slotNumber == "2") tempLoadList[1] = Resources.MenuGameSaveSlotsLoadFromSlot2 + " (" + now + ")";
+                        else if (slotNumber == "3") tempLoadList[2] = Resources.MenuGameSaveSlotsLoadFromSlot3 + " (" + now + ")";
+                        else if (slotNumber == "4") tempLoadList[3] = Resources.MenuGameSaveSlotsLoadFromSlot4 + " (" + now + ")";
+                        else if (slotNumber == "5") tempLoadList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5 + " (" + now + ")";
+                        MenuSaveSlotsLoadText = tempLoadList;
                     }
                 });
             }
