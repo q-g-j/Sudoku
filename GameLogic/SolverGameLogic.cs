@@ -7,13 +7,15 @@ namespace Sudoku.GameLogic
 {
     public class SolverGameLogic
     {
-        private NumbersListModel numbersList;
-        public NumbersListModel NumbersListSolved;
-
         public SolverGameLogic(NumbersListModel list)
         {
-            numbersList = NumbersListModel.CopyList(list);
+            numbersList = new NumbersListModel(list);
+            random = new Random();
         }
+
+        private readonly NumbersListModel numbersList;
+        public NumbersListModel NumbersListSolved;
+        private readonly Random random;
 
         public static bool IsFull(NumbersListModel numbersList)
         {
@@ -33,7 +35,7 @@ namespace Sudoku.GameLogic
 
         private void CopySolution(NumbersListModel numbersList)
         {
-            NumbersListSolved = NumbersListModel.CopyList(numbersList);
+            NumbersListSolved = new NumbersListModel(numbersList);
         }
 
         public void FillSudoku()
@@ -44,11 +46,8 @@ namespace Sudoku.GameLogic
                 {
                     if (numbersList[col][row] == "")
                     {
-                        List<int> intList = new List<int>();
-                        intList.AddRange(Enumerable.Range(1, 9));
-                        Random random = new Random();
-                        var shuffledIntList = intList.OrderBy(item => random.Next());
 
+                        int[] shuffledIntList = Enumerable.Range(1, 9).OrderBy(c => random.Next()).ToArray();
                         foreach (int item in shuffledIntList)
                         {
                             string number = item.ToString();

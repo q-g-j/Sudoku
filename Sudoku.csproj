@@ -130,8 +130,6 @@
     <Compile Include="GameLogic\ValidatorGameLogic.cs" />
     <Compile Include="Helpers\AdvancedInvokeCommandAction.cs" />
     <Compile Include="Helpers\CompositeCommandParameter.cs" />
-    <Compile Include="Helpers\RelayCommand.cs" />
-    <Compile Include="Helpers\StaticMethods.cs" />
     <Compile Include="Models\NumberColorsListModel.cs" />
     <Compile Include="Models\NumberListModel.cs" />
     <Compile Include="Models\MarkersListModel.cs" />
@@ -217,6 +215,7 @@
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Debug\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\waste bin.png" />

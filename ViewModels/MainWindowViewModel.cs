@@ -20,7 +20,7 @@ namespace Sudoku.ViewModels
         #region Constructor
         public MainWindowViewModel()
         {
-            doBlockInput = false;
+            // initialize properties:
             selectNumberVisibility = "Hidden";
             selectMarkerVisibility = "Hidden";
             labelUniqueWaitVisibility = "Hidden";
@@ -30,21 +30,21 @@ namespace Sudoku.ViewModels
             labelValidateText = "";
             buttonDifficultyWidth = "350";
             currentButtonIndex = "";
-            folderAppSettings = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SudokuGame");
 
+            // display each existing save slot's date and time:
+            folderAppSettings = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SudokuGame");
             if (!Directory.Exists(folderAppSettings))
             {
                 Directory.CreateDirectory(folderAppSettings);
             }
-
-            List<string> list = new List<string>();
+            List<string> saveSlotList = new List<string>();
             for (int i = 0; i < 5; i++)
             {
-                if      (i == 0) list.Add(Resources.MenuGameSaveSlotsLoadFromSlot1);
-                else if (i == 1) list.Add(Resources.MenuGameSaveSlotsLoadFromSlot2);
-                else if (i == 2) list.Add(Resources.MenuGameSaveSlotsLoadFromSlot3);
-                else if (i == 3) list.Add(Resources.MenuGameSaveSlotsLoadFromSlot4);
-                else if (i == 4) list.Add(Resources.MenuGameSaveSlotsLoadFromSlot5);
+                if      (i == 0) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot1);
+                else if (i == 1) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot2);
+                else if (i == 2) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot3);
+                else if (i == 3) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot4);
+                else if (i == 4) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot5);
                 string filename = Path.Combine(folderAppSettings, "slot" + (i + 1).ToString() + ".json");
                 if (File.Exists(filename))
                 {
@@ -54,19 +54,23 @@ namespace Sudoku.ViewModels
                         Dictionary<string, object> listsDict = (Dictionary<string, object>)serializer.Deserialize(file, typeof(Dictionary<string, object>));
 
                         DateTime dateAndTime = (DateTime)listsDict["DateAndTime"];
-                        list[i] += " (" + dateAndTime.ToString() + ")";
+                        saveSlotList[i] += " (" + dateAndTime.ToString() + ")";
                     }
                 }
             }
+            MenuSaveSlotsText = saveSlotList;
 
-            MenuSaveSlotsText = list;
+            // initialize variables:
+            doBlockInput = false;
 
+            // initialize lists:
             generatorNumbers = new List<string>();
             numbersList = new NumbersListModel();
             numbersColorsList = new NumbersColorsListModel();
             numbersList.InitializeList();
             numbersColorsList.InitializeList();
 
+            // initialize commands:
             MenuNewCommand = new AsyncRelayCommand(MenuNewAction);
             MenuSolveCommand = new AsyncRelayCommand(MenuSolveAction);
             MenuSettingsCommand = new AsyncRelayCommand(MenuSettingsAction);
@@ -242,7 +246,7 @@ namespace Sudoku.ViewModels
                         }
                         MarkersList = markersList;
                         NumbersColorsList = numbersColorsList;
-                        NumbersList = NumbersListModel.CopyList(solverGameLogic.NumbersListSolved);
+                        NumbersList = new NumbersListModel(solverGameLogic.NumbersListSolved);
                         ChangeButtonValidateVisibility();
                     }
                 });

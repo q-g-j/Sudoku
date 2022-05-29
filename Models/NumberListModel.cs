@@ -16,6 +16,14 @@ namespace Sudoku.Models
         {
         }
 
+        public NumbersListModel(NumbersListModel list)
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                Add(new List<string>(list[i]));
+            }
+        }
+
         public void InitializeList()
         {
             for (int i = 0; i < 9; i++)
@@ -27,16 +35,6 @@ namespace Sudoku.Models
                 }
                 Add(tempList);
             }
-        }
-
-        public static NumbersListModel CopyList(NumbersListModel list)
-        {
-            NumbersListModel returnList = new NumbersListModel();
-            for (int i = 0; i < 9; i++)
-            {
-                returnList.Add(new List<string>(list[i]));
-            }
-            return returnList;
         }
     }
 }

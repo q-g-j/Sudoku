@@ -15,6 +15,14 @@ namespace Sudoku.Models
         public NumbersColorsListModel(IEnumerable<List<string>> collection) : base(collection)
         {
         }
+        public NumbersColorsListModel(NumbersColorsListModel list)
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                Add(new List<string>(list[i]));
+            }
+        }
+
         public void InitializeList()
         {
             for (int i = 0; i < 9; i++)
@@ -26,16 +34,6 @@ namespace Sudoku.Models
                 }
                 Add(tempList);
             }
-        }
-
-        public static NumbersColorsListModel CopyList(NumbersColorsListModel list)
-        {
-            NumbersColorsListModel returnList = new NumbersColorsListModel();
-            for (int i = 0; i < 9; i++)
-            {
-                returnList.Add(new List<string>(list[i]));
-            }
-            return returnList;
         }
     }
 }

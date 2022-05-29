@@ -15,17 +15,14 @@ namespace Sudoku.GameLogic
             checkedList = new List<string>();
         }
 
-        private readonly Random random;
-
         public NumbersListModel NumbersList;
+        public NumbersListModel UniqueNumbersList;
+        private readonly List<string> checkedList;
+        private readonly Random random;
         public int RemoveNumbers;
         public int Counter = 0;
-        public int Tries = 0;
-
         public int UniqueCounter = 0;
-        public NumbersListModel UniqueNumbersList;
-
-        private readonly List<string> checkedList;
+        public int Tries = 0;
 
         public void GenerateSudoku()
         {
@@ -64,15 +61,11 @@ namespace Sudoku.GameLogic
 
         public void GenerateUniqueSudoku()
         {
-            List<int> intRowList = new List<int>();
-            intRowList.AddRange(Enumerable.Range(0, 9));
-            var shuffledIntRowList = intRowList.OrderBy(item => random.Next());
-            foreach (var row in shuffledIntRowList)
+            int[] rowArray = Enumerable.Range(0, 9).OrderBy(c => random.Next()).ToArray();
+            foreach (var row in rowArray)
             {
-                List<int> intColList = new List<int>();
-                intColList.AddRange(Enumerable.Range(0, 9));
-                var shuffledIntColList = intColList.OrderBy(item => random.Next());
-                foreach (var col in shuffledIntColList)
+                int[] colArray = Enumerable.Range(0, 9).OrderBy(c => random.Next()).ToArray();
+                foreach (var col in colArray)
                 {
                     if (NumbersList[col][row] != "")
                     {
@@ -83,11 +76,14 @@ namespace Sudoku.GameLogic
                             //Stopwatch stopwatch = new Stopwatch();
                             //stopwatch.Start();
 
-                            UniqueNumbersList = NumbersListModel.CopyList(NumbersList);
+                            UniqueNumbersList = new NumbersListModel(NumbersList);
                             UniqueNumbersList[col][row] = "";
                             UniqueCounter = 0;
 
-                            HasUniqueSolution();
+                            if (Counter > 20)
+                            {
+                                HasUniqueSolution();
+                            }
 
                             if (UniqueCounter < 2)
                             {
@@ -100,8 +96,8 @@ namespace Sudoku.GameLogic
                                 NumbersList[col][row] = "";
                                 checkedList.Clear();
                             }
-                            else
-                            {
+                            else if (Counter > 20)
+                            {                                
                                 Tries++;
                             }
                         }
@@ -135,6 +131,7 @@ namespace Sudoku.GameLogic
                                 if (SolverGameLogic.IsFull(UniqueNumbersList))
                                 {
                                     UniqueCounter++;
+                                    Console.WriteLine(UniqueCounter);
                                 }
                                 if (UniqueCounter < 2)
                                 {
