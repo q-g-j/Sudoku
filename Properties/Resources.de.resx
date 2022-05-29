@@ -195,6 +195,9 @@
   <data name="MenuGameSettings" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
+  <data name="MenuGameSettingsSingleSolution" xml:space="preserve">
+    <value>Sudokus mit nur einer Lösung generieren</value>
+  </data>
   <data name="MenuGameSolveSudoku" xml:space="preserve">
     <value>Sudoku lösen</value>
   </data>

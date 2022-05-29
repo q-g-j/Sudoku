@@ -131,7 +131,7 @@ namespace Sudoku.GameLogic
                                 if (SolverGameLogic.IsFull(UniqueNumbersList))
                                 {
                                     UniqueCounter++;
-                                    Console.WriteLine(UniqueCounter);
+                                    //Console.WriteLine(UniqueCounter);
                                 }
                                 if (UniqueCounter < 2)
                                 {

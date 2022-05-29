@@ -96,7 +96,9 @@
             <MenuItem Header="{x:Static p:Resources.MenuGame}">
                 <MenuItem Header="{x:Static p:Resources.MenuGameEmptySudoku}" Command="{Binding MenuNewCommand}"></MenuItem>
                 <MenuItem Header="{x:Static p:Resources.MenuGameSolveSudoku}" Command="{Binding MenuSolveCommand}" ></MenuItem>
-                <!--<MenuItem Header="{x:Static p:Resources.MenuGameSettings}" Command="{Binding MenuSettingsCommand}" ></MenuItem>-->
+                <MenuItem Header="{x:Static p:Resources.MenuGameSettings}">
+                    <MenuItem Header="{x:Static p:Resources.MenuGameSettingsSingleSolution}" IsCheckable="True" IsChecked="{Binding MenuSingleSolutionCheck}" Command="{Binding MenuSettingsSingleSolutionCommand}" ></MenuItem>
+                </MenuItem>
                 <!--<MenuItem Header="Sudoku drucken"></MenuItem>-->
                 <Separator></Separator>
                 <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlots}">

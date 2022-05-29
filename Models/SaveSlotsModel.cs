@@ -14,7 +14,7 @@ namespace Sudoku.Models
         }
         private readonly string folderAppSettings;
 
-        internal struct ListsStruct
+        internal struct SaveSlotStruct
         {
             internal DateTime DateAndTime;
             internal NumbersListModel NumbersList;
@@ -43,10 +43,10 @@ namespace Sudoku.Models
             }
         }
 
-        internal ListsStruct LoadAll(string slotNumber)
+        internal SaveSlotStruct LoadAll(string slotNumber)
         {
             string filename = Path.Combine(folderAppSettings, "slot" + slotNumber + ".json");
-            ListsStruct listsStruct = new ListsStruct();
+            SaveSlotStruct listsStruct = new SaveSlotStruct();
 
             using (var file = File.OpenText(filename))
             {

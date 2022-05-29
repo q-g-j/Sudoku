@@ -295,6 +295,15 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generate Sudokus with a single solution.
+        /// </summary>
+        public static string MenuGameSettingsSingleSolution {
+            get {
+                return ResourceManager.GetString("MenuGameSettingsSingleSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Solve this Sudoku.
         /// </summary>
         public static string MenuGameSolveSudoku {

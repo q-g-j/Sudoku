@@ -12,6 +12,7 @@ using Sudoku.GameLogic;
 using Sudoku.Models;
 using Sudoku.Helpers;
 using Sudoku.Properties;
+using Sudoku.Settings;
 
 namespace Sudoku.ViewModels
 {
@@ -37,6 +38,42 @@ namespace Sudoku.ViewModels
             {
                 Directory.CreateDirectory(folderAppSettings);
             }
+
+            string settingsFilename = Path.Combine(folderAppSettings, "settings.json");
+            if (File.Exists(settingsFilename))
+            {
+                using (var settingsFile = File.OpenText(settingsFilename))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    Dictionary<string, object> settingsDict = (Dictionary<string, object>)serializer.Deserialize(settingsFile, typeof(Dictionary<string, object>));
+                    if ((bool)settingsDict["SingleSolution"])
+                    {
+                        isMenuSettingsSingleSolutionSet = true;
+                        menuSingleSolutionCheck = "True";
+                    }
+                    else
+                    {
+                        isMenuSettingsSingleSolutionSet = false;
+                        menuSingleSolutionCheck = "False";
+                    }
+                }
+            }
+            else
+            {
+                Dictionary<string, object> settingsDict = new Dictionary<string, object>
+                {
+                    ["SingleSolution"] = false,
+                };
+
+                using (var file = File.CreateText(settingsFilename))
+                {
+                    var settingsDictJson = JsonConvert.SerializeObject(settingsDict, Formatting.Indented);
+                    file.WriteLine(settingsDictJson);
+                }
+                isMenuSettingsSingleSolutionSet = false;
+                menuSingleSolutionCheck = "False";
+            }
+
             List<string> saveSlotList = new List<string>();
             for (int i = 0; i < 5; i++)
             {
@@ -45,15 +82,15 @@ namespace Sudoku.ViewModels
                 else if (i == 2) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot3);
                 else if (i == 3) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot4);
                 else if (i == 4) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot5);
-                string filename = Path.Combine(folderAppSettings, "slot" + (i + 1).ToString() + ".json");
-                if (File.Exists(filename))
+                string saveSlotFilename = Path.Combine(folderAppSettings, "slot" + (i + 1).ToString() + ".json");
+                if (File.Exists(saveSlotFilename))
                 {
-                    using (var file = File.OpenText(filename))
+                    using (var saveSlotFile = File.OpenText(saveSlotFilename))
                     {
                         JsonSerializer serializer = new JsonSerializer();
-                        Dictionary<string, object> listsDict = (Dictionary<string, object>)serializer.Deserialize(file, typeof(Dictionary<string, object>));
+                        Dictionary<string, object> saveSlotDict = (Dictionary<string, object>)serializer.Deserialize(saveSlotFile, typeof(Dictionary<string, object>));
 
-                        DateTime dateAndTime = (DateTime)listsDict["DateAndTime"];
+                        DateTime dateAndTime = (DateTime)saveSlotDict["DateAndTime"];
                         saveSlotList[i] += " (" + dateAndTime.ToString() + ")";
                     }
                 }
@@ -73,7 +110,8 @@ namespace Sudoku.ViewModels
             // initialize commands:
             MenuNewCommand = new AsyncRelayCommand(MenuNewAction);
             MenuSolveCommand = new AsyncRelayCommand(MenuSolveAction);
-            MenuSettingsCommand = new AsyncRelayCommand(MenuSettingsAction);
+            //MenuSettingsCommand = new AsyncRelayCommand(MenuSettingsAction);
+            MenuSettingsSingleSolutionCommand = new AsyncRelayCommand(MenuSettingsSingleSolutionAction);
             MenuSaveToSlotCommand = new AsyncRelayCommand<object>(o => MenuSaveToSlotAction(o));
             MenuLoadFromSlotCommand = new AsyncRelayCommand<object>(o => MenuLoadFromSlotAction(o));
             ButtonDifficultyCommand = new AsyncRelayCommand(ButtonDifficultyAction);
@@ -94,6 +132,7 @@ namespace Sudoku.ViewModels
         private List<string> generatorNumbers;
         readonly string folderAppSettings;
         private bool doBlockInput;
+        private bool isMenuSettingsSingleSolutionSet;
         #endregion Private variables
 
         #region Property values
@@ -102,6 +141,7 @@ namespace Sudoku.ViewModels
         private NumbersColorsListModel numbersColorsList;
 
         private List<string> menuSaveSlotsText;
+        private string menuSingleSolutionCheck;
 
         private string buttonDifficultyText;
         private string labelValidateText;
@@ -119,6 +159,7 @@ namespace Sudoku.ViewModels
         public IAsyncRelayCommand MenuNewCommand { get; }
         public IAsyncRelayCommand MenuSolveCommand { get; }
         public IAsyncRelayCommand MenuSettingsCommand { get; }
+        public IAsyncRelayCommand MenuSettingsSingleSolutionCommand { get; }
         public IAsyncRelayCommand MenuSaveToSlotCommand { get; }
         public IAsyncRelayCommand MenuLoadFromSlotCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyCommand { get; }
@@ -137,6 +178,11 @@ namespace Sudoku.ViewModels
         {
             get => menuSaveSlotsText;
             set { menuSaveSlotsText = value; OnPropertyChanged(); }
+        }
+        public string MenuSingleSolutionCheck
+        {
+            get => menuSingleSolutionCheck;
+            set { menuSingleSolutionCheck = value; OnPropertyChanged(); }
         }
         public NumbersListModel NumbersList
         {
@@ -252,13 +298,34 @@ namespace Sudoku.ViewModels
                 });
             }
         }
-        private async Task MenuSettingsAction()
+        //private async Task MenuSettingsAction()
+        //{
+        //    if (! doBlockInput)
+        //    {
+        //        await Task.Run(() =>
+        //        {
+        //            ;
+        //        });
+        //    }
+        //}
+        private async Task MenuSettingsSingleSolutionAction()
         {
-            if (! doBlockInput)
+            if (!doBlockInput)
             {
                 await Task.Run(() =>
                 {
-                    ;
+                    AppSettings appSettings = new AppSettings(folderAppSettings);
+                    
+                    if (isMenuSettingsSingleSolutionSet)
+                    {
+                        isMenuSettingsSingleSolutionSet = false;
+                        appSettings.ChangeSingleSolution(false);
+                    }
+                    else
+                    {
+                        isMenuSettingsSingleSolutionSet = true;
+                        appSettings.ChangeSingleSolution(true);
+                    }
                 });
             }
         }
@@ -297,11 +364,11 @@ namespace Sudoku.ViewModels
                     {
                         HideOverlays();
                         SaveSlotsModel saveSlots = new SaveSlotsModel(folderAppSettings);
-                        SaveSlotsModel.ListsStruct listsStruct = saveSlots.LoadAll(slotNumber);
-                        NumbersList = listsStruct.NumbersList;
-                        MarkersList = listsStruct.MarkersList;
-                        NumbersColorsList = listsStruct.NumbersColorsList;
-                        generatorNumbers = listsStruct.GeneratorNumbers;
+                        SaveSlotsModel.SaveSlotStruct saveSlotStruct = saveSlots.LoadAll(slotNumber);
+                        NumbersList = saveSlotStruct.NumbersList;
+                        MarkersList = saveSlotStruct.MarkersList;
+                        NumbersColorsList = saveSlotStruct.NumbersColorsList;
+                        generatorNumbers = saveSlotStruct.GeneratorNumbers;
                         if (SolverGameLogic.IsFull(numbersList))
                         {
                             ShowValidation();
@@ -723,7 +790,7 @@ namespace Sudoku.ViewModels
         {
             doBlockInput = true;
 
-            if (difficulty == "Hard")
+            if (difficulty == "Hard" && isMenuSettingsSingleSolutionSet)
             {
                 LabelUniqueWaitVisibility = "Visible";
             }
@@ -762,7 +829,14 @@ namespace Sudoku.ViewModels
                 //Stopwatch stopwatch = new Stopwatch();
                 //stopwatch.Start();
 
-                generatorGameLogic.GenerateUniqueSudoku();
+                if (isMenuSettingsSingleSolutionSet)
+                {
+                    generatorGameLogic.GenerateUniqueSudoku();
+                }
+                else
+                {
+                    generatorGameLogic.GenerateSudoku();
+                }
 
 
                 //// DEBUG:
