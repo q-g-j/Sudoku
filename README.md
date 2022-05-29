@@ -6,12 +6,11 @@ Features:
 ---------
 
 - random puzzle generator with 3 difficulties
-- generate only Sudokus with a single solution
+- menu option to only generate Sudokus with a single solution
 - 5 save slots *(save files location: %APPDATA%\SudokuGame)*
 - solve current Sudoku from the menu
 - complete mouse input
-- place up to 9 markers in each square
-- markers now have a fixed position for better comparability
+- place up to 9 markers in each square<br/>(markers now have a fixed position for better comparability)
 - English and German localization (according to the system language)
 
 Controls:
