@@ -7,6 +7,7 @@ Features:
 
 - random puzzle generator with 3 difficulties
 - menu option to only generate Sudokus with a single solution
+- menu action to fill in all markers automatically
 - 5 save slots *(save files location: %APPDATA%\SudokuGame)*
 - solve current Sudoku from the menu
 - complete mouse input
