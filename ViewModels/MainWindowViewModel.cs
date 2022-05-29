@@ -30,13 +30,16 @@ namespace Sudoku.ViewModels
             saveSlotsModel = new SaveSlotsModel(folderAppSettings);
             generatorNumbers = new List<string>();
             numbersList = new NumbersListModel();
+            markersList = new MarkersListModel();
             numbersColorsList = new NumbersColorsListModel();
             numbersList.InitializeList();
+            markersList.InitializeList();
             numbersColorsList.InitializeList();
 
             // initialize commands:
             MenuNewCommand = new AsyncRelayCommand(MenuNewAction);
             MenuSolveCommand = new AsyncRelayCommand(MenuSolveAction);
+            MenuFillAllMarkersCommand = new AsyncRelayCommand(MenuFillAllMarkersAction);
             MenuSettingsSingleSolutionCommand = new AsyncRelayCommand(MenuSettingsSingleSolutionAction);
             MenuSaveToSlotCommand = new AsyncRelayCommand<object>(o => MenuSaveToSlotAction(o));
             MenuLoadFromSlotCommand = new AsyncRelayCommand<object>(o => MenuLoadFromSlotAction(o));
@@ -118,6 +121,7 @@ namespace Sudoku.ViewModels
         #region Properties
         public IAsyncRelayCommand MenuNewCommand { get; }
         public IAsyncRelayCommand MenuSolveCommand { get; }
+        public IAsyncRelayCommand MenuFillAllMarkersCommand { get; }
         public IAsyncRelayCommand MenuSettingsCommand { get; }
         public IAsyncRelayCommand MenuSettingsSingleSolutionCommand { get; }
         public IAsyncRelayCommand MenuSaveToSlotCommand { get; }
@@ -277,16 +281,96 @@ namespace Sudoku.ViewModels
                 });
             }
         }
-        //private async Task MenuSettingsAction()
-        //{
-        //    if (! doBlockInput)
-        //    {
-        //        await Task.Run(() =>
-        //        {
-        //            ;
-        //        });
-        //    }
-        //}
+        private async Task MenuFillAllMarkersAction()
+        {
+            if (!doBlockInput)
+            {
+                await Task.Run(() =>
+                {
+                    HideOverlays();
+                    for (int col = 0; col < 9; col++)
+                    {
+                        for (int row = 0; row < 9; row++)
+                        {
+                            // 1
+                            if (markersList[col][row][3][0] == "" && numbersList[col][row] == "")
+                            {
+                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "1"))
+                                {
+                                    markersList[col][row][3][0] = "1";
+                                }
+                            }
+                            // 2
+                            if (markersList[col][row][2][0] == "" && numbersList[col][row] == "")
+                            {
+                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "2"))
+                                {
+                                    markersList[col][row][2][0] = "2";
+                                }
+                            }
+                            // 3
+                            if (markersList[col][row][1][0] == "" && numbersList[col][row] == "")
+                            {
+                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "3"))
+                                {
+                                    markersList[col][row][1][0] = "3";
+                                }
+                            }
+                            // 4
+                            if (markersList[col][row][0][0] == "" && numbersList[col][row] == "")
+                            {
+                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "4"))
+                                {
+                                    markersList[col][row][0][0] = "4";
+                                }
+                            }
+                            // 5
+                            if (markersList[col][row][0][1] == "" && numbersList[col][row] == "")
+                            {
+                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "5"))
+                                {
+                                    markersList[col][row][0][1] = "5";
+                                }
+                            }
+                            // 6
+                            if (markersList[col][row][0][2] == "" && numbersList[col][row] == "")
+                            {
+                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "6"))
+                                {
+                                    markersList[col][row][0][2] = "6";
+                                }
+                            }
+                            // 7
+                            if (markersList[col][row][1][2] == "" && numbersList[col][row] == "")
+                            {
+                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "7"))
+                                {
+                                    markersList[col][row][1][2] = "7";
+                                }
+                            }
+                            // 8
+                            if (markersList[col][row][2][2] == "" && numbersList[col][row] == "")
+                            {
+                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "8"))
+                                {
+                                    markersList[col][row][2][2] = "8";
+                                }
+                            }
+                            // 9
+                            if (markersList[col][row][3][2] == "" && numbersList[col][row] == "")
+                            {
+                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "9"))
+                                {
+                                    markersList[col][row][3][2] = "9";
+                                }
+                            }
+                        }
+                        MarkersList = markersList;
+                    }
+                });
+            }
+        }
+
         private async Task MenuSettingsSingleSolutionAction()
         {
             if (!doBlockInput)

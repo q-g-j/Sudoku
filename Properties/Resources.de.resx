@@ -147,6 +147,9 @@
   <data name="LabelValidateNoConflicts" xml:space="preserve">
     <value>Keine Konflikte!</value>
   </data>
+  <data name="MenuFillAllMarkers" xml:space="preserve">
+    <value>Alle Marker automatisch setzen</value>
+  </data>
   <data name="MenuGame" xml:space="preserve">
     <value>Spiel</value>
   </data>

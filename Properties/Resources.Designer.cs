@@ -151,6 +151,15 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set all markers automatically.
+        /// </summary>
+        public static string MenuFillAllMarkers {
+            get {
+                return ResourceManager.GetString("MenuFillAllMarkers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game.
         /// </summary>
         public static string MenuGame {
