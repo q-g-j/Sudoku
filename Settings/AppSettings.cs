@@ -24,6 +24,45 @@ namespace Sudoku.Settings
             internal bool SingleSolution;
         }
 
+        internal AppSettingsStruct LoadSettings()
+        {
+            AppSettingsStruct appSettingsStruct = new AppSettingsStruct();
+
+            string settingsFilename = Path.Combine(folderAppSettings, "settings.json");
+            if (File.Exists(settingsFilename))
+            {
+                using (var settingsFile = File.OpenText(settingsFilename))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    Dictionary<string, object> settingsDict = (Dictionary<string, object>)serializer.Deserialize(settingsFile, typeof(Dictionary<string, object>));
+                    if ((bool)settingsDict["SingleSolution"])
+                    {
+                        appSettingsStruct.SingleSolution = true;
+                    }
+                    else
+                    {
+                        appSettingsStruct.SingleSolution = false;
+                    }
+                }
+            }
+            else
+            {
+                Dictionary<string, object> settingsDict = new Dictionary<string, object>
+                {
+                    ["SingleSolution"] = false,
+                };
+
+                using (var file = File.CreateText(settingsFilename))
+                {
+                    var settingsDictJson = JsonConvert.SerializeObject(settingsDict, Formatting.Indented);
+                    file.WriteLine(settingsDictJson);
+                }
+                appSettingsStruct.SingleSolution = false;
+            }
+
+            return appSettingsStruct;
+        }
+
         internal void ChangeSingleSolution(bool action)
         {
             string filename = Path.Combine(folderAppSettings, "settings.json");

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Sudoku.Properties;
 
 namespace Sudoku.Models
 {
@@ -21,6 +22,32 @@ namespace Sudoku.Models
             internal MarkersListModel MarkersList;
             internal NumbersColorsListModel NumbersColorsList;
             internal List<string> GeneratorNumbers;
+        }
+
+        internal List<string> GetSlotTexts()
+        {
+            List<string> saveSlotList = new List<string>();
+            for (int i = 0; i < 5; i++)
+            {
+                if (i == 0) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot1);
+                else if (i == 1) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot2);
+                else if (i == 2) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot3);
+                else if (i == 3) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot4);
+                else if (i == 4) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot5);
+                string saveSlotFilename = Path.Combine(folderAppSettings, "slot" + (i + 1).ToString() + ".json");
+                if (File.Exists(saveSlotFilename))
+                {
+                    using (var saveSlotFile = File.OpenText(saveSlotFilename))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        Dictionary<string, object> saveSlotDict = (Dictionary<string, object>)serializer.Deserialize(saveSlotFile, typeof(Dictionary<string, object>));
+
+                        DateTime dateAndTime = (DateTime)saveSlotDict["DateAndTime"];
+                        saveSlotList[i] += " (" + dateAndTime.ToString() + ")";
+                    }
+                }
+            }
+            return saveSlotList;
         }
 
         internal void SaveAll(NumbersListModel numbersList, MarkersListModel markersList, NumbersColorsListModel numbersColorsList, List<String> generatorNumbers, DateTime now, string slotNumber)
