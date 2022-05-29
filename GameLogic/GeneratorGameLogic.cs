@@ -87,7 +87,7 @@ namespace Sudoku.GameLogic
                             UniqueNumbersList[col][row] = "";
                             UniqueCounter = 0;
 
-                            HasUniqueSolution();                            
+                            HasUniqueSolution();
 
                             if (UniqueCounter < 2)
                             {
@@ -126,12 +126,9 @@ namespace Sudoku.GameLogic
                 {
                     if (UniqueNumbersList[col][row] == "")
                     {
-                        List<int> intList = new List<int>();
-                        intList.AddRange(Enumerable.Range(1, 9));
-
-                        foreach (int item in intList)
+                        for (int i = 1; i < 10; i++)
                         {
-                            string number = item.ToString();
+                            string number = i.ToString();
                             if (ValidatorGameLogic.IsValid(UniqueNumbersList, col, row, number))
                             {
                                 UniqueNumbersList[col][row] = number;
@@ -222,12 +219,7 @@ namespace Sudoku.GameLogic
             {
                 if (NumbersList[currentCol][row] != "")
                 {
-                    string coords = currentCol.ToString();
-                    coords += row.ToString();
-                    if (!checkedList.Contains(coords))
-                    {
-                        countCurrentColNumbers++;
-                    }
+                    countCurrentColNumbers++;
                 }
             }
 
@@ -264,12 +256,7 @@ namespace Sudoku.GameLogic
             {
                 if (NumbersList[col][currentRow] != "")
                 {
-                    string coords = col.ToString();
-                    coords += currentRow.ToString();
-                    if (!checkedList.Contains(coords))
-                    {
-                        countCurrentRowNumbers++;
-                    }
+                    countCurrentRowNumbers++;
                 }
             }
 
@@ -311,12 +298,7 @@ namespace Sudoku.GameLogic
                 {
                     if (NumbersList[col][row] != "")
                     {
-                        string coords = col.ToString();
-                        coords += row.ToString();
-                        if (!checkedList.Contains(coords))
-                        {
-                            currentCountNumbers++;
-                        }
+                        currentCountNumbers++;
                     }
                 }
             }
