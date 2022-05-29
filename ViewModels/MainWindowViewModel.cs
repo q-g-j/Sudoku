@@ -32,13 +32,13 @@ namespace Sudoku.ViewModels
             buttonDifficultyWidth = "350";
             currentButtonIndex = "";
 
-            // display each existing save slot's date and time:
             folderAppSettings = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SudokuGame");
             if (!Directory.Exists(folderAppSettings))
             {
                 Directory.CreateDirectory(folderAppSettings);
             }
 
+            // load app settings from file:
             string settingsFilename = Path.Combine(folderAppSettings, "settings.json");
             if (File.Exists(settingsFilename))
             {
@@ -74,6 +74,7 @@ namespace Sudoku.ViewModels
                 menuSingleSolutionCheck = "False";
             }
 
+            // display each existing save slot's date and time:
             List<string> saveSlotList = new List<string>();
             for (int i = 0; i < 5; i++)
             {
