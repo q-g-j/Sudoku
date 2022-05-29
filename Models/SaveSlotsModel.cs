@@ -24,12 +24,38 @@ namespace Sudoku.Models
             internal List<string> GeneratorNumbers;
         }
 
-        internal List<string> GetSlotTexts()
+        internal List<string> GetSaveTexts()
         {
             List<string> saveSlotList = new List<string>();
             for (int i = 0; i < 5; i++)
             {
-                if (i == 0) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot1);
+                if      (i == 0) saveSlotList.Add(Resources.MenuGameSaveSlotsSaveToSlot1);
+                else if (i == 1) saveSlotList.Add(Resources.MenuGameSaveSlotsSaveToSlot2);
+                else if (i == 2) saveSlotList.Add(Resources.MenuGameSaveSlotsSaveToSlot3);
+                else if (i == 3) saveSlotList.Add(Resources.MenuGameSaveSlotsSaveToSlot4);
+                else if (i == 4) saveSlotList.Add(Resources.MenuGameSaveSlotsSaveToSlot5);
+                string saveSlotFilename = Path.Combine(folderAppSettings, "slot" + (i + 1).ToString() + ".json");
+                if (File.Exists(saveSlotFilename))
+                {
+                    using (var saveSlotFile = File.OpenText(saveSlotFilename))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        Dictionary<string, object> saveSlotDict = (Dictionary<string, object>)serializer.Deserialize(saveSlotFile, typeof(Dictionary<string, object>));
+
+                        DateTime dateAndTime = (DateTime)saveSlotDict["DateAndTime"];
+                        saveSlotList[i] += " (" + dateAndTime.ToString() + ")";
+                    }
+                }
+            }
+            return saveSlotList;
+        }
+
+        internal List<string> GetLoadTexts()
+        {
+            List<string> saveSlotList = new List<string>();
+            for (int i = 0; i < 5; i++)
+            {
+                if      (i == 0) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot1);
                 else if (i == 1) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot2);
                 else if (i == 2) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot3);
                 else if (i == 3) saveSlotList.Add(Resources.MenuGameSaveSlotsLoadFromSlot4);

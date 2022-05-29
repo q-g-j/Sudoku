@@ -84,7 +84,8 @@ namespace Sudoku.ViewModels
             }
 
             // display each existing save slot's date and time:
-            menuSaveSlotsText = saveSlotsModel.GetSlotTexts();
+            menuSaveSlotsLoadText = saveSlotsModel.GetLoadTexts();
+            //menuSaveSlotsSaveText = saveSlotsModel.GetSaveTexts();
         }
         #endregion Constructor
 
@@ -103,7 +104,8 @@ namespace Sudoku.ViewModels
         private MarkersListModel markersList;
         private NumbersColorsListModel numbersColorsList;
 
-        private List<string> menuSaveSlotsText;
+        private List<string> menuSaveSlotsLoadText;
+        private List<string> menuSaveSlotsSaveText;
         private string menuSingleSolutionCheck;
 
         private string buttonDifficultyText;
@@ -138,10 +140,15 @@ namespace Sudoku.ViewModels
         public IAsyncRelayCommand ButtonSquareDownCommand { get; }
         public IAsyncRelayCommand ButtonSquareUpCommand { get; }
 
-        public List<string> MenuSaveSlotsText
+        public List<string> MenuSaveSlotsLoadText
         {
-            get => menuSaveSlotsText;
-            set { menuSaveSlotsText = value; OnPropertyChanged(); }
+            get => menuSaveSlotsLoadText;
+            set { menuSaveSlotsLoadText = value; OnPropertyChanged(); }
+        }
+        public List<string> MenuSaveSlotsSaveText
+        {
+            get => menuSaveSlotsSaveText;
+            set { menuSaveSlotsSaveText = value; OnPropertyChanged(); }
         }
         public string MenuSingleSolutionCheck
         {
@@ -292,7 +299,6 @@ namespace Sudoku.ViewModels
                     {
                         for (int row = 0; row < 9; row++)
                         {
-                            // 1
                             if (markersList[col][row][3][0] == "" && numbersList[col][row] == "")
                             {
                                 if (ValidatorGameLogic.IsValid(numbersList, col, row, "1"))
@@ -300,7 +306,6 @@ namespace Sudoku.ViewModels
                                     markersList[col][row][3][0] = "1";
                                 }
                             }
-                            // 2
                             if (markersList[col][row][2][0] == "" && numbersList[col][row] == "")
                             {
                                 if (ValidatorGameLogic.IsValid(numbersList, col, row, "2"))
@@ -308,7 +313,6 @@ namespace Sudoku.ViewModels
                                     markersList[col][row][2][0] = "2";
                                 }
                             }
-                            // 3
                             if (markersList[col][row][1][0] == "" && numbersList[col][row] == "")
                             {
                                 if (ValidatorGameLogic.IsValid(numbersList, col, row, "3"))
@@ -316,7 +320,6 @@ namespace Sudoku.ViewModels
                                     markersList[col][row][1][0] = "3";
                                 }
                             }
-                            // 4
                             if (markersList[col][row][0][0] == "" && numbersList[col][row] == "")
                             {
                                 if (ValidatorGameLogic.IsValid(numbersList, col, row, "4"))
@@ -324,7 +327,6 @@ namespace Sudoku.ViewModels
                                     markersList[col][row][0][0] = "4";
                                 }
                             }
-                            // 5
                             if (markersList[col][row][0][1] == "" && numbersList[col][row] == "")
                             {
                                 if (ValidatorGameLogic.IsValid(numbersList, col, row, "5"))
@@ -332,7 +334,6 @@ namespace Sudoku.ViewModels
                                     markersList[col][row][0][1] = "5";
                                 }
                             }
-                            // 6
                             if (markersList[col][row][0][2] == "" && numbersList[col][row] == "")
                             {
                                 if (ValidatorGameLogic.IsValid(numbersList, col, row, "6"))
@@ -340,7 +341,6 @@ namespace Sudoku.ViewModels
                                     markersList[col][row][0][2] = "6";
                                 }
                             }
-                            // 7
                             if (markersList[col][row][1][2] == "" && numbersList[col][row] == "")
                             {
                                 if (ValidatorGameLogic.IsValid(numbersList, col, row, "7"))
@@ -348,7 +348,6 @@ namespace Sudoku.ViewModels
                                     markersList[col][row][1][2] = "7";
                                 }
                             }
-                            // 8
                             if (markersList[col][row][2][2] == "" && numbersList[col][row] == "")
                             {
                                 if (ValidatorGameLogic.IsValid(numbersList, col, row, "8"))
@@ -356,7 +355,6 @@ namespace Sudoku.ViewModels
                                     markersList[col][row][2][2] = "8";
                                 }
                             }
-                            // 9
                             if (markersList[col][row][3][2] == "" && numbersList[col][row] == "")
                             {
                                 if (ValidatorGameLogic.IsValid(numbersList, col, row, "9"))
@@ -401,13 +399,20 @@ namespace Sudoku.ViewModels
                         DateTime now = DateTime.Now;
                         string slotNumber = (string)o;
                         saveSlotsModel.SaveAll(numbersList, markersList, numbersColorsList, generatorNumbers, now, slotNumber);
-                        List<string> tempList = menuSaveSlotsText;
-                        if (slotNumber == "1") tempList[0] = Resources.MenuGameSaveSlotsLoadFromSlot1 + " (" + now + ")";
-                        else if (slotNumber == "2") tempList[1] = Resources.MenuGameSaveSlotsLoadFromSlot2 + " (" + now + ")";
-                        else if (slotNumber == "3") tempList[2] = Resources.MenuGameSaveSlotsLoadFromSlot3 + " (" + now + ")";
-                        else if (slotNumber == "4") tempList[3] = Resources.MenuGameSaveSlotsLoadFromSlot4 + " (" + now + ")";
-                        else if (slotNumber == "5") tempList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5 + " (" + now + ")";
-                        MenuSaveSlotsText = tempList;
+                        List<string> tempSaveList = menuSaveSlotsSaveText;
+                        if (slotNumber == "1") tempSaveList[0] = Resources.MenuGameSaveSlotsLoadFromSlot1 + " (" + now + ")";
+                        else if (slotNumber == "2") tempSaveList[1] = Resources.MenuGameSaveSlotsLoadFromSlot2 + " (" + now + ")";
+                        else if (slotNumber == "3") tempSaveList[2] = Resources.MenuGameSaveSlotsLoadFromSlot3 + " (" + now + ")";
+                        else if (slotNumber == "4") tempSaveList[3] = Resources.MenuGameSaveSlotsLoadFromSlot4 + " (" + now + ")";
+                        else if (slotNumber == "5") tempSaveList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5 + " (" + now + ")";
+                        MenuSaveSlotsSaveText = tempSaveList;
+                        //List<string> tempLoadList = menuSaveSlotsLoadText;
+                        //if (slotNumber == "1") tempLoadList[0] = Resources.MenuGameSaveSlotsLoadFromSlot1 + " (" + now + ")";
+                        //else if (slotNumber == "2") tempLoadList[1] = Resources.MenuGameSaveSlotsLoadFromSlot2 + " (" + now + ")";
+                        //else if (slotNumber == "3") tempLoadList[2] = Resources.MenuGameSaveSlotsLoadFromSlot3 + " (" + now + ")";
+                        //else if (slotNumber == "4") tempLoadList[3] = Resources.MenuGameSaveSlotsLoadFromSlot4 + " (" + now + ")";
+                        //else if (slotNumber == "5") tempLoadList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5 + " (" + now + ")";
+                        //MenuSaveSlotsLoadText = tempLoadList;
                     }
                 });
             }

@@ -109,11 +109,11 @@
                     <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlotsSaveToSlot4}" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="4"></MenuItem>
                     <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlotsSaveToSlot5}" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="5"></MenuItem>
                     <Separator></Separator>
-                    <MenuItem Header="{Binding MenuSaveSlotsText[0]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="1"></MenuItem>
-                    <MenuItem Header="{Binding MenuSaveSlotsText[1]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="2"></MenuItem>
-                    <MenuItem Header="{Binding MenuSaveSlotsText[2]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="3"></MenuItem>
-                    <MenuItem Header="{Binding MenuSaveSlotsText[3]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="4"></MenuItem>
-                    <MenuItem Header="{Binding MenuSaveSlotsText[4]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="5"></MenuItem>
+                    <MenuItem Header="{Binding MenuSaveSlotsLoadText[0]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="1"></MenuItem>
+                    <MenuItem Header="{Binding MenuSaveSlotsLoadText[1]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="2"></MenuItem>
+                    <MenuItem Header="{Binding MenuSaveSlotsLoadText[2]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="3"></MenuItem>
+                    <MenuItem Header="{Binding MenuSaveSlotsLoadText[3]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="4"></MenuItem>
+                    <MenuItem Header="{Binding MenuSaveSlotsLoadText[4]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="5"></MenuItem>
                     <!--<Separator></Separator>
                     <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlotsDeleteAll}" Command="{Binding MenuDeleteAllSlotsCommand}" CommandParameter="5"></MenuItem>-->
                 </MenuItem>
