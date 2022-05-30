@@ -299,32 +299,36 @@ namespace Sudoku.ViewModels
                     {
                         for (int row = 0; row < 9; row++)
                         {
-                            if (markersList[col][row][3][0] == "" && numbersList[col][row] == "")
+                            // 00|10|20|30
+                            // 01|11|21|31
+                            // 02|12|22|32
+
+                            if (markersList[col][row][0][0] == "" && numbersList[col][row] == "")
                             {
                                 if (ValidatorGameLogic.IsValid(numbersList, col, row, "1"))
                                 {
-                                    markersList[col][row][3][0] = "1";
-                                }
-                            }
-                            if (markersList[col][row][2][0] == "" && numbersList[col][row] == "")
-                            {
-                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "2"))
-                                {
-                                    markersList[col][row][2][0] = "2";
+                                    markersList[col][row][0][0] = "1";
                                 }
                             }
                             if (markersList[col][row][1][0] == "" && numbersList[col][row] == "")
                             {
-                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "3"))
+                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "2"))
                                 {
-                                    markersList[col][row][1][0] = "3";
+                                    markersList[col][row][1][0] = "2";
                                 }
                             }
-                            if (markersList[col][row][0][0] == "" && numbersList[col][row] == "")
+                            if (markersList[col][row][2][0] == "" && numbersList[col][row] == "")
+                            {
+                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "3"))
+                                {
+                                    markersList[col][row][2][0] = "3";
+                                }
+                            }
+                            if (markersList[col][row][3][0] == "" && numbersList[col][row] == "")
                             {
                                 if (ValidatorGameLogic.IsValid(numbersList, col, row, "4"))
                                 {
-                                    markersList[col][row][0][0] = "4";
+                                    markersList[col][row][3][0] = "4";
                                 }
                             }
                             if (markersList[col][row][0][1] == "" && numbersList[col][row] == "")
@@ -334,32 +338,32 @@ namespace Sudoku.ViewModels
                                     markersList[col][row][0][1] = "5";
                                 }
                             }
-                            if (markersList[col][row][0][2] == "" && numbersList[col][row] == "")
+                            if (markersList[col][row][3][1] == "" && numbersList[col][row] == "")
                             {
                                 if (ValidatorGameLogic.IsValid(numbersList, col, row, "6"))
                                 {
-                                    markersList[col][row][0][2] = "6";
+                                    markersList[col][row][3][1] = "6";
+                                }
+                            }
+                            if (markersList[col][row][0][2] == "" && numbersList[col][row] == "")
+                            {
+                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "7"))
+                                {
+                                    markersList[col][row][0][2] = "7";
                                 }
                             }
                             if (markersList[col][row][1][2] == "" && numbersList[col][row] == "")
                             {
-                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "7"))
+                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "8"))
                                 {
-                                    markersList[col][row][1][2] = "7";
+                                    markersList[col][row][1][2] = "8";
                                 }
                             }
                             if (markersList[col][row][2][2] == "" && numbersList[col][row] == "")
                             {
-                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "8"))
-                                {
-                                    markersList[col][row][2][2] = "8";
-                                }
-                            }
-                            if (markersList[col][row][3][2] == "" && numbersList[col][row] == "")
-                            {
                                 if (ValidatorGameLogic.IsValid(numbersList, col, row, "9"))
                                 {
-                                    markersList[col][row][3][2] = "9";
+                                    markersList[col][row][2][2] = "9";
                                 }
                             }
                         }
@@ -783,7 +787,7 @@ namespace Sudoku.ViewModels
                 {
                     for (int i = 0; i < 4; i++)
                     {
-                        if ((i == 1 && j == 1) || (i == 2 && j == 1) || (i == 3 && j == 1))
+                        if ((i == 1 && j == 1) || (i == 2 && j == 1) || (i == 3 && j == 2))
                         {
                             continue;
                         }
@@ -802,25 +806,30 @@ namespace Sudoku.ViewModels
             {
                 MarkersListModel temp_numbersList;
                 temp_numbersList = markersList;
+
+                // 00|10|20|30
+                // 01|11|21|31
+                // 02|12|22|32
+
                 if (number == "1")
                 {
-                    if (markersList[col][row][3][0] != "") { temp_numbersList[col][row][3][0] = ""; }
-                    else { temp_numbersList[col][row][3][0] = "1"; }
+                    if (markersList[col][row][0][0] != "") { temp_numbersList[col][row][0][0] = ""; }
+                    else { temp_numbersList[col][row][0][0] = "1"; }
                 }
                 else if (number == "2")
                 {
-                    if (markersList[col][row][2][0] != "") { temp_numbersList[col][row][2][0] = ""; }
-                    else { temp_numbersList[col][row][2][0] = "2"; }
+                    if (markersList[col][row][1][0] != "") { temp_numbersList[col][row][1][0] = ""; }
+                    else { temp_numbersList[col][row][1][0] = "2"; }
                 }
                 else if (number == "3")
                 {
-                    if (markersList[col][row][1][0] != "") { temp_numbersList[col][row][1][0] = ""; }
-                    else { temp_numbersList[col][row][1][0] = "3"; }
+                    if (markersList[col][row][2][0] != "") { temp_numbersList[col][row][2][0] = ""; }
+                    else { temp_numbersList[col][row][2][0] = "3"; }
                 }
                 else if (number == "4")
                 {
-                    if (markersList[col][row][0][0] != "") { temp_numbersList[col][row][0][0] = ""; }
-                    else { temp_numbersList[col][row][0][0] = "4"; }
+                    if (markersList[col][row][3][0] != "") { temp_numbersList[col][row][3][0] = ""; }
+                    else { temp_numbersList[col][row][3][0] = "4"; }
                 }
                 else if (number == "5")
                 {
@@ -829,23 +838,23 @@ namespace Sudoku.ViewModels
                 }
                 else if (number == "6")
                 {
-                    if (markersList[col][row][0][2] != "") { temp_numbersList[col][row][0][2] = ""; }
-                    else { temp_numbersList[col][row][0][2] = "6"; }
+                    if (markersList[col][row][3][1] != "") { temp_numbersList[col][row][3][1] = ""; }
+                    else { temp_numbersList[col][row][3][1] = "6"; }
                 }
                 else if (number == "7")
                 {
-                    if (markersList[col][row][1][2] != "") { temp_numbersList[col][row][1][2] = ""; }
-                    else { temp_numbersList[col][row][1][2] = "7"; }
+                    if (markersList[col][row][0][2] != "") { temp_numbersList[col][row][0][2] = ""; }
+                    else { temp_numbersList[col][row][0][2] = "7"; }
                 }
                 else if (number == "8")
                 {
-                    if (markersList[col][row][2][2] != "") { temp_numbersList[col][row][2][2] = ""; }
-                    else { temp_numbersList[col][row][2][2] = "8"; }
+                    if (markersList[col][row][1][2] != "") { temp_numbersList[col][row][1][2] = ""; }
+                    else { temp_numbersList[col][row][1][2] = "8"; }
                 }
                 else if (number == "9")
                 {
-                    if (markersList[col][row][3][2] != "") { temp_numbersList[col][row][3][2] = ""; }
-                    else { temp_numbersList[col][row][3][2] = "9"; }
+                    if (markersList[col][row][2][2] != "") { temp_numbersList[col][row][2][2] = ""; }
+                    else { temp_numbersList[col][row][2][2] = "9"; }
                 }
                 MarkersList = temp_numbersList;
             }
