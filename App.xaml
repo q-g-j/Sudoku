@@ -4,11 +4,12 @@
              xmlns:local="clr-namespace:Sudoku"
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
-        <FontFamily x:Key="Title">pack://application:,,,/Assets/Fonts/BowlbyOne-Regular.otf#Bowlby One</FontFamily>
-        <FontFamily x:Key="Main">pack://application:,,,/Assets/Fonts/selawk.ttf#Selawik</FontFamily>
-        <FontFamily x:Key="MainSemiBold">pack://application:,,,/Assets/Fonts/selawksb.ttf#Selawik</FontFamily>
-        <FontFamily x:Key="MainBold">pack://application:,,,/Assets/Fonts/selawkb.ttf#Selawik</FontFamily>
-        <FontFamily x:Key="Block">pack://application:,,,/Assets/Fonts/JetBrainsMono-Regular.ttf#JetBrains Mono</FontFamily>
-        <BitmapImage x:Key="ImageWasteBin" UriSource="pack://application:,,,/Assets/Images/waste bin.png"></BitmapImage>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Fonts.xaml" />
+                <ResourceDictionary Source="/Resources/Images.xaml" />
+                <ResourceDictionary Source="/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
