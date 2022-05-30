@@ -254,9 +254,6 @@
     <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\waste_bin.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Images\trash.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

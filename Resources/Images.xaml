@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/">
-
+    
+    <ObjectDataProvider x:Key="ImageTrash" ObjectInstance="{svgc:SvgImage Source=/Sudoku;component/Assets/Images/trash.svg}"/>
 </ResourceDictionary>
