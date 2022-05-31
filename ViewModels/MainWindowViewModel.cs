@@ -43,6 +43,7 @@ namespace Sudoku.ViewModels
             MenuSettingsSingleSolutionCommand = new AsyncRelayCommand(MenuSettingsSingleSolutionAction);
             MenuSaveToSlotCommand = new AsyncRelayCommand<object>(o => MenuSaveToSlotAction(o));
             MenuLoadFromSlotCommand = new AsyncRelayCommand<object>(o => MenuLoadFromSlotAction(o));
+            MenuDeleteAllSlotsCommand = new AsyncRelayCommand(MenuDeleteAllSlotsAction);
             ButtonDifficultyCommand = new AsyncRelayCommand(ButtonDifficultyAction);
             ButtonValidateCommand = new AsyncRelayCommand(ButtonValidateAction);
             ButtonDifficultyEasyCommand = new AsyncRelayCommand(ButtonDifficultyEasyAction);
@@ -128,6 +129,7 @@ namespace Sudoku.ViewModels
         public IAsyncRelayCommand MenuSettingsSingleSolutionCommand { get; }
         public IAsyncRelayCommand MenuSaveToSlotCommand { get; }
         public IAsyncRelayCommand MenuLoadFromSlotCommand { get; }
+        public IAsyncRelayCommand MenuDeleteAllSlotsCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyCommand { get; }
         public IAsyncRelayCommand ButtonValidateCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyEasyCommand { get; }
@@ -139,6 +141,8 @@ namespace Sudoku.ViewModels
         public IAsyncRelayCommand ButtonSelectMarkerCommand { get; }
         public IAsyncRelayCommand ButtonSquareDownCommand { get; }
         public IAsyncRelayCommand ButtonSquareUpCommand { get; }
+        public IAsyncRelayCommand ButtonSquareLeftDownCommand { get; }
+        public IAsyncRelayCommand ButtonSquareLeftUpCommand { get; }
 
         public List<string> MenuSaveSlotsLoadText
         {
@@ -403,13 +407,6 @@ namespace Sudoku.ViewModels
                         DateTime now = DateTime.Now;
                         string slotNumber = (string)o;
                         saveSlotsModel.SaveAll(numbersList, markersList, numbersColorsList, generatorNumbers, now, slotNumber);
-                        //List<string> tempSaveList = menuSaveSlotsSaveText;
-                        //if (slotNumber == "1") tempSaveList[0] = Resources.MenuGameSaveSlotsLoadFromSlot1 + " (" + now + ")";
-                        //else if (slotNumber == "2") tempSaveList[1] = Resources.MenuGameSaveSlotsLoadFromSlot2 + " (" + now + ")";
-                        //else if (slotNumber == "3") tempSaveList[2] = Resources.MenuGameSaveSlotsLoadFromSlot3 + " (" + now + ")";
-                        //else if (slotNumber == "4") tempSaveList[3] = Resources.MenuGameSaveSlotsLoadFromSlot4 + " (" + now + ")";
-                        //else if (slotNumber == "5") tempSaveList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5 + " (" + now + ")";
-                        //MenuSaveSlotsSaveText = tempSaveList;
                         List<string> tempLoadList = menuSaveSlotsLoadText;
                         if (slotNumber == "1") tempLoadList[0] = Resources.MenuGameSaveSlotsLoadFromSlot1 + " (" + now + ")";
                         else if (slotNumber == "2") tempLoadList[1] = Resources.MenuGameSaveSlotsLoadFromSlot2 + " (" + now + ")";
@@ -446,6 +443,31 @@ namespace Sudoku.ViewModels
                             HideValidation();
                         }
                     }
+                });
+            }
+        }
+        private async Task MenuDeleteAllSlotsAction()
+        {
+            if (!doBlockInput)
+            {
+                await Task.Run(() =>
+                {
+                    for (int i = 1; i < 6; i++)
+                    {
+                        string filename = Path.Combine(folderAppSettings, "slot" + i.ToString() + ".json");
+                        if (File.Exists(filename))
+                        {
+                            File.Delete(filename);
+                        }
+                    }
+
+                    List<string> tempLoadList = menuSaveSlotsLoadText;
+                    tempLoadList[0] = Resources.MenuGameSaveSlotsLoadFromSlot1;
+                    tempLoadList[1] = Resources.MenuGameSaveSlotsLoadFromSlot2;
+                    tempLoadList[2] = Resources.MenuGameSaveSlotsLoadFromSlot3;
+                    tempLoadList[3] = Resources.MenuGameSaveSlotsLoadFromSlot4;
+                    tempLoadList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5;
+                    MenuSaveSlotsLoadText = tempLoadList;
                 });
             }
         }
@@ -511,6 +533,53 @@ namespace Sudoku.ViewModels
                     NewGame("Hard");
                 });
             }
+        }
+        private async Task ButtonSquareLeftDownAction(object o)
+        {
+            if (!doBlockInput)
+            {
+                var param = (string)o;
+
+                await Task.Run(() =>
+                {
+                    if (SelectDifficultyVisibility == "Visible")
+                    {
+                        SelectDifficultyVisibility = "Hidden";
+                        return;
+                    }
+
+                    if ((SelectNumberVisibility == "Visible") || (SelectMarkerVisibility == "Visible"))
+                    {
+                        SelectMarkerVisibility = "Hidden";
+                        SelectNumberVisibility = "Hidden";
+                    }
+                    else if (!generatorNumbers.Contains(param))
+                    {
+                        SelectNumberVisibility = "Visible";
+                    }
+
+                    if (!SolverGameLogic.IsFull(numbersList))
+                    {
+                        HideValidation();
+                    }
+                    else
+                    {
+                        ShowValidation();
+                    }
+                });
+            }
+        }
+        private async Task ButtonSquareLeftUpAction(object o)
+        {
+            var e = (MouseButtonEventArgs)o;
+            if (!doBlockInput)
+            {
+                await Task.Run(() =>
+                {
+                });
+            }
+
+            e.Handled = true;
         }
         private async Task ButtonSquareDownAction(CompositeCommandParameter o)
         {

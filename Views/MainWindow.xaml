@@ -53,8 +53,8 @@
                     <MenuItem Header="{Binding MenuSaveSlotsLoadText[2]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="3"></MenuItem>
                     <MenuItem Header="{Binding MenuSaveSlotsLoadText[3]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="4"></MenuItem>
                     <MenuItem Header="{Binding MenuSaveSlotsLoadText[4]}" Command="{Binding MenuLoadFromSlotCommand}" CommandParameter="5"></MenuItem>
-                    <!--<Separator></Separator>
-                    <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlotsDeleteAll}" Command="{Binding MenuDeleteAllSlotsCommand}" CommandParameter="5"></MenuItem>-->
+                    <Separator></Separator>
+                    <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlotsDeleteAll}" Command="{Binding MenuDeleteAllSlotsCommand}" CommandParameter="5"></MenuItem>
                 </MenuItem>
                 <Separator></Separator>
                 <MenuItem Header="{x:Static p:Resources.MenuGameQuitProgram}" Click="MenuQuitClick"></MenuItem>
