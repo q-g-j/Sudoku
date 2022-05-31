@@ -80,7 +80,7 @@ namespace Sudoku.Models
         {                        
             string filename = Path.Combine(folderAppSettings, "slot" + slotNumber + ".json");
 
-            List<List<List<string>>> tempList = new List<List<List<string>>>();
+            List<List<List<string>>> markersListConverted = new List<List<List<string>>>();
 
             for (int i = 0; i < 9; i++)
             {
@@ -100,14 +100,14 @@ namespace Sudoku.Models
                     }
                     tempList1.Add(tempList2);
                 }
-                tempList.Add(tempList1);
+                markersListConverted.Add(tempList1);
             }
 
             Dictionary<string, object> listsDict = new Dictionary<string, object>
             {
                 ["DateAndTime"] = now,
                 ["NumbersList"] = numbersList,
-                ["MarkersList"] = tempList,
+                ["MarkersList"] = markersListConverted,
                 ["NumbersColorsList"] = numbersColorsList,
                 ["GeneratorNumbers"] = generatorNumbers
             };
@@ -122,12 +122,12 @@ namespace Sudoku.Models
         internal SaveSlotStruct LoadAll(string slotNumber)
         {
             string filename = Path.Combine(folderAppSettings, "slot" + slotNumber + ".json");
-            SaveSlotStruct listsStruct = new SaveSlotStruct();
-            listsStruct.MarkersList = new MarkersListModel();
+            SaveSlotStruct listsStruct = new SaveSlotStruct
+            {
+                MarkersList = new MarkersListModel()
+            };
             listsStruct.MarkersList.InitializeList();
-            MarkersListModel oldMarkersList = new MarkersListModel();
             List<List<List<string>>> markersList = new List<List<List<string>>>();
-            oldMarkersList.InitializeList();
 
             using (var file = File.OpenText(filename))
             {
@@ -147,15 +147,16 @@ namespace Sudoku.Models
                         {
                             for (int k = 0; k < markersList[i][j].Count; k++)
                             {
-                                if      (markersList[i][j][k] == "1") { listsStruct.MarkersList[i][j][0][0] = "1"; }
-                                else if (markersList[i][j][k] == "2") { listsStruct.MarkersList[i][j][1][0] = "2"; }
-                                else if (markersList[i][j][k] == "3") { listsStruct.MarkersList[i][j][2][0] = "3"; }
-                                else if (markersList[i][j][k] == "4") { listsStruct.MarkersList[i][j][3][0] = "4"; }
-                                else if (markersList[i][j][k] == "5") { listsStruct.MarkersList[i][j][0][1] = "5"; }
-                                else if (markersList[i][j][k] == "6") { listsStruct.MarkersList[i][j][3][1] = "6"; }
-                                else if (markersList[i][j][k] == "7") { listsStruct.MarkersList[i][j][0][2] = "7"; }
-                                else if (markersList[i][j][k] == "8") { listsStruct.MarkersList[i][j][1][2] = "8"; }
-                                else if (markersList[i][j][k] == "9") { listsStruct.MarkersList[i][j][2][2] = "9"; }
+                                string number = markersList[i][j][k];
+                                if      (number == "1") { listsStruct.MarkersList[i][j][0][0] = number; }
+                                else if (number == "2") { listsStruct.MarkersList[i][j][1][0] = number; }
+                                else if (number == "3") { listsStruct.MarkersList[i][j][2][0] = number; }
+                                else if (number == "4") { listsStruct.MarkersList[i][j][3][0] = number; }
+                                else if (number == "5") { listsStruct.MarkersList[i][j][0][1] = number; }
+                                else if (number == "6") { listsStruct.MarkersList[i][j][3][1] = number; }
+                                else if (number == "7") { listsStruct.MarkersList[i][j][0][2] = number; }
+                                else if (number == "8") { listsStruct.MarkersList[i][j][1][2] = number; }
+                                else if (number == "9") { listsStruct.MarkersList[i][j][2][2] = number; }
                             }
                         }
                     }
