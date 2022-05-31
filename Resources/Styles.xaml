@@ -72,25 +72,34 @@
         <!--<Setter Property="FontFamily" Value="/Assets/Fonts/selawk.ttf#Selawik"/>-->
     </Style>
     <Style x:Key="StyleSelectNumberLineInner" TargetType="Line">
+        <Setter Property="Margin" Value="0"/>
         <Setter Property="Stroke" Value="Black"/>
         <Setter Property="StrokeThickness" Value="1"/>
         <Setter Property="Stretch" Value="Fill"/>
     </Style>
 
     <Style x:Key="StyleLineInnermost" TargetType="Line">
+        <Setter Property="Margin" Value="0"/>
         <Setter Property="Stroke" Value="#a6a6a6"/>
         <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="StrokeStartLineCap" Value="Square"/>
+        <Setter Property="StrokeEndLineCap" Value="Square"/>
         <Setter Property="Stretch" Value="Fill"/>
     </Style>
     <Style x:Key="StyleLineMiddle" TargetType="Line">
+        <Setter Property="Margin" Value="0"/>
         <Setter Property="Stroke" Value="#ff4000"/>
         <Setter Property="StrokeThickness" Value="3"/>
+        <Setter Property="StrokeStartLineCap" Value="Square"/>
+        <Setter Property="StrokeEndLineCap" Value="Square"/>
         <Setter Property="Stretch" Value="Fill"/>
     </Style>
     <Style x:Key="StyleBorderOutermost" TargetType="Border">
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+        <Setter Property="Margin" Value="0"/>
         <Setter Property="BorderBrush" Value="Blue"/>
         <Setter Property="BorderThickness" Value="6"/>
-        <Setter Property="CornerRadius" Value="3"/>
+        <Setter Property="CornerRadius" Value="5"/>
     </Style>
     <Style x:Key="StyleButtonGame" TargetType="Button">
         <Setter Property="Padding" Value="0"/>
