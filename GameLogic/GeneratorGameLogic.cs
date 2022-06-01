@@ -238,7 +238,7 @@ namespace Sudoku.GameLogic
                         }
                     }
                     // (81 - RemoveNumbers) / 9 + 1
-                    if (countNumbers > (81 - RemoveNumbers) / 9 + 2 && countCurrentColNumbers < countNumbers)
+                    if (countNumbers > 7 && countCurrentColNumbers < countNumbers)
                     {
                         return true;
                     }
@@ -275,7 +275,7 @@ namespace Sudoku.GameLogic
                         }
                     }
                     // (81 - RemoveNumbers) / 9 + 1
-                    if (countNumbers > (81 - RemoveNumbers) / 9 + 2 && countCurrentRowNumbers < countNumbers)
+                    if (countNumbers > 7 && countCurrentRowNumbers < countNumbers)
                     {
                         return true;
                     }
@@ -287,7 +287,7 @@ namespace Sudoku.GameLogic
         {
             int currentSquareCol = (int)(currentCol / 3) * 3;
             int currentSquareRow = (int)(currentRow / 3) * 3;
-            int currentCountNumbers = 0;
+            int countCurrentSquareNumbers = 0;
 
             for (int col = currentSquareCol; col < currentSquareCol + 3; col++)
             {
@@ -295,7 +295,7 @@ namespace Sudoku.GameLogic
                 {
                     if (NumbersList[col][row] != "")
                     {
-                        currentCountNumbers++;
+                        countCurrentSquareNumbers++;
                     }
                 }
             }
@@ -326,7 +326,7 @@ namespace Sudoku.GameLogic
                             }
                         }
 
-                        if (countNumbers > (81 - RemoveNumbers) / 9 + 2 && currentCountNumbers < countNumbers)
+                        if (countNumbers > 7 && countCurrentSquareNumbers < countNumbers)
                         {
                             return true;
                         }
