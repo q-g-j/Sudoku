@@ -13,6 +13,7 @@ Features:
 - complete mouse input
 - place up to 9 markers in each square<br/>(markers now have a fixed position for better comparability)
 - English and German localization (according to the system language)
+- basic printing functionality
 
 Controls:
 ---------
