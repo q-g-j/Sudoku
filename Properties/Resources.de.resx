@@ -156,6 +156,9 @@
   <data name="MenuGameEmptySudoku" xml:space="preserve">
     <value>Leeres Sudoku</value>
   </data>
+  <data name="MenuGamePrint" xml:space="preserve">
+    <value>Sudoku drucken</value>
+  </data>
   <data name="MenuGameQuitProgram" xml:space="preserve">
     <value>Programm beenden</value>
   </data>

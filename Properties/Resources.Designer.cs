@@ -178,6 +178,15 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Print Sudoku.
+        /// </summary>
+        public static string MenuGamePrint {
+            get {
+                return ResourceManager.GetString("MenuGamePrint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quit program.
         /// </summary>
         public static string MenuGameQuitProgram {

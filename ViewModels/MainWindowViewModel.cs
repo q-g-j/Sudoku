@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Printing;
 using System.Diagnostics;
 using System.IO;
 using System.Collections.Generic;
@@ -13,6 +14,10 @@ using Sudoku.Models;
 using Sudoku.Helpers;
 using Sudoku.Properties;
 using Sudoku.Settings;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows;
 
 namespace Sudoku.ViewModels
 {
@@ -44,6 +49,7 @@ namespace Sudoku.ViewModels
             MenuSaveToSlotCommand = new AsyncRelayCommand<object>(o => MenuSaveToSlotAction(o));
             MenuLoadFromSlotCommand = new AsyncRelayCommand<object>(o => MenuLoadFromSlotAction(o));
             MenuDeleteAllSlotsCommand = new AsyncRelayCommand(MenuDeleteAllSlotsAction);
+            MenuPrintCommand = new RelayCommand<object>(o => MenuPrintAction(o));
             ButtonDifficultyCommand = new AsyncRelayCommand(ButtonDifficultyAction);
             ButtonValidateCommand = new AsyncRelayCommand(ButtonValidateAction);
             ButtonDifficultyEasyCommand = new AsyncRelayCommand(ButtonDifficultyEasyAction);
@@ -130,6 +136,7 @@ namespace Sudoku.ViewModels
         public IAsyncRelayCommand MenuSaveToSlotCommand { get; }
         public IAsyncRelayCommand MenuLoadFromSlotCommand { get; }
         public IAsyncRelayCommand MenuDeleteAllSlotsCommand { get; }
+        public RelayCommand<object> MenuPrintCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyCommand { get; }
         public IAsyncRelayCommand ButtonValidateCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyEasyCommand { get; }
@@ -469,6 +476,45 @@ namespace Sudoku.ViewModels
                     tempLoadList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5;
                     MenuSaveSlotsLoadText = tempLoadList;
                 });
+            }
+        }
+        private void MenuPrintAction(object o)
+        {
+            if (!doBlockInput)
+            {
+                HideOverlays();
+                var sudokuGrid = (Viewbox)o;
+                PrintDialog printDialog = new PrintDialog();
+                if (printDialog.ShowDialog().GetValueOrDefault())
+                {
+                    System.Threading.Thread.Sleep(500);
+                    //store original scale
+                    Transform originalScale = sudokuGrid.LayoutTransform;
+                    //get selected printer capabilities
+                    PrintCapabilities capabilities = printDialog.PrintQueue.GetPrintCapabilities(printDialog.PrintTicket);
+
+                    //get scale of the print wrt to screen of WPF visual
+                    double scale = Math.Min((capabilities.PageImageableArea.ExtentWidth) / sudokuGrid.ActualWidth, (capabilities.PageImageableArea.ExtentHeight) /
+                                   sudokuGrid.ActualHeight);
+
+                    //Transform the Visual to scale
+                    sudokuGrid.LayoutTransform = new ScaleTransform(scale * 0.7, scale * 0.7);
+
+                    Console.WriteLine(scale.ToString());
+
+                    //get the size of the printer page
+                    Size sz = new Size(capabilities.PageImageableArea.ExtentWidth, capabilities.PageImageableArea.ExtentHeight);
+
+                    //update the layout of the visual to the printer page size.
+                    sudokuGrid.Measure(sz);
+                    sudokuGrid.Arrange(new Rect(new Point(capabilities.PageImageableArea.OriginWidth, capabilities.PageImageableArea.OriginHeight), sz));
+
+                    //now print the visual to printer to fit on the one page.
+                    printDialog.PrintVisual(sudokuGrid, "My Print");
+
+                    //apply the original transform.
+                    sudokuGrid.LayoutTransform = originalScale;
+                }
             }
         }
         private async Task ButtonDifficultyAction()

@@ -10,11 +10,11 @@
         xmlns:p="clr-namespace:Sudoku.Properties"
         xmlns:vm="clr-namespace:Sudoku.ViewModels"
         mc:Ignorable="d"
-        Title="Sudoku"
-        Width="536"
-        MinWidth="320"
-        MinHeight="370"
+        Width="640"
+        MinWidth="400"
+        MinHeight="485"
         SizeToContent="Height"
+        Title="Sudoku"
         ResizeMode="CanResize">
 
     <Window.DataContext>
@@ -39,7 +39,7 @@
                 <MenuItem Header="{x:Static p:Resources.MenuGameSettings}">
                     <MenuItem Header="{x:Static p:Resources.MenuGameSettingsSingleSolution}" IsCheckable="True" IsChecked="{Binding MenuSingleSolutionCheck}" Command="{Binding MenuSettingsSingleSolutionCommand}" ></MenuItem>
                 </MenuItem>
-                <!--<MenuItem Header="Sudoku drucken"></MenuItem>-->
+                <MenuItem Header="{x:Static p:Resources.MenuGamePrint}" Command="{Binding MenuPrintCommand}" CommandParameter="{Binding ElementName=SudokuGrid, Mode=OneWay}"></MenuItem>
                 <Separator></Separator>
                 <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlots}">
                     <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlotsSaveToSlot1}" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="1"></MenuItem>
@@ -68,8 +68,9 @@
             <StackPanel
                 Margin="20">
                 <Viewbox>
-                    <Border Style="{StaticResource StyleBorderOutermost}">
-                        <Grid>
+                    <Viewbox Width="650" Height="650" x:Name="SudokuGrid">
+                        <Border Style="{StaticResource StyleBorderOutermost}">
+                            <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="auto"/>
@@ -1968,12 +1969,13 @@
                             <Line Grid.Column="1" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource StyleLineMiddle}"/>
                             <Line Grid.Column="3" Grid.Row="0" Grid.RowSpan="5" X1="0" Y1="0" X2="0" Y2="1" Style="{StaticResource StyleLineMiddle}"/>
                         </Grid>
-                    </Border>
+                        </Border>
+                    </Viewbox>
                 </Viewbox>
 
                 <Grid
                     Panel.ZIndex="1000"
-                    Margin="0, -516, 0, 0"
+                    Margin="0, -514, 0, 0"
                     HorizontalAlignment="Center"
                     Visibility="{Binding SelectNumberVisibility}">
                     <StackPanel>
@@ -2089,7 +2091,7 @@
             
                 <Grid
                     Panel.ZIndex="1000"
-                    Margin="0, -516, 0, 0"
+                    Margin="0, -514, 0, 0"
                     HorizontalAlignment="Center"
                     Visibility="{Binding SelectMarkerVisibility}">
                     <StackPanel>
@@ -2252,7 +2254,7 @@
                     Height="266"
                     Background="Transparent"
                     HorizontalAlignment="Center"
-                    Margin="0, -774, 0, 0"
+                    Margin="0, -766, 0, 0"
                     Visibility="{Binding SelectDifficultyVisibility}">
 
                     <Grid HorizontalAlignment="Center">
@@ -2347,7 +2349,7 @@
                     Height="50"
                     Background="Transparent"
                     HorizontalAlignment="Center"
-                    Margin="0, -776, 0, 0"
+                    Margin="0, -772, 0, 0"
                     Visibility="{Binding LabelUniqueWaitVisibility}">
 
                     <Grid HorizontalAlignment="Center">
