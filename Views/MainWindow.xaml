@@ -10,9 +10,9 @@
         xmlns:p="clr-namespace:Sudoku.Properties"
         xmlns:vm="clr-namespace:Sudoku.ViewModels"
         mc:Ignorable="d"
-        Width="640"
+        Width="600"
         MinWidth="400"
-        MinHeight="485"
+        MinHeight="484"
         SizeToContent="Height"
         Title="Sudoku"
         ResizeMode="CanResize">
