@@ -494,23 +494,29 @@ namespace Sudoku.ViewModels
                     PrintCapabilities capabilities = printDialog.PrintQueue.GetPrintCapabilities(printDialog.PrintTicket);
 
                     //get scale of the print wrt to screen of WPF visual
-                    double scale = Math.Min((capabilities.PageImageableArea.ExtentWidth) / sudokuGrid.ActualWidth, (capabilities.PageImageableArea.ExtentHeight) /
-                                   sudokuGrid.ActualHeight);
+                    double scale = capabilities.PageImageableArea.ExtentWidth / sudokuGrid.ActualWidth;
+
+                    double factor = 0.5;
 
                     //Transform the Visual to scale
-                    sudokuGrid.LayoutTransform = new ScaleTransform(scale * 0.7, scale * 0.7);
-
-                    Console.WriteLine(scale.ToString());
+                    sudokuGrid.LayoutTransform = new ScaleTransform(Math.Round(scale * factor, 1), Math.Round(scale * factor, 1));
 
                     //get the size of the printer page
                     Size sz = new Size(capabilities.PageImageableArea.ExtentWidth, capabilities.PageImageableArea.ExtentHeight);
 
                     //update the layout of the visual to the printer page size.
                     sudokuGrid.Measure(sz);
-                    sudokuGrid.Arrange(new Rect(new Point(capabilities.PageImageableArea.OriginWidth, capabilities.PageImageableArea.OriginHeight), sz));
+
+                    sudokuGrid.Arrange(new Rect(
+                        new Point(
+                        capabilities.PageImageableArea.OriginWidth,
+                        capabilities.PageImageableArea.OriginHeight),
+                        sz));
 
                     //now print the visual to printer to fit on the one page.
                     printDialog.PrintVisual(sudokuGrid, "My Print");
+
+                    //Console.WriteLine(capabilities.PageImageableArea.ExtentWidth.ToString());
 
                     //apply the original transform.
                     sudokuGrid.LayoutTransform = originalScale;
