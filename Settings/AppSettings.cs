@@ -10,20 +10,25 @@ using System.Threading.Tasks;
 
 namespace Sudoku.Settings
 {
+    internal struct AppSettingsStruct
+    {
+        internal bool SingleSolution;
+    }
+
     internal class AppSettings
     {
+        #region Constructors
         internal AppSettings(string _folderAppSettings)
         {
             folderAppSettings = _folderAppSettings;
         }
+        #endregion Constructors
 
+        #region Fields
         internal string folderAppSettings;
-        
-        internal struct AppSettingsStruct
-        {
-            internal bool SingleSolution;
-        }
+        #endregion Fields
 
+        #region Methods
         internal AppSettingsStruct LoadSettings()
         {
             AppSettingsStruct appSettingsStruct = new AppSettingsStruct();
@@ -89,5 +94,6 @@ namespace Sudoku.Settings
                     fileSave.WriteLine(numbersListDictJson);
             }
         }
+        #endregion Methods
     }
 }

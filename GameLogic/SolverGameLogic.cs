@@ -7,16 +7,21 @@ namespace Sudoku.GameLogic
 {
     public class SolverGameLogic
     {
+        #region Constructors
         public SolverGameLogic(NumbersListModel list)
         {
             numbersList = new NumbersListModel(list);
             random = new Random();
         }
+        #endregion Constructors
 
+        #region Fields
         private readonly NumbersListModel numbersList;
         public NumbersListModel NumbersListSolved;
         private readonly Random random;
+        #endregion Fields
 
+        #region Methods
         public static bool IsFull(NumbersListModel numbersList)
         {
             bool isFull = true;
@@ -69,5 +74,6 @@ namespace Sudoku.GameLogic
                 }
             }
         }
+        #endregion Methods
     }
 }

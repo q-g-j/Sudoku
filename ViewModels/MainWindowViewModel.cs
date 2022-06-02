@@ -23,7 +23,7 @@ namespace Sudoku.ViewModels
 {
     public class MainWindowViewModel :INotifyPropertyChanged
     {
-        #region Constructor
+        #region Constructors
         public MainWindowViewModel()
         {
             // initialize variables:
@@ -78,7 +78,7 @@ namespace Sudoku.ViewModels
             }
 
             // load app settings from file:
-            AppSettings.AppSettingsStruct appSettingsStruct = appSettings.LoadSettings();
+            AppSettingsStruct appSettingsStruct = appSettings.LoadSettings();
             if (appSettingsStruct.SingleSolution)
             {
                 isMenuSettingsSingleSolutionSet = true;
@@ -94,9 +94,9 @@ namespace Sudoku.ViewModels
             menuSaveSlotsLoadText = saveSlotsModel.GetLoadTexts();
             //menuSaveSlotsSaveText = saveSlotsModel.GetSaveTexts();
         }
-        #endregion Constructor
+        #endregion Constructors
 
-        #region Private variables
+        #region Fields
         private readonly AppSettings appSettings;
         private readonly SaveSlotsModel saveSlotsModel;
         private string currentButtonIndex;
@@ -104,9 +104,9 @@ namespace Sudoku.ViewModels
         readonly string folderAppSettings;
         private bool doBlockInput;
         private bool isMenuSettingsSingleSolutionSet;
-        #endregion Private variables
+        #endregion Fields
 
-        #region Property values
+        #region Property Values
         private NumbersListModel numbersList;
         private MarkersListModel markersList;
         private NumbersColorsListModel numbersColorsList;
@@ -125,7 +125,7 @@ namespace Sudoku.ViewModels
         private string buttonValidateVisibility;
         private string labelValidateVisibility;
         private string labelUniqueWaitVisibility;
-        #endregion Property values
+        #endregion Property Values
 
         #region Properties
         public IAsyncRelayCommand MenuNewCommand { get; }
@@ -228,7 +228,7 @@ namespace Sudoku.ViewModels
         }
         #endregion Properties
 
-        #region Methods
+        #region Command Actions
         private async Task MenuNewAction()
         {
             if (! doBlockInput)
@@ -436,11 +436,11 @@ namespace Sudoku.ViewModels
                     if (File.Exists(filename))
                     {
                         HideOverlays();
-                        SaveSlotsModel.SaveSlotStruct saveSlotStruct = saveSlotsModel.LoadAll(slotNumber);
-                        NumbersList = saveSlotStruct.NumbersList;
-                        MarkersList = saveSlotStruct.MarkersList;
-                        NumbersColorsList = saveSlotStruct.NumbersColorsList;
-                        generatorNumbers = saveSlotStruct.GeneratorNumbers;
+                        SaveSlotStruct saveSlot = saveSlotsModel.LoadAll(slotNumber);
+                        NumbersList = saveSlot.NumbersList;
+                        MarkersList = saveSlot.MarkersList;
+                        NumbersColorsList = saveSlot.NumbersColorsList;
+                        generatorNumbers = saveSlot.GeneratorNumbers;
                         if (SolverGameLogic.IsFull(numbersList))
                         {
                             ShowValidation();
@@ -586,53 +586,6 @@ namespace Sudoku.ViewModels
                 });
             }
         }
-        private async Task ButtonSquareLeftDownAction(object o)
-        {
-            if (!doBlockInput)
-            {
-                var param = (string)o;
-
-                await Task.Run(() =>
-                {
-                    if (SelectDifficultyVisibility == "Visible")
-                    {
-                        SelectDifficultyVisibility = "Hidden";
-                        return;
-                    }
-
-                    if ((SelectNumberVisibility == "Visible") || (SelectMarkerVisibility == "Visible"))
-                    {
-                        SelectMarkerVisibility = "Hidden";
-                        SelectNumberVisibility = "Hidden";
-                    }
-                    else if (!generatorNumbers.Contains(param))
-                    {
-                        SelectNumberVisibility = "Visible";
-                    }
-
-                    if (!SolverGameLogic.IsFull(numbersList))
-                    {
-                        HideValidation();
-                    }
-                    else
-                    {
-                        ShowValidation();
-                    }
-                });
-            }
-        }
-        private async Task ButtonSquareLeftUpAction(object o)
-        {
-            var e = (MouseButtonEventArgs)o;
-            if (!doBlockInput)
-            {
-                await Task.Run(() =>
-                {
-                });
-            }
-
-            e.Handled = true;
-        }
         private async Task ButtonSquareDownAction(CompositeCommandParameter o)
         {
             var e = (MouseButtonEventArgs)o.EventArgs;
@@ -731,6 +684,9 @@ namespace Sudoku.ViewModels
                 });
             }
         }
+        #endregion Command Actions
+
+        #region Methods
         private void Inititalizes()
         {
             if (numbersList == null)

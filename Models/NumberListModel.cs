@@ -4,6 +4,7 @@ namespace Sudoku.Models
 {
     public class NumbersListModel : List<List<string>>
     {
+        #region Constructors
         public NumbersListModel()
         {
         }
@@ -23,7 +24,9 @@ namespace Sudoku.Models
                 Add(new List<string>(list[i]));
             }
         }
+        #endregion Constructors
 
+        #region Methods
         public void InitializeList()
         {
             for (int i = 0; i < 9; i++)
@@ -36,5 +39,6 @@ namespace Sudoku.Models
                 Add(tempList);
             }
         }
+        #endregion Methods
     }
 }

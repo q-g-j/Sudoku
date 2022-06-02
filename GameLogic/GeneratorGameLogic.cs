@@ -9,12 +9,15 @@ namespace Sudoku.GameLogic
 {
     public class GeneratorGameLogic
     {
+        #region Constructors
         public GeneratorGameLogic()
         {
             random = new Random();
             checkedList = new List<string>();
         }
+        #endregion Constructors
 
+        #region Fields
         public NumbersListModel NumbersList;
         public NumbersListModel UniqueNumbersList;
         private readonly List<string> checkedList;
@@ -23,7 +26,9 @@ namespace Sudoku.GameLogic
         public int Counter = 0;
         public int UniqueCounter = 0;
         public int Tries = 0;
+        #endregion Fields
 
+        #region Methods
         public void GenerateSudoku()
         {
             List<int> intRowList = new List<int>();
@@ -335,5 +340,6 @@ namespace Sudoku.GameLogic
             }
             return false;
         }
+        #endregion Methods
     }
 }

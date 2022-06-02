@@ -5,6 +5,7 @@ namespace Sudoku.GameLogic
 {
     public static class ValidatorGameLogic
     {
+        #region Methods
         public static bool IsValid(NumbersListModel numbersList, int col, int row, string number)
         {
             if (number == "")
@@ -56,5 +57,6 @@ namespace Sudoku.GameLogic
 
             return true;
         }
+        #endregion Methods
     }
 }
