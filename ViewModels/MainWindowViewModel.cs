@@ -81,12 +81,10 @@ namespace Sudoku.ViewModels
             AppSettingsStruct appSettingsStruct = appSettings.LoadSettings();
             if (appSettingsStruct.SingleSolution)
             {
-                isMenuSettingsSingleSolutionSet = true;
                 menuSingleSolutionCheck = "True";
             }
             else
             {
-                isMenuSettingsSingleSolutionSet = false;
                 menuSingleSolutionCheck = "False";
             }
 
@@ -103,7 +101,6 @@ namespace Sudoku.ViewModels
         private List<string> generatorNumbers;
         readonly string folderAppSettings;
         private bool doBlockInput;
-        private bool isMenuSettingsSingleSolutionSet;
         #endregion Fields
 
         #region Property Values
@@ -390,15 +387,13 @@ namespace Sudoku.ViewModels
             {
                 await Task.Run(() =>
                 {                    
-                    if (isMenuSettingsSingleSolutionSet)
+                    if (menuSingleSolutionCheck == "True")
                     {
-                        isMenuSettingsSingleSolutionSet = false;
-                        appSettings.ChangeSingleSolution(false);
+                        appSettings.ChangeSingleSolution(true);
                     }
                     else
                     {
-                        isMenuSettingsSingleSolutionSet = true;
-                        appSettings.ChangeSingleSolution(true);
+                        appSettings.ChangeSingleSolution(false);
                     }
                 });
             }
@@ -940,7 +935,7 @@ namespace Sudoku.ViewModels
         {
             doBlockInput = true;
 
-            if (difficulty == "Hard" && isMenuSettingsSingleSolutionSet)
+            if (difficulty == "Hard" && menuSingleSolutionCheck == "True")
             {
                 LabelUniqueWaitVisibility = "Visible";
             }
@@ -979,14 +974,15 @@ namespace Sudoku.ViewModels
                 //Stopwatch stopwatch = new Stopwatch();
                 //stopwatch.Start();
 
-                if (isMenuSettingsSingleSolutionSet)
+                if (menuSingleSolutionCheck == "True")
                 {
-                    generatorGameLogic.GenerateUniqueSudoku();
+                    generatorGameLogic.doSingleSolution = true;
                 }
                 else
                 {
-                    generatorGameLogic.GenerateSudoku();
+                    generatorGameLogic.doSingleSolution = false;
                 }
+                generatorGameLogic.GenerateUniqueSudoku();
 
 
                 //// DEBUG:

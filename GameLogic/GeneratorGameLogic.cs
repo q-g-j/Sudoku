@@ -14,108 +14,70 @@ namespace Sudoku.GameLogic
         {
             random = new Random();
             checkedList = new List<string>();
+            coordsList = new List<Coords>();
+            for (int col = 0; col < 9; col++)
+            {
+                for (int row = 0; row < 9; row++)
+                {
+                    coordsList.Add(new Coords(col, row));
+                }
+            }
         }
         #endregion Constructors
 
         #region Fields
         public NumbersListModel NumbersList;
         public NumbersListModel UniqueNumbersList;
+        private List<Coords> coordsList;
         private readonly List<string> checkedList;
         private readonly Random random;
         public int RemoveNumbers;
         public int Counter = 0;
         public int UniqueCounter = 0;
         public int Tries = 0;
+        public bool doSingleSolution;
         #endregion Fields
 
         #region Methods
-        public void GenerateSudoku()
-        {
-            List<int> intRowList = new List<int>();
-            intRowList.AddRange(Enumerable.Range(0, 9));
-            var shuffledIntRowList = intRowList.OrderBy(item => random.Next());
-            foreach (var row in shuffledIntRowList)
-            {
-                List<int> intColList = new List<int>();
-                intColList.AddRange(Enumerable.Range(0, 9));
-                var shuffledIntColList = intColList.OrderBy(item => random.Next());
-                foreach (var col in shuffledIntColList)
-                {
-                    if (NumbersList[col][row] != "")
-                    {
-                        if (!HasCurrentColTooFewNumbers(col) && !HasCurrentRowTooFewNumbers(row) && !HasCurrentSquareTooFewNumbers(col, row) &&
-                            !HasAnotherColTooManyNumbers(col) && !HasAnotherRowTooManyNumbers(row) && !HasAnotherSquareTooManyNumbers(col, row))
-                        {
-                            Counter++;
-                            NumbersList[col][row] = "";
-                            checkedList.Clear();
-                        }
-                        else
-                        {
-                            checkedList.Add(col.ToString() + row.ToString());
-                        }
-                        if (Counter < RemoveNumbers)
-                        {
-                            GenerateSudoku();
-                        }
-                        return;
-                    }
-                }
-            }
-        }
-
         public void GenerateUniqueSudoku()
         {
-            int[] rowArray = Enumerable.Range(0, 9).OrderBy(c => random.Next()).ToArray();
-            foreach (var row in rowArray)
+            List<Coords> shuffledCoordsList = coordsList.OrderBy(item => random.Next()).ToList();
+            foreach (var coords in shuffledCoordsList)
             {
-                int[] colArray = Enumerable.Range(0, 9).OrderBy(c => random.Next()).ToArray();
-                foreach (var col in colArray)
+                if (NumbersList[coords.X][coords.Y] != "")
                 {
-                    if (NumbersList[col][row] != "")
+                    if (!HasCurrentColTooFewNumbers(coords.X) && !HasCurrentRowTooFewNumbers(coords.Y) && !HasCurrentSquareTooFewNumbers(coords.X, coords.Y) &&
+                        !HasAnotherColTooManyNumbers(coords.X) && !HasAnotherRowTooManyNumbers(coords.Y) && !HasAnotherSquareTooManyNumbers(coords.X, coords.Y))
                     {
-                        if (!HasCurrentColTooFewNumbers(col) && !HasCurrentRowTooFewNumbers(row) && !HasCurrentSquareTooFewNumbers(col, row) &&
-                            !HasAnotherColTooManyNumbers(col) && !HasAnotherRowTooManyNumbers(row) && !HasAnotherSquareTooManyNumbers(col, row))
+                        UniqueNumbersList = new NumbersListModel(NumbersList);
+                        UniqueNumbersList[coords.X][coords.Y] = "";
+                        UniqueCounter = 0;
+
+                        if (Counter > 20 && doSingleSolution)
                         {
-                            //// DEBUG:
-                            //Stopwatch stopwatch = new Stopwatch();
-                            //stopwatch.Start();
-
-                            UniqueNumbersList = new NumbersListModel(NumbersList);
-                            UniqueNumbersList[col][row] = "";
-                            UniqueCounter = 0;
-
-                            if (Counter > 20)
-                            {
-                                HasUniqueSolution();
-                            }
-
-                            if (UniqueCounter < 2)
-                            {
-                                //// DEBUG:
-                                //stopwatch.Stop();
-                                //Console.WriteLine("Elapsed Time is {0} ms" + " " + stopwatch.Elapsed.TotalMilliseconds + ", " + Tries);
-                                //Console.WriteLine(Counter.ToString() + ", " + Tries.ToString());
-
-                                Counter++;
-                                NumbersList[col][row] = "";
-                                checkedList.Clear();
-                            }
-                            else if (Counter > 20)
-                            {                                
-                                Tries++;
-                            }
+                            HasUniqueSolution();
                         }
-                        else
+
+                        if (UniqueCounter < 2)
                         {
-                            checkedList.Add(col.ToString() + row.ToString());
+                            Counter++;
+                            NumbersList[coords.X][coords.Y] = "";
+                            checkedList.Clear();
                         }
-                        if (Counter < RemoveNumbers && Tries < 20)
-                        {
-                            GenerateUniqueSudoku();
+                        else if (Counter > 20)
+                        {                                
+                            Tries++;
                         }
-                        return;
                     }
+                    else
+                    {
+                        checkedList.Add(coords.X.ToString() + coords.Y.ToString());
+                    }
+                    if (Counter < RemoveNumbers && Tries < 20)
+                    {
+                        GenerateUniqueSudoku();
+                    }
+                    return;
                 }
             }
         }

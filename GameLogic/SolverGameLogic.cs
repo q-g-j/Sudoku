@@ -51,7 +51,7 @@ namespace Sudoku.GameLogic
                 {
                     if (numbersList[col][row] == "")
                     {
-                        int[] shuffledIntList = Enumerable.Range(1, 9).OrderBy(c => random.Next()).ToArray();
+                        int[] shuffledIntList = Enumerable.Range(1, 9).OrderBy(c => random.Next().ToString()).ToArray();
                         foreach (int item in shuffledIntList)
                         {
                             string number = item.ToString();
