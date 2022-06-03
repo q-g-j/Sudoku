@@ -953,44 +953,10 @@ namespace Sudoku.ViewModels
                 solverGameLogic.FillSudoku();
                 NumbersListModel numbersListSolved = solverGameLogic.NumbersListSolved;
 
-                generatorGameLogic = new GeneratorGameLogic();
+                generatorGameLogic = new GeneratorGameLogic(difficulty, numbersListSolved);
+                generatorGameLogic.GenerateSudoku(menuSingleSolutionCheck);
 
-                if (difficulty == "Easy")
-                {
-                    generatorGameLogic.RemoveNumbers = 42; // 42
-                }
-                else if (difficulty == "Medium")
-                {
-                    generatorGameLogic.RemoveNumbers = 50; // 50
-                }
-                else if (difficulty == "Hard")
-                {
-                    generatorGameLogic.RemoveNumbers = 55; // 57
-                }
-
-                generatorGameLogic.NumbersList = numbersListSolved;
-
-                //// DEBUG:
-                //Stopwatch stopwatch = new Stopwatch();
-                //stopwatch.Start();
-
-                if (menuSingleSolutionCheck == "True")
-                {
-                    generatorGameLogic.DoSingleSolution = true;
-                }
-                else
-                {
-                    generatorGameLogic.DoSingleSolution = false;
-                }
-                generatorGameLogic.GenerateSudoku();
-
-
-                //// DEBUG:
-                //stopwatch.Stop();
-                //Console.WriteLine("Elapsed Time is {0} ms" + " " + stopwatch.ElapsedMilliseconds + ", " + generatorGameLogic.Tries);
-                //Console.WriteLine(generatorGameLogic.Counter.ToString());
-
-                if (generatorGameLogic.Counter == generatorGameLogic.RemoveNumbers)
+                if (generatorGameLogic.Counter == generatorGameLogic.removeNumbers)
                 {
                     doRun = false;
                 }

@@ -10,11 +10,13 @@ namespace Sudoku.GameLogic
     public class GeneratorGameLogic
     {
         #region Constructors
-        public GeneratorGameLogic()
+        public GeneratorGameLogic(string _difficulty, NumbersListModel _numbersList)
         {
             random = new Random();
             checkedList = new List<string>();
             coordsList = new List<Coords>();
+            NumbersList = _numbersList;
+
             for (int col = 0; col < 9; col++)
             {
                 for (int row = 0; row < 9; row++)
@@ -22,24 +24,37 @@ namespace Sudoku.GameLogic
                     coordsList.Add(new Coords(col, row));
                 }
             }
+
+            if (_difficulty == "Easy")
+            {
+                removeNumbers = 42; // 42
+            }
+            else if (_difficulty == "Medium")
+            {
+                removeNumbers = 50; // 50
+            }
+            else if (_difficulty == "Hard")
+            {
+                removeNumbers = 55; // 57
+            }
         }
         #endregion Constructors
 
         #region Fields
-        public NumbersListModel NumbersList;
-        public NumbersListModel SingleSolutionNumbersList;
         private readonly List<Coords> coordsList;
         private readonly List<string> checkedList;
         private readonly Random random;
-        public int RemoveNumbers;
+
+        public NumbersListModel NumbersList;
+        public NumbersListModel SingleSolutionNumbersList;
+        public int removeNumbers;
         public int Counter = 0;
         public int SingleSolutionCounter = 0;
         public int Tries = 0;
-        public bool DoSingleSolution;
         #endregion Fields
 
         #region Methods
-        public void GenerateSudoku()
+        public void GenerateSudoku(string doSingleSolution)
         {
             List<Coords> shuffledCoordsList = coordsList.OrderBy(item => random.Next()).ToList();
             foreach (var coords in shuffledCoordsList)
@@ -53,7 +68,7 @@ namespace Sudoku.GameLogic
                         SingleSolutionNumbersList[coords.X][coords.Y] = "";
                         SingleSolutionCounter = 0;
 
-                        if (DoSingleSolution && Counter > 25)
+                        if (doSingleSolution == "True" && Counter > 25)
                         {
                             HasSingleSolution();
                         }
@@ -72,15 +87,15 @@ namespace Sudoku.GameLogic
                     {
                         checkedList.Add(coords.X.ToString() + coords.Y.ToString());
                     }
-                    if (Counter < RemoveNumbers && Tries < 20)
+                    if (Counter < removeNumbers && Tries < 20)
                     {
-                        GenerateSudoku();
+                        GenerateSudoku(doSingleSolution);
                     }
                     return;
                 }
             }
         }
-        public void HasSingleSolution()
+        private void HasSingleSolution()
         {
             for (int row = 0; row < 9; row++)
             {
@@ -204,7 +219,7 @@ namespace Sudoku.GameLogic
                         }
                     }
                     // (81 - RemoveNumbers) / 9 + 1
-                    if (countNumbers > (81 - RemoveNumbers) / 9 + 3 && countCurrentColNumbers < countNumbers)
+                    if (countNumbers > (81 - removeNumbers) / 9 + 3 && countCurrentColNumbers < countNumbers)
                     {
                         return true;
                     }
@@ -241,7 +256,7 @@ namespace Sudoku.GameLogic
                         }
                     }
                     // (81 - RemoveNumbers) / 9 + 1
-                    if (countNumbers > (81 - RemoveNumbers) / 9 + 3 && countCurrentRowNumbers < countNumbers)
+                    if (countNumbers > (81 - removeNumbers) / 9 + 3 && countCurrentRowNumbers < countNumbers)
                     {
                         return true;
                     }
@@ -292,7 +307,7 @@ namespace Sudoku.GameLogic
                             }
                         }
 
-                        if (countNumbers > (81 - RemoveNumbers) / 9 + 3 && countCurrentSquareNumbers < countNumbers)
+                        if (countNumbers > (81 - removeNumbers) / 9 + 3 && countCurrentSquareNumbers < countNumbers)
                         {
                             return true;
                         }
