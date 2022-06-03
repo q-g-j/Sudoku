@@ -2350,7 +2350,7 @@
                     Background="Transparent"
                     HorizontalAlignment="Center"
                     Margin="0, -772, 0, 0"
-                    Visibility="{Binding LabelUniqueWaitVisibility}">
+                    Visibility="{Binding LabelSingleSolutionWaitVisibility}">
 
                     <Grid HorizontalAlignment="Center">
                         <Border
@@ -2369,8 +2369,8 @@
                         BorderThickness="0"
                         CornerRadius="10">
                             <Label
-                            Content="{x:Static p:Resources.LabelOverlayUniqueWait}"
-                            Style="{StaticResource StyleLabelUniqueWait}">
+                            Content="{x:Static p:Resources.LabelOverlaySingleSolutionWait}"
+                            Style="{StaticResource StyleLabelSingleSolutionWait}">
                                     <Label.Resources>
                                     <Style TargetType="Border">
                                         <Setter Property="CornerRadius" Value="10" />

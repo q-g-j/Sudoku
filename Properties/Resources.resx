@@ -138,7 +138,7 @@
   <data name="LabelOverlayChooseNumber" xml:space="preserve">
     <value>Place a number</value>
   </data>
-  <data name="LabelOverlayUniqueWait" xml:space="preserve">
+  <data name="LabelOverlaySingleSolutionWait" xml:space="preserve">
     <value>Please wait...</value>
   </data>
   <data name="LabelValidateConflicts" xml:space="preserve">

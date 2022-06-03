@@ -122,7 +122,7 @@
         <Setter Property="FontFamily" Value="{StaticResource MainSemiBold}"/>
         <Setter Property="FontSize" Value="22"/>
     </Style>
-    <Style x:Key="StyleLabelUniqueWait" TargetType="Label">
+    <Style x:Key="StyleLabelSingleSolutionWait" TargetType="Label">
         <Setter Property="Padding" Value="90, 0, 90, 0"/>
         <Setter Property="Height" Value="50"/>
         <Setter Property="BorderThickness" Value="1"/>

@@ -126,9 +126,9 @@ namespace Sudoku.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Please wait....
         /// </summary>
-        public static string LabelOverlayUniqueWait {
+        public static string LabelOverlaySingleSolutionWait {
             get {
-                return ResourceManager.GetString("LabelOverlayUniqueWait", resourceCulture);
+                return ResourceManager.GetString("LabelOverlaySingleSolutionWait", resourceCulture);
             }
         }
         

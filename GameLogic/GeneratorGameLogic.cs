@@ -27,19 +27,19 @@ namespace Sudoku.GameLogic
 
         #region Fields
         public NumbersListModel NumbersList;
-        public NumbersListModel UniqueNumbersList;
-        private List<Coords> coordsList;
+        public NumbersListModel SingleSolutionNumbersList;
+        private readonly List<Coords> coordsList;
         private readonly List<string> checkedList;
         private readonly Random random;
         public int RemoveNumbers;
         public int Counter = 0;
-        public int UniqueCounter = 0;
+        public int SingleSolutionCounter = 0;
         public int Tries = 0;
-        public bool doSingleSolution;
+        public bool DoSingleSolution;
         #endregion Fields
 
         #region Methods
-        public void GenerateUniqueSudoku()
+        public void GenerateSudoku()
         {
             List<Coords> shuffledCoordsList = coordsList.OrderBy(item => random.Next()).ToList();
             foreach (var coords in shuffledCoordsList)
@@ -49,22 +49,21 @@ namespace Sudoku.GameLogic
                     if (!HasCurrentColTooFewNumbers(coords.X) && !HasCurrentRowTooFewNumbers(coords.Y) && !HasCurrentSquareTooFewNumbers(coords.X, coords.Y) &&
                         !HasAnotherColTooManyNumbers(coords.X) && !HasAnotherRowTooManyNumbers(coords.Y) && !HasAnotherSquareTooManyNumbers(coords.X, coords.Y))
                     {
-                        UniqueNumbersList = new NumbersListModel(NumbersList);
-                        UniqueNumbersList[coords.X][coords.Y] = "";
-                        UniqueCounter = 0;
+                        SingleSolutionNumbersList = new NumbersListModel(NumbersList);
+                        SingleSolutionNumbersList[coords.X][coords.Y] = "";
+                        SingleSolutionCounter = 0;
 
-                        if (Counter > 20 && doSingleSolution)
+                        if (DoSingleSolution && Counter > 25)
                         {
-                            HasUniqueSolution();
+                            HasSingleSolution();
                         }
-
-                        if (UniqueCounter < 2)
+                        if (SingleSolutionCounter < 2)
                         {
                             Counter++;
                             NumbersList[coords.X][coords.Y] = "";
                             checkedList.Clear();
                         }
-                        else if (Counter > 20)
+                        else if (Counter > 25)
                         {                                
                             Tries++;
                         }
@@ -75,36 +74,36 @@ namespace Sudoku.GameLogic
                     }
                     if (Counter < RemoveNumbers && Tries < 20)
                     {
-                        GenerateUniqueSudoku();
+                        GenerateSudoku();
                     }
                     return;
                 }
             }
         }
-        public void HasUniqueSolution()
+        public void HasSingleSolution()
         {
             for (int row = 0; row < 9; row++)
             {
                 for (int col = 0; col < 9; col++)
                 {
-                    if (UniqueNumbersList[col][row] == "")
+                    if (SingleSolutionNumbersList[col][row] == "")
                     {
                         for (int i = 1; i < 10; i++)
                         {
                             string number = i.ToString();
-                            if (ValidatorGameLogic.IsValid(UniqueNumbersList, col, row, number))
+                            if (ValidatorGameLogic.IsValid(SingleSolutionNumbersList, col, row, number))
                             {
-                                UniqueNumbersList[col][row] = number;
-                                if (SolverGameLogic.IsFull(UniqueNumbersList))
+                                SingleSolutionNumbersList[col][row] = number;
+                                if (SolverGameLogic.IsFull(SingleSolutionNumbersList))
                                 {
-                                    UniqueCounter++;
-                                    //Console.WriteLine(UniqueCounter);
+                                    SingleSolutionCounter++;
                                 }
-                                if (UniqueCounter < 2)
+                                if (SingleSolutionCounter < 2)
                                 {
-                                    HasUniqueSolution();
-                                    UniqueNumbersList[col][row] = "";
+                                    HasSingleSolution();
+                                    SingleSolutionNumbersList[col][row] = "";
                                 }
+
                             }
                         }
                         return;

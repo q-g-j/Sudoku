@@ -64,7 +64,7 @@ namespace Sudoku.ViewModels
             // initialize properties:
             selectNumberVisibility = "Hidden";
             selectMarkerVisibility = "Hidden";
-            labelUniqueWaitVisibility = "Hidden";
+            labelSingleSolutionWaitVisibility = "Hidden";
             selectDifficultyVisibility = "Visible";
             buttonValidateVisibility = "Collapsed";
             labelValidateVisibility = "Collapsed";
@@ -121,7 +121,7 @@ namespace Sudoku.ViewModels
         private string selectDifficultyVisibility;
         private string buttonValidateVisibility;
         private string labelValidateVisibility;
-        private string labelUniqueWaitVisibility;
+        private string labelSingleSolutionWaitVisibility;
         #endregion Property Values
 
         #region Properties
@@ -203,10 +203,10 @@ namespace Sudoku.ViewModels
             get => labelValidateVisibility;
             set { labelValidateVisibility = value; OnPropertyChanged(); }
         }
-        public string LabelUniqueWaitVisibility
+        public string LabelSingleSolutionWaitVisibility
         {
-            get => labelUniqueWaitVisibility;
-            set { labelUniqueWaitVisibility = value; OnPropertyChanged(); }
+            get => labelSingleSolutionWaitVisibility;
+            set { labelSingleSolutionWaitVisibility = value; OnPropertyChanged(); }
         }
         public string ButtonDifficultyText
         {
@@ -937,7 +937,7 @@ namespace Sudoku.ViewModels
 
             if (difficulty == "Hard" && menuSingleSolutionCheck == "True")
             {
-                LabelUniqueWaitVisibility = "Visible";
+                LabelSingleSolutionWaitVisibility = "Visible";
             }
 
             GeneratorGameLogic generatorGameLogic = null;
@@ -976,13 +976,13 @@ namespace Sudoku.ViewModels
 
                 if (menuSingleSolutionCheck == "True")
                 {
-                    generatorGameLogic.doSingleSolution = true;
+                    generatorGameLogic.DoSingleSolution = true;
                 }
                 else
                 {
-                    generatorGameLogic.doSingleSolution = false;
+                    generatorGameLogic.DoSingleSolution = false;
                 }
-                generatorGameLogic.GenerateUniqueSudoku();
+                generatorGameLogic.GenerateSudoku();
 
 
                 //// DEBUG:
@@ -1031,7 +1031,7 @@ namespace Sudoku.ViewModels
             MarkersList = markersList;
             HideValidation();
 
-            LabelUniqueWaitVisibility = "Hidden";
+            LabelSingleSolutionWaitVisibility = "Hidden";
 
             doBlockInput = false;
         }
