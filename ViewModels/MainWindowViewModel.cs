@@ -302,6 +302,9 @@ namespace Sudoku.ViewModels
             {
                 await Task.Run(() =>
                 {
+                    markersList = new MarkersListModel();
+                    markersList.InitializeList();
+
                     HideOverlays();
                     for (int col = 0; col < 9; col++)
                     {
