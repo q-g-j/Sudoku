@@ -39,7 +39,7 @@
                 <MenuItem Header="{x:Static p:Resources.MenuGameSettings}">
                     <MenuItem Header="{x:Static p:Resources.MenuGameSettingsSingleSolution}" IsCheckable="True" IsChecked="{Binding MenuSingleSolutionCheck}" Command="{Binding MenuSettingsSingleSolutionCommand}" ></MenuItem>
                 </MenuItem>
-                <MenuItem Header="{x:Static p:Resources.MenuGamePrint}" Command="{Binding MenuPrintCommand}" CommandParameter="{Binding ElementName=SudokuGrid, Mode=OneWay}"></MenuItem>
+                <MenuItem Header="{x:Static p:Resources.MenuGamePrint}" Command="{Binding MenuPrintCommand}" CommandParameter="{Binding ElementName=Main, Mode=OneWay}"></MenuItem>
                 <Separator></Separator>
                 <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlots}">
                     <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlotsSaveToSlot1}" Command="{Binding MenuSaveToSlotCommand}" CommandParameter="1"></MenuItem>
@@ -68,7 +68,7 @@
             <StackPanel
                 Margin="20">
                 <Viewbox>
-                    <Viewbox Width="650" Height="650" x:Name="SudokuGrid">
+                    <Viewbox Width="650" Height="650">
                         <Border Style="{StaticResource StyleBorderOutermost}">
                             <Grid>
                             <Grid.ColumnDefinitions>

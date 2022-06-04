@@ -18,6 +18,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows;
+using Sudoku.Views;
 
 namespace Sudoku.ViewModels
 {
@@ -30,6 +31,17 @@ namespace Sudoku.ViewModels
             folderAppSettings = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SudokuGame");
             appSettings = new AppSettings(folderAppSettings);
             doBlockInput = false;
+
+            // initialize property values:
+            selectNumberVisibility = "Hidden";
+            selectMarkerVisibility = "Hidden";
+            labelSingleSolutionWaitVisibility = "Hidden";
+            selectDifficultyVisibility = "Visible";
+            buttonValidateVisibility = "Collapsed";
+            labelValidateVisibility = "Collapsed";
+            labelValidateText = "";
+            buttonDifficultyWidth = "350";
+            currentButtonIndex = "";
 
             // initialize lists:
             saveSlotsModel = new SaveSlotsModel(folderAppSettings);
@@ -61,23 +73,11 @@ namespace Sudoku.ViewModels
             ButtonSquareDownCommand = new AsyncRelayCommand<CompositeCommandParameter>(o => ButtonSquareDownAction(o));
             ButtonSquareUpCommand = new AsyncRelayCommand<CompositeCommandParameter>(o => ButtonSquareUpAction(o));
 
-            // initialize properties:
-            selectNumberVisibility = "Hidden";
-            selectMarkerVisibility = "Hidden";
-            labelSingleSolutionWaitVisibility = "Hidden";
-            selectDifficultyVisibility = "Visible";
-            buttonValidateVisibility = "Collapsed";
-            labelValidateVisibility = "Collapsed";
-            labelValidateText = "";
-            buttonDifficultyWidth = "350";
-            currentButtonIndex = "";
-
+            // load app settings from file:
             if (!Directory.Exists(folderAppSettings))
             {
                 Directory.CreateDirectory(folderAppSettings);
             }
-
-            // load app settings from file:
             AppSettingsStruct appSettingsStruct = appSettings.LoadSettings();
             if (appSettingsStruct.SingleSolution)
             {
@@ -90,7 +90,6 @@ namespace Sudoku.ViewModels
 
             // display each existing save slot's date and time:
             menuSaveSlotsLoadText = saveSlotsModel.GetLoadTexts();
-            //menuSaveSlotsSaveText = saveSlotsModel.GetSaveTexts();
         }
         #endregion Constructors
 
@@ -481,18 +480,27 @@ namespace Sudoku.ViewModels
             if (!doBlockInput)
             {
                 HideOverlays();
-                var sudokuGrid = (Viewbox)o;
+                MainWindow mainWindow = (MainWindow)o;
+                PrintView printControl = new PrintView
+                {
+                    DataContext = mainWindow.DataContext
+                };
+                Viewbox sudokuGrid = (Viewbox)printControl.FindName("SudokuGrid");
+
                 PrintDialog printDialog = new PrintDialog();
+
                 if (printDialog.ShowDialog().GetValueOrDefault())
                 {
-                    System.Threading.Thread.Sleep(500);
+                    System.Threading.Thread.Sleep(100);
+
                     //store original scale
                     Transform originalScale = sudokuGrid.LayoutTransform;
+
                     //get selected printer capabilities
                     PrintCapabilities capabilities = printDialog.PrintQueue.GetPrintCapabilities(printDialog.PrintTicket);
 
                     //get scale of the print wrt to screen of WPF visual
-                    double scale = capabilities.PageImageableArea.ExtentWidth / sudokuGrid.ActualWidth;
+                    double scale = capabilities.PageImageableArea.ExtentWidth / sudokuGrid.Width;
 
                     double factor = 0.5;
 
@@ -514,11 +522,48 @@ namespace Sudoku.ViewModels
                     //now print the visual to printer to fit on the one page.
                     printDialog.PrintVisual(sudokuGrid, "My Print");
 
-                    //Console.WriteLine(capabilities.PageImageableArea.ExtentWidth.ToString());
-
                     //apply the original transform.
                     sudokuGrid.LayoutTransform = originalScale;
                 }
+
+                //UserControl sudokuGrid = (UserControl)o;
+                //PrintDialog printDialog = new PrintDialog();
+                //if (printDialog.ShowDialog().GetValueOrDefault())
+                //{
+                //    System.Threading.Thread.Sleep(100);
+                //store original scale
+                //Transform originalScale = sudokuGrid.LayoutTransform;
+                ////get selected printer capabilities
+                //PrintCapabilities capabilities = printDialog.PrintQueue.GetPrintCapabilities(printDialog.PrintTicket);
+
+                ////get scale of the print wrt to screen of WPF visual
+                //double scale = capabilities.PageImageableArea.ExtentWidth / sudokuGrid.ActualWidth;
+
+                //double factor = 0.5;
+
+                ////Transform the Visual to scale
+                //sudokuGrid.LayoutTransform = new ScaleTransform(Math.Round(scale * factor, 1), Math.Round(scale * factor, 1));
+
+                ////get the size of the printer page
+                //Size sz = new Size(capabilities.PageImageableArea.ExtentWidth, capabilities.PageImageableArea.ExtentHeight);
+
+                //update the layout of the visual to the printer page size.
+                //sudokuGrid.Measure(sz);
+
+                //sudokuGrid.Arrange(new Rect(
+                //    new Point(
+                //    capabilities.PageImageableArea.OriginWidth,
+                //    capabilities.PageImageableArea.OriginHeight),
+                //    sz));
+
+                //now print the visual to printer to fit on the one page.
+                //NumbersList = numbersList;
+                //printDialog.PrintVisual(sudokuGrid, "My Print");
+
+                //Console.WriteLine(capabilities.PageImageableArea.ExtentWidth.ToString());
+
+                //apply the original transform.
+                //sudokuGrid.LayoutTransform = originalScale;
             }
         }
         private async Task ButtonDifficultyAction()
