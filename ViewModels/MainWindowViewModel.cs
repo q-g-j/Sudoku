@@ -29,6 +29,16 @@ namespace Sudoku.ViewModels
             appSettings = new AppSettings(folderAppSettings);
             doBlockInput = false;
 
+            // initialize lists:
+            saveSlotsModel = new SaveSlotsModel(folderAppSettings);
+            generatorCoords = new List<string>();
+            numberList = new NumberListModel();
+            markerList = new MarkerListModel();
+            numberColorList = new NumberColorListModel();
+            numberList.InitializeList();
+            markerList.InitializeList();
+            numberColorList.InitializeList();
+
             // initialize property values:
             selectNumberVisibility = "Hidden";
             selectMarkerVisibility = "Hidden";
@@ -39,16 +49,6 @@ namespace Sudoku.ViewModels
             labelValidateText = "";
             buttonDifficultyWidth = "350";
             currentButtonIndex = "";
-
-            // initialize lists:
-            saveSlotsModel = new SaveSlotsModel(folderAppSettings);
-            generatorCoords = new List<string>();
-            numberList = new NumberListModel();
-            markerList = new MarkerListModel();
-            numberColorList = new NumberColorListModel();
-            numberList.InitializeList();
-            markerList.InitializeList();
-            numberColorList.InitializeList();
 
             preloadGameEasy = PreloadGame("Easy");
             preloadGameMedium = PreloadGame("Medium");
@@ -92,11 +92,6 @@ namespace Sudoku.ViewModels
             // display each existing save slot's date and time:
             menuSaveSlotsLoadText = saveSlotsModel.GetLoadTexts();
         }
-
-        private Task preloadGameEasy;
-        private Task preloadGameMedium;
-        private Task preloadGameHard;
-
         #endregion Constructors
 
         #region Fields
@@ -115,6 +110,9 @@ namespace Sudoku.ViewModels
         private List<string> generatorCoordsPreloadedEasy;
         private List<string> generatorCoordsPreloadedMedium;
         private List<string> generatorCoordsPreloadedHard;
+        private Task preloadGameEasy;
+        private Task preloadGameMedium;
+        private Task preloadGameHard;
         #endregion Fields
 
         #region Property Values
