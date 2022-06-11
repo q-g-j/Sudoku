@@ -953,6 +953,13 @@ namespace Sudoku.ViewModels
             //    LabelSingleSolutionWaitVisibility = "Visible";
             //}
 
+            LabelValidateText = "";
+            HideValidation();
+
+            markerList = new MarkerListModel();
+            markerList.InitializeList();
+            MarkerList = markerList;
+
             if (difficulty == "Easy")
             {
                 await preloadGameEasy;
@@ -1031,16 +1038,7 @@ namespace Sudoku.ViewModels
                     tempNumberColorList[col][row] = "Black";
                 }
 
-                LabelValidateText = "";
-
                 tempNumberList = generatorGameLogic.NumberList;
-
-                markerList = new MarkerListModel();
-                markerList.InitializeList();
-                MarkerList = markerList;
-                HideValidation();
-
-                LabelSingleSolutionWaitVisibility = "Hidden";
 
                 if (difficulty == "Easy")
                 {
