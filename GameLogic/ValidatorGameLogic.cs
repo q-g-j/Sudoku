@@ -6,7 +6,7 @@ namespace Sudoku.GameLogic
     public static class ValidatorGameLogic
     {
         #region Methods
-        public static bool IsValid(NumbersListModel numbersList, int col, int row, string number)
+        public static bool IsValid(NumberListModel numberList, int col, int row, string number)
         {
             if (number == "")
             {
@@ -18,7 +18,7 @@ namespace Sudoku.GameLogic
             {
                 if (i != col)
                 {
-                    if (numbersList[i][row] == number)
+                    if (numberList[i][row] == number)
                     {
                         return false;
                     }
@@ -30,7 +30,7 @@ namespace Sudoku.GameLogic
             {
                 if (i != row)
                 {
-                    if (numbersList[col][i] == number)
+                    if (numberList[col][i] == number)
                     {
                         return false;
                     }
@@ -47,7 +47,7 @@ namespace Sudoku.GameLogic
                 {
                     if (i != row && j != col)
                     {
-                        if (numbersList[j][i] == number)
+                        if (numberList[j][i] == number)
                         {
                             return false;
                         }

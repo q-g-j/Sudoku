@@ -90,8 +90,8 @@ namespace Sudoku.Settings
 
             using (var fileSave = File.CreateText(@filename))
             {
-                var numbersListDictJson = JsonConvert.SerializeObject(listsDict, Formatting.Indented);
-                    fileSave.WriteLine(numbersListDictJson);
+                var numberListDictJson = JsonConvert.SerializeObject(listsDict, Formatting.Indented);
+                    fileSave.WriteLine(numberListDictJson);
             }
         }
         #endregion Methods

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Printing;
-using System.Diagnostics;
 using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +7,6 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-using Newtonsoft.Json;
 using Sudoku.GameLogic;
 using Sudoku.Models;
 using Sudoku.Helpers;
@@ -16,7 +14,6 @@ using Sudoku.Properties;
 using Sudoku.Settings;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows;
 using Sudoku.Views;
 
@@ -45,13 +42,17 @@ namespace Sudoku.ViewModels
 
             // initialize lists:
             saveSlotsModel = new SaveSlotsModel(folderAppSettings);
-            generatorNumbers = new List<string>();
-            numbersList = new NumbersListModel();
-            markersList = new MarkersListModel();
-            numbersColorsList = new NumbersColorsListModel();
-            numbersList.InitializeList();
-            markersList.InitializeList();
-            numbersColorsList.InitializeList();
+            generatorCoords = new List<string>();
+            numberList = new NumberListModel();
+            markerList = new MarkerListModel();
+            numberColorList = new NumberColorListModel();
+            numberList.InitializeList();
+            markerList.InitializeList();
+            numberColorList.InitializeList();
+
+            preloadGameEasy = PreloadGame("Easy");
+            preloadGameMedium = PreloadGame("Medium");
+            preloadGameHard = PreloadGame("Hard");
 
             // initialize commands:
             MenuNewCommand = new AsyncRelayCommand(MenuNewAction);
@@ -70,8 +71,8 @@ namespace Sudoku.ViewModels
             ButtonSelectNumberCommand = new AsyncRelayCommand<object>(o => ButtonSelectNumberAction(o));
             ButtonSelectMarkerCommand = new AsyncRelayCommand<object>(o => ButtonSelectMarkerAction(o));
 
-            ButtonSquareDownCommand = new AsyncRelayCommand<CompositeCommandParameter>(o => ButtonSquareDownAction(o));
-            ButtonSquareUpCommand = new AsyncRelayCommand<CompositeCommandParameter>(o => ButtonSquareUpAction(o));
+            ButtonSquareDownCommand = new AsyncRelayCommand<object>(o => ButtonSquareDownAction(o));
+            ButtonSquareUpCommand = new AsyncRelayCommand<object>(o => ButtonSquareUpAction(o));
 
             // load app settings from file:
             if (!Directory.Exists(folderAppSettings))
@@ -91,21 +92,35 @@ namespace Sudoku.ViewModels
             // display each existing save slot's date and time:
             menuSaveSlotsLoadText = saveSlotsModel.GetLoadTexts();
         }
+
+        private Task preloadGameEasy;
+        private Task preloadGameMedium;
+        private Task preloadGameHard;
+
         #endregion Constructors
 
         #region Fields
         private readonly AppSettings appSettings;
         private readonly SaveSlotsModel saveSlotsModel;
         private string currentButtonIndex;
-        private List<string> generatorNumbers;
+        private List<string> generatorCoords;
         readonly string folderAppSettings;
         private bool doBlockInput;
+        private NumberListModel numberListPreloadedEasy;
+        private NumberListModel numberListPreloadedMedium;
+        private NumberListModel numberListPreloadedHard;
+        private NumberColorListModel numberColorListPreloadedEasy;
+        private NumberColorListModel numberColorListPreloadedMedium;
+        private NumberColorListModel numberColorListPreloadedHard;
+        private List<string> generatorCoordsPreloadedEasy;
+        private List<string> generatorCoordsPreloadedMedium;
+        private List<string> generatorCoordsPreloadedHard;
         #endregion Fields
 
         #region Property Values
-        private NumbersListModel numbersList;
-        private MarkersListModel markersList;
-        private NumbersColorsListModel numbersColorsList;
+        private NumberListModel numberList;
+        private MarkerListModel markerList;
+        private NumberColorListModel numberColorList;
 
         private List<string> menuSaveSlotsLoadText;
         private List<string> menuSaveSlotsSaveText;
@@ -162,20 +177,20 @@ namespace Sudoku.ViewModels
             get => menuSingleSolutionCheck;
             set { menuSingleSolutionCheck = value; OnPropertyChanged(); }
         }
-        public NumbersListModel NumbersList
+        public NumberListModel NumberList
         {
-            get => numbersList;
-            set { numbersList = value; OnPropertyChanged(); }
+            get => numberList;
+            set { numberList = value; OnPropertyChanged(); }
         }
-        public MarkersListModel MarkersList
+        public MarkerListModel MarkerList
         {
-            get => markersList;
-            set {  markersList = value; OnPropertyChanged(); }
+            get => markerList;
+            set {  markerList = value; OnPropertyChanged(); }
         }
-        public NumbersColorsListModel NumbersColorsList
+        public NumberColorListModel NumberColorList
         {
-            get => numbersColorsList;
-            set { numbersColorsList = value; OnPropertyChanged(); }
+            get => numberColorList;
+            set { numberColorList = value; OnPropertyChanged(); }
         }
         public string SelectNumberVisibility
         {
@@ -233,16 +248,16 @@ namespace Sudoku.ViewModels
                 {
                     HideOverlays();
                     HideValidation();
-                    numbersList = new NumbersListModel();
-                    markersList = new MarkersListModel();
-                    numbersColorsList = new NumbersColorsListModel();
-                    generatorNumbers = new List<string>();
-                    numbersList.InitializeList();
-                    markersList.InitializeList();
-                    numbersColorsList.InitializeList();
-                    NumbersList = numbersList;
-                    MarkersList = markersList;
-                    NumbersColorsList = numbersColorsList;
+                    numberList = new NumberListModel();
+                    markerList = new MarkerListModel();
+                    numberColorList = new NumberColorListModel();
+                    generatorCoords = new List<string>();
+                    numberList.InitializeList();
+                    markerList.InitializeList();
+                    numberColorList.InitializeList();
+                    NumberList = numberList;
+                    MarkerList = markerList;
+                    NumberColorList = numberColorList;
                 });
             }
         }
@@ -252,7 +267,7 @@ namespace Sudoku.ViewModels
             {
                 await Task.Run(() =>
                 {
-                    if (!SolverGameLogic.IsFull(numbersList))
+                    if (!SolverGameLogic.IsFull(numberList))
                     {
                         bool isValid = true;
                         for (int col = 0; col < 9; col++)
@@ -261,8 +276,8 @@ namespace Sudoku.ViewModels
                             {
                                 for (int row = 0; row < 9; row++)
                                 {
-                                    string number = numbersList[col][row];
-                                    if (!ValidatorGameLogic.IsValid(numbersList, col, row, number))
+                                    string number = numberList[col][row];
+                                    if (!ValidatorGameLogic.IsValid(numberList, col, row, number))
                                     {
                                         isValid = false;
                                         break;
@@ -273,22 +288,22 @@ namespace Sudoku.ViewModels
                         if (isValid)
                         {
                             HideOverlays();
-                            SolverGameLogic solverGameLogic = new SolverGameLogic(numbersList);
+                            SolverGameLogic solverGameLogic = new SolverGameLogic(numberList);
                             solverGameLogic.FillSudoku();
-                            markersList = new MarkersListModel();
-                            numbersColorsList = new NumbersColorsListModel();
-                            markersList.InitializeList();
-                            numbersColorsList.InitializeList();
-                            foreach (string coords in generatorNumbers)
+                            markerList = new MarkerListModel();
+                            numberColorList = new NumberColorListModel();
+                            markerList.InitializeList();
+                            numberColorList.InitializeList();
+                            foreach (string coords in generatorCoords)
                             {
                                 int col = int.Parse(coords[0].ToString());
                                 int row = int.Parse(coords[1].ToString());
 
-                                numbersColorsList[col][row] = "Black";
+                                numberColorList[col][row] = "Black";
                             }
-                            MarkersList = markersList;
-                            NumbersColorsList = numbersColorsList;
-                            NumbersList = new NumbersListModel(solverGameLogic.NumbersListSolved);
+                            MarkerList = markerList;
+                            NumberColorList = numberColorList;
+                            NumberList = new NumberListModel(solverGameLogic.NumberListSolved);
                             ChangeButtonValidateVisibility();
                         }
                     }
@@ -301,8 +316,8 @@ namespace Sudoku.ViewModels
             {
                 await Task.Run(() =>
                 {
-                    markersList = new MarkersListModel();
-                    markersList.InitializeList();
+                    markerList = new MarkerListModel();
+                    markerList.InitializeList();
 
                     HideOverlays();
                     for (int col = 0; col < 9; col++)
@@ -313,71 +328,71 @@ namespace Sudoku.ViewModels
                             // 01|11|21|31
                             // 02|12|22|32
 
-                            if (markersList[col][row][0][0] == "" && numbersList[col][row] == "")
+                            if (markerList[col][row][0][0] == "" && numberList[col][row] == "")
                             {
-                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "1"))
+                                if (ValidatorGameLogic.IsValid(numberList, col, row, "1"))
                                 {
-                                    markersList[col][row][0][0] = "1";
+                                    markerList[col][row][0][0] = "1";
                                 }
                             }
-                            if (markersList[col][row][1][0] == "" && numbersList[col][row] == "")
+                            if (markerList[col][row][1][0] == "" && numberList[col][row] == "")
                             {
-                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "2"))
+                                if (ValidatorGameLogic.IsValid(numberList, col, row, "2"))
                                 {
-                                    markersList[col][row][1][0] = "2";
+                                    markerList[col][row][1][0] = "2";
                                 }
                             }
-                            if (markersList[col][row][2][0] == "" && numbersList[col][row] == "")
+                            if (markerList[col][row][2][0] == "" && numberList[col][row] == "")
                             {
-                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "3"))
+                                if (ValidatorGameLogic.IsValid(numberList, col, row, "3"))
                                 {
-                                    markersList[col][row][2][0] = "3";
+                                    markerList[col][row][2][0] = "3";
                                 }
                             }
-                            if (markersList[col][row][3][0] == "" && numbersList[col][row] == "")
+                            if (markerList[col][row][3][0] == "" && numberList[col][row] == "")
                             {
-                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "4"))
+                                if (ValidatorGameLogic.IsValid(numberList, col, row, "4"))
                                 {
-                                    markersList[col][row][3][0] = "4";
+                                    markerList[col][row][3][0] = "4";
                                 }
                             }
-                            if (markersList[col][row][0][1] == "" && numbersList[col][row] == "")
+                            if (markerList[col][row][0][1] == "" && numberList[col][row] == "")
                             {
-                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "5"))
+                                if (ValidatorGameLogic.IsValid(numberList, col, row, "5"))
                                 {
-                                    markersList[col][row][0][1] = "5";
+                                    markerList[col][row][0][1] = "5";
                                 }
                             }
-                            if (markersList[col][row][3][1] == "" && numbersList[col][row] == "")
+                            if (markerList[col][row][3][1] == "" && numberList[col][row] == "")
                             {
-                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "6"))
+                                if (ValidatorGameLogic.IsValid(numberList, col, row, "6"))
                                 {
-                                    markersList[col][row][3][1] = "6";
+                                    markerList[col][row][3][1] = "6";
                                 }
                             }
-                            if (markersList[col][row][0][2] == "" && numbersList[col][row] == "")
+                            if (markerList[col][row][0][2] == "" && numberList[col][row] == "")
                             {
-                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "7"))
+                                if (ValidatorGameLogic.IsValid(numberList, col, row, "7"))
                                 {
-                                    markersList[col][row][0][2] = "7";
+                                    markerList[col][row][0][2] = "7";
                                 }
                             }
-                            if (markersList[col][row][1][2] == "" && numbersList[col][row] == "")
+                            if (markerList[col][row][1][2] == "" && numberList[col][row] == "")
                             {
-                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "8"))
+                                if (ValidatorGameLogic.IsValid(numberList, col, row, "8"))
                                 {
-                                    markersList[col][row][1][2] = "8";
+                                    markerList[col][row][1][2] = "8";
                                 }
                             }
-                            if (markersList[col][row][2][2] == "" && numbersList[col][row] == "")
+                            if (markerList[col][row][2][2] == "" && numberList[col][row] == "")
                             {
-                                if (ValidatorGameLogic.IsValid(numbersList, col, row, "9"))
+                                if (ValidatorGameLogic.IsValid(numberList, col, row, "9"))
                                 {
-                                    markersList[col][row][2][2] = "9";
+                                    markerList[col][row][2][2] = "9";
                                 }
                             }
                         }
-                        MarkersList = markersList;
+                        MarkerList = markerList;
                     }
                 });
             }
@@ -406,11 +421,11 @@ namespace Sudoku.ViewModels
             {
                 await Task.Run(() =>
                 {
-                    if (numbersList != null && markersList != null && numbersColorsList != null && generatorNumbers != null)
+                    if (numberList != null && markerList != null && numberColorList != null && generatorCoords != null)
                     {
                         DateTime now = DateTime.Now;
                         string slotNumber = (string)o;
-                        saveSlotsModel.SaveAll(numbersList, markersList, numbersColorsList, generatorNumbers, now, slotNumber);
+                        saveSlotsModel.SaveAll(numberList, markerList, numberColorList, generatorCoords, now, slotNumber);
                         List<string> tempLoadList = menuSaveSlotsLoadText;
                         if (slotNumber == "1") tempLoadList[0] = Resources.MenuGameSaveSlotsLoadFromSlot1 + " (" + now + ")";
                         else if (slotNumber == "2") tempLoadList[1] = Resources.MenuGameSaveSlotsLoadFromSlot2 + " (" + now + ")";
@@ -434,11 +449,11 @@ namespace Sudoku.ViewModels
                     {
                         HideOverlays();
                         SaveSlotStruct saveSlot = saveSlotsModel.LoadAll(slotNumber);
-                        NumbersList = saveSlot.NumbersList;
-                        MarkersList = saveSlot.MarkersList;
-                        NumbersColorsList = saveSlot.NumbersColorsList;
-                        generatorNumbers = saveSlot.GeneratorNumbers;
-                        if (SolverGameLogic.IsFull(numbersList))
+                        NumberList = saveSlot.NumberList;
+                        MarkerList = saveSlot.MarkerList;
+                        NumberColorList = saveSlot.NumberColorsList;
+                        generatorCoords = saveSlot.GeneratorNumberList;
+                        if (SolverGameLogic.IsFull(numberList))
                         {
                             ShowValidation();
                         }
@@ -525,45 +540,6 @@ namespace Sudoku.ViewModels
                     //apply the original transform.
                     sudokuGrid.LayoutTransform = originalScale;
                 }
-
-                //UserControl sudokuGrid = (UserControl)o;
-                //PrintDialog printDialog = new PrintDialog();
-                //if (printDialog.ShowDialog().GetValueOrDefault())
-                //{
-                //    System.Threading.Thread.Sleep(100);
-                //store original scale
-                //Transform originalScale = sudokuGrid.LayoutTransform;
-                ////get selected printer capabilities
-                //PrintCapabilities capabilities = printDialog.PrintQueue.GetPrintCapabilities(printDialog.PrintTicket);
-
-                ////get scale of the print wrt to screen of WPF visual
-                //double scale = capabilities.PageImageableArea.ExtentWidth / sudokuGrid.ActualWidth;
-
-                //double factor = 0.5;
-
-                ////Transform the Visual to scale
-                //sudokuGrid.LayoutTransform = new ScaleTransform(Math.Round(scale * factor, 1), Math.Round(scale * factor, 1));
-
-                ////get the size of the printer page
-                //Size sz = new Size(capabilities.PageImageableArea.ExtentWidth, capabilities.PageImageableArea.ExtentHeight);
-
-                //update the layout of the visual to the printer page size.
-                //sudokuGrid.Measure(sz);
-
-                //sudokuGrid.Arrange(new Rect(
-                //    new Point(
-                //    capabilities.PageImageableArea.OriginWidth,
-                //    capabilities.PageImageableArea.OriginHeight),
-                //    sz));
-
-                //now print the visual to printer to fit on the one page.
-                //NumbersList = numbersList;
-                //printDialog.PrintVisual(sudokuGrid, "My Print");
-
-                //Console.WriteLine(capabilities.PageImageableArea.ExtentWidth.ToString());
-
-                //apply the original transform.
-                //sudokuGrid.LayoutTransform = originalScale;
             }
         }
         private async Task ButtonDifficultyAction()
@@ -600,41 +576,32 @@ namespace Sudoku.ViewModels
         {
             if (! doBlockInput)
             {
-                await Task.Run(() =>
-                {
-                    HideOverlays();
-                    NewGame("Easy");
-                });
+                HideOverlays();
+                await NewGame("Easy");
             }
         }
         private async Task ButtonDifficultyMediumAction()
         {
             if (! doBlockInput)
             {
-                await Task.Run(() =>
-                {
-                    HideOverlays();
-                    NewGame("Medium");
-                });
+                HideOverlays();
+                await NewGame("Medium");
             }
         }
         private async Task ButtonDifficultyHardAction()
         {
             if (! doBlockInput)
             {
-                await Task.Run(() =>
-                {
-                    HideOverlays();
-                    NewGame("Hard");
-                });
+                HideOverlays();
+                await NewGame("Hard");
             }
         }
-        private async Task ButtonSquareDownAction(CompositeCommandParameter o)
+        private async Task ButtonSquareDownAction(object o)
         {
-            var e = (MouseButtonEventArgs)o.EventArgs;
+            var e = (MouseButtonEventArgs)((CompositeCommandParameter)o).EventArgs;
             if (! doBlockInput)
             {
-                var param = (string)o.Parameter;
+                var param = (string)((CompositeCommandParameter)o).Parameter;
 
                 await Task.Run(() =>
                 {
@@ -653,7 +620,7 @@ namespace Sudoku.ViewModels
                             SelectMarkerVisibility = "Hidden";
                             SelectNumberVisibility = "Hidden";
                         }
-                        else if (!generatorNumbers.Contains(param))
+                        else if (!generatorCoords.Contains(param))
                         {
                             SelectNumberVisibility = "Visible";
                         }
@@ -670,13 +637,13 @@ namespace Sudoku.ViewModels
                             SelectMarkerVisibility = "Hidden";
                             SelectNumberVisibility = "Hidden";
                         }
-                        else if (!generatorNumbers.Contains(param))
+                        else if (!generatorCoords.Contains(param))
                         {
                             SelectMarkerVisibility = "Visible";
                         }
                     }
 
-                    if (!SolverGameLogic.IsFull(numbersList))
+                    if (!SolverGameLogic.IsFull(numberList))
                     {
                         HideValidation();
                     }
@@ -689,9 +656,9 @@ namespace Sudoku.ViewModels
 
             e.Handled = true;
         }
-        private async Task ButtonSquareUpAction(CompositeCommandParameter o)
+        private async Task ButtonSquareUpAction(object o)
         {
-            var e = (MouseButtonEventArgs)o.EventArgs;
+            var e = (MouseButtonEventArgs)((CompositeCommandParameter)o).EventArgs;
             if (! doBlockInput)
             {
                 await Task.Run(() =>
@@ -732,25 +699,25 @@ namespace Sudoku.ViewModels
         #region Methods
         private void Inititalizes()
         {
-            if (numbersList == null)
+            if (numberList == null)
             {
-                numbersList = new NumbersListModel();
-                numbersList.InitializeList();
+                numberList = new NumberListModel();
+                numberList.InitializeList();
             }
-            if (markersList == null)
+            if (markerList == null)
             {
-                markersList = new MarkersListModel();
-                markersList.InitializeList();
+                markerList = new MarkerListModel();
+                markerList.InitializeList();
             }
-            if (numbersColorsList == null)
+            if (numberColorList == null)
             {
-                numbersColorsList = new NumbersColorsListModel();
-                numbersColorsList.InitializeList();
+                numberColorList = new NumberColorListModel();
+                numberColorList.InitializeList();
             }
         }
         private void ChangeButtonValidateVisibility()
         {
-            if (SolverGameLogic.IsFull(numbersList))
+            if (SolverGameLogic.IsFull(numberList))
             {
                 ButtonDifficultyWidth = "250";
                 ButtonValidateVisibility = "Visible";
@@ -765,32 +732,32 @@ namespace Sudoku.ViewModels
         {
             Inititalizes();
 
-            if (generatorNumbers == null)
+            if (generatorCoords == null)
             {
-                generatorNumbers = new List<string>();
+                generatorCoords = new List<string>();
             }
 
             string coords = button.Substring(0, 2);
-            if (! generatorNumbers.Contains(coords))
+            if (! generatorCoords.Contains(coords))
             {
                 int col = int.Parse(button[0].ToString());
                 int row = int.Parse(button[1].ToString());
                 string number = button[2].ToString();
-                NumbersListModel temp_numbersList;
-                temp_numbersList = numbersList;
+                NumberListModel tempNumberList;
+                tempNumberList = numberList;
 
                 if (number == "X")
                 {
-                    temp_numbersList[col][row] = number;
-                    temp_numbersList[col][row] = "";
-                    NumbersList = temp_numbersList;
+                    tempNumberList[col][row] = number;
+                    tempNumberList[col][row] = "";
+                    NumberList = tempNumberList;
                     ChangeButtonValidateVisibility();
                     return;
                 }
                 else
                 {
-                    temp_numbersList[col][row] = number;
-                    NumbersList = temp_numbersList;
+                    tempNumberList[col][row] = number;
+                    NumberList = tempNumberList;
                     ChangeButtonValidateVisibility();
                     for (int j = 0; j < 3; j++)
                     {
@@ -802,10 +769,10 @@ namespace Sudoku.ViewModels
                             }
                             else
                             {
-                                MarkersListModel temp_markersList;
-                                temp_markersList = markersList;
-                                temp_markersList[col][row][i][j] = "";
-                                MarkersList = temp_markersList;
+                                MarkerListModel tempMarkerList;
+                                tempMarkerList = markerList;
+                                tempMarkerList[col][row][i][j] = "";
+                                MarkerList = tempMarkerList;
                             }
                         }
                     }
@@ -821,12 +788,12 @@ namespace Sudoku.ViewModels
                                 }
                                 else
                                 {
-                                    MarkersListModel temp_markersList;
-                                    temp_markersList = markersList;
-                                    if (temp_markersList[col][k][i][j] == number)
+                                    MarkerListModel tempMarkerList;
+                                    tempMarkerList = markerList;
+                                    if (tempMarkerList[col][k][i][j] == number)
                                     {
-                                        temp_markersList[col][k][i][j] = "";
-                                        MarkersList = temp_markersList;
+                                        tempMarkerList[col][k][i][j] = "";
+                                        MarkerList = tempMarkerList;
                                     }
                                 }
                             }
@@ -844,12 +811,12 @@ namespace Sudoku.ViewModels
                                 }
                                 else
                                 {
-                                    MarkersListModel temp_markersList;
-                                    temp_markersList = markersList;
-                                    if (temp_markersList[k][row][i][j] == number)
+                                    MarkerListModel tempMarkerList;
+                                    tempMarkerList = markerList;
+                                    if (tempMarkerList[k][row][i][j] == number)
                                     {
-                                        temp_markersList[k][row][i][j] = "";
-                                        MarkersList = temp_markersList;
+                                        tempMarkerList[k][row][i][j] = "";
+                                        MarkerList = tempMarkerList;
                                     }
                                 }
                             }
@@ -873,12 +840,12 @@ namespace Sudoku.ViewModels
                                     }
                                     else
                                     {
-                                        MarkersListModel temp_markersList;
-                                        temp_markersList = markersList;
-                                        if (temp_markersList[j][i][k][l] == number)
+                                        MarkerListModel tempMarkerList;
+                                        tempMarkerList = markerList;
+                                        if (tempMarkerList[j][i][k][l] == number)
                                         {
-                                            temp_markersList[j][i][k][l] = "";
-                                            MarkersList = temp_markersList;
+                                            tempMarkerList[j][i][k][l] = "";
+                                            MarkerList = tempMarkerList;
                                         }
                                     }
                                 }
@@ -896,7 +863,7 @@ namespace Sudoku.ViewModels
             int row = int.Parse(button[1].ToString());
             string number = button[2].ToString();
 
-            if (numbersList[col][row] != "")
+            if (numberList[col][row] != "")
             {
                 return;
             }
@@ -913,10 +880,10 @@ namespace Sudoku.ViewModels
                         }
                         else
                         {
-                            MarkersListModel temp_numbersList;
-                            temp_numbersList = markersList;
-                            temp_numbersList[col][row][i][j] = "";
-                            MarkersList = temp_numbersList;
+                            MarkerListModel tempNumberList;
+                            tempNumberList = markerList;
+                            tempNumberList[col][row][i][j] = "";
+                            MarkerList = tempNumberList;
                         }
                     }
                 }
@@ -924,8 +891,8 @@ namespace Sudoku.ViewModels
             }
             else
             {
-                MarkersListModel temp_numbersList;
-                temp_numbersList = markersList;
+                MarkerListModel tempNumberList;
+                tempNumberList = markerList;
 
                 // 00|10|20|30
                 // 01|11|21|31
@@ -933,139 +900,189 @@ namespace Sudoku.ViewModels
 
                 if (number == "1")
                 {
-                    if (markersList[col][row][0][0] != "") { temp_numbersList[col][row][0][0] = ""; }
-                    else { temp_numbersList[col][row][0][0] = "1"; }
+                    if (markerList[col][row][0][0] != "") { tempNumberList[col][row][0][0] = ""; }
+                    else { tempNumberList[col][row][0][0] = "1"; }
                 }
                 else if (number == "2")
                 {
-                    if (markersList[col][row][1][0] != "") { temp_numbersList[col][row][1][0] = ""; }
-                    else { temp_numbersList[col][row][1][0] = "2"; }
+                    if (markerList[col][row][1][0] != "") { tempNumberList[col][row][1][0] = ""; }
+                    else { tempNumberList[col][row][1][0] = "2"; }
                 }
                 else if (number == "3")
                 {
-                    if (markersList[col][row][2][0] != "") { temp_numbersList[col][row][2][0] = ""; }
-                    else { temp_numbersList[col][row][2][0] = "3"; }
+                    if (markerList[col][row][2][0] != "") { tempNumberList[col][row][2][0] = ""; }
+                    else { tempNumberList[col][row][2][0] = "3"; }
                 }
                 else if (number == "4")
                 {
-                    if (markersList[col][row][3][0] != "") { temp_numbersList[col][row][3][0] = ""; }
-                    else { temp_numbersList[col][row][3][0] = "4"; }
+                    if (markerList[col][row][3][0] != "") { tempNumberList[col][row][3][0] = ""; }
+                    else { tempNumberList[col][row][3][0] = "4"; }
                 }
                 else if (number == "5")
                 {
-                    if (markersList[col][row][0][1] != "") { temp_numbersList[col][row][0][1] = ""; }
-                    else { temp_numbersList[col][row][0][1] = "5"; }
+                    if (markerList[col][row][0][1] != "") { tempNumberList[col][row][0][1] = ""; }
+                    else { tempNumberList[col][row][0][1] = "5"; }
                 }
                 else if (number == "6")
                 {
-                    if (markersList[col][row][3][1] != "") { temp_numbersList[col][row][3][1] = ""; }
-                    else { temp_numbersList[col][row][3][1] = "6"; }
+                    if (markerList[col][row][3][1] != "") { tempNumberList[col][row][3][1] = ""; }
+                    else { tempNumberList[col][row][3][1] = "6"; }
                 }
                 else if (number == "7")
                 {
-                    if (markersList[col][row][0][2] != "") { temp_numbersList[col][row][0][2] = ""; }
-                    else { temp_numbersList[col][row][0][2] = "7"; }
+                    if (markerList[col][row][0][2] != "") { tempNumberList[col][row][0][2] = ""; }
+                    else { tempNumberList[col][row][0][2] = "7"; }
                 }
                 else if (number == "8")
                 {
-                    if (markersList[col][row][1][2] != "") { temp_numbersList[col][row][1][2] = ""; }
-                    else { temp_numbersList[col][row][1][2] = "8"; }
+                    if (markerList[col][row][1][2] != "") { tempNumberList[col][row][1][2] = ""; }
+                    else { tempNumberList[col][row][1][2] = "8"; }
                 }
                 else if (number == "9")
                 {
-                    if (markersList[col][row][2][2] != "") { temp_numbersList[col][row][2][2] = ""; }
-                    else { temp_numbersList[col][row][2][2] = "9"; }
+                    if (markerList[col][row][2][2] != "") { tempNumberList[col][row][2][2] = ""; }
+                    else { tempNumberList[col][row][2][2] = "9"; }
                 }
-                MarkersList = temp_numbersList;
+                MarkerList = tempNumberList;
             }
         }
-        private void NewGame(string difficulty)
+        private async Task NewGame(string difficulty)
         {
             doBlockInput = true;
 
-            if (difficulty == "Hard" && menuSingleSolutionCheck == "True")
+            //if (difficulty == "Hard" && menuSingleSolutionCheck == "True")
+            //{
+            //    LabelSingleSolutionWaitVisibility = "Visible";
+            //}
+
+            if (difficulty == "Easy")
             {
-                LabelSingleSolutionWaitVisibility = "Visible";
+                await preloadGameEasy;
+                NumberList = numberListPreloadedEasy;
+                generatorCoords = generatorCoordsPreloadedEasy;
+                NumberColorList = numberColorListPreloadedEasy;
+            }
+            else if (difficulty == "Medium")
+            {
+                await preloadGameMedium;
+                NumberList = numberListPreloadedMedium;
+                generatorCoords = generatorCoordsPreloadedMedium;
+                NumberColorList = numberColorListPreloadedMedium;
+            }
+            else if (difficulty == "Hard")
+            {
+                await preloadGameHard;
+                NumberList = numberListPreloadedHard;
+                generatorCoords = generatorCoordsPreloadedHard;
+                NumberColorList = numberColorListPreloadedHard;
             }
 
-            GeneratorGameLogic generatorGameLogic = null;
-
-            bool doRun = true;
-
-            while (doRun)
-            {
-                numbersList = new NumbersListModel();
-                numbersList.InitializeList();
-
-                SolverGameLogic solverGameLogic = new SolverGameLogic(numbersList);
-                solverGameLogic.FillSudoku();
-                NumbersListModel numbersListSolved = solverGameLogic.NumbersListSolved;
-
-                generatorGameLogic = new GeneratorGameLogic(difficulty, numbersListSolved);
-                generatorGameLogic.GenerateSudoku(menuSingleSolutionCheck);
-
-                if (generatorGameLogic.Counter == generatorGameLogic.removeNumbers)
-                {
-                    doRun = false;
-                }
-            }
-
-            generatorNumbers = new List<string>();
-
-            for (int col = 0; col < 9; col++)
-            {
-                for (int row = 0; row < 9; row++)
-                {
-                    if (generatorGameLogic.NumbersList[col][row] != "")
-                    {
-                        string coords = col.ToString();
-                        coords += row.ToString();
-                        generatorNumbers.Add(coords);
-                    }
-                }
-            }
-
-            numbersColorsList = new NumbersColorsListModel();
-            numbersColorsList.InitializeList();
-            foreach (string coords in generatorNumbers)
-            {
-                int col = int.Parse(coords[0].ToString());
-                int row = int.Parse(coords[1].ToString());
-
-                numbersColorsList[col][row] = "Black";
-            }
-            NumbersColorsList = numbersColorsList;
-
-            LabelValidateText = "";
-
-            NumbersList = generatorGameLogic.NumbersList;
-
-            markersList = new MarkersListModel();
-            markersList.InitializeList();
-            MarkersList = markersList;
-            HideValidation();
-
-            LabelSingleSolutionWaitVisibility = "Hidden";
+            preloadGameEasy = PreloadGame("Easy");
+            preloadGameMedium = PreloadGame("Medium");
+            preloadGameHard = PreloadGame("Hard");
 
             doBlockInput = false;
+        }
+        private async Task PreloadGame(string difficulty)
+        {
+            await Task.Run(() =>
+            {
+                GeneratorGameLogic generatorGameLogic = null;
+                NumberListModel tempNumberList = new NumberListModel();
+                NumberColorListModel tempNumberColorList = new NumberColorListModel();
+                bool doRun = true;
+
+                while (doRun)
+                {
+                    tempNumberList.InitializeList();
+
+                    SolverGameLogic solverGameLogic = new SolverGameLogic(tempNumberList);
+                    solverGameLogic.FillSudoku();
+                    NumberListModel numberListSolved = solverGameLogic.NumberListSolved;
+
+                    generatorGameLogic = new GeneratorGameLogic(difficulty, numberListSolved);
+                    generatorGameLogic.GenerateSudoku(menuSingleSolutionCheck);
+
+                    if (generatorGameLogic.Counter == generatorGameLogic.removeNumbers)
+                    {
+                        doRun = false;
+                    }
+                }
+
+                List<string>  tempGeneratorCoords = new List<string>();
+
+                for (int col = 0; col < 9; col++)
+                {
+                    for (int row = 0; row < 9; row++)
+                    {
+                        if (generatorGameLogic.NumberList[col][row] != "")
+                        {
+                            string coords = col.ToString();
+                            coords += row.ToString();
+                            tempGeneratorCoords.Add(coords);
+                        }
+                    }
+                }
+
+                tempNumberColorList.InitializeList();
+                foreach (string coords in tempGeneratorCoords)
+                {
+                    int col = int.Parse(coords[0].ToString());
+                    int row = int.Parse(coords[1].ToString());
+
+                    tempNumberColorList[col][row] = "Black";
+                }
+
+                LabelValidateText = "";
+
+                tempNumberList = generatorGameLogic.NumberList;
+
+                markerList = new MarkerListModel();
+                markerList.InitializeList();
+                MarkerList = markerList;
+                HideValidation();
+
+                LabelSingleSolutionWaitVisibility = "Hidden";
+
+                if (difficulty == "Easy")
+                {
+                    numberListPreloadedEasy = tempNumberList;
+                    numberColorListPreloadedEasy = tempNumberColorList;
+                    generatorCoordsPreloadedEasy = tempGeneratorCoords;
+                }
+                else if (difficulty == "Medium")
+                {
+                    numberListPreloadedMedium = tempNumberList;
+                    numberColorListPreloadedMedium = tempNumberColorList;
+                    generatorCoordsPreloadedMedium = tempGeneratorCoords;
+                }
+                else if (difficulty == "Hard")
+                {
+                    numberListPreloadedHard = tempNumberList;
+                    numberColorListPreloadedHard = tempNumberColorList;
+                    generatorCoordsPreloadedHard = tempGeneratorCoords;
+                }
+
+                doBlockInput = false;
+            });
         }
         private void ValidateAll()
         {
             ButtonValidateVisibility = "Collapsed";
             LabelValidateVisibility = "Visible";
 
-            if (numbersList == null)
+            if (numberList == null)
             {
-                numbersList = new NumbersListModel();
-                numbersList.InitializeList();
+                numberList = new NumberListModel();
+                numberList.InitializeList();
             }
 
             for (int col = 0; col < 9; col++)
             {
                 for (int row = 0; row < 9; row++)
                 {
-                    string number = numbersList[col][row];
-                    if (! ValidatorGameLogic.IsValid(numbersList, col, row, number))
+                    string number = numberList[col][row];
+                    if (! ValidatorGameLogic.IsValid(numberList, col, row, number))
                     {
                         LabelValidateText = Resources.LabelValidateConflicts;
                         return;

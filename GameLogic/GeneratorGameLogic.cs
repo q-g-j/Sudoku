@@ -10,12 +10,12 @@ namespace Sudoku.GameLogic
     public class GeneratorGameLogic
     {
         #region Constructors
-        public GeneratorGameLogic(string _difficulty, NumbersListModel _numbersList)
+        public GeneratorGameLogic(string _difficulty, NumberListModel _numberList)
         {
             random = new Random();
             checkedList = new List<string>();
             coordsList = new List<Coords>();
-            NumbersList = _numbersList;
+            NumberList = _numberList;
 
             for (int col = 0; col < 9; col++)
             {
@@ -35,7 +35,7 @@ namespace Sudoku.GameLogic
             }
             else if (_difficulty == "Hard")
             {
-                removeNumbers = 55; // 57
+                removeNumbers = 54; // 57
             }
         }
         #endregion Constructors
@@ -45,8 +45,8 @@ namespace Sudoku.GameLogic
         private readonly List<string> checkedList;
         private readonly Random random;
 
-        public NumbersListModel NumbersList;
-        public NumbersListModel SingleSolutionNumbersList;
+        public NumberListModel NumberList;
+        public NumberListModel SingleSolutionNumberList;
         public int removeNumbers;
         public int Counter = 0;
         public int SingleSolutionCounter = 0;
@@ -59,26 +59,26 @@ namespace Sudoku.GameLogic
             List<Coords> shuffledCoordsList = coordsList.OrderBy(item => random.Next()).ToList();
             foreach (var coords in shuffledCoordsList)
             {
-                if (NumbersList[coords.X][coords.Y] != "")
+                if (NumberList[coords.X][coords.Y] != "")
                 {
                     if (!HasCurrentColTooFewNumbers(coords.X) && !HasCurrentRowTooFewNumbers(coords.Y) && !HasCurrentSquareTooFewNumbers(coords.X, coords.Y) &&
                         !HasAnotherColTooManyNumbers(coords.X) && !HasAnotherRowTooManyNumbers(coords.Y) && !HasAnotherSquareTooManyNumbers(coords.X, coords.Y))
                     {
-                        SingleSolutionNumbersList = new NumbersListModel(NumbersList);
-                        SingleSolutionNumbersList[coords.X][coords.Y] = "";
+                        SingleSolutionNumberList = new NumberListModel(NumberList);
+                        SingleSolutionNumberList[coords.X][coords.Y] = "";
                         SingleSolutionCounter = 0;
 
-                        if (doSingleSolution == "True" && Counter > 25)
+                        if (doSingleSolution == "True" && Counter > 30)
                         {
                             HasSingleSolution();
                         }
                         if (SingleSolutionCounter < 2)
                         {
                             Counter++;
-                            NumbersList[coords.X][coords.Y] = "";
+                            NumberList[coords.X][coords.Y] = "";
                             checkedList.Clear();
                         }
-                        else if (Counter > 25)
+                        else if (Counter > 30)
                         {                                
                             Tries++;
                         }
@@ -87,7 +87,7 @@ namespace Sudoku.GameLogic
                     {
                         checkedList.Add(coords.X.ToString() + coords.Y.ToString());
                     }
-                    if (Counter < removeNumbers && Tries < 20)
+                    if (Counter < removeNumbers && Tries < 15)
                     {
                         GenerateSudoku(doSingleSolution);
                     }
@@ -101,22 +101,22 @@ namespace Sudoku.GameLogic
             {
                 for (int col = 0; col < 9; col++)
                 {
-                    if (SingleSolutionNumbersList[col][row] == "")
+                    if (SingleSolutionNumberList[col][row] == "")
                     {
                         for (int i = 1; i < 10; i++)
                         {
                             string number = i.ToString();
-                            if (ValidatorGameLogic.IsValid(SingleSolutionNumbersList, col, row, number))
+                            if (ValidatorGameLogic.IsValid(SingleSolutionNumberList, col, row, number))
                             {
-                                SingleSolutionNumbersList[col][row] = number;
-                                if (SolverGameLogic.IsFull(SingleSolutionNumbersList))
+                                SingleSolutionNumberList[col][row] = number;
+                                if (SolverGameLogic.IsFull(SingleSolutionNumberList))
                                 {
                                     SingleSolutionCounter++;
                                 }
                                 if (SingleSolutionCounter < 2)
                                 {
                                     HasSingleSolution();
-                                    SingleSolutionNumbersList[col][row] = "";
+                                    SingleSolutionNumberList[col][row] = "";
                                 }
 
                             }
@@ -132,7 +132,7 @@ namespace Sudoku.GameLogic
             int countNumbers = 0;
             for (int row = 0; row < 9; row++)
             {
-                if (NumbersList[currentCol][row] != "")
+                if (NumberList[currentCol][row] != "")
                 {
                     countNumbers++;
                 }
@@ -151,7 +151,7 @@ namespace Sudoku.GameLogic
             int countNumbers = 0;
             for (int col = 0; col < 9; col++)
             {
-                if (NumbersList[col][currentRow] != "")
+                if (NumberList[col][currentRow] != "")
                 {
                     countNumbers++;
                 }
@@ -175,7 +175,7 @@ namespace Sudoku.GameLogic
             {
                 for (int innerRow = squareRow; innerRow < squareRow + 3; innerRow++)
                 {
-                    if (NumbersList[innerCol][innerRow] != "")
+                    if (NumberList[innerCol][innerRow] != "")
                     {
                         countNumbers++;
                     }
@@ -195,7 +195,7 @@ namespace Sudoku.GameLogic
             int countCurrentColNumbers = 0;
             for (int row = 0; row < 9; row++)
             {
-                if (NumbersList[currentCol][row] != "")
+                if (NumberList[currentCol][row] != "")
                 {
                     countCurrentColNumbers++;
                 }
@@ -208,7 +208,7 @@ namespace Sudoku.GameLogic
                     int countNumbers = 0;
                     for (int row = 0; row < 9; row++)
                     {
-                        if (NumbersList[col][row] != "")
+                        if (NumberList[col][row] != "")
                         {
                             string coords = currentCol.ToString();
                             coords += row.ToString();
@@ -232,7 +232,7 @@ namespace Sudoku.GameLogic
             int countCurrentRowNumbers = 0;
             for (int col = 0; col < 9; col++)
             {
-                if (NumbersList[col][currentRow] != "")
+                if (NumberList[col][currentRow] != "")
                 {
                     countCurrentRowNumbers++;
                 }
@@ -245,7 +245,7 @@ namespace Sudoku.GameLogic
                     int countNumbers = 0;
                     for (int col = 0; col < 9; col++)
                     {
-                        if (NumbersList[col][row] != "")
+                        if (NumberList[col][row] != "")
                         {
                             string coords = col.ToString();
                             coords += row.ToString();
@@ -274,7 +274,7 @@ namespace Sudoku.GameLogic
             {
                 for (int row = currentSquareRow; row < currentSquareRow + 3; row++)
                 {
-                    if (NumbersList[col][row] != "")
+                    if (NumberList[col][row] != "")
                     {
                         countCurrentSquareNumbers++;
                     }
@@ -295,7 +295,7 @@ namespace Sudoku.GameLogic
                         {
                             for (int innerRow = squareRow; innerRow < squareRow + 3; innerRow++)
                             {
-                                if (NumbersList[innerCol][innerRow] != "")
+                                if (NumberList[innerCol][innerRow] != "")
                                 {
                                     string coords = innerCol.ToString();
                                     coords += innerRow.ToString();

@@ -2,21 +2,21 @@
 
 namespace Sudoku.Models
 {
-    public class MarkersListModel : List<List<List<List<string>>>>
+    public class MarkerListModel : List<List<List<List<string>>>>
     {
         #region Constructors
-        public MarkersListModel()
+        public MarkerListModel()
         {
         }
 
-        public MarkersListModel(int capacity) : base(capacity)
+        public MarkerListModel(int capacity) : base(capacity)
         {
         }
 
-        public MarkersListModel(IEnumerable<List<List<List<string>>>> collection) : base(collection)
+        public MarkerListModel(IEnumerable<List<List<List<string>>>> collection) : base(collection)
         {
         }
-        public MarkersListModel(MarkersListModel list)
+        public MarkerListModel(MarkerListModel list)
         {
             for (int i = 0; i < 9; i++)
             {

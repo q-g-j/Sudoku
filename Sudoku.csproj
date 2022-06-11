@@ -132,9 +132,9 @@
     <Compile Include="GameLogic\ValidatorGameLogic.cs" />
     <Compile Include="Helpers\AdvancedInvokeCommandAction.cs" />
     <Compile Include="Helpers\CompositeCommandParameter.cs" />
-    <Compile Include="Models\NumberColorsListModel.cs" />
+    <Compile Include="Models\NumberColorListModel.cs" />
     <Compile Include="Models\NumberListModel.cs" />
-    <Compile Include="Models\MarkersListModel.cs" />
+    <Compile Include="Models\MarkerListModel.cs" />
     <Compile Include="Services\MessengerService.cs" />
     <Compile Include="Views\NumbersInnerGridView.xaml.cs">
       <DependentUpon>NumbersInnerGridView.xaml</DependentUpon>

@@ -2,21 +2,21 @@
 
 namespace Sudoku.Models
 {
-    public class NumbersColorsListModel : List<List<string>>
+    public class NumberColorListModel : List<List<string>>
     {
         #region Constructors
-        public NumbersColorsListModel()
+        public NumberColorListModel()
         {
         }
 
-        public NumbersColorsListModel(int capacity) : base(capacity)
+        public NumberColorListModel(int capacity) : base(capacity)
         {
         }
 
-        public NumbersColorsListModel(IEnumerable<List<string>> collection) : base(collection)
+        public NumberColorListModel(IEnumerable<List<string>> collection) : base(collection)
         {
         }
-        public NumbersColorsListModel(NumbersColorsListModel list)
+        public NumberColorListModel(NumberColorListModel list)
         {
             for (int i = 0; i < 9; i++)
             {

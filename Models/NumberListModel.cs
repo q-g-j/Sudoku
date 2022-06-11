@@ -2,22 +2,22 @@
 
 namespace Sudoku.Models
 {
-    public class NumbersListModel : List<List<string>>
+    public class NumberListModel : List<List<string>>
     {
         #region Constructors
-        public NumbersListModel()
+        public NumberListModel()
         {
         }
 
-        public NumbersListModel(int capacity) : base(capacity)
+        public NumberListModel(int capacity) : base(capacity)
         {
         }
 
-        public NumbersListModel(IEnumerable<List<string>> collection) : base(collection)
+        public NumberListModel(IEnumerable<List<string>> collection) : base(collection)
         {
         }
 
-        public NumbersListModel(NumbersListModel list)
+        public NumberListModel(NumberListModel list)
         {
             for (int i = 0; i < 9; i++)
             {

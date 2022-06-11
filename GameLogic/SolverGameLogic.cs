@@ -8,28 +8,28 @@ namespace Sudoku.GameLogic
     public class SolverGameLogic
     {
         #region Constructors
-        public SolverGameLogic(NumbersListModel list)
+        public SolverGameLogic(NumberListModel list)
         {
-            numbersList = new NumbersListModel(list);
+            numberList = new NumberListModel(list);
             random = new Random();
         }
         #endregion Constructors
 
         #region Fields
-        private readonly NumbersListModel numbersList;
-        public NumbersListModel NumbersListSolved;
+        private readonly NumberListModel numberList;
+        public NumberListModel NumberListSolved;
         private readonly Random random;
         #endregion Fields
 
         #region Methods
-        public static bool IsFull(NumbersListModel numbersList)
+        public static bool IsFull(NumberListModel numberList)
         {
             bool isFull = true;
             for (int row = 0; row < 9; row++)
             {
                 for (int col = 0; col < 9; col++)
                 {
-                    if (numbersList[col][row] == "")
+                    if (numberList[col][row] == "")
                     {
                         isFull = false;
                     }
@@ -38,9 +38,9 @@ namespace Sudoku.GameLogic
             return isFull;
         }
 
-        private void CopySolution(NumbersListModel numbersList)
+        private void CopySolution(NumberListModel numberList)
         {
-            NumbersListSolved = new NumbersListModel(numbersList);
+            NumberListSolved = new NumberListModel(numberList);
         }
 
         public void FillSudoku()
@@ -49,23 +49,23 @@ namespace Sudoku.GameLogic
             {
                 for (int col = 0; col < 9; col++)
                 {
-                    if (numbersList[col][row] == "")
+                    if (numberList[col][row] == "")
                     {
                         int[] shuffledIntList = Enumerable.Range(1, 9).OrderBy(c => random.Next().ToString()).ToArray();
                         foreach (int item in shuffledIntList)
                         {
                             string number = item.ToString();
-                            if (ValidatorGameLogic.IsValid(numbersList, col, row, number))
+                            if (ValidatorGameLogic.IsValid(numberList, col, row, number))
                             {
-                                numbersList[col][row] = number;
-                                if (IsFull(numbersList))
+                                numberList[col][row] = number;
+                                if (IsFull(numberList))
                                 {
-                                    CopySolution(numbersList);
+                                    CopySolution(numberList);
                                 }
                                 else
                                 {
                                     FillSudoku();
-                                    numbersList[col][row] = "";
+                                    numberList[col][row] = "";
                                 }
                             }
                         }
