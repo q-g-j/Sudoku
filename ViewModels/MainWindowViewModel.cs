@@ -948,11 +948,6 @@ namespace Sudoku.ViewModels
         {
             doBlockInput = true;
 
-            //if (difficulty == "Hard" && menuSingleSolutionCheck == "True")
-            //{
-            //    LabelSingleSolutionWaitVisibility = "Visible";
-            //}
-
             LabelValidateText = "";
             HideValidation();
 
@@ -976,10 +971,15 @@ namespace Sudoku.ViewModels
             }
             else if (difficulty == "Hard")
             {
+                if (menuSingleSolutionCheck == "True")
+                {
+                    LabelSingleSolutionWaitVisibility = "Visible";
+                }
                 await preloadGameHard;
                 NumberList = numberListPreloadedHard;
                 generatorCoords = generatorCoordsPreloadedHard;
                 NumberColorList = numberColorListPreloadedHard;
+                LabelSingleSolutionWaitVisibility = "Hidden";
             }
 
             preloadGameEasy = PreloadGame("Easy");
