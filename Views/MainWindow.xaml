@@ -57,7 +57,7 @@
                     <MenuItem Header="{x:Static p:Resources.MenuGameSaveSlotsDeleteAll}" Command="{Binding MenuDeleteAllSlotsCommand}" CommandParameter="5"></MenuItem>
                 </MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="{x:Static p:Resources.MenuGameQuitProgram}" Click="MenuQuitClick"></MenuItem>
+                <MenuItem Header="{x:Static p:Resources.MenuGameQuitProgram}" Command="{Binding MenuQuitCommand}"></MenuItem>
             </MenuItem>
             <MenuItem HorizontalAlignment="Right" Header="{x:Static p:Resources.MenuHelp}">
                 <MenuItem Header="{x:Static p:Resources.MenuHelpRules}"></MenuItem>

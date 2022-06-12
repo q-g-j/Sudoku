@@ -63,6 +63,7 @@ namespace Sudoku.ViewModels
             MenuLoadFromSlotCommand = new AsyncRelayCommand<object>(o => MenuLoadFromSlotAction(o));
             MenuDeleteAllSlotsCommand = new AsyncRelayCommand(MenuDeleteAllSlotsAction);
             MenuPrintCommand = new RelayCommand<object>(o => MenuPrintAction(o));
+            MenuQuitCommand = new RelayCommand(MenuQuitAction);
             ButtonDifficultyCommand = new AsyncRelayCommand(ButtonDifficultyAction);
             ButtonValidateCommand = new AsyncRelayCommand(ButtonValidateAction);
             ButtonDifficultyEasyCommand = new AsyncRelayCommand(ButtonDifficultyEasyAction);
@@ -146,6 +147,7 @@ namespace Sudoku.ViewModels
         public IAsyncRelayCommand MenuLoadFromSlotCommand { get; }
         public IAsyncRelayCommand MenuDeleteAllSlotsCommand { get; }
         public RelayCommand<object> MenuPrintCommand { get; }
+        public RelayCommand MenuQuitCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyCommand { get; }
         public IAsyncRelayCommand ButtonValidateCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyEasyCommand { get; }
@@ -539,6 +541,10 @@ namespace Sudoku.ViewModels
                     sudokuGrid.LayoutTransform = originalScale;
                 }
             }
+        }
+        private void MenuQuitAction()
+        {
+            Application.Current.Shutdown();
         }
         private async Task ButtonDifficultyAction()
         {
