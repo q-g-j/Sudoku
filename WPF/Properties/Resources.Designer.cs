@@ -97,33 +97,6 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Validate.
-        /// </summary>
-        public static string ButtonValidate {
-            get {
-                return ResourceManager.GetString("ButtonValidate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Place a marker.
-        /// </summary>
-        public static string LabelOverlayChooseMarker {
-            get {
-                return ResourceManager.GetString("LabelOverlayChooseMarker", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Place a number.
-        /// </summary>
-        public static string LabelOverlayChooseNumber {
-            get {
-                return ResourceManager.GetString("LabelOverlayChooseNumber", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Please wait....
         /// </summary>
         public static string LabelOverlaySingleSolutionWait {
@@ -160,7 +133,7 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No conflicts found.
+        ///   Looks up a localized string similar to No conflicts found!.
         /// </summary>
         public static string LabelValidateNoConflicts {
             get {

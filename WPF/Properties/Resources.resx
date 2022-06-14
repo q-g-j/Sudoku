@@ -129,15 +129,6 @@
   <data name="ButtonNewGame" xml:space="preserve">
     <value>New Game</value>
   </data>
-  <data name="ButtonValidate" xml:space="preserve">
-    <value>Validate</value>
-  </data>
-  <data name="LabelOverlayChooseMarker" xml:space="preserve">
-    <value>Place a marker</value>
-  </data>
-  <data name="LabelOverlayChooseNumber" xml:space="preserve">
-    <value>Place a number</value>
-  </data>
   <data name="LabelOverlaySingleSolutionWait" xml:space="preserve">
     <value>Please wait...</value>
   </data>
@@ -151,7 +142,7 @@
     <value>Conflicts found!</value>
   </data>
   <data name="LabelValidateNoConflicts" xml:space="preserve">
-    <value>No conflicts found</value>
+    <value>No conflicts found!</value>
   </data>
   <data name="MenuFillAllMarkers" xml:space="preserve">
     <value>Set all markers automatically</value>

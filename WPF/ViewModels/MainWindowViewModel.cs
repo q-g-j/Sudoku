@@ -327,17 +327,7 @@ namespace Sudoku.ViewModels
                             NumberList = new NumberListModel(solverGameLogic.NumberListSolved);
                         }
                     }
-                    if (!SolverGameLogic.IsFull(numberList))
-                    {
-                        SelectNumberOrMarkerVisibility = "Visible";
-                        ValidationVisibility = "Collapsed";
-                    }
-                    else
-                    {
-                        ValidateAll();
-                        SelectNumberOrMarkerVisibility = "Collapsed";
-                        ValidationVisibility = "Visible";
-                    }
+                    CheckIsFull();
                 });
             }
         }
@@ -630,17 +620,7 @@ namespace Sudoku.ViewModels
                             CurrentCoordsBackgroundReset();
                             leftOrRightClicked = "";
                         }
-                        if (!SolverGameLogic.IsFull(numberList))
-                        {
-                            SelectNumberOrMarkerVisibility = "Visible";
-                            ValidationVisibility = "Collapsed";
-                        }
-                        else
-                        {
-                            ValidateAll();
-                            SelectNumberOrMarkerVisibility = "Collapsed";
-                            ValidationVisibility = "Visible";
-                        }
+                        CheckIsFull();
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
@@ -691,7 +671,7 @@ namespace Sudoku.ViewModels
                 {
                     var param = (string)((CompositeCommandParameter)o).Parameter;
                     Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
-                    buttonBackgroundList[coords.Col][coords.Row] = "lightblue";
+                    buttonBackgroundList[coords.Col][coords.Row] = "LightBlue";
                     ButtonBackgroundList = buttonBackgroundList;
                 });
             }
@@ -755,7 +735,7 @@ namespace Sudoku.ViewModels
         #endregion Command Actions
 
         #region Methods
-        private void Inititalizes()
+        private void InititalizeLists()
         {
             if (numberList == null)
             {
@@ -775,7 +755,7 @@ namespace Sudoku.ViewModels
         }
         private void ChangeNumber(string button)
         {
-            Inititalizes();
+            InititalizeLists();
 
             if (generatorCoords == null)
             {
@@ -796,34 +776,15 @@ namespace Sudoku.ViewModels
                     tempNumberList[col][row] = number;
                     tempNumberList[col][row] = "";
                     NumberList = tempNumberList;
-                    if (!SolverGameLogic.IsFull(numberList))
-                    {
-                        SelectNumberOrMarkerVisibility = "Visible";
-                        ValidationVisibility = "Collapsed";
-                    }
-                    else
-                    {
-                        ValidateAll();
-                        SelectNumberOrMarkerVisibility = "Collapsed";
-                        ValidationVisibility = "Visible";
-                    }
+                    SelectNumberOrMarkerVisibility = "Visible";
+                    ValidationVisibility = "Collapsed";
                     return;
                 }
                 else
                 {
                     tempNumberList[col][row] = number;
                     NumberList = tempNumberList;
-                    if (!SolverGameLogic.IsFull(numberList))
-                    {
-                        SelectNumberOrMarkerVisibility = "Visible";
-                        ValidationVisibility = "Collapsed";
-                    }
-                    else
-                    {
-                        ValidateAll();
-                        SelectNumberOrMarkerVisibility = "Collapsed";
-                        ValidationVisibility = "Visible";
-                    }
+                    CheckIsFull();
                     for (int j = 0; j < 3; j++)
                     {
                         for (int i = 0; i < 4; i++)
@@ -922,7 +883,7 @@ namespace Sudoku.ViewModels
         }
         private void ChangeMarker(string button)
         {
-            Inititalizes();
+            InititalizeLists();
 
             int col = int.Parse(button[0].ToString());
             int row = int.Parse(button[1].ToString());
@@ -1145,6 +1106,20 @@ namespace Sudoku.ViewModels
 
                 doBlockInput = false;
             });
+        }
+        private void CheckIsFull()
+        {
+            if (!SolverGameLogic.IsFull(numberList))
+            {
+                SelectNumberOrMarkerVisibility = "Visible";
+                ValidationVisibility = "Collapsed";
+            }
+            else
+            {
+                ValidateAll();
+                SelectNumberOrMarkerVisibility = "Collapsed";
+                ValidationVisibility = "Visible";
+            }
         }
         private void ValidateAll()
         {
