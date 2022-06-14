@@ -1250,6 +1250,10 @@ namespace Sudoku.ViewModels
                 {
                     buttonBackgroundList[int.Parse(coords[0].ToString())][int.Parse(coords[1].ToString())] = "LightYellow";
                 }
+                else
+                {
+                    buttonBackgroundList[int.Parse(coords[0].ToString())][int.Parse(coords[1].ToString())] = "White";
+                }
             }
             ButtonBackgroundList = buttonBackgroundList;
             conflictCoords.Clear();
