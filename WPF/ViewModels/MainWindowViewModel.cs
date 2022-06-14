@@ -40,6 +40,7 @@ namespace Sudoku.ViewModels
             markerList.InitializeList();
             numberColorList.InitializeList();
             buttonBackgroundList.InitializeList();
+            highlightedCoords = new List<string>();
 
             // initialize property values:
             labelSelectNumberOrMarker = "";
@@ -100,6 +101,7 @@ namespace Sudoku.ViewModels
         private readonly AppSettings appSettings;
         private readonly SaveSlotsModel saveSlotsModel;
         private string currentlyMarkedCoords;
+        private List<string> highlightedCoords;
         private List<string> generatorCoords;
         readonly string folderAppSettings;
         private bool doBlockInput;
@@ -252,7 +254,10 @@ namespace Sudoku.ViewModels
             {
                 await Task.Run(() =>
                 {
+                    currentlyMarkedCoords = "";
                     CurrentCoordsBackgroundReset();
+                    UnhighlightColRowSquare();
+                    currentlyMarkedCoords = "";
                     SelectDifficultyVisibility = "Visible";
                 });
             }
@@ -263,7 +268,9 @@ namespace Sudoku.ViewModels
             {
                 await Task.Run(() =>
                 {
+                    currentlyMarkedCoords = "";
                     CurrentCoordsBackgroundReset();
+                    UnhighlightColRowSquare();
                     HideOverlays();
                     currentlyMarkedCoords = "";
                     SelectNumberOrMarkerVisibility = "Visible";
@@ -287,7 +294,9 @@ namespace Sudoku.ViewModels
             {
                 await Task.Run(() =>
                 {
+                    currentlyMarkedCoords = "";
                     CurrentCoordsBackgroundReset();
+                    UnhighlightColRowSquare();
                     if (!SolverGameLogic.IsFull(numberList))
                     {
                         bool isValid = true;
@@ -337,7 +346,9 @@ namespace Sudoku.ViewModels
             {
                 await Task.Run(() =>
                 {
+                    currentlyMarkedCoords = "";
                     CurrentCoordsBackgroundReset();
+                    UnhighlightColRowSquare();
                     markerList = new MarkerListModel();
                     markerList.InitializeList();
 
@@ -426,7 +437,9 @@ namespace Sudoku.ViewModels
             {
                 await Task.Run(() =>
                 {
+                    currentlyMarkedCoords = "";
                     CurrentCoordsBackgroundReset();
+                    UnhighlightColRowSquare();
                     if (menuSingleSolutionCheck == "True")
                     {
                         appSettings.ChangeSingleSolution(true);
@@ -444,7 +457,9 @@ namespace Sudoku.ViewModels
             {
                 await Task.Run(() =>
                 {
+                    currentlyMarkedCoords = "";
                     CurrentCoordsBackgroundReset();
+                    UnhighlightColRowSquare();
                     if (numberList != null && markerList != null && numberColorList != null && generatorCoords != null)
                     {
                         DateTime now = DateTime.Now;
@@ -467,7 +482,9 @@ namespace Sudoku.ViewModels
             {
                 await Task.Run(() =>
                 {
+                    currentlyMarkedCoords = "";
                     CurrentCoordsBackgroundReset();
+                    UnhighlightColRowSquare();
                     string slotNumber = (string)o;
                     string filename = Path.Combine(folderAppSettings, "slot" + slotNumber + ".json");
                     if (File.Exists(filename))
@@ -488,7 +505,9 @@ namespace Sudoku.ViewModels
             {
                 await Task.Run(() =>
                 {
+                    currentlyMarkedCoords = "";
                     CurrentCoordsBackgroundReset();
+                    UnhighlightColRowSquare();
                     for (int i = 1; i < 6; i++)
                     {
                         string filename = Path.Combine(folderAppSettings, "slot" + i.ToString() + ".json");
@@ -512,7 +531,9 @@ namespace Sudoku.ViewModels
         {
             if (!doBlockInput)
             {
+                currentlyMarkedCoords = "";
                 CurrentCoordsBackgroundReset();
+                UnhighlightColRowSquare();
                 HideOverlays();
                 MainWindow mainWindow = (MainWindow)o;
                 PrintView printControl = new PrintView
@@ -607,9 +628,17 @@ namespace Sudoku.ViewModels
                         }
                         if (!generatorCoords.Contains(param))
                         {
+                            Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
+                            if (param == currentlyMarkedCoords && highlightedCoords.Count != 0)
+                            {
+                                UnhighlightColRowSquare();
+                            }
+                            else
+                            {
+                                HighlightColRowSquare(coords);
+                            }
                             CurrentCoordsBackgroundReset();
                             currentlyMarkedCoords = param;
-                            Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
                             leftOrRightClicked = "Left";
                             LabelSelectNumberOrMarker = Resources.LabelSelectNumber;
                             buttonBackgroundList[coords.Col][coords.Row] = "Yellow";
@@ -617,7 +646,9 @@ namespace Sudoku.ViewModels
                         }
                         else
                         {
+                            UnhighlightColRowSquare();
                             CurrentCoordsBackgroundReset();
+                            currentlyMarkedCoords = "";
                             leftOrRightClicked = "";
                         }
                         CheckIsFull();
@@ -632,6 +663,14 @@ namespace Sudoku.ViewModels
                         Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
                         if (!generatorCoords.Contains(param) && numberList[coords.Col][coords.Row] == "")
                         {
+                            if (param == currentlyMarkedCoords && highlightedCoords.Count != 0)
+                            {
+                                UnhighlightColRowSquare();
+                            }
+                            else
+                            {
+                                HighlightColRowSquare(coords);
+                            }
                             CurrentCoordsBackgroundReset();
                             currentlyMarkedCoords = param;
                             leftOrRightClicked = "Right";
@@ -641,7 +680,9 @@ namespace Sudoku.ViewModels
                         }
                         else
                         {
+                            UnhighlightColRowSquare();
                             CurrentCoordsBackgroundReset();
+                            currentlyMarkedCoords = "";
                             leftOrRightClicked = "";
                         }
                     }
@@ -689,7 +730,14 @@ namespace Sudoku.ViewModels
                     if (currentlyMarkedCoords != param)
                     {
                         Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
-                        buttonBackgroundList[coords.Col][coords.Row] = "White";
+                        if (highlightedCoords.Contains(param))
+                        {
+                            buttonBackgroundList[coords.Col][coords.Row] = "LightYellow";
+                        }
+                        else
+                        {
+                            buttonBackgroundList[coords.Col][coords.Row] = "White";
+                        }
                         ButtonBackgroundList = buttonBackgroundList;
                     }
                     else
@@ -977,15 +1025,70 @@ namespace Sudoku.ViewModels
             if (currentlyMarkedCoords != "")
             {
                 Coords coordsOld = new Coords(int.Parse(currentlyMarkedCoords[0].ToString()), int.Parse(currentlyMarkedCoords[1].ToString()));
-                buttonBackgroundList[coordsOld.Col][coordsOld.Row] = "White";
+                if (highlightedCoords.Contains(currentlyMarkedCoords))
+                {
+                    buttonBackgroundList[coordsOld.Col][coordsOld.Row] = "LightYellow";
+                }
+                else
+                {
+                    buttonBackgroundList[coordsOld.Col][coordsOld.Row] = "White";
+                }
                 ButtonBackgroundList = buttonBackgroundList;
-                currentlyMarkedCoords = "";
                 LabelSelectNumberOrMarker = "";
             }
         }
-        private void MarkColRowSquare(Coords coords)
+        private void HighlightColRowSquare(Coords coords)
         {
+            UnhighlightColRowSquare();
 
+            // highlight column:
+            for (int i = 0; i < 9; i++)
+            {
+                string tempCoords = coords.Col.ToString() + i.ToString();
+                if (!highlightedCoords.Contains(tempCoords))
+                {
+                    buttonBackgroundList[coords.Col][i] = "LightYellow";
+                    highlightedCoords.Add(tempCoords);
+                }
+            }
+
+            // highlight row:
+            for (int i = 0; i < 9; i++)
+            {
+                string tempCoords = i.ToString() + coords.Row.ToString();
+                if (!highlightedCoords.Contains(tempCoords))
+                {
+                    buttonBackgroundList[i][coords.Row] = "LightYellow";
+                    highlightedCoords.Add(tempCoords);
+                }
+            }
+
+            // highlight square:
+            int col = (int)(coords.Col / 3) * 3;
+            int row = (int)(coords.Row / 3) * 3;
+
+            for (int i = row; i < row + 3; i++)
+            {
+                for (int j = col; j < col + 3; j++)
+                {
+                    string tempCoords = j.ToString() + i.ToString();
+                    if (!highlightedCoords.Contains(tempCoords))
+                    {
+                        buttonBackgroundList[j][i] = "LightYellow";
+                        highlightedCoords.Add(tempCoords);
+                    }
+                }
+            }
+            ButtonBackgroundList = buttonBackgroundList;
+        }
+        private void UnhighlightColRowSquare()
+        {
+            for (int i = 0; i < highlightedCoords.Count; i++)
+            {
+                buttonBackgroundList[int.Parse(highlightedCoords[i][0].ToString())][int.Parse(highlightedCoords[i][1].ToString())] = "White";
+            }
+            ButtonBackgroundList = buttonBackgroundList;
+            highlightedCoords.Clear();
         }
         private async Task NewGame(string difficulty)
         {
