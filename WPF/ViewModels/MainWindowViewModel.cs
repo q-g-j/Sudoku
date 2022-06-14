@@ -28,6 +28,7 @@ namespace Sudoku.ViewModels
             folderAppSettings = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SudokuGame");
             appSettings = new AppSettings(folderAppSettings);
             doBlockInput = false;
+            isFull = false;
 
             // initialize lists:
             saveSlotsModel = new SaveSlotsModel(folderAppSettings);
@@ -41,6 +42,7 @@ namespace Sudoku.ViewModels
             numberColorList.InitializeList();
             buttonBackgroundList.InitializeList();
             highlightedCoords = new List<string>();
+            conflictCoords = new List<string>();
 
             // initialize property values:
             labelSelectNumberOrMarker = "";
@@ -102,8 +104,9 @@ namespace Sudoku.ViewModels
         private readonly SaveSlotsModel saveSlotsModel;
         private string currentlyMarkedCoords;
         private List<string> highlightedCoords;
+        private List<string> conflictCoords;
         private List<string> generatorCoords;
-        readonly string folderAppSettings;
+        private readonly string folderAppSettings;
         private bool doBlockInput;
         private string leftOrRightClicked;
         private NumberListModel numberListPreloadedEasy;
@@ -118,6 +121,7 @@ namespace Sudoku.ViewModels
         private Task preloadGameEasy;
         private Task preloadGameMedium;
         private Task preloadGameHard;
+        private bool isFull;
         #endregion Fields
 
         #region Property Values
@@ -727,9 +731,18 @@ namespace Sudoku.ViewModels
                 await Task.Run(() =>
                 {
                     var param = (string)((CompositeCommandParameter)o).Parameter;
-                    if (currentlyMarkedCoords != param)
+                    Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
+                    if (conflictCoords.Contains(param))
                     {
-                        Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
+                        buttonBackgroundList[coords.Col][coords.Row] = "Red";
+                    }
+                    else if (currentlyMarkedCoords == param)
+                    {
+                        buttonBackgroundList[coords.Col][coords.Row] = "Yellow";
+                        ButtonBackgroundList = buttonBackgroundList;
+                    }
+                    else
+                    {
                         if (highlightedCoords.Contains(param))
                         {
                             buttonBackgroundList[coords.Col][coords.Row] = "LightYellow";
@@ -738,12 +751,6 @@ namespace Sudoku.ViewModels
                         {
                             buttonBackgroundList[coords.Col][coords.Row] = "White";
                         }
-                        ButtonBackgroundList = buttonBackgroundList;
-                    }
-                    else
-                    {
-                        Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
-                        buttonBackgroundList[coords.Col][coords.Row] = "Yellow";
                         ButtonBackgroundList = buttonBackgroundList;
                     }
                 });
@@ -826,6 +833,12 @@ namespace Sudoku.ViewModels
                     NumberList = tempNumberList;
                     SelectNumberOrMarkerVisibility = "Visible";
                     ValidationVisibility = "Collapsed";
+                    foreach (string c in conflictCoords)
+                    {
+                        buttonBackgroundList[int.Parse(c[0].ToString())][int.Parse(c[1].ToString())] = "White";
+                    }
+                    conflictCoords.Clear();
+                    ButtonBackgroundList = buttonBackgroundList;
                     return;
                 }
                 else
@@ -1085,7 +1098,10 @@ namespace Sudoku.ViewModels
         {
             for (int i = 0; i < highlightedCoords.Count; i++)
             {
-                buttonBackgroundList[int.Parse(highlightedCoords[i][0].ToString())][int.Parse(highlightedCoords[i][1].ToString())] = "White";
+                if (!conflictCoords.Contains(highlightedCoords[i]))
+                {
+                    buttonBackgroundList[int.Parse(highlightedCoords[i][0].ToString())][int.Parse(highlightedCoords[i][1].ToString())] = "White";
+                }
             }
             ButtonBackgroundList = buttonBackgroundList;
             highlightedCoords.Clear();
@@ -1231,7 +1247,10 @@ namespace Sudoku.ViewModels
                 numberList = new NumberListModel();
                 numberList.InitializeList();
             }
+            bool isValid = true;
 
+            LabelValidate = Resources.LabelValidateNoConflicts;
+            LabelValidateBackground = "#40bf80";
             for (int col = 0; col < 9; col++)
             {
                 for (int row = 0; row < 9; row++)
@@ -1239,15 +1258,20 @@ namespace Sudoku.ViewModels
                     string number = numberList[col][row];
                     if (!ValidatorGameLogic.IsValid(numberList, col, row, number))
                     {
+                        isValid = false;
                         LabelValidate = Resources.LabelValidateConflicts;
                         LabelValidateBackground = "#ff531a";
-                        LabelValidateVisibility = "Visible";
-                        return;
+                        buttonBackgroundList[col][row] = "Red";
+                        ButtonBackgroundList = buttonBackgroundList;
+                        string stringCoords = col.ToString() + row.ToString();
+                        conflictCoords.Add(stringCoords);
                     }
                 }
             }
-            LabelValidate = Resources.LabelValidateNoConflicts;
-            LabelValidateBackground = "#40bf80";
+            if (! isValid)
+            {
+                UnhighlightColRowSquare();
+            }
             LabelValidateVisibility = "Visible";
         }
         private void HideOverlays()
