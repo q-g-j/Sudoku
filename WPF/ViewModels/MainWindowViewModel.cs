@@ -1041,6 +1041,11 @@ namespace Sudoku.ViewModels
                 ButtonBackgroundList = buttonBackgroundList;
                 LabelSelectNumberOrMarker = "";
             }
+            else if (currentlyMarkedCoords != "" && conflictCoords.Contains(currentlyMarkedCoords))
+            {
+                Coords coordsOld = new Coords(int.Parse(currentlyMarkedCoords[0].ToString()), int.Parse(currentlyMarkedCoords[1].ToString()));
+                buttonBackgroundList[coordsOld.Col][coordsOld.Row] = Colors.CellBackgroundConflicts;
+            }
         }
         private void BackgroundReset()
         {
@@ -1115,6 +1120,10 @@ namespace Sudoku.ViewModels
                 {
                     buttonBackgroundList[int.Parse(highlightedCoords[i][0].ToString())][int.Parse(highlightedCoords[i][1].ToString())] = Colors.CellBackgroundConflicts;
                 }
+            }
+            if (currentlyMarkedCoords != "")
+            {
+                buttonBackgroundList[int.Parse(currentlyMarkedCoords[0].ToString())][int.Parse(currentlyMarkedCoords[1].ToString())] = Colors.CellBackgroundConflictsSelected;
             }
             ButtonBackgroundList = buttonBackgroundList;
             highlightedCoords.Clear();
