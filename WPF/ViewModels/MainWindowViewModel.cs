@@ -482,6 +482,7 @@ namespace Sudoku.ViewModels
                         MarkerList = saveSlot.MarkerList;
                         NumberColorList = saveSlot.NumberColorsList;
                         generatorCoords = saveSlot.GeneratorNumberList;
+                        ValidateAll();
                     }
                 });
             }
