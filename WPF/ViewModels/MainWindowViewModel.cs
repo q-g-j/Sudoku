@@ -747,7 +747,6 @@ namespace Sudoku.ViewModels
                     else if (currentlyMarkedCoords == param)
                     {
                         buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundSelected;
-                        ButtonBackgroundList = buttonBackgroundList;
                     }
                     else
                     {
@@ -759,8 +758,8 @@ namespace Sudoku.ViewModels
                         {
                             buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundDefault;
                         }
-                        ButtonBackgroundList = buttonBackgroundList;
                     }
+                    ButtonBackgroundList = buttonBackgroundList;
                 });
             }
 
