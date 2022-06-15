@@ -91,7 +91,6 @@ namespace Sudoku.ViewModels
             {
                 menuSingleSolutionCheck = "False";
             }
-
             // display each existing save slot's date and time:
             menuSaveSlotsLoadText = saveSlotsModel.GetLoadTexts();
         }
@@ -323,7 +322,7 @@ namespace Sudoku.ViewModels
                                 int col = int.Parse(coords[0].ToString());
                                 int row = int.Parse(coords[1].ToString());
 
-                                numberColorList[col][row] = "Black";
+                                numberColorList[col][row] = Colors.CellNumberGenerator;
                             }
                             MarkerList = markerList;
                             NumberColorList = numberColorList;
@@ -627,7 +626,14 @@ namespace Sudoku.ViewModels
                             currentlyMarkedCoords = param;
                             leftOrRightClicked = "Left";
                             LabelSelectNumberOrMarker = Resources.LabelSelectNumber;
-                            buttonBackgroundList[coords.Col][coords.Row] = "Yellow";
+                            if (conflictCoords.Contains(param))
+                            {
+                                buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundConflictsSelected;
+                            }
+                            else
+                            {
+                                buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundSelected;
+                            }
                             ButtonBackgroundList = buttonBackgroundList;
                         }
                         else
@@ -660,7 +666,7 @@ namespace Sudoku.ViewModels
                             currentlyMarkedCoords = param;
                             leftOrRightClicked = "Right";
                             LabelSelectNumberOrMarker = Resources.LabelSelectMarker;
-                            buttonBackgroundList[coords.Col][coords.Row] = "Yellow";
+                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundSelected;
                             ButtonBackgroundList = buttonBackgroundList;
                         }
                         else
@@ -697,7 +703,7 @@ namespace Sudoku.ViewModels
                 {
                     var param = (string)((CompositeCommandParameter)o).Parameter;
                     Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
-                    buttonBackgroundList[coords.Col][coords.Row] = "LightBlue";
+                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundMouseOver;
                     ButtonBackgroundList = buttonBackgroundList;
                 });
             }
@@ -715,22 +721,29 @@ namespace Sudoku.ViewModels
                     Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
                     if (conflictCoords.Contains(param))
                     {
-                        buttonBackgroundList[coords.Col][coords.Row] = "Red";
+                        if (currentlyMarkedCoords == param)
+                        {
+                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundConflictsSelected;
+                        }
+                        else
+                        {
+                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundConflicts;
+                        }
                     }
                     else if (currentlyMarkedCoords == param)
                     {
-                        buttonBackgroundList[coords.Col][coords.Row] = "Yellow";
+                        buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundSelected;
                         ButtonBackgroundList = buttonBackgroundList;
                     }
                     else
                     {
                         if (highlightedCoords.Contains(param))
                         {
-                            buttonBackgroundList[coords.Col][coords.Row] = "LightYellow";
+                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundHighlighted;
                         }
                         else
                         {
-                            buttonBackgroundList[coords.Col][coords.Row] = "White";
+                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundDefault;
                         }
                         ButtonBackgroundList = buttonBackgroundList;
                     }
@@ -1007,11 +1020,11 @@ namespace Sudoku.ViewModels
                 Coords coordsOld = new Coords(int.Parse(currentlyMarkedCoords[0].ToString()), int.Parse(currentlyMarkedCoords[1].ToString()));
                 if (highlightedCoords.Contains(currentlyMarkedCoords))
                 {
-                    buttonBackgroundList[coordsOld.Col][coordsOld.Row] = "LightYellow";
+                    buttonBackgroundList[coordsOld.Col][coordsOld.Row] = Colors.CellBackgroundHighlighted;
                 }
                 else
                 {
-                    buttonBackgroundList[coordsOld.Col][coordsOld.Row] = "White";
+                    buttonBackgroundList[coordsOld.Col][coordsOld.Row] = Colors.CellBackgroundDefault;
                 }
                 ButtonBackgroundList = buttonBackgroundList;
                 LabelSelectNumberOrMarker = "";
@@ -1037,7 +1050,7 @@ namespace Sudoku.ViewModels
                 {
                     if (!conflictCoords.Contains(tempCoords))
                     {
-                        buttonBackgroundList[coords.Col][i] = "LightYellow";
+                        buttonBackgroundList[coords.Col][i] = Colors.CellBackgroundHighlighted;
                     }
                     highlightedCoords.Add(tempCoords);
                 }
@@ -1051,7 +1064,7 @@ namespace Sudoku.ViewModels
                 {
                     if (!conflictCoords.Contains(tempCoords))
                     {
-                        buttonBackgroundList[i][coords.Row] = "LightYellow";
+                        buttonBackgroundList[i][coords.Row] = Colors.CellBackgroundHighlighted;
                     }
                     highlightedCoords.Add(tempCoords);
                 }
@@ -1070,7 +1083,7 @@ namespace Sudoku.ViewModels
                     {
                         if (!conflictCoords.Contains(tempCoords))
                         {
-                            buttonBackgroundList[j][i] = "LightYellow";
+                            buttonBackgroundList[j][i] = Colors.CellBackgroundHighlighted;
                         }
                         highlightedCoords.Add(tempCoords);
                     }
@@ -1084,11 +1097,11 @@ namespace Sudoku.ViewModels
             {
                 if (!conflictCoords.Contains(highlightedCoords[i]))
                 {
-                    buttonBackgroundList[int.Parse(highlightedCoords[i][0].ToString())][int.Parse(highlightedCoords[i][1].ToString())] = "White";
+                    buttonBackgroundList[int.Parse(highlightedCoords[i][0].ToString())][int.Parse(highlightedCoords[i][1].ToString())] = Colors.CellBackgroundDefault;
                 }
                 else
                 {
-                    buttonBackgroundList[int.Parse(highlightedCoords[i][0].ToString())][int.Parse(highlightedCoords[i][1].ToString())] = "Red";
+                    buttonBackgroundList[int.Parse(highlightedCoords[i][0].ToString())][int.Parse(highlightedCoords[i][1].ToString())] = Colors.CellBackgroundConflicts;
                 }
             }
             ButtonBackgroundList = buttonBackgroundList;
@@ -1187,7 +1200,7 @@ namespace Sudoku.ViewModels
                     int col = int.Parse(coords[0].ToString());
                     int row = int.Parse(coords[1].ToString());
 
-                    tempNumberColorList[col][row] = "Black";
+                    tempNumberColorList[col][row] = Colors.CellNumberGenerator;
                 }
 
                 tempNumberList = generatorGameLogic.NumberList;
@@ -1238,21 +1251,21 @@ namespace Sudoku.ViewModels
             bool isValid = true;
 
             LabelValidate = Resources.LabelValidateNoConflicts;
-            LabelValidateBackground = "#40bf80";
+            LabelValidateBackground = Colors.LabelValidateHasNoConflicts;
 
             foreach (string coords in conflictCoords)
             {
                 if (currentlyMarkedCoords == coords)
                 {
-                    buttonBackgroundList[int.Parse(coords[0].ToString())][int.Parse(coords[1].ToString())] = "Yellow";
+                    buttonBackgroundList[int.Parse(coords[0].ToString())][int.Parse(coords[1].ToString())] = Colors.CellBackgroundSelected;
                 }
                 else if (highlightedCoords.Contains(coords))
                 {
-                    buttonBackgroundList[int.Parse(coords[0].ToString())][int.Parse(coords[1].ToString())] = "LightYellow";
+                    buttonBackgroundList[int.Parse(coords[0].ToString())][int.Parse(coords[1].ToString())] = Colors.CellBackgroundHighlighted;
                 }
                 else
                 {
-                    buttonBackgroundList[int.Parse(coords[0].ToString())][int.Parse(coords[1].ToString())] = "White";
+                    buttonBackgroundList[int.Parse(coords[0].ToString())][int.Parse(coords[1].ToString())] = Colors.CellBackgroundDefault;
                 }
             }
             ButtonBackgroundList = buttonBackgroundList;
@@ -1267,8 +1280,8 @@ namespace Sudoku.ViewModels
                     {
                         isValid = false;
                         LabelValidate = Resources.LabelValidateConflicts;
-                        LabelValidateBackground = "#ff531a";
-                        buttonBackgroundList[col][row] = "Red";
+                        LabelValidateBackground = Colors.LabelValidateHasConflicts;
+                        buttonBackgroundList[col][row] = Colors.CellBackgroundConflicts;
                         ButtonBackgroundList = buttonBackgroundList;
                         string stringCoords = col.ToString() + row.ToString();
                         conflictCoords.Add(stringCoords);

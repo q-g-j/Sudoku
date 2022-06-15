@@ -33,7 +33,7 @@ namespace Sudoku.Models
                 List<string> tempList = new List<string>();
                 for (int j = 0; j < 9; j++)
                 {
-                    tempList.Add("#0066ff");
+                    tempList.Add(Colors.CellNumber);
                 }
                 Add(tempList);
             }

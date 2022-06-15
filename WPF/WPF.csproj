@@ -119,6 +119,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Colors\Colors.cs" />
     <Compile Include="Helpers\Coords.cs" />
     <Compile Include="Models\ButtonBackgroundListModel.cs" />
     <Compile Include="Models\SaveSlotsModel.cs" />
