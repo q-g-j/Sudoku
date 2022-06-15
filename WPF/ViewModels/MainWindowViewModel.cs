@@ -669,6 +669,18 @@ namespace Sudoku.ViewModels
                             buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundSelected;
                             ButtonBackgroundList = buttonBackgroundList;
                         }
+                        else if (numberList[coords.Col][coords.Row] != "")
+                        {
+                            if (param == currentlyMarkedCoords && highlightedCoords.Count != 0)
+                            {
+                                UnhighlightColRowSquare();
+                            }
+                            CurrentCoordsBackgroundReset();
+                            currentlyMarkedCoords = "";
+                            leftOrRightClicked = "";
+                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundMouseOver;
+                            ButtonBackgroundList = buttonBackgroundList;
+                        }
                         else
                         {
                             UnhighlightColRowSquare();
