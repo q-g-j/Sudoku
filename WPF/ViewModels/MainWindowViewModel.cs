@@ -517,8 +517,9 @@ namespace Sudoku.ViewModels
         {
             if (!doBlockInput)
             {
-                currentlyMarkedCoords = "";
+                //currentlyMarkedCoords = "";
                 BackgroundReset();
+
                 HideOverlays();
                 MainWindow mainWindow = (MainWindow)o;
                 PrintView printControl = new PrintView
@@ -565,6 +566,7 @@ namespace Sudoku.ViewModels
                     //apply the original transform.
                     sudokuGrid.LayoutTransform = originalScale;
                 }
+                ValidateAll();
             }
         }
         private void MenuQuitAction()
