@@ -671,7 +671,7 @@ namespace Sudoku.ViewModels
                         }
                         else if (numberList[coords.Col][coords.Row] != "")
                         {
-                            if (param == currentlyMarkedCoords && highlightedCoords.Count != 0)
+                            if (highlightedCoords.Count != 0)
                             {
                                 UnhighlightColRowSquare();
                             }
