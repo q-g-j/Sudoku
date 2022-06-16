@@ -27,7 +27,5 @@ namespace Sudoku
         public static string BorderOutermost { get => "Blue"; }
         public static string LineMiddle { get => "Black"; }
         public static string LineInnermost { get => "#a6a6a6"; }
-
-
     }
 }

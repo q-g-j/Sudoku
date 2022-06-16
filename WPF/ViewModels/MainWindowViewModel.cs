@@ -81,6 +81,7 @@ namespace Sudoku.ViewModels
             ButtonSquareUpCommand = new AsyncRelayCommand<object>(o => ButtonSquareUpAction(o));
             ButtonSquareMouseEnterCommand = new AsyncRelayCommand<object>(o => ButtonSquareMouseEnterAction(o));
             ButtonSquareMouseLeaveCommand = new AsyncRelayCommand<object>(o => ButtonSquareMouseLeaveAction(o));
+            KeyboardCommand = new RelayCommand<object>(o => KeyboardAction(o));
 
             // load app settings from file:
             if (!Directory.Exists(folderAppSettings))
@@ -173,6 +174,7 @@ namespace Sudoku.ViewModels
         public IAsyncRelayCommand ButtonSquareUpCommand { get; }
         public IAsyncRelayCommand ButtonSquareMouseEnterCommand { get; }
         public IAsyncRelayCommand ButtonSquareMouseLeaveCommand { get; }
+        public RelayCommand<object> KeyboardCommand { get; }
 
         public List<string> MenuSaveSlotsLoadText
         {
@@ -806,6 +808,97 @@ namespace Sudoku.ViewModels
 
             e.Handled = true;
         }
+        private void KeyboardAction(object o)
+        {
+            string key = (string)o;
+            if (currentlyMarkedCoords != "")
+            {
+                int col = int.Parse(currentlyMarkedCoords[0].ToString());
+                int row = int.Parse(currentlyMarkedCoords[1].ToString());
+                if (leftOrRightClicked == "Left")
+                {
+                    if (key != "X")
+                    {
+                        numberList[col][row] = key;
+                    }
+                    else
+                    {
+                        numberList[col][row] = "";
+                    }
+                    NumberList = numberList;
+                }
+                else if (leftOrRightClicked == "Right")
+                {
+                    if (key != "X")
+                    {
+                        if (key == "1")
+                        {
+                            if (markerList[col][row][0][0] != "") { markerList[col][row][0][0] = ""; }
+                            else { markerList[col][row][0][0] = "1"; }
+                        }
+                        else if (key == "2")
+                        {
+                            if (markerList[col][row][1][0] != "") { markerList[col][row][1][0] = ""; }
+                            else { markerList[col][row][1][0] = "2"; }
+                        }
+                        else if (key == "3")
+                        {
+                            if (markerList[col][row][2][0] != "") { markerList[col][row][2][0] = ""; }
+                            else { markerList[col][row][2][0] = "3"; }
+                        }
+                        else if (key == "4")
+                        {
+                            if (markerList[col][row][3][0] != "") { markerList[col][row][3][0] = ""; }
+                            else { markerList[col][row][3][0] = "4"; }
+                        }
+                        else if (key == "5")
+                        {
+                            if (markerList[col][row][0][1] != "") { markerList[col][row][0][1] = ""; }
+                            else { markerList[col][row][0][1] = "5"; }
+                        }
+                        else if (key == "6")
+                        {
+                            if (markerList[col][row][3][1] != "") { markerList[col][row][3][1] = ""; }
+                            else { markerList[col][row][3][1] = "6"; }
+                        }
+                        else if (key == "7")
+                        {
+                            if (markerList[col][row][0][2] != "") { markerList[col][row][0][2] = ""; }
+                            else { markerList[col][row][0][2] = "7"; }
+                        }
+                        else if (key == "8")
+                        {
+                            if (markerList[col][row][1][2] != "") { markerList[col][row][1][2] = ""; }
+                            else { markerList[col][row][1][2] = "8"; }
+                        }
+                        else if (key == "9")
+                        {
+                            if (markerList[col][row][2][2] != "") { markerList[col][row][2][2] = ""; }
+                            else { markerList[col][row][2][2] = "9"; }
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < 3; j++)
+                        {
+                            for (int i = 0; i < 4; i++)
+                            {
+                                if ((i == 1 && j == 1) || (i == 2 && j == 1) || (i == 3 && j == 2))
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    markerList[col][row][i][j] = "";
+                                }
+                            }
+                        }
+                    }
+                    MarkerList = markerList;
+                }
+
+            }
+        }
         private async Task ButtonSelectNumberOrMarkerAction(object o)
         {
             if (! doBlockInput)
@@ -861,14 +954,12 @@ namespace Sudoku.ViewModels
                 int col = int.Parse(button[0].ToString());
                 int row = int.Parse(button[1].ToString());
                 string number = button[2].ToString();
-                NumberListModel tempNumberList;
-                tempNumberList = numberList;
 
                 if (number == "X")
                 {
-                    tempNumberList[col][row] = number;
-                    tempNumberList[col][row] = "";
-                    NumberList = tempNumberList;
+                    numberList[col][row] = number;
+                    numberList[col][row] = "";
+                    NumberList = numberList;
                     SelectNumberOrMarkerVisibility = "Visible";
                     ValidationVisibility = "Collapsed";
                     ValidateAll();
@@ -877,8 +968,8 @@ namespace Sudoku.ViewModels
                 }
                 else
                 {
-                    tempNumberList[col][row] = number;
-                    NumberList = tempNumberList;
+                    numberList[col][row] = number;
+                    NumberList = numberList;
                     CheckIsFull();
                     for (int j = 0; j < 3; j++)
                     {
@@ -890,10 +981,8 @@ namespace Sudoku.ViewModels
                             }
                             else
                             {
-                                MarkerListModel tempMarkerList;
-                                tempMarkerList = markerList;
-                                tempMarkerList[col][row][i][j] = "";
-                                MarkerList = tempMarkerList;
+                                markerList[col][row][i][j] = "";
+                                MarkerList = markerList;
                             }
                         }
                     }
@@ -909,12 +998,10 @@ namespace Sudoku.ViewModels
                                 }
                                 else
                                 {
-                                    MarkerListModel tempMarkerList;
-                                    tempMarkerList = markerList;
-                                    if (tempMarkerList[col][k][i][j] == number)
+                                    if (markerList[col][k][i][j] == number)
                                     {
-                                        tempMarkerList[col][k][i][j] = "";
-                                        MarkerList = tempMarkerList;
+                                        markerList[col][k][i][j] = "";
+                                        MarkerList = markerList;
                                     }
                                 }
                             }
@@ -932,12 +1019,10 @@ namespace Sudoku.ViewModels
                                 }
                                 else
                                 {
-                                    MarkerListModel tempMarkerList;
-                                    tempMarkerList = markerList;
-                                    if (tempMarkerList[k][row][i][j] == number)
+                                    if (markerList[k][row][i][j] == number)
                                     {
-                                        tempMarkerList[k][row][i][j] = "";
-                                        MarkerList = tempMarkerList;
+                                        markerList[k][row][i][j] = "";
+                                        MarkerList = markerList;
                                     }
                                 }
                             }
@@ -961,12 +1046,10 @@ namespace Sudoku.ViewModels
                                     }
                                     else
                                     {
-                                        MarkerListModel tempMarkerList;
-                                        tempMarkerList = markerList;
-                                        if (tempMarkerList[j][i][k][l] == number)
+                                        if (markerList[j][i][k][l] == number)
                                         {
-                                            tempMarkerList[j][i][k][l] = "";
-                                            MarkerList = tempMarkerList;
+                                            markerList[j][i][k][l] = "";
+                                            MarkerList = markerList;
                                         }
                                     }
                                 }
@@ -1001,10 +1084,8 @@ namespace Sudoku.ViewModels
                         }
                         else
                         {
-                            MarkerListModel tempNumberList;
-                            tempNumberList = markerList;
-                            tempNumberList[col][row][i][j] = "";
-                            MarkerList = tempNumberList;
+                            markerList[col][row][i][j] = "";
+                            MarkerList = markerList;
                         }
                     }
                 }
@@ -1012,59 +1093,56 @@ namespace Sudoku.ViewModels
             }
             else
             {
-                MarkerListModel tempNumberList;
-                tempNumberList = markerList;
-
                 // 00|10|20|30
                 // 01|11|21|31
                 // 02|12|22|32
 
                 if (number == "1")
                 {
-                    if (markerList[col][row][0][0] != "") { tempNumberList[col][row][0][0] = ""; }
-                    else { tempNumberList[col][row][0][0] = "1"; }
+                    if (markerList[col][row][0][0] != "") { markerList[col][row][0][0] = ""; }
+                    else { markerList[col][row][0][0] = "1"; }
                 }
                 else if (number == "2")
                 {
-                    if (markerList[col][row][1][0] != "") { tempNumberList[col][row][1][0] = ""; }
-                    else { tempNumberList[col][row][1][0] = "2"; }
+                    if (markerList[col][row][1][0] != "") { markerList[col][row][1][0] = ""; }
+                    else { markerList[col][row][1][0] = "2"; }
                 }
                 else if (number == "3")
                 {
-                    if (markerList[col][row][2][0] != "") { tempNumberList[col][row][2][0] = ""; }
-                    else { tempNumberList[col][row][2][0] = "3"; }
+                    if (markerList[col][row][2][0] != "") { markerList[col][row][2][0] = ""; }
+                    else { markerList[col][row][2][0] = "3"; }
                 }
                 else if (number == "4")
                 {
-                    if (markerList[col][row][3][0] != "") { tempNumberList[col][row][3][0] = ""; }
-                    else { tempNumberList[col][row][3][0] = "4"; }
+                    if (markerList[col][row][3][0] != "") { markerList[col][row][3][0] = ""; }
+                    else { markerList[col][row][3][0] = "4"; }
                 }
                 else if (number == "5")
                 {
-                    if (markerList[col][row][0][1] != "") { tempNumberList[col][row][0][1] = ""; }
-                    else { tempNumberList[col][row][0][1] = "5"; }
+                    if (markerList[col][row][0][1] != "") { markerList[col][row][0][1] = ""; }
+                    else { markerList[col][row][0][1] = "5"; }
                 }
                 else if (number == "6")
                 {
-                    if (markerList[col][row][3][1] != "") { tempNumberList[col][row][3][1] = ""; }
-                    else { tempNumberList[col][row][3][1] = "6"; }
+                    if (markerList[col][row][3][1] != "") { markerList[col][row][3][1] = ""; }
+                    else { markerList[col][row][3][1] = "6"; }
                 }
                 else if (number == "7")
                 {
-                    if (markerList[col][row][0][2] != "") { tempNumberList[col][row][0][2] = ""; }
-                    else { tempNumberList[col][row][0][2] = "7"; }
+                    if (markerList[col][row][0][2] != "") { markerList[col][row][0][2] = ""; }
+                    else { markerList[col][row][0][2] = "7"; }
                 }
                 else if (number == "8")
                 {
-                    if (markerList[col][row][1][2] != "") { tempNumberList[col][row][1][2] = ""; }
-                    else { tempNumberList[col][row][1][2] = "8"; }
+                    if (markerList[col][row][1][2] != "") { markerList[col][row][1][2] = ""; }
+                    else { markerList[col][row][1][2] = "8"; }
                 }
                 else if (number == "9")
                 {
-                    if (markerList[col][row][2][2] != "") { tempNumberList[col][row][2][2] = ""; }
-                    else { tempNumberList[col][row][2][2] = "9"; }
+                    if (markerList[col][row][2][2] != "") { markerList[col][row][2][2] = ""; }
+                    else { markerList[col][row][2][2] = "9"; }
                 }
-                MarkerList = tempNumberList;
+                MarkerList = markerList;
             }
         }
         private void CurrentCoordsBackgroundReset()
