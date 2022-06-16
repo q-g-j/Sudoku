@@ -25,7 +25,7 @@ namespace Sudoku
         public static string LabelValidateHasConflicts { get => "#ff531a"; }
         public static string BorderDefault { get => "Black"; }
         public static string BorderOutermost { get => "Blue"; }
-        public static string LineMiddle { get => "#ff4000"; }
+        public static string LineMiddle { get => "Black"; }
         public static string LineInnermost { get => "#a6a6a6"; }
 
 
