@@ -777,26 +777,23 @@ namespace Sudoku.ViewModels
         }
         private void KeyboardAction(object o)
         {
-            if (!doBlockInput)
+            if (!doBlockInput && currentlyMarkedCoords != "")
             {
                 string key = (string)o;
-                if (currentlyMarkedCoords != "")
+                string param = currentlyMarkedCoords + key;
+                if (leftOrRightClicked == "Left")
                 {
-                    string button = currentlyMarkedCoords + key;
-                    if (leftOrRightClicked == "Left")
-                    {
-                        ChangeNumber(button);
-                    }
-                    else if (leftOrRightClicked == "Right")
-                    {
-                        ChangeMarker(button);
-                    }
+                    ChangeNumber(param);
+                }
+                else if (leftOrRightClicked == "Right")
+                {
+                    ChangeMarker(param);
                 }
             }
         }
         private void ButtonSelectNumberOrMarkerAction(object o)
         {
-            if (! doBlockInput)
+            if (! doBlockInput && currentlyMarkedCoords != "")
             {
                 var tag = (string)o;
                 string param = currentlyMarkedCoords + tag;
@@ -831,7 +828,7 @@ namespace Sudoku.ViewModels
                 numberColorList.InitializeList();
             }
         }
-        private void ChangeNumber(string button)
+        private void ChangeNumber(string param)
         {
             InititalizeLists();
 
@@ -840,12 +837,12 @@ namespace Sudoku.ViewModels
                 generatorCoordsList = new List<string>();
             }
 
-            string coords = button.Substring(0, 2);
+            string coords = param.Substring(0, 2);
             if (! generatorCoordsList.Contains(coords))
             {
-                int col = int.Parse(button[0].ToString());
-                int row = int.Parse(button[1].ToString());
-                string number = button[2].ToString();
+                int col = int.Parse(param[0].ToString());
+                int row = int.Parse(param[1].ToString());
+                string number = param[2].ToString();
 
                 if (number == "X")
                 {
@@ -951,13 +948,13 @@ namespace Sudoku.ViewModels
                 }
             }
         }
-        private void ChangeMarker(string button)
+        private void ChangeMarker(string param)
         {
             InititalizeLists();
 
-            int col = int.Parse(button[0].ToString());
-            int row = int.Parse(button[1].ToString());
-            string number = button[2].ToString();
+            int col = int.Parse(param[0].ToString());
+            int row = int.Parse(param[1].ToString());
+            string number = param[2].ToString();
 
             if (numberList[col][row] != "")
             {
@@ -1228,7 +1225,7 @@ namespace Sudoku.ViewModels
                     }
                 }
 
-                List<string>  tempGeneratorCoords = new List<string>();
+                List<string> tempGeneratorCoords = new List<string>();
 
                 for (int col = 0; col < 9; col++)
                 {
@@ -1255,19 +1252,19 @@ namespace Sudoku.ViewModels
                 if (difficulty == "Easy")
                 {
                     numberListPreloadedEasy = new NumberListModel(generatorGameLogic.NumberList);
-                    numberColorListPreloadedEasy = tempNumberColorList;
+                    numberColorListPreloadedEasy = new NumberColorListModel(tempNumberColorList);
                     generatorCoordsPreloadedEasy = tempGeneratorCoords;
                 }
                 else if (difficulty == "Medium")
                 {
                     numberListPreloadedMedium = new NumberListModel(generatorGameLogic.NumberList);
-                    numberColorListPreloadedMedium = tempNumberColorList;
+                    numberColorListPreloadedMedium = new NumberColorListModel(tempNumberColorList);
                     generatorCoordsPreloadedMedium = tempGeneratorCoords;
                 }
                 else if (difficulty == "Hard")
                 {
                     numberListPreloadedHard = new NumberListModel(generatorGameLogic.NumberList);
-                    numberColorListPreloadedHard = tempNumberColorList;
+                    numberColorListPreloadedHard = new NumberColorListModel(tempNumberColorList);
                     generatorCoordsPreloadedHard = tempGeneratorCoords;
                 }
 
