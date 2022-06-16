@@ -45,6 +45,7 @@ namespace Sudoku.ViewModels
 
             // initialize property values:
             labelSelectNumberOrMarker = "";
+            buttonSelectNumberOrMarker = Colors.ButtonSelectNumber;
             labelSingleSolutionWaitVisibility = "Hidden";
             validationVisibility = "Collapsed";
             selectDifficultyVisibility = "Visible";
@@ -131,6 +132,7 @@ namespace Sudoku.ViewModels
         private string menuSingleSolutionCheck;
 
         private string labelSelectNumberOrMarker;
+        private string buttonSelectNumberOrMarker;
         private string labelValidate;
         private string labelValidateBackground;
 
@@ -204,6 +206,11 @@ namespace Sudoku.ViewModels
             get => labelSelectNumberOrMarker;
             set { labelSelectNumberOrMarker = value; OnPropertyChanged(); }
         }
+        public string ButtonSelectNumberOrMarker
+        {
+            get => buttonSelectNumberOrMarker;
+            set { buttonSelectNumberOrMarker = value; OnPropertyChanged(); }
+        }
         public string LabelValidate
         {
             get => labelValidate;
@@ -255,6 +262,8 @@ namespace Sudoku.ViewModels
                 {
                     currentlyMarkedCoords = "";
                     BackgroundReset();
+                    LabelSelectNumberOrMarker = "";
+                    ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                     SelectDifficultyVisibility = "Visible";
                 });
             }
@@ -267,6 +276,8 @@ namespace Sudoku.ViewModels
                 {
                     currentlyMarkedCoords = "";
                     BackgroundReset();
+                    LabelSelectNumberOrMarker = "";
+                    ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                     SelectNumberOrMarkerVisibility = "Visible";
                     ValidationVisibility = "Collapsed";
                     numberList = new NumberListModel();
@@ -289,6 +300,8 @@ namespace Sudoku.ViewModels
                 await Task.Run(() =>
                 {
                     currentlyMarkedCoords = "";
+                    LabelSelectNumberOrMarker = "";
+                    ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                     BackgroundReset();
                     if (!SolverGameLogic.IsFull(numberList))
                     {
@@ -427,8 +440,6 @@ namespace Sudoku.ViewModels
             {
                 await Task.Run(() =>
                 {
-                    currentlyMarkedCoords = "";
-                    BackgroundReset();
                     if (menuSingleSolutionCheck == "True")
                     {
                         appSettings.ChangeSingleSolution(true);
@@ -448,6 +459,8 @@ namespace Sudoku.ViewModels
                 {
                     currentlyMarkedCoords = "";
                     BackgroundReset();
+                    LabelSelectNumberOrMarker = "";
+                    ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                     if (numberList != null && markerList != null && numberColorList != null && generatorCoords != null)
                     {
                         DateTime now = DateTime.Now;
@@ -472,6 +485,8 @@ namespace Sudoku.ViewModels
                 {
                     currentlyMarkedCoords = "";
                     BackgroundReset();
+                    LabelSelectNumberOrMarker = "";
+                    ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                     string slotNumber = (string)o;
                     string filename = Path.Combine(folderAppSettings, "slot" + slotNumber + ".json");
                     if (File.Exists(filename))
@@ -493,8 +508,6 @@ namespace Sudoku.ViewModels
             {
                 await Task.Run(() =>
                 {
-                    currentlyMarkedCoords = "";
-                    BackgroundReset();
                     for (int i = 1; i < 6; i++)
                     {
                         string filename = Path.Combine(folderAppSettings, "slot" + i.ToString() + ".json");
@@ -520,6 +533,7 @@ namespace Sudoku.ViewModels
             {
                 //currentlyMarkedCoords = "";
                 BackgroundReset();
+                LabelSelectNumberOrMarker = "";
 
                 HideOverlays();
                 MainWindow mainWindow = (MainWindow)o;
@@ -625,6 +639,7 @@ namespace Sudoku.ViewModels
                             {
                                 HighlightColRowSquare(coords);
                             }
+                            ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                             CurrentCoordsBackgroundReset();
                             currentlyMarkedCoords = param;
                             leftOrRightClicked = "Left";
@@ -642,6 +657,7 @@ namespace Sudoku.ViewModels
                         else
                         {
                             UnhighlightColRowSquare();
+                            ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                             CurrentCoordsBackgroundReset();
                             currentlyMarkedCoords = "";
                             leftOrRightClicked = "";
@@ -665,6 +681,7 @@ namespace Sudoku.ViewModels
                             {
                                 HighlightColRowSquare(coords);
                             }
+                            ButtonSelectNumberOrMarker = Colors.ButtonSelectMarker;
                             CurrentCoordsBackgroundReset();
                             currentlyMarkedCoords = param;
                             leftOrRightClicked = "Right";
@@ -678,6 +695,7 @@ namespace Sudoku.ViewModels
                             {
                                 UnhighlightColRowSquare();
                             }
+                            ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                             CurrentCoordsBackgroundReset();
                             currentlyMarkedCoords = "";
                             leftOrRightClicked = "";
@@ -687,6 +705,7 @@ namespace Sudoku.ViewModels
                         else
                         {
                             UnhighlightColRowSquare();
+                            ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                             CurrentCoordsBackgroundReset();
                             currentlyMarkedCoords = "";
                             leftOrRightClicked = "";
