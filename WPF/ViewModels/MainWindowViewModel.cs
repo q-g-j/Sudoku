@@ -485,22 +485,23 @@ namespace Sudoku.ViewModels
         {
             if (! doBlockInput)
             {
-                    currentlyMarkedCoords = "";
-                    BackgroundReset();
-                    LabelSelectNumberOrMarker = "";
-                    ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
-                    string slotNumber = (string)o;
-                    string filename = Path.Combine(folderAppSettings, "slot" + slotNumber + ".json");
-                    if (File.Exists(filename))
-                    {
-                        HideOverlays();
-                        SaveSlotStruct saveSlot = saveSlotsModel.LoadAll(slotNumber);
-                        NumberList = saveSlot.NumberList;
-                        MarkerList = saveSlot.MarkerList;
-                        NumberColorList = saveSlot.NumberColorsList;
-                        generatorCoordsList = saveSlot.GeneratorNumberList;
-                        ValidateAll();
-                    }
+                currentDifficulty = "";
+                currentlyMarkedCoords = "";
+                BackgroundReset();
+                LabelSelectNumberOrMarker = "";
+                ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
+                string slotNumber = (string)o;
+                string filename = Path.Combine(folderAppSettings, "slot" + slotNumber + ".json");
+                if (File.Exists(filename))
+                {
+                    HideOverlays();
+                    SaveSlotStruct saveSlot = saveSlotsModel.LoadAll(slotNumber);
+                    NumberList = saveSlot.NumberList;
+                    MarkerList = saveSlot.MarkerList;
+                    NumberColorList = saveSlot.NumberColorsList;
+                    generatorCoordsList = saveSlot.GeneratorNumberList;
+                    ValidateAll();
+                }
             }
         }
         private void MenuDeleteAllSlotsAction()
