@@ -230,7 +230,7 @@
                             Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                             Panel.ZIndex="2"
                             Visibility="{Binding TrophyVisibility}">
-                            <Image Source="{Binding Source={StaticResource ImageTrophy}}"/>
+                            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Source={StaticResource ImageTrophy}}"/>
                         </StackPanel>
                         <Viewbox x:Name="SudokuViewbox"
                             Width="650" Height="650">

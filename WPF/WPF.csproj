@@ -121,6 +121,7 @@
     </ApplicationDefinition>
     <Compile Include="Colors\Colors.cs" />
     <Compile Include="Helpers\Coords.cs" />
+    <Compile Include="Helpers\HiPerfTimer.cs" />
     <Compile Include="Models\ButtonBackgroundListModel.cs" />
     <Compile Include="Models\SaveSlotsModel.cs" />
     <Compile Include="Properties\Resources.de.Designer.cs">

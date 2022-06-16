@@ -58,6 +58,7 @@ namespace Sudoku.ViewModels
             trophyVisibility = "Collapsed";
             currentlyMarkedCoords = "";
             trophyWidth = "0";
+            doStopTrophy = false;
 
             preloadGameEasy = PreloadGame("Easy");
             preloadGameMedium = PreloadGame("Medium");
@@ -130,6 +131,7 @@ namespace Sudoku.ViewModels
         private Task preloadGameMedium;
         private Task preloadGameHard;
         private string currentDifficulty;
+        bool doStopTrophy;
         #endregion Fields
 
         #region Property Values
@@ -872,6 +874,7 @@ namespace Sudoku.ViewModels
                     NumberList = numberList;
                     SelectNumberOrMarkerVisibility = "Visible";
                     ValidationVisibility = "Collapsed";
+                    TrophyVisibility = "Collapsed";
                     ButtonBackgroundList = buttonBackgroundList;
                     ValidateAll(false);
                     return;
@@ -1360,7 +1363,11 @@ namespace Sudoku.ViewModels
             }
             else if (doShowTrophy)
             {
+                doStopTrophy = true;
+                System.Threading.Thread.Sleep(1);
+                doStopTrophy = false;
                 HideOverlays();
+                
                 TrophyWidth = "0";
                 TrophyVisibility = "Visible";
                 Task zoomInTrophy = ZoomInTrophy();
@@ -1371,12 +1378,42 @@ namespace Sudoku.ViewModels
         {
             await Task.Run(() =>
             {
-                for (int i = 1; i < 500; i += 10)
+                for (int i = 1; i <= 501; i += 3)
                 {
+                    HiPerfTimer pt = new HiPerfTimer();
+                    if (doStopTrophy)
+                    {
+                        pt = null;
+                        break;
+                    }
                     TrophyWidth = i.ToString();
-                    System.Threading.Thread.Sleep(1);
+                    pt.Start();
+                    pt.Stop();
+                    while(pt.Duration < 0.0022)
+                    {
+                        System.Threading.Thread.Sleep(0);
+                        pt.Stop();
+                    }
+                    pt = null;
                 }
-                System.Threading.Thread.Sleep(1000);
+
+                for (int i = 1; i <= 1000; i += 1)
+                {
+                    HiPerfTimer pt = new HiPerfTimer();
+                    if (doStopTrophy)
+                    {
+                        pt = null;
+                        break;
+                    }
+                    pt.Start();
+                    pt.Stop();
+                    while (pt.Duration < 0.001)
+                    {
+                        System.Threading.Thread.Sleep(0);
+                        pt.Stop();
+                    }
+                    pt = null;
+                }
                 TrophyVisibility = "Collapsed";
             });
         }
