@@ -31,3 +31,8 @@ A graphical version of the Sudoku game written in C#. The [Windows](https://gith
 |-|-|
 |Numbers 1-9|place a number / marker (after left / right click)|
 |Delete Key|delete a number / all markers (after left / right click)|
+
+### Screenshots:
+
+<img src="https://github.com/q-g-j/Sudoku/raw/master/WPF/screenshot-number.jpg" width="500">
+<img src="https://github.com/q-g-j/Sudoku/raw/master/WPF/screenshot-marker.jpg" width="500">
