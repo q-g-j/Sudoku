@@ -55,7 +55,9 @@ namespace Sudoku.ViewModels
             selectDifficultyVisibility = "Visible";
             buttonValidateVisibility = "Visible";
             labelValidateVisibility = "Collapsed";
+            trophyVisibility = "Collapsed";
             currentlyMarkedCoords = "";
+            trophyWidth = "0";
 
             preloadGameEasy = PreloadGame("Easy");
             preloadGameMedium = PreloadGame("Medium");
@@ -140,6 +142,8 @@ namespace Sudoku.ViewModels
         private List<string> menuSaveSlotsSaveText;
         private string menuSingleSolutionCheck;
 
+        private string trophyWidth;
+
         private string labelSelectNumberOrMarker;
         private string buttonSelectNumberOrMarker;
         private string labelValidate;
@@ -151,6 +155,7 @@ namespace Sudoku.ViewModels
         private string buttonValidateVisibility;
         private string labelValidateVisibility;
         private string labelSingleSolutionWaitVisibility;
+        private string trophyVisibility;
         #endregion Property Values
 
         #region Properties
@@ -176,6 +181,11 @@ namespace Sudoku.ViewModels
         public RelayCommand<object> ButtonSquareMouseLeaveCommand { get; }
         public RelayCommand<object> KeyboardCommand { get; }
 
+        public string TrophyWidth
+        {
+            get => trophyWidth;
+            set { trophyWidth = value; OnPropertyChanged(); }
+        }
         public List<string> MenuSaveSlotsLoadText
         {
             get => menuSaveSlotsLoadText;
@@ -261,6 +271,11 @@ namespace Sudoku.ViewModels
             get => labelSingleSolutionWaitVisibility;
             set { labelSingleSolutionWaitVisibility = value; OnPropertyChanged(); }
         }
+        public string TrophyVisibility
+        {
+            get => trophyVisibility;
+            set { trophyVisibility = value; OnPropertyChanged(); }
+        }
         #endregion Properties
 
         #region Command Actions
@@ -273,6 +288,7 @@ namespace Sudoku.ViewModels
                 LabelSelectNumberOrMarker = "";
                 ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                 SelectDifficultyVisibility = "Visible";
+                TrophyVisibility = "Collapsed";
             }
         }
         private void MenuEmptySudokuAction()
@@ -282,10 +298,12 @@ namespace Sudoku.ViewModels
                 currentDifficulty = "";
                 currentlyMarkedCoords = "";
                 BackgroundReset();
+                HideOverlays();
                 LabelSelectNumberOrMarker = "";
                 ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                 SelectNumberOrMarkerVisibility = "Visible";
                 ValidationVisibility = "Collapsed";
+                TrophyVisibility = "Collapsed";
                 numberList = new NumberListModel();
                 markerList = new MarkerListModel();
                 numberColorList = new NumberColorListModel();
@@ -357,7 +375,7 @@ namespace Sudoku.ViewModels
                         else NumberList = new NumberListModel(solverGameLogic.NumberListSolved);
                     }
                 }
-                CheckIsFull();
+                CheckIsFull(false);
             }
         }
         private void MenuFillAllMarkersAction()
@@ -479,12 +497,14 @@ namespace Sudoku.ViewModels
                     else if (slotNumber == "5") tempLoadList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5 + " (" + now + ")";
                     MenuSaveSlotsLoadText = tempLoadList;
                 }
+                ValidateAll(false);
             }
         }
         private void MenuLoadFromSlotAction(object o)
         {
             if (! doBlockInput)
             {
+                TrophyVisibility = "Collapsed";
                 currentDifficulty = "";
                 currentlyMarkedCoords = "";
                 BackgroundReset();
@@ -500,7 +520,7 @@ namespace Sudoku.ViewModels
                     MarkerList = saveSlot.MarkerList;
                     NumberColorList = saveSlot.NumberColorsList;
                     generatorCoordsList = saveSlot.GeneratorNumberList;
-                    ValidateAll();
+                    CheckIsFull(false);
                 }
             }
         }
@@ -530,11 +550,12 @@ namespace Sudoku.ViewModels
         {
             if (!doBlockInput)
             {
-                //currentlyMarkedCoords = "";
+                currentlyMarkedCoords = "";
                 BackgroundReset();
                 LabelSelectNumberOrMarker = "";
-
+                TrophyVisibility = "Collapsed";
                 HideOverlays();
+
                 MainWindow mainWindow = (MainWindow)o;
                 PrintView printControl = new PrintView
                 {
@@ -580,7 +601,7 @@ namespace Sudoku.ViewModels
                     //apply the original transform.
                     sudokuGrid.LayoutTransform = originalScale;
                 }
-                ValidateAll();
+                ValidateAll(false);
             }
         }
         private void MenuQuitAction()
@@ -851,15 +872,15 @@ namespace Sudoku.ViewModels
                     NumberList = numberList;
                     SelectNumberOrMarkerVisibility = "Visible";
                     ValidationVisibility = "Collapsed";
-                    ValidateAll();
                     ButtonBackgroundList = buttonBackgroundList;
+                    ValidateAll(false);
                     return;
                 }
                 else
                 {
                     numberList[col][row] = number;
                     NumberList = numberList;
-                    CheckIsFull();
+                    CheckIsFull(true);
                     for (int j = 0; j < 3; j++)
                     {
                         for (int i = 0; i < 4; i++)
@@ -1271,7 +1292,7 @@ namespace Sudoku.ViewModels
                 doBlockInput = false;
             });
         }
-        private void CheckIsFull()
+        private void CheckIsFull(bool doShowTrophy)
         {
             if (!SolverGameLogic.IsFull(numberList))
             {
@@ -1280,12 +1301,12 @@ namespace Sudoku.ViewModels
             }
             else
             {
-                ValidateAll();
+                ValidateAll(doShowTrophy);
                 SelectNumberOrMarkerVisibility = "Collapsed";
                 ValidationVisibility = "Visible";
             }
         }
-        private void ValidateAll()
+        private async void ValidateAll(bool doShowTrophy)
         {
             if (numberList == null)
             {
@@ -1332,11 +1353,32 @@ namespace Sudoku.ViewModels
                     }
                 }
             }
+            LabelValidateVisibility = "Visible";
             if (!isValid)
             {
                 UnhighlightColRowSquare();
             }
-            LabelValidateVisibility = "Visible";
+            else if (doShowTrophy)
+            {
+                HideOverlays();
+                TrophyWidth = "0";
+                TrophyVisibility = "Visible";
+                Task zoomInTrophy = ZoomInTrophy();
+                await zoomInTrophy;
+            }
+        }
+        private async Task ZoomInTrophy()
+        {
+            await Task.Run(() =>
+            {
+                for (int i = 1; i < 500; i += 10)
+                {
+                    TrophyWidth = i.ToString();
+                    System.Threading.Thread.Sleep(1);
+                }
+                System.Threading.Thread.Sleep(1000);
+                TrophyVisibility = "Collapsed";
+            });
         }
         private void HideOverlays()
         {

@@ -225,6 +225,13 @@
                                 </Border>
                             </Grid>
                         </StackPanel>
+                        <StackPanel x:Name="Trophy"
+                            Width="{Binding TrophyWidth}"
+                            Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                            Panel.ZIndex="2"
+                            Visibility="{Binding TrophyVisibility}">
+                            <Image Source="{Binding Source={StaticResource ImageTrophy}}"/>
+                        </StackPanel>
                         <Viewbox x:Name="SudokuViewbox"
                             Width="650" Height="650">
                             <Border
@@ -244,7 +251,7 @@
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
-
+                                    
                                     <!-- Column 0, Row 0 -->
                                     <local:NumbersOuterGridView Grid.Column="0" Grid.Row="0">
                                         <Button Background="{Binding ButtonBackgroundList[0][0]}" Tag="00" Grid.Column="0" Grid.Row="0" Style="{StaticResource StyleButtonNumber}">
@@ -2714,7 +2721,7 @@
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0"  Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="1" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="1">
+                            <Button Grid.Column="0" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="1" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="1">
                                 <Button.Resources>
                                     <Style TargetType="Border">
                                         <Setter Property="CornerRadius" Value="3, 0, 0, 3"/>

@@ -2,4 +2,5 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <BitmapImage x:Key="ImageTrash" UriSource="/Sudoku;component/Assets/Images/trash.png"/>
+    <BitmapImage x:Key="ImageTrophy" UriSource="/Sudoku;component/Assets/Images/trophy.png"/>
 </ResourceDictionary>
