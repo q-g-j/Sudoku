@@ -1388,7 +1388,6 @@ namespace Sudoku.ViewModels
                     }
                     TrophyWidth = i.ToString();
                     pt.Start();
-                    pt.Stop();
                     while(pt.Duration < 0.0022)
                     {
                         System.Threading.Thread.Sleep(0);
@@ -1406,7 +1405,6 @@ namespace Sudoku.ViewModels
                         break;
                     }
                     pt.Start();
-                    pt.Stop();
                     while (pt.Duration < 0.001)
                     {
                         System.Threading.Thread.Sleep(0);

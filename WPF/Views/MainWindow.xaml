@@ -54,7 +54,7 @@
             DockPanel.Dock="Top">
             <Menu.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <DockPanel HorizontalAlignment="Stretch"/>
+                    <DockPanel HorizontalAlignment="Left"/>
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
             <MenuItem Header="{x:Static p:Resources.MenuGame}">
@@ -86,10 +86,10 @@
                 <Separator></Separator>
                 <MenuItem Header="{x:Static p:Resources.MenuGameQuitProgram}" Command="{Binding MenuQuitCommand}"></MenuItem>
             </MenuItem>
-            <MenuItem HorizontalAlignment="Right" Header="{x:Static p:Resources.MenuHelp}">
+            <!--<MenuItem HorizontalAlignment="Right" Header="{x:Static p:Resources.MenuHelp}">
                 <MenuItem Header="{x:Static p:Resources.MenuHelpRules}"></MenuItem>
                 <MenuItem Header="{x:Static p:Resources.MenuHelpAbout}"></MenuItem>
-            </MenuItem>
+            </MenuItem>-->
         </Menu>
         <Viewbox x:Name="MainViewbox">
             <StackPanel
