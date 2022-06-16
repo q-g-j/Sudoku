@@ -24,8 +24,8 @@ A graphical version of the Sudoku game written in C#. The [Windows](https://gith
 
 |Mouse button|Action|
 |-|-|
-|Left click|place a number|
-|Right click|place a marker|
+|Left click|select a cell to place a number|
+|Right click|select a cell to place a marker|
 
 |Key|Action|
 |-|-|
