@@ -28,10 +28,11 @@ namespace Sudoku.ViewModels
             folderAppSettings = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SudokuGame");
             appSettings = new AppSettings(folderAppSettings);
             doBlockInput = false;
+            currentDifficulty = "";
 
             // initialize lists:
             saveSlotsModel = new SaveSlotsModel(folderAppSettings);
-            generatorCoords = new List<string>();
+            generatorCoordsList = new List<string>();
             numberList = new NumberListModel();
             markerList = new MarkerListModel();
             numberColorList = new NumberColorListModel();
@@ -40,8 +41,11 @@ namespace Sudoku.ViewModels
             markerList.InitializeList();
             numberColorList.InitializeList();
             buttonBackgroundList.InitializeList();
-            highlightedCoords = new List<string>();
-            conflictCoords = new List<string>();
+            highlightedCoordsList = new List<string>();
+            conflictCoordsList = new List<string>();
+            numberListEasySolved = new NumberListModel();
+            numberListMediumSolved = new NumberListModel();
+            numberListHardSolved = new NumberListModel();
 
             // initialize property values:
             labelSelectNumberOrMarker = "";
@@ -101,15 +105,18 @@ namespace Sudoku.ViewModels
         private readonly AppSettings appSettings;
         private readonly SaveSlotsModel saveSlotsModel;
         private string currentlyMarkedCoords;
-        private readonly List<string> highlightedCoords;
-        private readonly List<string> conflictCoords;
-        private List<string> generatorCoords;
+        private readonly List<string> highlightedCoordsList;
+        private readonly List<string> conflictCoordsList;
+        private List<string> generatorCoordsList;
         private readonly string folderAppSettings;
         private bool doBlockInput;
         private string leftOrRightClicked;
         private NumberListModel numberListPreloadedEasy;
         private NumberListModel numberListPreloadedMedium;
         private NumberListModel numberListPreloadedHard;
+        private NumberListModel numberListEasySolved;
+        private NumberListModel numberListMediumSolved;
+        private NumberListModel numberListHardSolved;
         private NumberColorListModel numberColorListPreloadedEasy;
         private NumberColorListModel numberColorListPreloadedMedium;
         private NumberColorListModel numberColorListPreloadedHard;
@@ -119,6 +126,7 @@ namespace Sudoku.ViewModels
         private Task preloadGameEasy;
         private Task preloadGameMedium;
         private Task preloadGameHard;
+        private string currentDifficulty;
         #endregion Fields
 
         #region Property Values
@@ -283,10 +291,14 @@ namespace Sudoku.ViewModels
                     numberList = new NumberListModel();
                     markerList = new MarkerListModel();
                     numberColorList = new NumberColorListModel();
-                    generatorCoords = new List<string>();
+                    generatorCoordsList = new List<string>();
                     numberList.InitializeList();
                     markerList.InitializeList();
                     numberColorList.InitializeList();
+                    numberListEasySolved.Clear();
+                    numberListMediumSolved.Clear();
+                    numberListHardSolved.Clear();
+                    currentDifficulty = "";
                     NumberList = numberList;
                     MarkerList = markerList;
                     NumberColorList = numberColorList;
@@ -306,17 +318,20 @@ namespace Sudoku.ViewModels
                     if (!SolverGameLogic.IsFull(numberList))
                     {
                         bool isValid = true;
-                        for (int col = 0; col < 9; col++)
+                        if (currentDifficulty == "")
                         {
-                            if (isValid)
+                            for (int col = 0; col < 9; col++)
                             {
-                                for (int row = 0; row < 9; row++)
+                                if (isValid)
                                 {
-                                    string number = numberList[col][row];
-                                    if (!ValidatorGameLogic.IsValid(numberList, col, row, number))
+                                    for (int row = 0; row < 9; row++)
                                     {
-                                        isValid = false;
-                                        break;
+                                        string number = numberList[col][row];
+                                        if (!ValidatorGameLogic.IsValid(numberList, col, row, number))
+                                        {
+                                            isValid = false;
+                                            break;
+                                        }
                                     }
                                 }
                             }
@@ -325,12 +340,15 @@ namespace Sudoku.ViewModels
                         {
                             HideOverlays();
                             SolverGameLogic solverGameLogic = new SolverGameLogic(numberList);
-                            solverGameLogic.FillSudoku();
+                            if (currentDifficulty == "")
+                            {
+                                solverGameLogic.FillSudoku();
+                            }
                             markerList = new MarkerListModel();
                             numberColorList = new NumberColorListModel();
                             markerList.InitializeList();
                             numberColorList.InitializeList();
-                            foreach (string coords in generatorCoords)
+                            foreach (string coords in generatorCoordsList)
                             {
                                 int col = int.Parse(coords[0].ToString());
                                 int row = int.Parse(coords[1].ToString());
@@ -339,7 +357,10 @@ namespace Sudoku.ViewModels
                             }
                             MarkerList = markerList;
                             NumberColorList = numberColorList;
-                            NumberList = new NumberListModel(solverGameLogic.NumberListSolved);
+                            if (currentDifficulty == "Easy") NumberList = new NumberListModel(numberListEasySolved);
+                            else if (currentDifficulty == "Medium") NumberList = new NumberListModel(numberListMediumSolved);
+                            else if (currentDifficulty == "Hard") NumberList = new NumberListModel(numberListHardSolved);
+                            else NumberList = new NumberListModel(solverGameLogic.NumberListSolved);
                         }
                     }
                     CheckIsFull();
@@ -461,11 +482,11 @@ namespace Sudoku.ViewModels
                     BackgroundReset();
                     LabelSelectNumberOrMarker = "";
                     ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
-                    if (numberList != null && markerList != null && numberColorList != null && generatorCoords != null)
+                    if (numberList != null && markerList != null && numberColorList != null && generatorCoordsList != null)
                     {
                         DateTime now = DateTime.Now;
                         string slotNumber = (string)o;
-                        saveSlotsModel.SaveAll(numberList, markerList, numberColorList, generatorCoords, now, slotNumber);
+                        saveSlotsModel.SaveAll(numberList, markerList, numberColorList, generatorCoordsList, now, slotNumber);
                         List<string> tempLoadList = menuSaveSlotsLoadText;
                         if (slotNumber == "1") tempLoadList[0] = Resources.MenuGameSaveSlotsLoadFromSlot1 + " (" + now + ")";
                         else if (slotNumber == "2") tempLoadList[1] = Resources.MenuGameSaveSlotsLoadFromSlot2 + " (" + now + ")";
@@ -496,7 +517,7 @@ namespace Sudoku.ViewModels
                         NumberList = saveSlot.NumberList;
                         MarkerList = saveSlot.MarkerList;
                         NumberColorList = saveSlot.NumberColorsList;
-                        generatorCoords = saveSlot.GeneratorNumberList;
+                        generatorCoordsList = saveSlot.GeneratorNumberList;
                         ValidateAll();
                     }
                 });
@@ -628,10 +649,10 @@ namespace Sudoku.ViewModels
                             SelectDifficultyVisibility = "Hidden";
                             return;
                         }
-                        if (!generatorCoords.Contains(param))
+                        if (!generatorCoordsList.Contains(param))
                         {
                             Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
-                            if (param == currentlyMarkedCoords && highlightedCoords.Count != 0)
+                            if (param == currentlyMarkedCoords && highlightedCoordsList.Count != 0)
                             {
                                 UnhighlightColRowSquare();
                             }
@@ -644,7 +665,7 @@ namespace Sudoku.ViewModels
                             currentlyMarkedCoords = param;
                             leftOrRightClicked = "Left";
                             LabelSelectNumberOrMarker = Resources.LabelSelectNumber;
-                            if (conflictCoords.Contains(param))
+                            if (conflictCoordsList.Contains(param))
                             {
                                 buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundConflictsSelected;
                             }
@@ -671,9 +692,9 @@ namespace Sudoku.ViewModels
                             return;
                         }
                         Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
-                        if (!generatorCoords.Contains(param) && numberList[coords.Col][coords.Row] == "")
+                        if (!generatorCoordsList.Contains(param) && numberList[coords.Col][coords.Row] == "")
                         {
-                            if (param == currentlyMarkedCoords && highlightedCoords.Count != 0)
+                            if (param == currentlyMarkedCoords && highlightedCoordsList.Count != 0)
                             {
                                 UnhighlightColRowSquare();
                             }
@@ -691,7 +712,7 @@ namespace Sudoku.ViewModels
                         }
                         else if (numberList[coords.Col][coords.Row] != "")
                         {
-                            if (highlightedCoords.Count != 0)
+                            if (highlightedCoordsList.Count != 0)
                             {
                                 UnhighlightColRowSquare();
                             }
@@ -753,7 +774,7 @@ namespace Sudoku.ViewModels
                 {
                     var param = (string)((CompositeCommandParameter)o).Parameter;
                     Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
-                    if (conflictCoords.Contains(param))
+                    if (conflictCoordsList.Contains(param))
                     {
                         if (currentlyMarkedCoords == param)
                         {
@@ -770,7 +791,7 @@ namespace Sudoku.ViewModels
                     }
                     else
                     {
-                        if (highlightedCoords.Contains(param))
+                        if (highlightedCoordsList.Contains(param))
                         {
                             buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundHighlighted;
                         }
@@ -829,13 +850,13 @@ namespace Sudoku.ViewModels
         {
             InititalizeLists();
 
-            if (generatorCoords == null)
+            if (generatorCoordsList == null)
             {
-                generatorCoords = new List<string>();
+                generatorCoordsList = new List<string>();
             }
 
             string coords = button.Substring(0, 2);
-            if (! generatorCoords.Contains(coords))
+            if (! generatorCoordsList.Contains(coords))
             {
                 int col = int.Parse(button[0].ToString());
                 int row = int.Parse(button[1].ToString());
@@ -1048,10 +1069,10 @@ namespace Sudoku.ViewModels
         }
         private void CurrentCoordsBackgroundReset()
         {
-            if (currentlyMarkedCoords != "" && !conflictCoords.Contains(currentlyMarkedCoords))
+            if (currentlyMarkedCoords != "" && !conflictCoordsList.Contains(currentlyMarkedCoords))
             {
                 Coords coordsOld = new Coords(int.Parse(currentlyMarkedCoords[0].ToString()), int.Parse(currentlyMarkedCoords[1].ToString()));
-                if (highlightedCoords.Contains(currentlyMarkedCoords))
+                if (highlightedCoordsList.Contains(currentlyMarkedCoords))
                 {
                     buttonBackgroundList[coordsOld.Col][coordsOld.Row] = Colors.CellBackgroundHighlighted;
                 }
@@ -1062,7 +1083,7 @@ namespace Sudoku.ViewModels
                 ButtonBackgroundList = buttonBackgroundList;
                 LabelSelectNumberOrMarker = "";
             }
-            else if (currentlyMarkedCoords != "" && conflictCoords.Contains(currentlyMarkedCoords))
+            else if (currentlyMarkedCoords != "" && conflictCoordsList.Contains(currentlyMarkedCoords))
             {
                 Coords coordsOld = new Coords(int.Parse(currentlyMarkedCoords[0].ToString()), int.Parse(currentlyMarkedCoords[1].ToString()));
                 buttonBackgroundList[coordsOld.Col][coordsOld.Row] = Colors.CellBackgroundConflicts;
@@ -1070,8 +1091,8 @@ namespace Sudoku.ViewModels
         }
         private void BackgroundReset()
         {
-            conflictCoords.Clear();
-            highlightedCoords.Clear();
+            conflictCoordsList.Clear();
+            highlightedCoordsList.Clear();
             buttonBackgroundList.Clear();
             buttonBackgroundList.InitializeList();
             ButtonBackgroundList = buttonBackgroundList;
@@ -1084,13 +1105,13 @@ namespace Sudoku.ViewModels
             for (int i = 0; i < 9; i++)
             {
                 string tempCoords = coords.Col.ToString() + i.ToString();
-                if (!highlightedCoords.Contains(tempCoords))
+                if (!highlightedCoordsList.Contains(tempCoords))
                 {
-                    if (!conflictCoords.Contains(tempCoords))
+                    if (!conflictCoordsList.Contains(tempCoords))
                     {
                         buttonBackgroundList[coords.Col][i] = Colors.CellBackgroundHighlighted;
                     }
-                    highlightedCoords.Add(tempCoords);
+                    highlightedCoordsList.Add(tempCoords);
                 }
             }
 
@@ -1098,13 +1119,13 @@ namespace Sudoku.ViewModels
             for (int i = 0; i < 9; i++)
             {
                 string tempCoords = i.ToString() + coords.Row.ToString();
-                if (!highlightedCoords.Contains(tempCoords))
+                if (!highlightedCoordsList.Contains(tempCoords))
                 {
-                    if (!conflictCoords.Contains(tempCoords))
+                    if (!conflictCoordsList.Contains(tempCoords))
                     {
                         buttonBackgroundList[i][coords.Row] = Colors.CellBackgroundHighlighted;
                     }
-                    highlightedCoords.Add(tempCoords);
+                    highlightedCoordsList.Add(tempCoords);
                 }
             }
 
@@ -1117,13 +1138,13 @@ namespace Sudoku.ViewModels
                 for (int j = col; j < col + 3; j++)
                 {
                     string tempCoords = j.ToString() + i.ToString();
-                    if (!highlightedCoords.Contains(tempCoords))
+                    if (!highlightedCoordsList.Contains(tempCoords))
                     {
-                        if (!conflictCoords.Contains(tempCoords))
+                        if (!conflictCoordsList.Contains(tempCoords))
                         {
                             buttonBackgroundList[j][i] = Colors.CellBackgroundHighlighted;
                         }
-                        highlightedCoords.Add(tempCoords);
+                        highlightedCoordsList.Add(tempCoords);
                     }
                 }
             }
@@ -1131,15 +1152,15 @@ namespace Sudoku.ViewModels
         }
         private void UnhighlightColRowSquare()
         {
-            for (int i = 0; i < highlightedCoords.Count; i++)
+            for (int i = 0; i < highlightedCoordsList.Count; i++)
             {
-                if (!conflictCoords.Contains(highlightedCoords[i]))
+                if (!conflictCoordsList.Contains(highlightedCoordsList[i]))
                 {
-                    buttonBackgroundList[int.Parse(highlightedCoords[i][0].ToString())][int.Parse(highlightedCoords[i][1].ToString())] = Colors.CellBackgroundDefault;
+                    buttonBackgroundList[int.Parse(highlightedCoordsList[i][0].ToString())][int.Parse(highlightedCoordsList[i][1].ToString())] = Colors.CellBackgroundDefault;
                 }
                 else
                 {
-                    buttonBackgroundList[int.Parse(highlightedCoords[i][0].ToString())][int.Parse(highlightedCoords[i][1].ToString())] = Colors.CellBackgroundConflicts;
+                    buttonBackgroundList[int.Parse(highlightedCoordsList[i][0].ToString())][int.Parse(highlightedCoordsList[i][1].ToString())] = Colors.CellBackgroundConflicts;
                 }
             }
             if (currentlyMarkedCoords != "")
@@ -1147,7 +1168,7 @@ namespace Sudoku.ViewModels
                 buttonBackgroundList[int.Parse(currentlyMarkedCoords[0].ToString())][int.Parse(currentlyMarkedCoords[1].ToString())] = Colors.CellBackgroundConflictsSelected;
             }
             ButtonBackgroundList = buttonBackgroundList;
-            highlightedCoords.Clear();
+            highlightedCoordsList.Clear();
         }
         private async Task NewGame(string difficulty)
         {
@@ -1161,15 +1182,17 @@ namespace Sudoku.ViewModels
             {
                 await preloadGameEasy;
                 NumberList = numberListPreloadedEasy;
-                generatorCoords = generatorCoordsPreloadedEasy;
+                generatorCoordsList = generatorCoordsPreloadedEasy;
                 NumberColorList = numberColorListPreloadedEasy;
+                currentDifficulty = "Easy";
             }
             else if (difficulty == "Medium")
             {
                 await preloadGameMedium;
                 NumberList = numberListPreloadedMedium;
-                generatorCoords = generatorCoordsPreloadedMedium;
+                generatorCoordsList = generatorCoordsPreloadedMedium;
                 NumberColorList = numberColorListPreloadedMedium;
+                currentDifficulty = "Medium";
             }
             else if (difficulty == "Hard")
             {
@@ -1179,9 +1202,10 @@ namespace Sudoku.ViewModels
                 }
                 await preloadGameHard;
                 NumberList = numberListPreloadedHard;
-                generatorCoords = generatorCoordsPreloadedHard;
+                generatorCoordsList = generatorCoordsPreloadedHard;
                 NumberColorList = numberColorListPreloadedHard;
                 LabelSingleSolutionWaitVisibility = "Hidden";
+                currentDifficulty = "Hard";
             }
 
             preloadGameEasy = PreloadGame("Easy");
@@ -1207,12 +1231,27 @@ namespace Sudoku.ViewModels
                 while (doRun)
                 {
                     tempNumberList.InitializeList();
-
                     SolverGameLogic solverGameLogic = new SolverGameLogic(tempNumberList);
                     solverGameLogic.FillSudoku();
-                    NumberListModel numberListSolved = solverGameLogic.NumberListSolved;
+                    if (difficulty == "Easy")
+                    {
+                        numberListEasySolved.InitializeList();
+                        numberListEasySolved = solverGameLogic.NumberListSolved;
+                        generatorGameLogic = new GeneratorGameLogic(difficulty, new NumberListModel(numberListEasySolved));
+                    }
+                    else if (difficulty == "Medium")
+                    {
+                        numberListMediumSolved.InitializeList();
+                        numberListMediumSolved = solverGameLogic.NumberListSolved;
+                        generatorGameLogic = new GeneratorGameLogic(difficulty, new NumberListModel(numberListMediumSolved));
+                    }
+                    else if (difficulty == "Hard")
+                    {
+                        numberListHardSolved.InitializeList();
+                        numberListHardSolved = solverGameLogic.NumberListSolved;
+                        generatorGameLogic = new GeneratorGameLogic(difficulty, new NumberListModel(numberListHardSolved));
+                    }
 
-                    generatorGameLogic = new GeneratorGameLogic(difficulty, numberListSolved);
                     generatorGameLogic.GenerateSudoku(menuSingleSolutionCheck);
 
                     if (generatorGameLogic.Counter == generatorGameLogic.removeNumbers)
@@ -1295,13 +1334,13 @@ namespace Sudoku.ViewModels
             LabelValidate = Resources.LabelValidateNoConflicts;
             LabelValidateBackground = Colors.LabelValidateHasNoConflicts;
 
-            foreach (string coords in conflictCoords)
+            foreach (string coords in conflictCoordsList)
             {
                 if (currentlyMarkedCoords == coords)
                 {
                     buttonBackgroundList[int.Parse(coords[0].ToString())][int.Parse(coords[1].ToString())] = Colors.CellBackgroundSelected;
                 }
-                else if (highlightedCoords.Contains(coords))
+                else if (highlightedCoordsList.Contains(coords))
                 {
                     buttonBackgroundList[int.Parse(coords[0].ToString())][int.Parse(coords[1].ToString())] = Colors.CellBackgroundHighlighted;
                 }
@@ -1311,7 +1350,7 @@ namespace Sudoku.ViewModels
                 }
             }
             ButtonBackgroundList = buttonBackgroundList;
-            conflictCoords.Clear();
+            conflictCoordsList.Clear();
 
             for (int col = 0; col < 9; col++)
             {
@@ -1326,7 +1365,7 @@ namespace Sudoku.ViewModels
                         buttonBackgroundList[col][row] = Colors.CellBackgroundConflicts;
                         ButtonBackgroundList = buttonBackgroundList;
                         string stringCoords = col.ToString() + row.ToString();
-                        conflictCoords.Add(stringCoords);
+                        conflictCoordsList.Add(stringCoords);
                     }
                 }
             }
