@@ -30,7 +30,7 @@ A graphical version of the Sudoku game written in C#. The [Windows](https://gith
 |Key|Action|
 |-|-|
 |Numbers 1-9|place a number / marker (after left / right click)|
-|Delete Key|delete a number / all markers (after left / right click)|
+|Delete Key|delete a number / all markers of current cell (after left / right click)|
 
 ### Screenshots:
 
