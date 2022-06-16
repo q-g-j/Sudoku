@@ -62,25 +62,25 @@ namespace Sudoku.ViewModels
             preloadGameHard = PreloadGame("Hard");
 
             // initialize commands:
-            MenuNewGameCommand = new AsyncRelayCommand(MenuNewGameAction);
-            MenuEmptySudokuCommand = new AsyncRelayCommand(MenuEmptySudokuAction);
-            MenuSolveCommand = new AsyncRelayCommand(MenuSolveAction);
-            MenuFillAllMarkersCommand = new AsyncRelayCommand(MenuFillAllMarkersAction);
-            MenuSettingsSingleSolutionCommand = new AsyncRelayCommand(MenuSettingsSingleSolutionAction);
-            MenuSaveToSlotCommand = new AsyncRelayCommand<object>(o => MenuSaveToSlotAction(o));
-            MenuLoadFromSlotCommand = new AsyncRelayCommand<object>(o => MenuLoadFromSlotAction(o));
-            MenuDeleteAllSlotsCommand = new AsyncRelayCommand(MenuDeleteAllSlotsAction);
+            MenuNewGameCommand = new RelayCommand(MenuNewGameAction);
+            MenuEmptySudokuCommand = new RelayCommand(MenuEmptySudokuAction);
+            MenuSolveCommand = new RelayCommand(MenuSolveAction);
+            MenuFillAllMarkersCommand = new RelayCommand(MenuFillAllMarkersAction);
+            MenuSettingsSingleSolutionCommand = new RelayCommand(MenuSettingsSingleSolutionAction);
+            MenuSaveToSlotCommand = new RelayCommand<object>(o => MenuSaveToSlotAction(o));
+            MenuLoadFromSlotCommand = new RelayCommand<object>(o => MenuLoadFromSlotAction(o));
+            MenuDeleteAllSlotsCommand = new RelayCommand(MenuDeleteAllSlotsAction);
             MenuPrintCommand = new RelayCommand<object>(o => MenuPrintAction(o));
             MenuQuitCommand = new RelayCommand(MenuQuitAction);
             ButtonDifficultyEasyCommand = new AsyncRelayCommand(ButtonDifficultyEasyAction);
             ButtonDifficultyMediumCommand = new AsyncRelayCommand(ButtonDifficultyMediumAction);
             ButtonDifficultyHardCommand = new AsyncRelayCommand(ButtonDifficultyHardAction);
-            ButtonSelectNumberOrMarkerCommand = new AsyncRelayCommand<object>(o => ButtonSelectNumberOrMarkerAction(o));
+            ButtonSelectNumberOrMarkerCommand = new RelayCommand<object>(o => ButtonSelectNumberOrMarkerAction(o));
 
             ButtonSquareDownCommand = new AsyncRelayCommand<object>(o => ButtonSquareDownAction(o));
             ButtonSquareUpCommand = new AsyncRelayCommand<object>(o => ButtonSquareUpAction(o));
-            ButtonSquareMouseEnterCommand = new AsyncRelayCommand<object>(o => ButtonSquareMouseEnterAction(o));
-            ButtonSquareMouseLeaveCommand = new AsyncRelayCommand<object>(o => ButtonSquareMouseLeaveAction(o));
+            ButtonSquareMouseEnterCommand = new RelayCommand<object>(o => ButtonSquareMouseEnterAction(o));
+            ButtonSquareMouseLeaveCommand = new RelayCommand<object>(o => ButtonSquareMouseLeaveAction(o));
             KeyboardCommand = new RelayCommand<object>(o => KeyboardAction(o));
 
             // load app settings from file:
@@ -154,26 +154,26 @@ namespace Sudoku.ViewModels
         #endregion Property Values
 
         #region Properties
-        public IAsyncRelayCommand MenuNewGameCommand { get; }
-        public IAsyncRelayCommand MenuEmptySudokuCommand { get; }
-        public IAsyncRelayCommand MenuSolveCommand { get; }
-        public IAsyncRelayCommand MenuFillAllMarkersCommand { get; }
-        public IAsyncRelayCommand MenuSettingsCommand { get; }
-        public IAsyncRelayCommand MenuSettingsSingleSolutionCommand { get; }
-        public IAsyncRelayCommand MenuSaveToSlotCommand { get; }
-        public IAsyncRelayCommand MenuLoadFromSlotCommand { get; }
-        public IAsyncRelayCommand MenuDeleteAllSlotsCommand { get; }
+        public RelayCommand MenuNewGameCommand { get; }
+        public RelayCommand MenuEmptySudokuCommand { get; }
+        public RelayCommand MenuSolveCommand { get; }
+        public RelayCommand MenuFillAllMarkersCommand { get; }
+        public RelayCommand MenuSettingsCommand { get; }
+        public RelayCommand MenuSettingsSingleSolutionCommand { get; }
+        public RelayCommand<object> MenuSaveToSlotCommand { get; }
+        public RelayCommand<object> MenuLoadFromSlotCommand { get; }
+        public RelayCommand MenuDeleteAllSlotsCommand { get; }
         public RelayCommand<object> MenuPrintCommand { get; }
         public RelayCommand MenuQuitCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyEasyCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyMediumCommand { get; }
         public IAsyncRelayCommand ButtonDifficultyHardCommand { get; }
-        public IAsyncRelayCommand ButtonSelectNumberOrMarkerCommand { get; }
-        public IAsyncRelayCommand ButtonSelectMarkerCommand { get; }
+        public RelayCommand<object> ButtonSelectNumberOrMarkerCommand { get; }
+        public RelayCommand<object> ButtonSelectMarkerCommand { get; }
         public IAsyncRelayCommand ButtonSquareDownCommand { get; }
         public IAsyncRelayCommand ButtonSquareUpCommand { get; }
-        public IAsyncRelayCommand ButtonSquareMouseEnterCommand { get; }
-        public IAsyncRelayCommand ButtonSquareMouseLeaveCommand { get; }
+        public RelayCommand<object> ButtonSquareMouseEnterCommand { get; }
+        public RelayCommand<object> ButtonSquareMouseLeaveCommand { get; }
         public RelayCommand<object> KeyboardCommand { get; }
 
         public List<string> MenuSaveSlotsLoadText
@@ -264,26 +264,21 @@ namespace Sudoku.ViewModels
         #endregion Properties
 
         #region Command Actions
-        private async Task MenuNewGameAction()
+        private void MenuNewGameAction()
         {
             if (!doBlockInput)
             {
-                await Task.Run(() =>
-                {
-                    currentlyMarkedCoords = "";
-                    BackgroundReset();
-                    LabelSelectNumberOrMarker = "";
-                    ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
-                    SelectDifficultyVisibility = "Visible";
-                });
+                currentlyMarkedCoords = "";
+                BackgroundReset();
+                LabelSelectNumberOrMarker = "";
+                ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
+                SelectDifficultyVisibility = "Visible";
             }
         }
-        private async Task MenuEmptySudokuAction()
+        private void MenuEmptySudokuAction()
         {
             if (! doBlockInput)
             {
-                await Task.Run(() =>
-                {
                     currentlyMarkedCoords = "";
                     BackgroundReset();
                     LabelSelectNumberOrMarker = "";
@@ -304,15 +299,12 @@ namespace Sudoku.ViewModels
                     NumberList = numberList;
                     MarkerList = markerList;
                     NumberColorList = numberColorList;
-                });
             }
         }
-        private async Task MenuSolveAction()
+        private void MenuSolveAction()
         {
             if (! doBlockInput)
             {
-                await Task.Run(() =>
-                {
                     currentlyMarkedCoords = "";
                     LabelSelectNumberOrMarker = "";
                     ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
@@ -366,15 +358,12 @@ namespace Sudoku.ViewModels
                         }
                     }
                     CheckIsFull();
-                });
             }
         }
-        private async Task MenuFillAllMarkersAction()
+        private void MenuFillAllMarkersAction()
         {
             if (!doBlockInput)
             {
-                await Task.Run(() =>
-                {
                     markerList = new MarkerListModel();
                     markerList.InitializeList();
 
@@ -453,16 +442,12 @@ namespace Sudoku.ViewModels
                         }
                         MarkerList = markerList;
                     }
-                });
             }
         }
-
-        private async Task MenuSettingsSingleSolutionAction()
+        private void MenuSettingsSingleSolutionAction()
         {
             if (!doBlockInput)
             {
-                await Task.Run(() =>
-                {
                     if (menuSingleSolutionCheck == "True")
                     {
                         appSettings.ChangeSingleSolution(true);
@@ -471,15 +456,12 @@ namespace Sudoku.ViewModels
                     {
                         appSettings.ChangeSingleSolution(false);
                     }
-                });
             }
         }
-        private async Task MenuSaveToSlotAction(object o)
+        private void MenuSaveToSlotAction(object o)
         {
             if (! doBlockInput)
             {
-                await Task.Run(() =>
-                {
                     currentlyMarkedCoords = "";
                     BackgroundReset();
                     LabelSelectNumberOrMarker = "";
@@ -497,15 +479,12 @@ namespace Sudoku.ViewModels
                         else if (slotNumber == "5") tempLoadList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5 + " (" + now + ")";
                         MenuSaveSlotsLoadText = tempLoadList;
                     }
-                });
             }
         }
-        private async Task MenuLoadFromSlotAction(object o)
+        private void MenuLoadFromSlotAction(object o)
         {
             if (! doBlockInput)
             {
-                await Task.Run(() =>
-                {
                     currentlyMarkedCoords = "";
                     BackgroundReset();
                     LabelSelectNumberOrMarker = "";
@@ -522,15 +501,12 @@ namespace Sudoku.ViewModels
                         generatorCoordsList = saveSlot.GeneratorNumberList;
                         ValidateAll();
                     }
-                });
             }
         }
-        private async Task MenuDeleteAllSlotsAction()
+        private void MenuDeleteAllSlotsAction()
         {
             if (!doBlockInput)
             {
-                await Task.Run(() =>
-                {
                     for (int i = 1; i < 6; i++)
                     {
                         string filename = Path.Combine(folderAppSettings, "slot" + i.ToString() + ".json");
@@ -547,7 +523,6 @@ namespace Sudoku.ViewModels
                     tempLoadList[3] = Resources.MenuGameSaveSlotsLoadFromSlot4;
                     tempLoadList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5;
                     MenuSaveSlotsLoadText = tempLoadList;
-                });
             }
         }
         private void MenuPrintAction(object o)
@@ -638,12 +613,12 @@ namespace Sudoku.ViewModels
         private async Task ButtonSquareDownAction(object o)
         {
             var e = (MouseButtonEventArgs)((CompositeCommandParameter)o).EventArgs;
-            if (! doBlockInput)
+            if (!doBlockInput)
             {
-                var param = (string)((CompositeCommandParameter)o).Parameter;
-
                 await Task.Run(() =>
                 {
+                    var param = (string)((CompositeCommandParameter)o).Parameter;
+
                     if (e.ChangedButton == MouseButton.Left)
                     {
                         if (SelectDifficultyVisibility == "Visible")
@@ -742,180 +717,95 @@ namespace Sudoku.ViewModels
         private async Task ButtonSquareUpAction(object o)
         {
             var e = (MouseButtonEventArgs)((CompositeCommandParameter)o).EventArgs;
-            if (! doBlockInput)
+            await Task.Run(() =>
             {
-                await Task.Run(() =>
-                {
-                });
-            }
-
+            });
             e.Handled = true;
         }
-        private async Task ButtonSquareMouseEnterAction(object o)
+        private void ButtonSquareMouseEnterAction(object o)
         {
             var e = (MouseEventArgs)((CompositeCommandParameter)o).EventArgs;
             if (!doBlockInput)
             {
-                await Task.Run(() =>
-                {
-                    var param = (string)((CompositeCommandParameter)o).Parameter;
-                    Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
-                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundMouseOver;
-                    ButtonBackgroundList = buttonBackgroundList;
-                });
+                var param = (string)((CompositeCommandParameter)o).Parameter;
+                Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
+                buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundMouseOver;
+                ButtonBackgroundList = buttonBackgroundList;
             }
 
             e.Handled = true;
         }
-        private async Task ButtonSquareMouseLeaveAction(object o)
+        private void ButtonSquareMouseLeaveAction(object o)
         {
             var e = (MouseEventArgs)((CompositeCommandParameter)o).EventArgs;
             if (!doBlockInput)
             {
-                await Task.Run(() =>
+                var param = (string)((CompositeCommandParameter)o).Parameter;
+                Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
+                if (conflictCoordsList.Contains(param))
                 {
-                    var param = (string)((CompositeCommandParameter)o).Parameter;
-                    Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
-                    if (conflictCoordsList.Contains(param))
+                    if (currentlyMarkedCoords == param)
                     {
-                        if (currentlyMarkedCoords == param)
-                        {
-                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundConflictsSelected;
-                        }
-                        else
-                        {
-                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundConflicts;
-                        }
-                    }
-                    else if (currentlyMarkedCoords == param)
-                    {
-                        buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundSelected;
+                        buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundConflictsSelected;
                     }
                     else
                     {
-                        if (highlightedCoordsList.Contains(param))
-                        {
-                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundHighlighted;
-                        }
-                        else
-                        {
-                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundDefault;
-                        }
+                        buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundConflicts;
                     }
-                    ButtonBackgroundList = buttonBackgroundList;
-                });
+                }
+                else if (currentlyMarkedCoords == param)
+                {
+                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundSelected;
+                }
+                else
+                {
+                    if (highlightedCoordsList.Contains(param))
+                    {
+                        buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundHighlighted;
+                    }
+                    else
+                    {
+                        buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundDefault;
+                    }
+                }
+                ButtonBackgroundList = buttonBackgroundList;
             }
 
             e.Handled = true;
         }
         private void KeyboardAction(object o)
         {
-            string key = (string)o;
-            if (currentlyMarkedCoords != "")
+            if (!doBlockInput)
             {
-                int col = int.Parse(currentlyMarkedCoords[0].ToString());
-                int row = int.Parse(currentlyMarkedCoords[1].ToString());
-                if (leftOrRightClicked == "Left")
+                string key = (string)o;
+                if (currentlyMarkedCoords != "")
                 {
-                    if (key != "X")
-                    {
-                        numberList[col][row] = key;
-                    }
-                    else
-                    {
-                        numberList[col][row] = "";
-                    }
-                    NumberList = numberList;
-                }
-                else if (leftOrRightClicked == "Right")
-                {
-                    if (key != "X")
-                    {
-                        if (key == "1")
-                        {
-                            if (markerList[col][row][0][0] != "") { markerList[col][row][0][0] = ""; }
-                            else { markerList[col][row][0][0] = "1"; }
-                        }
-                        else if (key == "2")
-                        {
-                            if (markerList[col][row][1][0] != "") { markerList[col][row][1][0] = ""; }
-                            else { markerList[col][row][1][0] = "2"; }
-                        }
-                        else if (key == "3")
-                        {
-                            if (markerList[col][row][2][0] != "") { markerList[col][row][2][0] = ""; }
-                            else { markerList[col][row][2][0] = "3"; }
-                        }
-                        else if (key == "4")
-                        {
-                            if (markerList[col][row][3][0] != "") { markerList[col][row][3][0] = ""; }
-                            else { markerList[col][row][3][0] = "4"; }
-                        }
-                        else if (key == "5")
-                        {
-                            if (markerList[col][row][0][1] != "") { markerList[col][row][0][1] = ""; }
-                            else { markerList[col][row][0][1] = "5"; }
-                        }
-                        else if (key == "6")
-                        {
-                            if (markerList[col][row][3][1] != "") { markerList[col][row][3][1] = ""; }
-                            else { markerList[col][row][3][1] = "6"; }
-                        }
-                        else if (key == "7")
-                        {
-                            if (markerList[col][row][0][2] != "") { markerList[col][row][0][2] = ""; }
-                            else { markerList[col][row][0][2] = "7"; }
-                        }
-                        else if (key == "8")
-                        {
-                            if (markerList[col][row][1][2] != "") { markerList[col][row][1][2] = ""; }
-                            else { markerList[col][row][1][2] = "8"; }
-                        }
-                        else if (key == "9")
-                        {
-                            if (markerList[col][row][2][2] != "") { markerList[col][row][2][2] = ""; }
-                            else { markerList[col][row][2][2] = "9"; }
-                        }
-                    }
-                    else
-                    {
-                        for (int j = 0; j < 3; j++)
-                        {
-                            for (int i = 0; i < 4; i++)
-                            {
-                                if ((i == 1 && j == 1) || (i == 2 && j == 1) || (i == 3 && j == 2))
-                                {
-                                    continue;
-                                }
-                                else
-                                {
-                                    markerList[col][row][i][j] = "";
-                                }
-                            }
-                        }
-                    }
-                    MarkerList = markerList;
-                }
-
-            }
-        }
-        private async Task ButtonSelectNumberOrMarkerAction(object o)
-        {
-            if (! doBlockInput)
-            {
-                await Task.Run(() =>
-                {
-                    var tag = (string)o;
-                    string param = currentlyMarkedCoords + tag;
+                    string button = currentlyMarkedCoords + key;
                     if (leftOrRightClicked == "Left")
                     {
-                        ChangeNumber(param);
+                        ChangeNumber(button);
                     }
                     else if (leftOrRightClicked == "Right")
                     {
-                        ChangeMarker(param);
+                        ChangeMarker(button);
                     }
-                });
+                }
+            }
+        }
+        private void ButtonSelectNumberOrMarkerAction(object o)
+        {
+            if (! doBlockInput)
+            {
+                var tag = (string)o;
+                string param = currentlyMarkedCoords + tag;
+                if (leftOrRightClicked == "Left")
+                {
+                    ChangeNumber(param);
+                }
+                else if (leftOrRightClicked == "Right")
+                {
+                    ChangeMarker(param);
+                }
             }
         }
         #endregion Command Actions

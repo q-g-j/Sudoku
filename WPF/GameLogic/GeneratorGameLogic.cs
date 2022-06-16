@@ -10,12 +10,12 @@ namespace Sudoku.GameLogic
     public class GeneratorGameLogic
     {
         #region Constructors
-        public GeneratorGameLogic(string _difficulty, NumberListModel _numberList)
+        public GeneratorGameLogic(string difficulty, NumberListModel numberList)
         {
             random = new Random();
             checkedList = new List<string>();
             coordsList = new List<Coords>();
-            NumberList = _numberList;
+            NumberList = numberList;
 
             for (int col = 0; col < 9; col++)
             {
@@ -25,15 +25,15 @@ namespace Sudoku.GameLogic
                 }
             }
 
-            if (_difficulty == "Easy")
+            if (difficulty == "Easy")
             {
                 removeNumbers = 42; // 42
             }
-            else if (_difficulty == "Medium")
+            else if (difficulty == "Medium")
             {
                 removeNumbers = 50; // 50
             }
-            else if (_difficulty == "Hard")
+            else if (difficulty == "Hard")
             {
                 removeNumbers = 54; // 57
             }
@@ -87,7 +87,7 @@ namespace Sudoku.GameLogic
                     {
                         checkedList.Add(coords.Col.ToString() + coords.Row.ToString());
                     }
-                    if (Counter < removeNumbers && Tries < 25)
+                    if (Counter < removeNumbers && Tries < 20)
                     {
                         GenerateSudoku(doSingleSolution);
                     }
