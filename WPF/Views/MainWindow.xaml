@@ -32,6 +32,17 @@
         <KeyBinding Key="D7" Command="{Binding KeyboardCommand}" CommandParameter="7"/>
         <KeyBinding Key="D8" Command="{Binding KeyboardCommand}" CommandParameter="8"/>
         <KeyBinding Key="D9" Command="{Binding KeyboardCommand}" CommandParameter="9"/>
+        
+        <KeyBinding Key="NumPad1" Command="{Binding KeyboardCommand}" CommandParameter="1"/>
+        <KeyBinding Key="NumPad2" Command="{Binding KeyboardCommand}" CommandParameter="2"/>
+        <KeyBinding Key="NumPad3" Command="{Binding KeyboardCommand}" CommandParameter="3"/>
+        <KeyBinding Key="NumPad4" Command="{Binding KeyboardCommand}" CommandParameter="4"/>
+        <KeyBinding Key="NumPad5" Command="{Binding KeyboardCommand}" CommandParameter="5"/>
+        <KeyBinding Key="NumPad6" Command="{Binding KeyboardCommand}" CommandParameter="6"/>
+        <KeyBinding Key="NumPad7" Command="{Binding KeyboardCommand}" CommandParameter="7"/>
+        <KeyBinding Key="NumPad8" Command="{Binding KeyboardCommand}" CommandParameter="8"/>
+        <KeyBinding Key="NumPad9" Command="{Binding KeyboardCommand}" CommandParameter="9"/>
+        
         <KeyBinding Gesture="Delete" Command="{Binding KeyboardCommand}" CommandParameter="X"/>
     </Window.InputBindings>
 
