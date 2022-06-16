@@ -1192,14 +1192,12 @@ namespace Sudoku.ViewModels
             await Task.Run(() =>
             {
                 GeneratorGameLogic generatorGameLogic = null;
-                NumberListModel tempNumberList = new NumberListModel();
                 NumberColorListModel tempNumberColorList = new NumberColorListModel();
                 bool doRun = true;
 
                 while (doRun)
                 {
-                    tempNumberList.InitializeList();
-                    SolverGameLogic solverGameLogic = new SolverGameLogic(tempNumberList);
+                    SolverGameLogic solverGameLogic = new SolverGameLogic(numberList);
                     solverGameLogic.FillSudoku();
                     if (difficulty == "Easy")
                     {
@@ -1252,23 +1250,21 @@ namespace Sudoku.ViewModels
                     tempNumberColorList[col][row] = Colors.CellNumberGenerator;
                 }
 
-                tempNumberList = generatorGameLogic.NumberList;
-
                 if (difficulty == "Easy")
                 {
-                    numberListPreloadedEasy = tempNumberList;
+                    numberListPreloadedEasy = new NumberListModel(generatorGameLogic.NumberList);
                     numberColorListPreloadedEasy = tempNumberColorList;
                     generatorCoordsPreloadedEasy = tempGeneratorCoords;
                 }
                 else if (difficulty == "Medium")
                 {
-                    numberListPreloadedMedium = tempNumberList;
+                    numberListPreloadedMedium = new NumberListModel(generatorGameLogic.NumberList);
                     numberColorListPreloadedMedium = tempNumberColorList;
                     generatorCoordsPreloadedMedium = tempGeneratorCoords;
                 }
                 else if (difficulty == "Hard")
                 {
-                    numberListPreloadedHard = tempNumberList;
+                    numberListPreloadedHard = new NumberListModel(generatorGameLogic.NumberList);
                     numberColorListPreloadedHard = tempNumberColorList;
                     generatorCoordsPreloadedHard = tempGeneratorCoords;
                 }
