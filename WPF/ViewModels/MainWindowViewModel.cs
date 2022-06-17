@@ -393,20 +393,20 @@ namespace Sudoku.ViewModels
                             NumberList = new NumberListModel(solverGameLogic.NumberListSolved);
                         }
                     }
-                }
-                if (solverGameLogic.Tries < 100000 && solverGameLogic.NumberListSolved != null)
-                {
-                    ValidateAll(false);
-                    SelectNumberOrMarkerVisibility = "Collapsed";
-                    ValidationVisibility = "Visible";
-                }
-                else
-                {
-                    LabelValidate = Resources.LabelValidateUnsolvable;
-                    LabelValidateBackground = Colors.LabelValidateHasConflicts;
-                    SelectNumberOrMarkerVisibility = "Collapsed";
-                    LabelValidateVisibility = "Visible";
-                    ValidationVisibility = "Visible";
+                    if (solverGameLogic.Tries < 100000 && solverGameLogic.NumberListSolved != null)
+                    {
+                        ValidateAll(false);
+                        SelectNumberOrMarkerVisibility = "Collapsed";
+                        ValidationVisibility = "Visible";
+                    }
+                    else
+                    {
+                        LabelValidate = Resources.LabelValidateUnsolvable;
+                        LabelValidateBackground = Colors.LabelValidateHasConflicts;
+                        SelectNumberOrMarkerVisibility = "Collapsed";
+                        LabelValidateVisibility = "Visible";
+                        ValidationVisibility = "Visible";
+                    }
                 }
             }
         }
