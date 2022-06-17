@@ -10,34 +10,36 @@ namespace Sudoku.GameLogic
         #region Constructors
         public SolverGameLogic(NumberListModel list)
         {
-            numberList = new NumberListModel(list);
+            NumberList = new NumberListModel(list);
             random = new Random();
             Tries = 0;
+            isFull = false;
         }
         #endregion Constructors
 
         #region Fields
-        private readonly NumberListModel numberList;
-        public NumberListModel NumberListSolved;
+        internal readonly NumberListModel NumberList;
+        internal NumberListModel NumberListSolved;
         private readonly Random random;
-        public int Tries;
+        internal int Tries;
+        private bool isFull;
         #endregion Fields
 
         #region Methods
         public static bool IsFull(NumberListModel numberList)
         {
-            bool isFull = true;
+            bool _isFull = true;
             for (int row = 0; row < 9; row++)
             {
                 for (int col = 0; col < 9; col++)
                 {
                     if (numberList[col][row] == "")
                     {
-                        isFull = false;
+                        _isFull = false;
                     }
                 }
             }
-            return isFull;
+            return _isFull;
         }
 
         private void CopySolution(NumberListModel numberList)
@@ -51,24 +53,25 @@ namespace Sudoku.GameLogic
             {
                 for (int col = 0; col < 9; col++)
                 {
-                    if (numberList[col][row] == "" && Tries < 100000)
+                    if (NumberList[col][row] == "")
                     {
                         Tries += 1;
                         int[] shuffledIntList = Enumerable.Range(1, 9).OrderBy(c => random.Next().ToString()).ToArray();
                         foreach (int item in shuffledIntList)
                         {
                             string number = item.ToString();
-                            if (ValidatorGameLogic.IsValid(numberList, col, row, number))
+                            if (ValidatorGameLogic.IsValid(NumberList, col, row, number))
                             {
-                                numberList[col][row] = number;
-                                if (IsFull(numberList))
+                                NumberList[col][row] = number;
+                                if (IsFull(NumberList))
                                 {
-                                    CopySolution(numberList);
+                                    isFull = true;
+                                    CopySolution(NumberList);
                                 }
-                                else
+                                else if (Tries <= 100000 && !isFull)
                                 {
                                     FillSudoku();
-                                    numberList[col][row] = "";
+                                    NumberList[col][row] = "";
                                 }
                             }
                         }

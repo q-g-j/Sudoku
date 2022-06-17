@@ -328,7 +328,7 @@ namespace Sudoku.ViewModels
                 bool isValid = true;
                 LabelSelectNumberOrMarker = "";
                 ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
-                SolverGameLogic solverGameLogic = new SolverGameLogic(numberList);
+                SolverGameLogic solverGameLogic = new SolverGameLogic(NumberList);
                 if (!SolverGameLogic.IsFull(numberList))
                 {
                     //if (currentDifficulty == "")
@@ -352,14 +352,25 @@ namespace Sudoku.ViewModels
                     if (isValid)
                     {
                         HideOverlays();
-                        if (currentDifficulty == "")
+                        //if (currentDifficulty == "")
                         {
-                            doBlockInput = true;
                             LabelSingleSolutionWaitVisibility = "Visible";
                             var fillSudokuTask = FillSudokuTask(solverGameLogic);
+                            doBlockInput = true;
                             await fillSudokuTask;
-                            LabelSingleSolutionWaitVisibility = "Collapsed";
                             doBlockInput = false;
+                            LabelSingleSolutionWaitVisibility = "Collapsed";
+                            buttonBackgroundList.Clear();
+                            buttonBackgroundList.InitializeList();
+                            ButtonBackgroundList = buttonBackgroundList;
+
+                            if (currentlyMarkedCoords != "")
+                            {
+                                int col = int.Parse(currentlyMarkedCoords[0].ToString());
+                                int row = int.Parse(currentlyMarkedCoords[1].ToString());
+                                Coords coords = new Coords(col, row);
+                                HighlightColRowSquare(coords);
+                            }
                         }
                         markerList = new MarkerListModel();
                         numberColorList = new NumberColorListModel();
@@ -374,16 +385,16 @@ namespace Sudoku.ViewModels
                         }
                         MarkerList = markerList;
                         NumberColorList = numberColorList;
-                        if (currentDifficulty == "Easy") NumberList = new NumberListModel(numberListEasySolved);
-                        else if (currentDifficulty == "Medium") NumberList = new NumberListModel(numberListMediumSolved);
-                        else if (currentDifficulty == "Hard") NumberList = new NumberListModel(numberListHardSolved);
-                        else if (solverGameLogic.Tries < 100000)
+                        if (currentDifficulty == "Easy" && solverGameLogic.Tries < 100000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListEasySolved);
+                        else if (currentDifficulty == "Medium" && solverGameLogic.Tries < 100000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListMediumSolved);
+                        else if (currentDifficulty == "Hard" && solverGameLogic.Tries < 100000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListHardSolved);
+                        else if (solverGameLogic.Tries < 100000 && solverGameLogic.NumberListSolved != null)
                         {
                             NumberList = new NumberListModel(solverGameLogic.NumberListSolved);
                         }
                     }
                 }
-                if (solverGameLogic.Tries < 100000)
+                if (solverGameLogic.Tries < 100000 && solverGameLogic.NumberListSolved != null)
                 {
                     ValidateAll(false);
                     SelectNumberOrMarkerVisibility = "Collapsed";
