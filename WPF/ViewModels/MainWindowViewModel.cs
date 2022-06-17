@@ -370,6 +370,7 @@ namespace Sudoku.ViewModels
                                 int row = int.Parse(currentlyMarkedCoords[1].ToString());
                                 Coords coords = new Coords(col, row);
                                 HighlightColRowSquare(coords);
+                                buttonBackgroundList[col][row] = Colors.CellBackgroundSelected;
                             }
                         }
                         markerList = new MarkerListModel();
