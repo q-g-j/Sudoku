@@ -881,9 +881,23 @@ namespace Sudoku.ViewModels
                 }
                 else
                 {
+                    bool isEmpty = true;
+                    if (numberList[col][row] != "")
+                    {
+                        isEmpty = false;
+                    }
                     numberList[col][row] = number;
                     NumberList = numberList;
-                    CheckIsFull(true);
+                    if (isEmpty)
+                    {
+                        doStopTrophy = true;
+                        System.Threading.Thread.Sleep(100);
+                        CheckIsFull(true);
+                    }
+                    else
+                    {
+                        CheckIsFull(false);
+                    }
                     for (int j = 0; j < 3; j++)
                     {
                         for (int i = 0; i < 4; i++)
@@ -1378,7 +1392,7 @@ namespace Sudoku.ViewModels
         {
             await Task.Run(() =>
             {
-                for (int i = 1; i <= 501; i += 3)
+                for (int i = 1; i <= 501; i += 10)
                 {
                     HiPerfTimer pt = new HiPerfTimer();
                     if (doStopTrophy)
@@ -1388,7 +1402,7 @@ namespace Sudoku.ViewModels
                     }
                     TrophyWidth = i.ToString();
                     pt.Start();
-                    while(pt.Duration < 0.0022)
+                    while(pt.Duration < 0.01)
                     {
                         System.Threading.Thread.Sleep(0);
                         pt.Stop();
@@ -1396,7 +1410,7 @@ namespace Sudoku.ViewModels
                     pt = null;
                 }
 
-                for (int i = 1; i <= 1000; i += 1)
+                for (int i = 1; i <= 10; i += 1)
                 {
                     HiPerfTimer pt = new HiPerfTimer();
                     if (doStopTrophy)
@@ -1405,7 +1419,7 @@ namespace Sudoku.ViewModels
                         break;
                     }
                     pt.Start();
-                    while (pt.Duration < 0.001)
+                    while (pt.Duration < 0.1)
                     {
                         System.Threading.Thread.Sleep(0);
                         pt.Stop();
