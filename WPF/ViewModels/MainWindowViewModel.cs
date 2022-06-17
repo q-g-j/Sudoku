@@ -321,7 +321,7 @@ namespace Sudoku.ViewModels
                 NumberColorList = numberColorList;
             }
         }
-        private void MenuSolveAction()
+        private async void MenuSolveAction()
         {
             if (! doBlockInput)
             {
@@ -354,7 +354,12 @@ namespace Sudoku.ViewModels
                         HideOverlays();
                         if (currentDifficulty == "")
                         {
-                            solverGameLogic.FillSudoku();
+                            doBlockInput = true;
+                            LabelSingleSolutionWaitVisibility = "Visible";
+                            var fillSudokuTask = FillSudokuTask(solverGameLogic);
+                            await fillSudokuTask;
+                            LabelSingleSolutionWaitVisibility = "Collapsed";
+                            doBlockInput = false;
                         }
                         markerList = new MarkerListModel();
                         numberColorList = new NumberColorListModel();
@@ -393,6 +398,13 @@ namespace Sudoku.ViewModels
                     ValidationVisibility = "Visible";
                 }
             }
+        }
+        private async Task FillSudokuTask(SolverGameLogic solverGameLogic)
+        {
+            await Task.Run(() =>
+            {
+                solverGameLogic.FillSudoku();
+            });
         }
         private void MenuFillAllMarkersAction()
         {
