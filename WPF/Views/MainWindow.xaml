@@ -42,8 +42,9 @@
         <KeyBinding Key="NumPad7" Command="{Binding KeyboardCommand}" CommandParameter="7"/>
         <KeyBinding Key="NumPad8" Command="{Binding KeyboardCommand}" CommandParameter="8"/>
         <KeyBinding Key="NumPad9" Command="{Binding KeyboardCommand}" CommandParameter="9"/>
-        
+
         <KeyBinding Gesture="Delete" Command="{Binding KeyboardCommand}" CommandParameter="X"/>
+        <KeyBinding Gesture="Backspace" Command="{Binding KeyboardCommand}" CommandParameter="X"/>
     </Window.InputBindings>
 
     <DockPanel>
