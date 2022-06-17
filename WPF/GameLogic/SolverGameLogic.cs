@@ -12,6 +12,7 @@ namespace Sudoku.GameLogic
         {
             numberList = new NumberListModel(list);
             random = new Random();
+            Tries = 0;
         }
         #endregion Constructors
 
@@ -19,6 +20,7 @@ namespace Sudoku.GameLogic
         private readonly NumberListModel numberList;
         public NumberListModel NumberListSolved;
         private readonly Random random;
+        public int Tries;
         #endregion Fields
 
         #region Methods
@@ -49,8 +51,9 @@ namespace Sudoku.GameLogic
             {
                 for (int col = 0; col < 9; col++)
                 {
-                    if (numberList[col][row] == "")
+                    if (numberList[col][row] == "" && Tries < 100000)
                     {
+                        Tries += 1;
                         int[] shuffledIntList = Enumerable.Range(1, 9).OrderBy(c => random.Next().ToString()).ToArray();
                         foreach (int item in shuffledIntList)
                         {

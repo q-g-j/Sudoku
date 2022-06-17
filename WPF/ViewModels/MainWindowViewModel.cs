@@ -325,11 +325,12 @@ namespace Sudoku.ViewModels
         {
             if (! doBlockInput)
             {
+                bool isValid = true;
                 LabelSelectNumberOrMarker = "";
                 ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
+                SolverGameLogic solverGameLogic = new SolverGameLogic(numberList);
                 if (!SolverGameLogic.IsFull(numberList))
                 {
-                    bool isValid = true;
                     //if (currentDifficulty == "")
                     {
                         for (int col = 0; col < 9; col++)
@@ -351,7 +352,6 @@ namespace Sudoku.ViewModels
                     if (isValid)
                     {
                         HideOverlays();
-                        SolverGameLogic solverGameLogic = new SolverGameLogic(numberList);
                         if (currentDifficulty == "")
                         {
                             solverGameLogic.FillSudoku();
@@ -372,12 +372,18 @@ namespace Sudoku.ViewModels
                         if (currentDifficulty == "Easy") NumberList = new NumberListModel(numberListEasySolved);
                         else if (currentDifficulty == "Medium") NumberList = new NumberListModel(numberListMediumSolved);
                         else if (currentDifficulty == "Hard") NumberList = new NumberListModel(numberListHardSolved);
-                        else NumberList = new NumberListModel(solverGameLogic.NumberListSolved);
+                        else if (solverGameLogic.Tries < 100000)
+                        {
+                            NumberList = new NumberListModel(solverGameLogic.NumberListSolved);
+                        }
                     }
                 }
-                ValidateAll(false);
-                SelectNumberOrMarkerVisibility = "Collapsed";
-                ValidationVisibility = "Visible";
+                if (solverGameLogic.Tries < 100000)
+                {
+                    ValidateAll(false);
+                    SelectNumberOrMarkerVisibility = "Collapsed";
+                    ValidationVisibility = "Visible";
+                }
             }
         }
         private void MenuFillAllMarkersAction()
