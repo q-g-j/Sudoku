@@ -142,6 +142,15 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This Sudoku is not solvable!.
+        /// </summary>
+        public static string LabelValidateUnsolvable {
+            get {
+                return ResourceManager.GetString("LabelValidateUnsolvable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set all markers automatically.
         /// </summary>
         public static string MenuFillAllMarkers {

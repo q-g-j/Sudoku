@@ -384,6 +384,14 @@ namespace Sudoku.ViewModels
                     SelectNumberOrMarkerVisibility = "Collapsed";
                     ValidationVisibility = "Visible";
                 }
+                else
+                {
+                    LabelValidate = Resources.LabelValidateUnsolvable;
+                    LabelValidateBackground = Colors.LabelValidateHasConflicts;
+                    SelectNumberOrMarkerVisibility = "Collapsed";
+                    LabelValidateVisibility = "Visible";
+                    ValidationVisibility = "Visible";
+                }
             }
         }
         private void MenuFillAllMarkersAction()

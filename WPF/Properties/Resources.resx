@@ -144,6 +144,9 @@
   <data name="LabelValidateNoConflicts" xml:space="preserve">
     <value>No conflicts found!</value>
   </data>
+  <data name="LabelValidateUnsolvable" xml:space="preserve">
+    <value>This Sudoku is not solvable!</value>
+  </data>
   <data name="MenuFillAllMarkers" xml:space="preserve">
     <value>Set all markers automatically</value>
   </data>
