@@ -325,14 +325,12 @@ namespace Sudoku.ViewModels
         {
             if (! doBlockInput)
             {
-                currentlyMarkedCoords = "";
                 LabelSelectNumberOrMarker = "";
                 ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
-                BackgroundReset();
                 if (!SolverGameLogic.IsFull(numberList))
                 {
                     bool isValid = true;
-                    if (currentDifficulty == "")
+                    //if (currentDifficulty == "")
                     {
                         for (int col = 0; col < 9; col++)
                         {
@@ -377,7 +375,9 @@ namespace Sudoku.ViewModels
                         else NumberList = new NumberListModel(solverGameLogic.NumberListSolved);
                     }
                 }
-                CheckIsFull(false);
+                ValidateAll(false);
+                SelectNumberOrMarkerVisibility = "Collapsed";
+                ValidationVisibility = "Visible";
             }
         }
         private void MenuFillAllMarkersAction()
@@ -888,10 +888,14 @@ namespace Sudoku.ViewModels
                     }
                     numberList[col][row] = number;
                     NumberList = numberList;
-                    if (isEmpty)
+                    if (isEmpty && TrophyVisibility == "Visible")
                     {
                         doStopTrophy = true;
                         System.Threading.Thread.Sleep(100);
+                        CheckIsFull(true);
+                    }
+                    else if (isEmpty)
+                    {
                         CheckIsFull(true);
                     }
                     else
@@ -1378,7 +1382,7 @@ namespace Sudoku.ViewModels
             else if (doShowTrophy)
             {
                 doStopTrophy = true;
-                System.Threading.Thread.Sleep(1);
+                System.Threading.Thread.Sleep(100);
                 doStopTrophy = false;
                 HideOverlays();
                 
@@ -1397,7 +1401,6 @@ namespace Sudoku.ViewModels
                     HiPerfTimer pt = new HiPerfTimer();
                     if (doStopTrophy)
                     {
-                        pt = null;
                         break;
                     }
                     TrophyWidth = i.ToString();
@@ -1407,7 +1410,6 @@ namespace Sudoku.ViewModels
                         System.Threading.Thread.Sleep(0);
                         pt.Stop();
                     }
-                    pt = null;
                 }
 
                 for (int i = 1; i <= 10; i += 1)
@@ -1415,7 +1417,6 @@ namespace Sudoku.ViewModels
                     HiPerfTimer pt = new HiPerfTimer();
                     if (doStopTrophy)
                     {
-                        pt = null;
                         break;
                     }
                     pt.Start();
@@ -1424,7 +1425,6 @@ namespace Sudoku.ViewModels
                         System.Threading.Thread.Sleep(0);
                         pt.Stop();
                     }
-                    pt = null;
                 }
                 TrophyVisibility = "Collapsed";
             });
