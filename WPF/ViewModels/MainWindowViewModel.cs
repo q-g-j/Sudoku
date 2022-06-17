@@ -354,15 +354,14 @@ namespace Sudoku.ViewModels
                         HideOverlays();
                         //if (currentDifficulty == "")
                         {
+                            buttonBackgroundList.Clear();
+                            buttonBackgroundList.InitializeList();
+                            ButtonBackgroundList = buttonBackgroundList;
                             LabelSingleSolutionWaitVisibility = "Visible";
                             var fillSudokuTask = FillSudokuTask(solverGameLogic);
                             doBlockInput = true;
                             await fillSudokuTask;
-                            doBlockInput = false;
                             LabelSingleSolutionWaitVisibility = "Collapsed";
-                            buttonBackgroundList.Clear();
-                            buttonBackgroundList.InitializeList();
-                            ButtonBackgroundList = buttonBackgroundList;
 
                             if (currentlyMarkedCoords != "")
                             {
@@ -371,6 +370,7 @@ namespace Sudoku.ViewModels
                                 HighlightColRowSquare(new Coords(currentCol, currentRow));
                                 buttonBackgroundList[currentCol][currentRow] = Colors.CellBackgroundSelected;
                             }
+                            ButtonBackgroundList = buttonBackgroundList;
                         }
                         markerList = new MarkerListModel();
                         numberColorList = new NumberColorListModel();
@@ -385,15 +385,15 @@ namespace Sudoku.ViewModels
                         }
                         MarkerList = markerList;
                         NumberColorList = numberColorList;
-                        if (currentDifficulty == "Easy" && solverGameLogic.Tries < 100000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListEasySolved);
-                        else if (currentDifficulty == "Medium" && solverGameLogic.Tries < 100000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListMediumSolved);
-                        else if (currentDifficulty == "Hard" && solverGameLogic.Tries < 100000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListHardSolved);
-                        else if (solverGameLogic.Tries < 100000 && solverGameLogic.NumberListSolved != null)
+                        if (currentDifficulty == "Easy" && solverGameLogic.Tries < 500000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListEasySolved);
+                        else if (currentDifficulty == "Medium" && solverGameLogic.Tries < 500000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListMediumSolved);
+                        else if (currentDifficulty == "Hard" && solverGameLogic.Tries < 500000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListHardSolved);
+                        else if (solverGameLogic.Tries < 500000 && solverGameLogic.NumberListSolved != null)
                         {
                             NumberList = new NumberListModel(solverGameLogic.NumberListSolved);
                         }
                     }
-                    if (solverGameLogic.Tries < 100000 && solverGameLogic.NumberListSolved != null)
+                    if (solverGameLogic.Tries < 500000 && solverGameLogic.NumberListSolved != null)
                     {
                         ValidateAll(false);
                         SelectNumberOrMarkerVisibility = "Collapsed";
@@ -407,6 +407,8 @@ namespace Sudoku.ViewModels
                         LabelValidateVisibility = "Visible";
                         ValidationVisibility = "Visible";
                     }
+                    doBlockInput = false;
+                    Console.WriteLine(solverGameLogic.Tries.ToString());
                 }
             }
         }

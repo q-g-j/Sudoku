@@ -13,7 +13,6 @@ namespace Sudoku.GameLogic
             NumberList = new NumberListModel(list);
             random = new Random();
             Tries = 0;
-            isFull = false;
         }
         #endregion Constructors
 
@@ -22,7 +21,6 @@ namespace Sudoku.GameLogic
         internal NumberListModel NumberListSolved;
         private readonly Random random;
         internal int Tries;
-        private bool isFull;
         #endregion Fields
 
         #region Methods
@@ -65,10 +63,9 @@ namespace Sudoku.GameLogic
                                 NumberList[col][row] = number;
                                 if (IsFull(NumberList))
                                 {
-                                    isFull = true;
                                     CopySolution(NumberList);
                                 }
-                                else if (Tries <= 100000 && !isFull)
+                                else if (Tries <= 500000)
                                 {
                                     FillSudoku();
                                     NumberList[col][row] = "";
