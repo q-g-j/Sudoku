@@ -366,11 +366,10 @@ namespace Sudoku.ViewModels
 
                             if (currentlyMarkedCoords != "")
                             {
-                                int col = int.Parse(currentlyMarkedCoords[0].ToString());
-                                int row = int.Parse(currentlyMarkedCoords[1].ToString());
-                                Coords coords = new Coords(col, row);
-                                HighlightColRowSquare(coords);
-                                buttonBackgroundList[col][row] = Colors.CellBackgroundSelected;
+                                int currentCol = int.Parse(currentlyMarkedCoords[0].ToString());
+                                int currentRow = int.Parse(currentlyMarkedCoords[1].ToString());
+                                HighlightColRowSquare(new Coords(currentCol, currentRow));
+                                buttonBackgroundList[currentCol][currentRow] = Colors.CellBackgroundSelected;
                             }
                         }
                         markerList = new MarkerListModel();
