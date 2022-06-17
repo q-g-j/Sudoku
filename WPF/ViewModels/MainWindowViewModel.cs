@@ -352,26 +352,11 @@ namespace Sudoku.ViewModels
                     if (isValid)
                     {
                         HideOverlays();
-                        //if (currentDifficulty == "")
-                        {
-                            buttonBackgroundList.Clear();
-                            buttonBackgroundList.InitializeList();
-                            ButtonBackgroundList = buttonBackgroundList;
-                            LabelSingleSolutionWaitVisibility = "Visible";
-                            var fillSudokuTask = FillSudokuTask(solverGameLogic);
-                            doBlockInput = true;
-                            await fillSudokuTask;
-                            LabelSingleSolutionWaitVisibility = "Collapsed";
-
-                            if (currentlyMarkedCoords != "")
-                            {
-                                int currentCol = int.Parse(currentlyMarkedCoords[0].ToString());
-                                int currentRow = int.Parse(currentlyMarkedCoords[1].ToString());
-                                HighlightColRowSquare(new Coords(currentCol, currentRow));
-                                buttonBackgroundList[currentCol][currentRow] = Colors.CellBackgroundSelected;
-                            }
-                            ButtonBackgroundList = buttonBackgroundList;
-                        }
+                        LabelSingleSolutionWaitVisibility = "Visible";
+                        var fillSudokuTask = FillSudokuTask(solverGameLogic);
+                        doBlockInput = true;
+                        await fillSudokuTask;
+                        LabelSingleSolutionWaitVisibility = "Collapsed";
                         markerList = new MarkerListModel();
                         numberColorList = new NumberColorListModel();
                         markerList.InitializeList();
@@ -393,6 +378,8 @@ namespace Sudoku.ViewModels
                             NumberList = new NumberListModel(solverGameLogic.NumberListSolved);
                         }
                     }
+                    buttonBackgroundList.Clear();
+                    buttonBackgroundList.InitializeList();
                     if (solverGameLogic.Tries < 500000 && solverGameLogic.NumberListSolved != null)
                     {
                         ValidateAll(false);
@@ -401,14 +388,23 @@ namespace Sudoku.ViewModels
                     }
                     else
                     {
+                        ValidateAll(false);
                         LabelValidate = Resources.LabelValidateUnsolvable;
                         LabelValidateBackground = Colors.LabelValidateHasConflicts;
                         SelectNumberOrMarkerVisibility = "Collapsed";
                         LabelValidateVisibility = "Visible";
                         ValidationVisibility = "Visible";
                     }
+
+                    if (currentlyMarkedCoords != "" && !conflictCoordsList.Contains(currentlyMarkedCoords))
+                    {
+                        int currentCol = int.Parse(currentlyMarkedCoords[0].ToString());
+                        int currentRow = int.Parse(currentlyMarkedCoords[1].ToString());
+                        HighlightColRowSquare(new Coords(currentCol, currentRow));
+                        buttonBackgroundList[currentCol][currentRow] = Colors.CellBackgroundSelected;
+                    }
+                    ButtonBackgroundList = buttonBackgroundList;
                     doBlockInput = false;
-                    Console.WriteLine(solverGameLogic.Tries.ToString());
                 }
             }
         }
@@ -1401,7 +1397,7 @@ namespace Sudoku.ViewModels
                 for (int row = 0; row < 9; row++)
                 {
                     string number = numberList[col][row];
-                    if (!ValidatorGameLogic.IsValid(numberList, col, row, number))
+                    if (numberList[col][row] != "" && !ValidatorGameLogic.IsValid(numberList, col, row, number))
                     {
                         isValid = false;
                         LabelValidate = Resources.LabelValidateConflicts;
