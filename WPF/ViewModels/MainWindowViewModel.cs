@@ -648,8 +648,6 @@ namespace Sudoku.ViewModels
         {
             if (!doBlockInput)
             {
-                currentlySelectedCoords = "";
-                LabelSelectNumberOrMarker = "";
                 TrophyVisibility = "Collapsed";
                 HideOverlays();
 
@@ -697,6 +695,10 @@ namespace Sudoku.ViewModels
 
                     //apply the original transform.
                     sudokuGrid.LayoutTransform = originalScale;
+                }
+                if (currentlySelectedCoords != "")
+                {
+                    RestoreCoordsBackground(currentlySelectedCoords);
                 }
                 ValidateAll(false);
             }
