@@ -29,6 +29,7 @@ namespace Sudoku.ViewModels
             appSettings = new AppSettings(folderAppSettings);
             doBlockInput = false;
             doStopTrophy = false;
+            hasLoadedFromSlot = false;
             currentDifficulty = "";
             currentlySelectedCoords = "";
 
@@ -116,6 +117,7 @@ namespace Sudoku.ViewModels
         private readonly string folderAppSettings;
         private bool doBlockInput;
         private bool doStopTrophy;
+        private bool hasLoadedFromSlot;
         private string leftOrRightClicked;
         private NumberListModel numberListPreloadedEasy;
         private NumberListModel numberListPreloadedMedium;
@@ -320,6 +322,7 @@ namespace Sudoku.ViewModels
                 NumberList = numberList;
                 MarkerList = markerList;
                 NumberColorList = numberColorList;
+                hasLoadedFromSlot = false;
             }
         }
         private async void MenuSolveAction()
@@ -368,11 +371,11 @@ namespace Sudoku.ViewModels
                     {
                         HideOverlays();
                         LabelSingleSolutionWaitVisibility = "Visible";
-                        bool hasUserPlaceANumber = false;
+                        bool hasUserPlacedANumber = false;
                         bool isEmpty = true;
                         for (int col = 0; col < 9; col++)
                         {
-                            if (hasUserPlaceANumber)
+                            if (hasUserPlacedANumber)
                             {
                                 break;
                             }
@@ -381,7 +384,7 @@ namespace Sudoku.ViewModels
                                 string stringCoords = col.ToString() + row.ToString();
                                 if (numberList[col][row] != "" && ! generatorCoordsList.Contains(stringCoords))
                                 {
-                                    hasUserPlaceANumber = true;
+                                    hasUserPlacedANumber = true;
                                     break;
                                 }
                             }
@@ -401,7 +404,7 @@ namespace Sudoku.ViewModels
                                 }
                             }
                         }
-                        if (hasUserPlaceANumber || isEmpty)
+                        if (hasUserPlacedANumber || isEmpty || hasLoadedFromSlot)
                         {
                             Task fillSudokuTask = FillSudokuTask(solverGameLogic);
                             await fillSudokuTask;
@@ -615,6 +618,7 @@ namespace Sudoku.ViewModels
                     CheckIsFull(false);
                     currentlySelectedCoords = "";
                     UnhighlightColRowSquare();
+                    hasLoadedFromSlot = true;
                 }
             }
         }
