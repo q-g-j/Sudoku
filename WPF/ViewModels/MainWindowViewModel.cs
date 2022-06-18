@@ -696,10 +696,7 @@ namespace Sudoku.ViewModels
                     //apply the original transform.
                     sudokuGrid.LayoutTransform = originalScale;
                 }
-                if (currentlySelectedCoords != "")
-                {
-                    RestoreCoordsBackground(currentlySelectedCoords);
-                }
+
                 ValidateAll(false);
             }
         }
