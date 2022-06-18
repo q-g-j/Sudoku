@@ -19,16 +19,18 @@ using Sudoku.Views;
 
 namespace Sudoku.ViewModels
 {
-    public class MainWindowViewModel :INotifyPropertyChanged
+    public class MainWindowViewModel : INotifyPropertyChanged
     {
         #region Constructors
         public MainWindowViewModel()
         {
-            // initialize variables:
+            // initialize fields:
             folderAppSettings = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SudokuGame");
             appSettings = new AppSettings(folderAppSettings);
             doBlockInput = false;
+            doStopTrophy = false;
             currentDifficulty = "";
+            currentlySelectedCoords = "";
 
             // initialize lists:
             saveSlotsModel = new SaveSlotsModel(folderAppSettings);
@@ -56,13 +58,7 @@ namespace Sudoku.ViewModels
             buttonValidateVisibility = "Visible";
             labelValidateVisibility = "Collapsed";
             trophyVisibility = "Collapsed";
-            currentlyMarkedCoords = "";
             trophyWidth = "0";
-            doStopTrophy = false;
-
-            preloadGameEasy = PreloadGame("Easy");
-            preloadGameMedium = PreloadGame("Medium");
-            preloadGameHard = PreloadGame("Hard");
 
             // initialize commands:
             MenuNewGameCommand = new RelayCommand(MenuNewGameAction);
@@ -102,18 +98,24 @@ namespace Sudoku.ViewModels
             }
             // display each existing save slot's date and time:
             menuSaveSlotsLoadText = saveSlotsModel.GetLoadTexts();
+
+            // preload games in three difficulties:
+            preloadGameEasy = PreloadGame("Easy");
+            preloadGameMedium = PreloadGame("Medium");
+            preloadGameHard = PreloadGame("Hard");
         }
         #endregion Constructors
 
         #region Fields
         private readonly AppSettings appSettings;
         private readonly SaveSlotsModel saveSlotsModel;
-        private string currentlyMarkedCoords;
+        private string currentlySelectedCoords;
         private readonly List<string> highlightedCoordsList;
         private readonly List<string> conflictCoordsList;
         private List<string> generatorCoordsList;
         private readonly string folderAppSettings;
         private bool doBlockInput;
+        private bool doStopTrophy;
         private string leftOrRightClicked;
         private NumberListModel numberListPreloadedEasy;
         private NumberListModel numberListPreloadedMedium;
@@ -131,7 +133,6 @@ namespace Sudoku.ViewModels
         private Task preloadGameMedium;
         private Task preloadGameHard;
         private string currentDifficulty;
-        bool doStopTrophy;
         #endregion Fields
 
         #region Property Values
@@ -285,8 +286,8 @@ namespace Sudoku.ViewModels
         {
             if (!doBlockInput)
             {
-                currentlyMarkedCoords = "";
-                BackgroundReset();
+                currentlySelectedCoords = "";
+                ResetBackground();
                 LabelSelectNumberOrMarker = "";
                 ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                 SelectDifficultyVisibility = "Visible";
@@ -297,10 +298,10 @@ namespace Sudoku.ViewModels
         {
             if (! doBlockInput)
             {
-                currentDifficulty = "";
-                currentlyMarkedCoords = "";
-                BackgroundReset();
                 HideOverlays();
+                currentlySelectedCoords = "";
+                ResetBackground();
+                currentDifficulty = "";
                 LabelSelectNumberOrMarker = "";
                 ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                 SelectNumberOrMarkerVisibility = "Visible";
@@ -323,28 +324,42 @@ namespace Sudoku.ViewModels
         }
         private async void MenuSolveAction()
         {
-            if (! doBlockInput)
+            if (!doBlockInput)
             {
+                for (int i = 0; i < 9; i++)
+                {
+                    for (int j = 0; j < 9; j++)
+                    {
+                        string stringCoords = i.ToString() + j.ToString();
+                        RestoreCoordsBackground(stringCoords);
+                    }
+                }
+                var menuSolveTask = MenuSolveTask();
+                await menuSolveTask;
+            }
+        }
+        private async Task MenuSolveTask()
+        {
+            await Task.Run(async () =>
+            {
+                doBlockInput = true;
                 bool isValid = true;
                 LabelSelectNumberOrMarker = "";
                 ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                 SolverGameLogic solverGameLogic = new SolverGameLogic(NumberList);
                 if (!SolverGameLogic.IsFull(numberList))
                 {
-                    //if (currentDifficulty == "")
+                    for (int col = 0; col < 9; col++)
                     {
-                        for (int col = 0; col < 9; col++)
+                        if (isValid)
                         {
-                            if (isValid)
+                            for (int row = 0; row < 9; row++)
                             {
-                                for (int row = 0; row < 9; row++)
+                                string number = numberList[col][row];
+                                if (!ValidatorGameLogic.IsValid(numberList, col, row, number))
                                 {
-                                    string number = numberList[col][row];
-                                    if (!ValidatorGameLogic.IsValid(numberList, col, row, number))
-                                    {
-                                        isValid = false;
-                                        break;
-                                    }
+                                    isValid = false;
+                                    break;
                                 }
                             }
                         }
@@ -353,34 +368,68 @@ namespace Sudoku.ViewModels
                     {
                         HideOverlays();
                         LabelSingleSolutionWaitVisibility = "Visible";
-                        var fillSudokuTask = FillSudokuTask(solverGameLogic);
-                        doBlockInput = true;
-                        await fillSudokuTask;
-                        LabelSingleSolutionWaitVisibility = "Collapsed";
-                        markerList = new MarkerListModel();
-                        numberColorList = new NumberColorListModel();
-                        markerList.InitializeList();
-                        numberColorList.InitializeList();
-                        foreach (string coords in generatorCoordsList)
+                        bool hasUserPlaceANumber = false;
+                        bool isEmpty = true;
+                        for (int col = 0; col < 9; col++)
                         {
-                            int col = int.Parse(coords[0].ToString());
-                            int row = int.Parse(coords[1].ToString());
-
-                            numberColorList[col][row] = Colors.CellNumberGenerator;
+                            if (hasUserPlaceANumber)
+                            {
+                                break;
+                            }
+                            for (int row = 0; row < 9; row++)
+                            {
+                                string stringCoords = col.ToString() + row.ToString();
+                                if (numberList[col][row] != "" && ! generatorCoordsList.Contains(stringCoords))
+                                {
+                                    hasUserPlaceANumber = true;
+                                    break;
+                                }
+                            }
                         }
-                        MarkerList = markerList;
+                        for (int col = 0; col < 9; col++)
+                        {
+                            if (!isEmpty)
+                            {
+                                break;
+                            }
+                            for (int row = 0; row < 9; row++)
+                            {
+                                if (numberList[col][row] != "")
+                                {
+                                    isEmpty = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (hasUserPlaceANumber || isEmpty)
+                        {
+                            Task fillSudokuTask = FillSudokuTask(solverGameLogic);
+                            await fillSudokuTask;
+                        }
+                        else
+                        {
+                            solverGameLogic.NumberListSolved = new NumberListModel();
+                            solverGameLogic.NumberListSolved.InitializeList();
+                        }
+                        LabelSingleSolutionWaitVisibility = "Collapsed";
+                        numberColorList = new NumberColorListModel();
+                        numberColorList.InitializeList();
+                        foreach (string stringCoords in generatorCoordsList)
+                        {
+                            Coords coords = Coords.StringToCoords(stringCoords);
+                            numberColorList[coords.Col][coords.Row] = Colors.CellNumberGenerator;
+                        }
                         NumberColorList = numberColorList;
-                        if (currentDifficulty == "Easy" && solverGameLogic.Tries < 500000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListEasySolved);
-                        else if (currentDifficulty == "Medium" && solverGameLogic.Tries < 500000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListMediumSolved);
-                        else if (currentDifficulty == "Hard" && solverGameLogic.Tries < 500000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListHardSolved);
-                        else if (solverGameLogic.Tries < 500000 && solverGameLogic.NumberListSolved != null)
+                        if (currentDifficulty == "Easy" && solverGameLogic.Tries < 700000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListEasySolved);
+                        else if (currentDifficulty == "Medium" && solverGameLogic.Tries < 700000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListMediumSolved);
+                        else if (currentDifficulty == "Hard" && solverGameLogic.Tries < 700000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListHardSolved);
+                        else if (solverGameLogic.Tries < 700000 && solverGameLogic.NumberListSolved != null)
                         {
                             NumberList = new NumberListModel(solverGameLogic.NumberListSolved);
                         }
                     }
-                    buttonBackgroundList.Clear();
-                    buttonBackgroundList.InitializeList();
-                    if (solverGameLogic.Tries < 500000 && solverGameLogic.NumberListSolved != null)
+
+                    if (solverGameLogic.Tries < 700000 && solverGameLogic.NumberListSolved != null)
                     {
                         ValidateAll(false);
                         SelectNumberOrMarkerVisibility = "Collapsed";
@@ -395,18 +444,26 @@ namespace Sudoku.ViewModels
                         LabelValidateVisibility = "Visible";
                         ValidationVisibility = "Visible";
                     }
-
-                    if (currentlyMarkedCoords != "" && !conflictCoordsList.Contains(currentlyMarkedCoords))
+                    for (int col = 0; col < 9; col++)
                     {
-                        int currentCol = int.Parse(currentlyMarkedCoords[0].ToString());
-                        int currentRow = int.Parse(currentlyMarkedCoords[1].ToString());
-                        HighlightColRowSquare(new Coords(currentCol, currentRow));
-                        buttonBackgroundList[currentCol][currentRow] = Colors.CellBackgroundSelected;
+                        for (int row = 0; row < 9; row++)
+                        {
+                            if (numberList[col][row] != "")
+                            {
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    for (int j = 0; j < 3; j++)
+                                    {
+                                        markerList[col][row][i][j] = "";
+                                    }
+                                }
+                            }
+                        }
                     }
-                    ButtonBackgroundList = buttonBackgroundList;
-                    doBlockInput = false;
+                    MarkerList = markerList;
                 }
-            }
+                doBlockInput = false;
+            });
         }
         private async Task FillSudokuTask(SolverGameLogic solverGameLogic)
         {
@@ -517,8 +574,7 @@ namespace Sudoku.ViewModels
         {
             if (! doBlockInput)
             {
-                currentlyMarkedCoords = "";
-                BackgroundReset();
+                currentlySelectedCoords = "";
                 LabelSelectNumberOrMarker = "";
                 ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                 if (numberList != null && markerList != null && numberColorList != null && generatorCoordsList != null)
@@ -543,8 +599,7 @@ namespace Sudoku.ViewModels
             {
                 TrophyVisibility = "Collapsed";
                 currentDifficulty = "";
-                currentlyMarkedCoords = "";
-                BackgroundReset();
+                currentlySelectedCoords = "";
                 LabelSelectNumberOrMarker = "";
                 ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                 string slotNumber = (string)o;
@@ -587,8 +642,7 @@ namespace Sudoku.ViewModels
         {
             if (!doBlockInput)
             {
-                currentlyMarkedCoords = "";
-                BackgroundReset();
+                currentlySelectedCoords = "";
                 LabelSelectNumberOrMarker = "";
                 TrophyVisibility = "Collapsed";
                 HideOverlays();
@@ -687,18 +741,19 @@ namespace Sudoku.ViewModels
                         }
                         if (!generatorCoordsList.Contains(param))
                         {
-                            Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
-                            if (param == currentlyMarkedCoords && highlightedCoordsList.Count != 0)
+                            Coords coords = Coords.StringToCoords(param);
+                            if (param == currentlySelectedCoords && highlightedCoordsList.Count != 0)
                             {
                                 UnhighlightColRowSquare();
                             }
                             else
                             {
+                                UnhighlightColRowSquare();
                                 HighlightColRowSquare(coords);
                             }
                             ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
-                            CurrentCoordsBackgroundReset();
-                            currentlyMarkedCoords = param;
+                            RestoreOldCoordsBackground();
+                            currentlySelectedCoords = param;
                             leftOrRightClicked = "Left";
                             LabelSelectNumberOrMarker = Resources.LabelSelectNumber;
                             if (conflictCoordsList.Contains(param))
@@ -713,10 +768,10 @@ namespace Sudoku.ViewModels
                         }
                         else
                         {
+                            currentlySelectedCoords = "";
                             UnhighlightColRowSquare();
                             ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
-                            CurrentCoordsBackgroundReset();
-                            currentlyMarkedCoords = "";
+                            currentlySelectedCoords = "";
                             leftOrRightClicked = "";
                         }
                     }
@@ -727,10 +782,10 @@ namespace Sudoku.ViewModels
                             SelectDifficultyVisibility = "Hidden";
                             return;
                         }
-                        Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
+                        Coords coords = Coords.StringToCoords(param);
                         if (!generatorCoordsList.Contains(param) && numberList[coords.Col][coords.Row] == "")
                         {
-                            if (param == currentlyMarkedCoords && highlightedCoordsList.Count != 0)
+                            if (param == currentlySelectedCoords && highlightedCoordsList.Count != 0)
                             {
                                 UnhighlightColRowSquare();
                             }
@@ -739,32 +794,30 @@ namespace Sudoku.ViewModels
                                 HighlightColRowSquare(coords);
                             }
                             ButtonSelectNumberOrMarker = Colors.ButtonSelectMarker;
-                            CurrentCoordsBackgroundReset();
-                            currentlyMarkedCoords = param;
+                            RestoreOldCoordsBackground();
+                            currentlySelectedCoords = param;
                             leftOrRightClicked = "Right";
                             LabelSelectNumberOrMarker = Resources.LabelSelectMarker;
                             buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundSelected;
                             ButtonBackgroundList = buttonBackgroundList;
                         }
-                        else if (numberList[coords.Col][coords.Row] != "")
+                        else if (!generatorCoordsList.Contains(param) && numberList[coords.Col][coords.Row] != "")
                         {
                             if (highlightedCoordsList.Count != 0)
                             {
                                 UnhighlightColRowSquare();
                             }
                             ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
-                            CurrentCoordsBackgroundReset();
-                            currentlyMarkedCoords = "";
+                            currentlySelectedCoords = "";
                             leftOrRightClicked = "";
                             buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundMouseOver;
                             ButtonBackgroundList = buttonBackgroundList;
                         }
                         else
                         {
+                            currentlySelectedCoords = "";
                             UnhighlightColRowSquare();
                             ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
-                            CurrentCoordsBackgroundReset();
-                            currentlyMarkedCoords = "";
                             leftOrRightClicked = "";
                         }
                     }
@@ -788,7 +841,7 @@ namespace Sudoku.ViewModels
             if (!doBlockInput)
             {
                 var param = (string)((CompositeCommandParameter)o).Parameter;
-                Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
+                Coords coords = Coords.StringToCoords(param);
                 buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundMouseOver;
                 ButtonBackgroundList = buttonBackgroundList;
             }
@@ -801,44 +854,17 @@ namespace Sudoku.ViewModels
             if (!doBlockInput)
             {
                 var param = (string)((CompositeCommandParameter)o).Parameter;
-                Coords coords = new Coords(int.Parse(param[0].ToString()), int.Parse(param[1].ToString()));
-                if (conflictCoordsList.Contains(param))
-                {
-                    if (currentlyMarkedCoords == param)
-                    {
-                        buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundConflictsSelected;
-                    }
-                    else
-                    {
-                        buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundConflicts;
-                    }
-                }
-                else if (currentlyMarkedCoords == param)
-                {
-                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundSelected;
-                }
-                else
-                {
-                    if (highlightedCoordsList.Contains(param))
-                    {
-                        buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundHighlighted;
-                    }
-                    else
-                    {
-                        buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundDefault;
-                    }
-                }
-                ButtonBackgroundList = buttonBackgroundList;
+                RestoreCoordsBackground(param);
             }
 
             e.Handled = true;
         }
         private void KeyboardAction(object o)
         {
-            if (!doBlockInput && currentlyMarkedCoords != "")
+            if (!doBlockInput && currentlySelectedCoords != "")
             {
                 string key = (string)o;
-                string param = currentlyMarkedCoords + key;
+                string param = currentlySelectedCoords + key;
                 if (leftOrRightClicked == "Left")
                 {
                     ChangeNumber(param);
@@ -851,10 +877,10 @@ namespace Sudoku.ViewModels
         }
         private void ButtonSelectNumberOrMarkerAction(object o)
         {
-            if (! doBlockInput && currentlyMarkedCoords != "")
+            if (! doBlockInput && currentlySelectedCoords != "")
             {
                 var tag = (string)o;
-                string param = currentlyMarkedCoords + tag;
+                string param = currentlySelectedCoords + tag;
                 if (leftOrRightClicked == "Left")
                 {
                     ChangeNumber(param);
@@ -895,48 +921,50 @@ namespace Sudoku.ViewModels
                 generatorCoordsList = new List<string>();
             }
 
-            string coords = param.Substring(0, 2);
-            if (! generatorCoordsList.Contains(coords))
+            string stringCoords = param.Substring(0, 2);
+            if (! generatorCoordsList.Contains(stringCoords))
             {
-                int col = int.Parse(param[0].ToString());
-                int row = int.Parse(param[1].ToString());
+                Coords coords = Coords.StringToCoords(param);
                 string number = param[2].ToString();
 
                 if (number == "X")
                 {
-                    numberList[col][row] = number;
-                    numberList[col][row] = "";
+                    numberList[coords.Col][coords.Row] = "";
                     NumberList = numberList;
                     SelectNumberOrMarkerVisibility = "Visible";
                     ValidationVisibility = "Collapsed";
-                    TrophyVisibility = "Collapsed";
-                    ButtonBackgroundList = buttonBackgroundList;
-                    ValidateAll(false);
-                    return;
-                }
-                else
-                {
-                    bool isEmpty = true;
-                    if (numberList[col][row] != "")
-                    {
-                        isEmpty = false;
-                    }
-                    numberList[col][row] = number;
-                    NumberList = numberList;
-                    if (isEmpty && TrophyVisibility == "Visible")
+                    if (TrophyVisibility == "Visible")
                     {
                         doStopTrophy = true;
                         System.Threading.Thread.Sleep(100);
+                        TrophyVisibility = "Collapsed";
                         CheckIsFull(true);
                     }
-                    else if (isEmpty)
+                    ResetBackground();
+                    HighlightColRowSquare(coords);
+                    ValidateAll(false);
+                    return;
+                }
+                else if (numberList[coords.Col][coords.Row] != number)
+                {
+                    numberList[coords.Col][coords.Row] = number;
+                    NumberList = numberList;
+                    SelectNumberOrMarkerVisibility = "Visible";
+                    ValidationVisibility = "Collapsed";
+                    if (TrophyVisibility == "Visible")
                     {
+                        doStopTrophy = true;
+                        System.Threading.Thread.Sleep(100);
+                        TrophyVisibility = "Collapsed";
                         CheckIsFull(true);
                     }
                     else
                     {
-                        CheckIsFull(false);
+                        CheckIsFull(true);
                     }
+                    ResetBackground();
+                    HighlightColRowSquare(coords);
+                    ValidateAll(false);
                     for (int j = 0; j < 3; j++)
                     {
                         for (int i = 0; i < 4; i++)
@@ -947,8 +975,7 @@ namespace Sudoku.ViewModels
                             }
                             else
                             {
-                                markerList[col][row][i][j] = "";
-                                MarkerList = markerList;
+                                markerList[coords.Col][coords.Row][i][j] = "";
                             }
                         }
                     }
@@ -964,10 +991,9 @@ namespace Sudoku.ViewModels
                                 }
                                 else
                                 {
-                                    if (markerList[col][k][i][j] == number)
+                                    if (markerList[coords.Col][k][i][j] == number)
                                     {
-                                        markerList[col][k][i][j] = "";
-                                        MarkerList = markerList;
+                                        markerList[coords.Col][k][i][j] = "";
                                     }
                                 }
                             }
@@ -985,18 +1011,17 @@ namespace Sudoku.ViewModels
                                 }
                                 else
                                 {
-                                    if (markerList[k][row][i][j] == number)
+                                    if (markerList[k][coords.Row][i][j] == number)
                                     {
-                                        markerList[k][row][i][j] = "";
-                                        MarkerList = markerList;
+                                        markerList[k][coords.Row][i][j] = "";
                                     }
                                 }
                             }
                         }
                     }
 
-                    int col2 = (int)(col / 3) * 3;
-                    int row2 = (int)(row / 3) * 3;
+                    int col2 = (int)(coords.Col / 3) * 3;
+                    int row2 = (int)(coords.Row / 3) * 3;
 
                     for (int i = row2; i < row2 + 3; i++)
                     {
@@ -1015,13 +1040,13 @@ namespace Sudoku.ViewModels
                                         if (markerList[j][i][k][l] == number)
                                         {
                                             markerList[j][i][k][l] = "";
-                                            MarkerList = markerList;
                                         }
                                     }
                                 }
                             }
                         }
                     }
+                    MarkerList = markerList;
                 }
             }
         }
@@ -1029,11 +1054,10 @@ namespace Sudoku.ViewModels
         {
             InititalizeLists();
 
-            int col = int.Parse(param[0].ToString());
-            int row = int.Parse(param[1].ToString());
+            Coords coords = Coords.StringToCoords(param);
             string number = param[2].ToString();
 
-            if (numberList[col][row] != "")
+            if (numberList[coords.Col][coords.Row] != "")
             {
                 return;
             }
@@ -1050,7 +1074,7 @@ namespace Sudoku.ViewModels
                         }
                         else
                         {
-                            markerList[col][row][i][j] = "";
+                            markerList[coords.Col][coords.Row][i][j] = "";
                             MarkerList = markerList;
                         }
                     }
@@ -1065,58 +1089,89 @@ namespace Sudoku.ViewModels
 
                 if (number == "1")
                 {
-                    if (markerList[col][row][0][0] != "") { markerList[col][row][0][0] = ""; }
-                    else { markerList[col][row][0][0] = "1"; }
+                    if (markerList[coords.Col][coords.Row][0][0] != "") { markerList[coords.Col][coords.Row][0][0] = ""; }
+                    else { markerList[coords.Col][coords.Row][0][0] = "1"; }
                 }
                 else if (number == "2")
                 {
-                    if (markerList[col][row][1][0] != "") { markerList[col][row][1][0] = ""; }
-                    else { markerList[col][row][1][0] = "2"; }
+                    if (markerList[coords.Col][coords.Row][1][0] != "") { markerList[coords.Col][coords.Row][1][0] = ""; }
+                    else { markerList[coords.Col][coords.Row][1][0] = "2"; }
                 }
                 else if (number == "3")
                 {
-                    if (markerList[col][row][2][0] != "") { markerList[col][row][2][0] = ""; }
-                    else { markerList[col][row][2][0] = "3"; }
+                    if (markerList[coords.Col][coords.Row][2][0] != "") { markerList[coords.Col][coords.Row][2][0] = ""; }
+                    else { markerList[coords.Col][coords.Row][2][0] = "3"; }
                 }
                 else if (number == "4")
                 {
-                    if (markerList[col][row][3][0] != "") { markerList[col][row][3][0] = ""; }
-                    else { markerList[col][row][3][0] = "4"; }
+                    if (markerList[coords.Col][coords.Row][3][0] != "") { markerList[coords.Col][coords.Row][3][0] = ""; }
+                    else { markerList[coords.Col][coords.Row][3][0] = "4"; }
                 }
                 else if (number == "5")
                 {
-                    if (markerList[col][row][0][1] != "") { markerList[col][row][0][1] = ""; }
-                    else { markerList[col][row][0][1] = "5"; }
+                    if (markerList[coords.Col][coords.Row][0][1] != "") { markerList[coords.Col][coords.Row][0][1] = ""; }
+                    else { markerList[coords.Col][coords.Row][0][1] = "5"; }
                 }
                 else if (number == "6")
                 {
-                    if (markerList[col][row][3][1] != "") { markerList[col][row][3][1] = ""; }
-                    else { markerList[col][row][3][1] = "6"; }
+                    if (markerList[coords.Col][coords.Row][3][1] != "") { markerList[coords.Col][coords.Row][3][1] = ""; }
+                    else { markerList[coords.Col][coords.Row][3][1] = "6"; }
                 }
                 else if (number == "7")
                 {
-                    if (markerList[col][row][0][2] != "") { markerList[col][row][0][2] = ""; }
-                    else { markerList[col][row][0][2] = "7"; }
+                    if (markerList[coords.Col][coords.Row][0][2] != "") { markerList[coords.Col][coords.Row][0][2] = ""; }
+                    else { markerList[coords.Col][coords.Row][0][2] = "7"; }
                 }
                 else if (number == "8")
                 {
-                    if (markerList[col][row][1][2] != "") { markerList[col][row][1][2] = ""; }
-                    else { markerList[col][row][1][2] = "8"; }
+                    if (markerList[coords.Col][coords.Row][1][2] != "") { markerList[coords.Col][coords.Row][1][2] = ""; }
+                    else { markerList[coords.Col][coords.Row][1][2] = "8"; }
                 }
                 else if (number == "9")
                 {
-                    if (markerList[col][row][2][2] != "") { markerList[col][row][2][2] = ""; }
-                    else { markerList[col][row][2][2] = "9"; }
+                    if (markerList[coords.Col][coords.Row][2][2] != "") { markerList[coords.Col][coords.Row][2][2] = ""; }
+                    else { markerList[coords.Col][coords.Row][2][2] = "9"; }
                 }
                 MarkerList = markerList;
             }
         }
-        private void CurrentCoordsBackgroundReset()
+        private void RestoreCoordsBackground(string stringCoords)
         {
-            if (currentlyMarkedCoords != "" && !conflictCoordsList.Contains(currentlyMarkedCoords))
+            Coords coords = Coords.StringToCoords(stringCoords);
+            if (conflictCoordsList.Contains(stringCoords))
             {
-                Coords coordsOld = new Coords(int.Parse(currentlyMarkedCoords[0].ToString()), int.Parse(currentlyMarkedCoords[1].ToString()));
-                if (highlightedCoordsList.Contains(currentlyMarkedCoords))
+                if (currentlySelectedCoords == stringCoords)
+                {
+                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundConflictsSelected;
+                }
+                else
+                {
+                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundConflicts;
+                }
+            }
+            else if (currentlySelectedCoords == stringCoords)
+            {
+                buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundSelected;
+            }
+            else
+            {
+                if (highlightedCoordsList.Contains(stringCoords))
+                {
+                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundHighlighted;
+                }
+                else
+                {
+                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundDefault;
+                }
+            }
+            ButtonBackgroundList = buttonBackgroundList;
+        }
+        private void RestoreOldCoordsBackground()
+        {
+            if (currentlySelectedCoords != "" && !conflictCoordsList.Contains(currentlySelectedCoords))
+            {
+                Coords coordsOld = Coords.StringToCoords(currentlySelectedCoords);
+                if (highlightedCoordsList.Contains(currentlySelectedCoords))
                 {
                     buttonBackgroundList[coordsOld.Col][coordsOld.Row] = Colors.CellBackgroundHighlighted;
                 }
@@ -1124,52 +1179,49 @@ namespace Sudoku.ViewModels
                 {
                     buttonBackgroundList[coordsOld.Col][coordsOld.Row] = Colors.CellBackgroundDefault;
                 }
-                ButtonBackgroundList = buttonBackgroundList;
                 LabelSelectNumberOrMarker = "";
             }
-            else if (currentlyMarkedCoords != "" && conflictCoordsList.Contains(currentlyMarkedCoords))
+            else if (currentlySelectedCoords != "" && conflictCoordsList.Contains(currentlySelectedCoords))
             {
-                Coords coordsOld = new Coords(int.Parse(currentlyMarkedCoords[0].ToString()), int.Parse(currentlyMarkedCoords[1].ToString()));
+                Coords coordsOld = Coords.StringToCoords(currentlySelectedCoords);
                 buttonBackgroundList[coordsOld.Col][coordsOld.Row] = Colors.CellBackgroundConflicts;
             }
-        }
-        private void BackgroundReset()
-        {
-            conflictCoordsList.Clear();
-            highlightedCoordsList.Clear();
-            buttonBackgroundList.Clear();
-            buttonBackgroundList.InitializeList();
             ButtonBackgroundList = buttonBackgroundList;
+        }
+        private void ResetBackground()
+        {
+            highlightedCoordsList.Clear();
+            conflictCoordsList.Clear();
+            ButtonBackgroundList = new ButtonBackgroundListModel();
+            ButtonBackgroundList.InitializeList();
         }
         private void HighlightColRowSquare(Coords coords)
         {
-            UnhighlightColRowSquare();
-
             // highlight column:
             for (int i = 0; i < 9; i++)
             {
-                string tempCoords = coords.Col.ToString() + i.ToString();
-                if (!highlightedCoordsList.Contains(tempCoords))
+                string stringCoords = coords.Col.ToString() + i.ToString();
+                if (!highlightedCoordsList.Contains(stringCoords))
                 {
-                    if (!conflictCoordsList.Contains(tempCoords))
+                    if (!conflictCoordsList.Contains(stringCoords))
                     {
                         buttonBackgroundList[coords.Col][i] = Colors.CellBackgroundHighlighted;
                     }
-                    highlightedCoordsList.Add(tempCoords);
+                    highlightedCoordsList.Add(stringCoords);
                 }
             }
 
             // highlight row:
             for (int i = 0; i < 9; i++)
             {
-                string tempCoords = i.ToString() + coords.Row.ToString();
-                if (!highlightedCoordsList.Contains(tempCoords))
+                string stringCoords = i.ToString() + coords.Row.ToString();
+                if (!highlightedCoordsList.Contains(stringCoords))
                 {
-                    if (!conflictCoordsList.Contains(tempCoords))
+                    if (!conflictCoordsList.Contains(stringCoords))
                     {
                         buttonBackgroundList[i][coords.Row] = Colors.CellBackgroundHighlighted;
                     }
-                    highlightedCoordsList.Add(tempCoords);
+                    highlightedCoordsList.Add(stringCoords);
                 }
             }
 
@@ -1181,35 +1233,39 @@ namespace Sudoku.ViewModels
             {
                 for (int j = col; j < col + 3; j++)
                 {
-                    string tempCoords = j.ToString() + i.ToString();
-                    if (!highlightedCoordsList.Contains(tempCoords))
+                    string stringCoords = j.ToString() + i.ToString();
+                    if (!highlightedCoordsList.Contains(stringCoords))
                     {
-                        if (!conflictCoordsList.Contains(tempCoords))
+                        if (!conflictCoordsList.Contains(stringCoords))
                         {
                             buttonBackgroundList[j][i] = Colors.CellBackgroundHighlighted;
                         }
-                        highlightedCoordsList.Add(tempCoords);
+                        highlightedCoordsList.Add(stringCoords);
                     }
                 }
             }
+
+            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundSelected;
             ButtonBackgroundList = buttonBackgroundList;
         }
         private void UnhighlightColRowSquare()
         {
             for (int i = 0; i < highlightedCoordsList.Count; i++)
             {
+                Coords highlightedCoords = Coords.StringToCoords(highlightedCoordsList[i]);
                 if (!conflictCoordsList.Contains(highlightedCoordsList[i]))
                 {
-                    buttonBackgroundList[int.Parse(highlightedCoordsList[i][0].ToString())][int.Parse(highlightedCoordsList[i][1].ToString())] = Colors.CellBackgroundDefault;
+                    buttonBackgroundList[highlightedCoords.Col][highlightedCoords.Row] = Colors.CellBackgroundDefault;
                 }
                 else
                 {
-                    buttonBackgroundList[int.Parse(highlightedCoordsList[i][0].ToString())][int.Parse(highlightedCoordsList[i][1].ToString())] = Colors.CellBackgroundConflicts;
+                    buttonBackgroundList[highlightedCoords.Col][highlightedCoords.Row] = Colors.CellBackgroundConflicts;
                 }
             }
-            if (currentlyMarkedCoords != "")
+            if (currentlySelectedCoords != "" && conflictCoordsList.Contains(currentlySelectedCoords))
             {
-                buttonBackgroundList[int.Parse(currentlyMarkedCoords[0].ToString())][int.Parse(currentlyMarkedCoords[1].ToString())] = Colors.CellBackgroundConflictsSelected;
+                Coords currentCoords = Coords.StringToCoords(currentlySelectedCoords);
+                buttonBackgroundList[currentCoords.Col][currentCoords.Row] = Colors.CellBackgroundConflictsSelected;
             }
             ButtonBackgroundList = buttonBackgroundList;
             highlightedCoordsList.Clear();
@@ -1256,7 +1312,7 @@ namespace Sudoku.ViewModels
             preloadGameMedium = PreloadGame("Medium");
             preloadGameHard = PreloadGame("Hard");
 
-            currentlyMarkedCoords = "";
+            currentlySelectedCoords = "";
 
             SelectNumberOrMarkerVisibility = "Visible";
             ValidationVisibility = "Collapsed";
@@ -1318,12 +1374,11 @@ namespace Sudoku.ViewModels
                 }
 
                 tempNumberColorList.InitializeList();
-                foreach (string coords in tempGeneratorCoords)
+                foreach (string stringCoords in tempGeneratorCoords)
                 {
-                    int col = int.Parse(coords[0].ToString());
-                    int row = int.Parse(coords[1].ToString());
+                    Coords coords = Coords.StringToCoords(stringCoords);
 
-                    tempNumberColorList[col][row] = Colors.CellNumberGenerator;
+                    tempNumberColorList[coords.Col][coords.Row] = Colors.CellNumberGenerator;
                 }
 
                 if (difficulty == "Easy")
@@ -1374,24 +1429,6 @@ namespace Sudoku.ViewModels
             LabelValidate = Resources.LabelValidateNoConflicts;
             LabelValidateBackground = Colors.LabelValidateHasNoConflicts;
 
-            foreach (string coords in conflictCoordsList)
-            {
-                if (currentlyMarkedCoords == coords)
-                {
-                    buttonBackgroundList[int.Parse(coords[0].ToString())][int.Parse(coords[1].ToString())] = Colors.CellBackgroundSelected;
-                }
-                else if (highlightedCoordsList.Contains(coords))
-                {
-                    buttonBackgroundList[int.Parse(coords[0].ToString())][int.Parse(coords[1].ToString())] = Colors.CellBackgroundHighlighted;
-                }
-                else
-                {
-                    buttonBackgroundList[int.Parse(coords[0].ToString())][int.Parse(coords[1].ToString())] = Colors.CellBackgroundDefault;
-                }
-            }
-            ButtonBackgroundList = buttonBackgroundList;
-            conflictCoordsList.Clear();
-
             for (int col = 0; col < 9; col++)
             {
                 for (int row = 0; row < 9; row++)
@@ -1403,18 +1440,22 @@ namespace Sudoku.ViewModels
                         LabelValidate = Resources.LabelValidateConflicts;
                         LabelValidateBackground = Colors.LabelValidateHasConflicts;
                         buttonBackgroundList[col][row] = Colors.CellBackgroundConflicts;
-                        ButtonBackgroundList = buttonBackgroundList;
                         string stringCoords = col.ToString() + row.ToString();
                         conflictCoordsList.Add(stringCoords);
                     }
                 }
             }
-            LabelValidateVisibility = "Visible";
-            if (!isValid)
+            if (conflictCoordsList.Contains(currentlySelectedCoords))
             {
-                UnhighlightColRowSquare();
+                Coords currentCoords = Coords.StringToCoords(currentlySelectedCoords);
+                buttonBackgroundList[currentCoords.Col][currentCoords.Row] = Colors.CellBackgroundConflictsSelected;
             }
-            else if (doShowTrophy)
+
+            ButtonBackgroundList = buttonBackgroundList;
+
+            LabelValidateVisibility = "Visible";
+            
+            if (isValid && doShowTrophy)
             {
                 doStopTrophy = true;
                 System.Threading.Thread.Sleep(100);

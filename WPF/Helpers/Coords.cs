@@ -18,5 +18,10 @@ namespace Sudoku.Helpers
         public int Row { get; }
 
         public override string ToString() => $"({Col}, {Row})";
+
+        internal static Coords StringToCoords(string coordsString)
+        {
+            return new Coords(int.Parse(coordsString[0].ToString()), int.Parse(coordsString[1].ToString()));
+        }
     }
 }

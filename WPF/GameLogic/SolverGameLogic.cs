@@ -65,7 +65,7 @@ namespace Sudoku.GameLogic
                                 {
                                     CopySolution(NumberList);
                                 }
-                                else if (Tries <= 500000)
+                                else if (Tries <= 700000)
                                 {
                                     FillSudoku();
                                     NumberList[col][row] = "";
