@@ -791,6 +791,7 @@ namespace Sudoku.ViewModels
                             }
                             else
                             {
+                                UnhighlightColRowSquare();
                                 HighlightColRowSquare(coords);
                             }
                             ButtonSelectNumberOrMarker = Colors.ButtonSelectMarker;
@@ -808,6 +809,7 @@ namespace Sudoku.ViewModels
                                 UnhighlightColRowSquare();
                             }
                             ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
+                            LabelSelectNumberOrMarker = Resources.LabelSelectNumber;
                             currentlySelectedCoords = "";
                             leftOrRightClicked = "";
                             buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundMouseOver;
@@ -815,9 +817,13 @@ namespace Sudoku.ViewModels
                         }
                         else
                         {
-                            currentlySelectedCoords = "";
-                            UnhighlightColRowSquare();
+                            if (highlightedCoordsList.Count != 0)
+                            {
+                                UnhighlightColRowSquare();
+                            }
                             ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
+                            LabelSelectNumberOrMarker = Resources.LabelSelectNumber;
+                            currentlySelectedCoords = "";
                             leftOrRightClicked = "";
                         }
                     }
