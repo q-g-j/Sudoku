@@ -613,6 +613,8 @@ namespace Sudoku.ViewModels
                     NumberColorList = saveSlot.NumberColorsList;
                     generatorCoordsList = saveSlot.GeneratorNumberList;
                     CheckIsFull(false);
+                    currentlySelectedCoords = "";
+                    UnhighlightColRowSquare();
                 }
             }
         }
@@ -1413,6 +1415,7 @@ namespace Sudoku.ViewModels
         {
             if (!SolverGameLogic.IsFull(numberList))
             {
+                ValidateAll(false);
                 SelectNumberOrMarkerVisibility = "Visible";
                 ValidationVisibility = "Collapsed";
             }
@@ -1430,6 +1433,7 @@ namespace Sudoku.ViewModels
                 numberList = new NumberListModel();
                 numberList.InitializeList();
             }
+
             bool isValid = true;
 
             LabelValidate = Resources.LabelValidateNoConflicts;
