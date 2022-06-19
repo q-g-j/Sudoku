@@ -85,6 +85,7 @@
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="FontSize" Value="40"/>
         <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Focusable" Value="False"/>
     </Style>
     <Style x:Key="StyleSelectNumberLineInner" TargetType="Line">
         <Setter Property="Margin" Value="0"/>
@@ -113,6 +114,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="FontFamily" Value="{StaticResource MainSemiBold}"/>
         <Setter Property="FontSize" Value="22"/>
+        <Setter Property="Focusable" Value="False"/>
     </Style>
     <Style x:Key="StyleLabelSingleSolutionWait" TargetType="Label">
         <Setter Property="Padding" Value="90, 0, 90, 0"/>
