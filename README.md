@@ -2,11 +2,7 @@
 
 Copyright 2022 Jann Emken
 
-A graphical version of the Sudoku game written in C#. The [Windows](https://github.com/q-g-j/Sudoku/tree/master/WPF) version is almost finished - an Android version is in the works.
-
-## Windows Version:
-
-**Written in C# with WPF for .NET Framework 4.7**
+**Written in C# for .NET Framework 4.7**
 
 ### Features:
 
