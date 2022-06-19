@@ -9,16 +9,18 @@ namespace Sudoku
     public static class Colors
     {
         public static string CellBackgroundDefault { get => "White"; }
-        public static string CellBackgroundHighlighted { get => "LightYellow"; }
-        public static string CellBackgroundSelected { get => "Yellow"; }
+        public static string CellBackgroundLeftHighlighted { get => "#d0ebfb"; }
+        public static string CellBackgroundRightHighlighted { get => "#f9e1d2"; }
+        public static string CellBackgroundLeftSelected { get => "Yellow"; }
+        public static string CellBackgroundRightSelected { get => "Yellow"; }
         public static string CellBackgroundConflicts { get => "Red"; }
         public static string CellBackgroundConflictsSelected { get => "#ff6666"; }
         public static string CellBackgroundMouseOver { get => "LightBlue"; }
         public static string CellNumber { get => "#0066ff"; }
         public static string CellNumberGenerator { get => "Black"; }
         public static string CellMarker { get => "Black"; }
-        public static string ButtonSelectNumber { get => "#d8effd"; }
-        public static string ButtonSelectMarker { get => "#eda374"; }
+        public static string ButtonSelectNumber { get => "#9ed7fa"; }
+        public static string ButtonSelectMarker { get => "#eda578"; }
         public static string ButtonSelectDifficulty { get => "#eda374"; }
         public static string LabelSingleSolutionWait { get => "LightSkyBlue"; }
         public static string LabelValidateHasNoConflicts { get => "#40bf80"; }

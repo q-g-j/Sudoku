@@ -464,6 +464,16 @@ namespace Sudoku.ViewModels
                         }
                     }
                     MarkerList = markerList;
+
+                    if (currentlySelectedCoords != "")
+                    {
+                        Coords currentCoords = Coords.StringToCoords(currentlySelectedCoords);
+                        if (NumberList[currentCoords.Col][currentCoords.Row] != "" && leftOrRightClicked == "Right")
+                        {
+                            currentlySelectedCoords = "";
+                            UnhighlightColRowSquare();
+                        }
+                    }
                 }
                 doBlockInput = false;
             });
@@ -603,6 +613,7 @@ namespace Sudoku.ViewModels
                 TrophyVisibility = "Collapsed";
                 currentDifficulty = "";
                 currentlySelectedCoords = "";
+                ResetBackground();
                 LabelSelectNumberOrMarker = "";
                 ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                 string slotNumber = (string)o;
@@ -746,6 +757,7 @@ namespace Sudoku.ViewModels
                         }
                         if (!generatorCoordsList.Contains(param))
                         {
+                            leftOrRightClicked = "Left";
                             Coords coords = Coords.StringToCoords(param);
                             if (param == currentlySelectedCoords && highlightedCoordsList.Count != 0)
                             {
@@ -759,7 +771,6 @@ namespace Sudoku.ViewModels
                             ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                             RestoreOldCoordsBackground();
                             currentlySelectedCoords = param;
-                            leftOrRightClicked = "Left";
                             LabelSelectNumberOrMarker = Resources.LabelSelectNumber;
                             if (conflictCoordsList.Contains(param))
                             {
@@ -767,7 +778,7 @@ namespace Sudoku.ViewModels
                             }
                             else
                             {
-                                buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundSelected;
+                                buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftSelected;
                             }
                             ButtonBackgroundList = buttonBackgroundList;
                         }
@@ -790,6 +801,7 @@ namespace Sudoku.ViewModels
                         Coords coords = Coords.StringToCoords(param);
                         if (!generatorCoordsList.Contains(param) && numberList[coords.Col][coords.Row] == "")
                         {
+                            leftOrRightClicked = "Right";
                             if (param == currentlySelectedCoords && highlightedCoordsList.Count != 0)
                             {
                                 UnhighlightColRowSquare();
@@ -802,9 +814,8 @@ namespace Sudoku.ViewModels
                             ButtonSelectNumberOrMarker = Colors.ButtonSelectMarker;
                             RestoreOldCoordsBackground();
                             currentlySelectedCoords = param;
-                            leftOrRightClicked = "Right";
                             LabelSelectNumberOrMarker = Resources.LabelSelectMarker;
-                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundSelected;
+                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundRightSelected;
                             ButtonBackgroundList = buttonBackgroundList;
                         }
                         else if (!generatorCoordsList.Contains(param) && numberList[coords.Col][coords.Row] != "")
@@ -1162,13 +1173,28 @@ namespace Sudoku.ViewModels
             }
             else if (currentlySelectedCoords == stringCoords)
             {
-                buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundSelected;
+                if (leftOrRightClicked == "Left")
+                {
+                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftSelected;
+                }
+                else
+                {
+                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundRightSelected;
+                }
             }
             else
             {
                 if (highlightedCoordsList.Contains(stringCoords))
                 {
-                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundHighlighted;
+
+                    if (leftOrRightClicked == "Left")
+                    {
+                        buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftHighlighted;
+                    }
+                    else
+                    {
+                        buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundRightHighlighted;
+                    }
                 }
                 else
                 {
@@ -1184,7 +1210,14 @@ namespace Sudoku.ViewModels
                 Coords coordsOld = Coords.StringToCoords(currentlySelectedCoords);
                 if (highlightedCoordsList.Contains(currentlySelectedCoords))
                 {
-                    buttonBackgroundList[coordsOld.Col][coordsOld.Row] = Colors.CellBackgroundHighlighted;
+                    if (leftOrRightClicked == "Left")
+                    {
+                        buttonBackgroundList[coordsOld.Col][coordsOld.Row] = Colors.CellBackgroundLeftHighlighted;
+                    }
+                    else
+                    {
+                        buttonBackgroundList[coordsOld.Col][coordsOld.Row] = Colors.CellBackgroundRightHighlighted;
+                    }
                 }
                 else
                 {
@@ -1216,7 +1249,14 @@ namespace Sudoku.ViewModels
                 {
                     if (!conflictCoordsList.Contains(stringCoords))
                     {
-                        buttonBackgroundList[coords.Col][i] = Colors.CellBackgroundHighlighted;
+                        if (leftOrRightClicked == "Left")
+                        {
+                            buttonBackgroundList[coords.Col][i] = Colors.CellBackgroundLeftHighlighted;
+                        }
+                        else
+                        {
+                            buttonBackgroundList[coords.Col][i] = Colors.CellBackgroundRightHighlighted;
+                        }
                     }
                     highlightedCoordsList.Add(stringCoords);
                 }
@@ -1230,7 +1270,14 @@ namespace Sudoku.ViewModels
                 {
                     if (!conflictCoordsList.Contains(stringCoords))
                     {
-                        buttonBackgroundList[i][coords.Row] = Colors.CellBackgroundHighlighted;
+                        if (leftOrRightClicked == "Left")
+                        {
+                            buttonBackgroundList[i][coords.Row] = Colors.CellBackgroundLeftHighlighted;
+                        }
+                        else
+                        {
+                            buttonBackgroundList[i][coords.Row] = Colors.CellBackgroundRightHighlighted;
+                        }
                     }
                     highlightedCoordsList.Add(stringCoords);
                 }
@@ -1249,14 +1296,28 @@ namespace Sudoku.ViewModels
                     {
                         if (!conflictCoordsList.Contains(stringCoords))
                         {
-                            buttonBackgroundList[j][i] = Colors.CellBackgroundHighlighted;
+                            if (leftOrRightClicked == "Left")
+                            {
+                                buttonBackgroundList[j][i] = Colors.CellBackgroundLeftHighlighted;
+                            }
+                            else
+                            {
+                                buttonBackgroundList[j][i] = Colors.CellBackgroundRightHighlighted;
+                            }
                         }
                         highlightedCoordsList.Add(stringCoords);
                     }
                 }
             }
 
-            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundSelected;
+            if (leftOrRightClicked == "Left")
+            {
+                buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftSelected;
+            }
+            else
+            {
+                buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundRightSelected;
+            }
             ButtonBackgroundList = buttonBackgroundList;
         }
         private void UnhighlightColRowSquare()
