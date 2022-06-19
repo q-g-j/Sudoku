@@ -759,15 +759,8 @@ namespace Sudoku.ViewModels
                         {
                             leftOrRightClicked = "Left";
                             Coords coords = Coords.StringToCoords(param);
-                            if (param == currentlySelectedCoords && highlightedCoordsList.Count != 0)
-                            {
-                                UnhighlightColRowSquare();
-                            }
-                            else
-                            {
-                                UnhighlightColRowSquare();
-                                HighlightColRowSquare(coords);
-                            }
+                            UnhighlightColRowSquare();
+                            HighlightColRowSquare(coords);
                             ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                             RestoreOldCoordsBackground();
                             currentlySelectedCoords = param;
@@ -802,15 +795,8 @@ namespace Sudoku.ViewModels
                         if (!generatorCoordsList.Contains(param) && numberList[coords.Col][coords.Row] == "")
                         {
                             leftOrRightClicked = "Right";
-                            if (param == currentlySelectedCoords && highlightedCoordsList.Count != 0)
-                            {
-                                UnhighlightColRowSquare();
-                            }
-                            else
-                            {
-                                UnhighlightColRowSquare();
-                                HighlightColRowSquare(coords);
-                            }
+                            UnhighlightColRowSquare();
+                            HighlightColRowSquare(coords);
                             ButtonSelectNumberOrMarker = Colors.ButtonSelectMarker;
                             RestoreOldCoordsBackground();
                             currentlySelectedCoords = param;
