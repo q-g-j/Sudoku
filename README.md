@@ -37,3 +37,5 @@ A graphical version of the Sudoku game written in C#. The [Windows](https://gith
 
 <img src="https://github.com/q-g-j/Sudoku/raw/master/WPF/screenshot-number.jpg" width="500">
 <img src="https://github.com/q-g-j/Sudoku/raw/master/WPF/screenshot-marker.jpg" width="500">
+<img src="https://github.com/q-g-j/Sudoku/raw/master/WPF/screenshot-conflicts.jpg" width="500">
+<img src="https://github.com/q-g-j/Sudoku/raw/master/WPF/screenshot-won.jpg" width="500">
