@@ -1381,13 +1381,15 @@ namespace Sudoku.ViewModels
         {
             await Task.Run(() =>
             {
+                NumberListModel tempNumberlist = new NumberListModel();
+                tempNumberlist.InitializeList();
                 GeneratorGameLogic generatorGameLogic = null;
                 NumberColorListModel tempNumberColorList = new NumberColorListModel();
                 bool doRun = true;
 
                 while (doRun)
                 {
-                    SolverGameLogic solverGameLogic = new SolverGameLogic(numberList);
+                    SolverGameLogic solverGameLogic = new SolverGameLogic(tempNumberlist);
                     solverGameLogic.FillSudoku();
                     if (difficulty == "Easy")
                     {

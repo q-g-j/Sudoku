@@ -1,5 +1,0 @@
-﻿<ResourceDictionary  xmlns="http://xamarin.com/schemas/2014/forms"
-                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-    <BitmapImage x:Key="ImageTrash" UriSource="/Sudoku;component/Assets/Images/trash.png"/>
-</ResourceDictionary>
