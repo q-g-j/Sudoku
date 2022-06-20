@@ -29,8 +29,6 @@ namespace Sudoku.ViewModels
             appSettings = new AppSettings(folderAppSettings);
             doBlockInput = false;
             doStopTrophy = false;
-            hasLoadedFromSlot = false;
-            currentDifficulty = "";
             currentlySelectedCoords = "";
 
             // initialize lists:
@@ -46,9 +44,6 @@ namespace Sudoku.ViewModels
             buttonBackgroundList.InitializeList();
             highlightedCoordsList = new List<string>();
             conflictCoordsList = new List<string>();
-            numberListEasySolved = new NumberListModel();
-            numberListMediumSolved = new NumberListModel();
-            numberListHardSolved = new NumberListModel();
 
             // initialize property values:
             labelSelectNumberOrMarker = "";
@@ -101,9 +96,7 @@ namespace Sudoku.ViewModels
             menuSaveSlotsLoadText = saveSlotsModel.GetLoadTexts();
 
             // preload games in three difficulties:
-            preloadGameEasy = PreloadGame("Easy");
-            preloadGameMedium = PreloadGame("Medium");
-            preloadGameHard = PreloadGame("Hard");
+            PreloadGames();
         }
         #endregion Constructors
 
@@ -117,14 +110,10 @@ namespace Sudoku.ViewModels
         private readonly string folderAppSettings;
         private bool doBlockInput;
         private bool doStopTrophy;
-        private bool hasLoadedFromSlot;
         private string leftOrRightClicked;
         private NumberListModel numberListPreloadedEasy;
         private NumberListModel numberListPreloadedMedium;
         private NumberListModel numberListPreloadedHard;
-        private NumberListModel numberListEasySolved;
-        private NumberListModel numberListMediumSolved;
-        private NumberListModel numberListHardSolved;
         private NumberColorListModel numberColorListPreloadedEasy;
         private NumberColorListModel numberColorListPreloadedMedium;
         private NumberColorListModel numberColorListPreloadedHard;
@@ -134,7 +123,6 @@ namespace Sudoku.ViewModels
         private Task preloadGameEasy;
         private Task preloadGameMedium;
         private Task preloadGameHard;
-        private string currentDifficulty;
         #endregion Fields
 
         #region Property Values
@@ -214,7 +202,7 @@ namespace Sudoku.ViewModels
         public MarkerListModel MarkerList
         {
             get => markerList;
-            set {  markerList = value; OnPropertyChanged(); }
+            set { markerList = value; OnPropertyChanged(); }
         }
         public NumberColorListModel NumberColorList
         {
@@ -298,12 +286,11 @@ namespace Sudoku.ViewModels
         }
         private void MenuEmptySudokuAction()
         {
-            if (! doBlockInput)
+            if (!doBlockInput)
             {
                 HideOverlays();
                 currentlySelectedCoords = "";
                 ResetBackground();
-                currentDifficulty = "";
                 LabelSelectNumberOrMarker = "";
                 ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                 SelectNumberOrMarkerVisibility = "Visible";
@@ -316,13 +303,9 @@ namespace Sudoku.ViewModels
                 numberList.InitializeList();
                 markerList.InitializeList();
                 numberColorList.InitializeList();
-                numberListEasySolved.Clear();
-                numberListMediumSolved.Clear();
-                numberListHardSolved.Clear();
                 NumberList = numberList;
                 MarkerList = markerList;
                 NumberColorList = numberColorList;
-                hasLoadedFromSlot = false;
             }
         }
         private async void MenuSolveAction()
@@ -349,7 +332,8 @@ namespace Sudoku.ViewModels
                 bool isValid = true;
                 LabelSelectNumberOrMarker = "";
                 ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
-                SolverGameLogic solverGameLogic = new SolverGameLogic(NumberList);
+                SolverGameLogic solverGameLogic = new SolverGameLogic(numberList);
+
                 if (!SolverGameLogic.IsFull(numberList))
                 {
                     for (int col = 0; col < 9; col++)
@@ -382,7 +366,7 @@ namespace Sudoku.ViewModels
                             for (int row = 0; row < 9; row++)
                             {
                                 string stringCoords = col.ToString() + row.ToString();
-                                if (numberList[col][row] != "" && ! generatorCoordsList.Contains(stringCoords))
+                                if (numberList[col][row] != "" && !generatorCoordsList.Contains(stringCoords))
                                 {
                                     hasUserPlacedANumber = true;
                                     break;
@@ -404,16 +388,8 @@ namespace Sudoku.ViewModels
                                 }
                             }
                         }
-                        if (hasUserPlacedANumber || isEmpty || hasLoadedFromSlot)
-                        {
-                            Task fillSudokuTask = FillSudokuTask(solverGameLogic);
-                            await fillSudokuTask;
-                        }
-                        else
-                        {
-                            solverGameLogic.NumberListSolved = new NumberListModel();
-                            solverGameLogic.NumberListSolved.InitializeList();
-                        }
+                        Task fillSudokuTask = FillSudokuTask(solverGameLogic);
+                        await fillSudokuTask;
                         LabelSingleSolutionWaitVisibility = "Collapsed";
                         numberColorList = new NumberColorListModel();
                         numberColorList.InitializeList();
@@ -423,13 +399,11 @@ namespace Sudoku.ViewModels
                             numberColorList[coords.Col][coords.Row] = Colors.CellNumberGenerator;
                         }
                         NumberColorList = numberColorList;
-                        if (currentDifficulty == "Easy" && solverGameLogic.Tries < 700000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListEasySolved);
-                        else if (currentDifficulty == "Medium" && solverGameLogic.Tries < 700000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListMediumSolved);
-                        else if (currentDifficulty == "Hard" && solverGameLogic.Tries < 700000 && solverGameLogic.NumberListSolved != null) NumberList = new NumberListModel(numberListHardSolved);
-                        else if (solverGameLogic.Tries < 700000 && solverGameLogic.NumberListSolved != null)
+                        if (solverGameLogic.Tries < 700000 && solverGameLogic.NumberListSolved != null)
                         {
-                            NumberList = new NumberListModel(solverGameLogic.NumberListSolved);
+                            numberList = new NumberListModel(solverGameLogic.NumberListSolved);
                         }
+                        NumberList = numberList;
                     }
 
                     if (solverGameLogic.Tries < 700000 && solverGameLogic.NumberListSolved != null)
@@ -468,7 +442,7 @@ namespace Sudoku.ViewModels
                     if (currentlySelectedCoords != "")
                     {
                         Coords currentCoords = Coords.StringToCoords(currentlySelectedCoords);
-                        if (NumberList[currentCoords.Col][currentCoords.Row] != "" && leftOrRightClicked == "Right")
+                        if (numberList[currentCoords.Col][currentCoords.Row] != "" && leftOrRightClicked == "Right")
                         {
                             currentlySelectedCoords = "";
                             UnhighlightColRowSquare();
@@ -585,7 +559,7 @@ namespace Sudoku.ViewModels
         }
         private void MenuSaveToSlotAction(object o)
         {
-            if (! doBlockInput)
+            if (!doBlockInput)
             {
                 currentlySelectedCoords = "";
                 LabelSelectNumberOrMarker = "";
@@ -608,10 +582,9 @@ namespace Sudoku.ViewModels
         }
         private void MenuLoadFromSlotAction(object o)
         {
-            if (! doBlockInput)
+            if (!doBlockInput)
             {
                 TrophyVisibility = "Collapsed";
-                currentDifficulty = "";
                 currentlySelectedCoords = "";
                 ResetBackground();
                 LabelSelectNumberOrMarker = "";
@@ -629,7 +602,6 @@ namespace Sudoku.ViewModels
                     CheckIsFull(false);
                     currentlySelectedCoords = "";
                     UnhighlightColRowSquare();
-                    hasLoadedFromSlot = true;
                 }
             }
         }
@@ -717,7 +689,7 @@ namespace Sudoku.ViewModels
         }
         private async Task ButtonDifficultyEasyAction()
         {
-            if (! doBlockInput)
+            if (!doBlockInput)
             {
                 HideOverlays();
                 await NewGame("Easy");
@@ -725,7 +697,7 @@ namespace Sudoku.ViewModels
         }
         private async Task ButtonDifficultyMediumAction()
         {
-            if (! doBlockInput)
+            if (!doBlockInput)
             {
                 HideOverlays();
                 await NewGame("Medium");
@@ -733,7 +705,7 @@ namespace Sudoku.ViewModels
         }
         private async Task ButtonDifficultyHardAction()
         {
-            if (! doBlockInput)
+            if (!doBlockInput)
             {
                 HideOverlays();
                 await NewGame("Hard");
@@ -885,7 +857,7 @@ namespace Sudoku.ViewModels
         }
         private void ButtonSelectNumberOrMarkerAction(object o)
         {
-            if (! doBlockInput && currentlySelectedCoords != "")
+            if (!doBlockInput && currentlySelectedCoords != "")
             {
                 var tag = (string)o;
                 string param = currentlySelectedCoords + tag;
@@ -930,7 +902,7 @@ namespace Sudoku.ViewModels
             }
 
             string stringCoords = param.Substring(0, 2);
-            if (! generatorCoordsList.Contains(stringCoords))
+            if (!generatorCoordsList.Contains(stringCoords))
             {
                 Coords coords = Coords.StringToCoords(param);
                 string number = param[2].ToString();
@@ -1339,18 +1311,16 @@ namespace Sudoku.ViewModels
             if (difficulty == "Easy")
             {
                 await preloadGameEasy;
-                NumberList = numberListPreloadedEasy;
+                numberList = numberListPreloadedEasy;
                 generatorCoordsList = generatorCoordsPreloadedEasy;
                 NumberColorList = numberColorListPreloadedEasy;
-                currentDifficulty = "Easy";
             }
             else if (difficulty == "Medium")
             {
                 await preloadGameMedium;
-                NumberList = numberListPreloadedMedium;
+                numberList = numberListPreloadedMedium;
                 generatorCoordsList = generatorCoordsPreloadedMedium;
                 NumberColorList = numberColorListPreloadedMedium;
-                currentDifficulty = "Medium";
             }
             else if (difficulty == "Hard")
             {
@@ -1359,55 +1329,56 @@ namespace Sudoku.ViewModels
                     LabelSingleSolutionWaitVisibility = "Visible";
                 }
                 await preloadGameHard;
-                NumberList = numberListPreloadedHard;
+                numberList = numberListPreloadedHard;
                 generatorCoordsList = generatorCoordsPreloadedHard;
                 NumberColorList = numberColorListPreloadedHard;
                 LabelSingleSolutionWaitVisibility = "Hidden";
-                currentDifficulty = "Hard";
             }
-
-            preloadGameEasy = PreloadGame("Easy");
-            preloadGameMedium = PreloadGame("Medium");
-            preloadGameHard = PreloadGame("Hard");
+            NumberList = numberList;
 
             currentlySelectedCoords = "";
 
             SelectNumberOrMarkerVisibility = "Visible";
             ValidationVisibility = "Collapsed";
 
+            PreloadGames();
+
             doBlockInput = false;
         }
-        private async Task PreloadGame(string difficulty)
+        private async void PreloadGames()
+        {
+            preloadGameEasy = PreloadGameTask("Easy");
+            await preloadGameEasy;
+            preloadGameMedium = PreloadGameTask("Medium");
+            await preloadGameMedium;
+            preloadGameHard = PreloadGameTask("Hard");
+            await preloadGameHard;
+        }
+        private async Task PreloadGameTask(string difficulty)
         {
             await Task.Run(() =>
             {
-                NumberListModel tempNumberlist = new NumberListModel();
-                tempNumberlist.InitializeList();
+                NumberListModel tempNumberList = new NumberListModel();
+                tempNumberList.InitializeList();
                 GeneratorGameLogic generatorGameLogic = null;
                 NumberColorListModel tempNumberColorList = new NumberColorListModel();
                 bool doRun = true;
 
                 while (doRun)
                 {
-                    SolverGameLogic solverGameLogic = new SolverGameLogic(tempNumberlist);
+                    SolverGameLogic solverGameLogic = new SolverGameLogic(tempNumberList);
                     solverGameLogic.FillSudoku();
                     if (difficulty == "Easy")
                     {
-                        numberListEasySolved.InitializeList();
-                        numberListEasySolved = solverGameLogic.NumberListSolved;
-                        generatorGameLogic = new GeneratorGameLogic(difficulty, new NumberListModel(numberListEasySolved));
+                        generatorGameLogic = new GeneratorGameLogic(difficulty, new NumberListModel(solverGameLogic.NumberListSolved));
                     }
                     else if (difficulty == "Medium")
                     {
-                        numberListMediumSolved.InitializeList();
-                        numberListMediumSolved = solverGameLogic.NumberListSolved;
-                        generatorGameLogic = new GeneratorGameLogic(difficulty, new NumberListModel(numberListMediumSolved));
+                        generatorGameLogic = new GeneratorGameLogic(difficulty, new NumberListModel(solverGameLogic.NumberListSolved));
                     }
                     else if (difficulty == "Hard")
                     {
-                        numberListHardSolved.InitializeList();
-                        numberListHardSolved = solverGameLogic.NumberListSolved;
-                        generatorGameLogic = new GeneratorGameLogic(difficulty, new NumberListModel(numberListHardSolved));
+                        generatorGameLogic = new GeneratorGameLogic(difficulty, new NumberListModel(solverGameLogic.NumberListSolved));
                     }
 
                     generatorGameLogic.GenerateSudoku(menuSingleSolutionCheck);
