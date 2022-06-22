@@ -400,7 +400,7 @@ namespace Sudoku.GameLogic
                     if (SingleMarkerInColList.Count != 0)
                     {
                         SolveWithMarkerListPlaceNumbers(SingleMarkerInColList);
-                        MarkerList = new MarkerListModel(FillAllMarkers(NumberList));
+                        MarkerList = FillAllMarkers(NumberList);
                     }
                     else
                     {
