@@ -355,24 +355,7 @@ namespace Sudoku.ViewModels
                     {
                         HideOverlays();
                         LabelSingleSolutionWaitVisibility = "Visible";
-                        bool hasUserPlacedANumber = false;
                         bool isEmpty = true;
-                        for (int col = 0; col < 9; col++)
-                        {
-                            if (hasUserPlacedANumber)
-                            {
-                                break;
-                            }
-                            for (int row = 0; row < 9; row++)
-                            {
-                                string stringCoords = col.ToString() + row.ToString();
-                                if (numberList[col][row] != "" && !generatorCoordsList.Contains(stringCoords))
-                                {
-                                    hasUserPlacedANumber = true;
-                                    break;
-                                }
-                            }
-                        }
                         for (int col = 0; col < 9; col++)
                         {
                             if (!isEmpty)
@@ -388,8 +371,17 @@ namespace Sudoku.ViewModels
                                 }
                             }
                         }
-                        Task fillSudokuTask = FillSudokuTask(solverGameLogic);
-                        await fillSudokuTask;
+                        solverGameLogic.SolveWithMarkerList();
+                        numberList = new NumberListModel(solverGameLogic.NumberList);
+                        if (SolverGameLogic.IsFull(solverGameLogic.NumberList))
+                        {
+                            solverGameLogic.NumberListSolved = new NumberListModel(solverGameLogic.NumberList);
+                        }
+                        else
+                        {
+                            Task fillSudokuTask = FillSudokuTask(solverGameLogic);
+                            await fillSudokuTask;
+                        }
                         LabelSingleSolutionWaitVisibility = "Collapsed";
                         numberColorList = new NumberColorListModel();
                         numberColorList.InitializeList();
@@ -402,8 +394,8 @@ namespace Sudoku.ViewModels
                         if (solverGameLogic.Tries < 700000 && solverGameLogic.NumberListSolved != null)
                         {
                             numberList = new NumberListModel(solverGameLogic.NumberListSolved);
+                            NumberList = numberList;
                         }
-                        NumberList = numberList;
                     }
 
                     if (solverGameLogic.Tries < 700000 && solverGameLogic.NumberListSolved != null)
@@ -463,84 +455,10 @@ namespace Sudoku.ViewModels
         {
             if (!doBlockInput)
             {
-                markerList = new MarkerListModel();
-                markerList.InitializeList();
-
+                SolverGameLogic solverGameLogic = new SolverGameLogic(numberList);
                 HideOverlays();
-                for (int col = 0; col < 9; col++)
-                {
-                    for (int row = 0; row < 9; row++)
-                    {
-                        // 00|10|20|30
-                        // 01|11|21|31
-                        // 02|12|22|32
-
-                        if (markerList[col][row][0][0] == "" && numberList[col][row] == "")
-                        {
-                            if (ValidatorGameLogic.IsValid(numberList, col, row, "1"))
-                            {
-                                markerList[col][row][0][0] = "1";
-                            }
-                        }
-                        if (markerList[col][row][1][0] == "" && numberList[col][row] == "")
-                        {
-                            if (ValidatorGameLogic.IsValid(numberList, col, row, "2"))
-                            {
-                                markerList[col][row][1][0] = "2";
-                            }
-                        }
-                        if (markerList[col][row][2][0] == "" && numberList[col][row] == "")
-                        {
-                            if (ValidatorGameLogic.IsValid(numberList, col, row, "3"))
-                            {
-                                markerList[col][row][2][0] = "3";
-                            }
-                        }
-                        if (markerList[col][row][3][0] == "" && numberList[col][row] == "")
-                        {
-                            if (ValidatorGameLogic.IsValid(numberList, col, row, "4"))
-                            {
-                                markerList[col][row][3][0] = "4";
-                            }
-                        }
-                        if (markerList[col][row][0][1] == "" && numberList[col][row] == "")
-                        {
-                            if (ValidatorGameLogic.IsValid(numberList, col, row, "5"))
-                            {
-                                markerList[col][row][0][1] = "5";
-                            }
-                        }
-                        if (markerList[col][row][3][1] == "" && numberList[col][row] == "")
-                        {
-                            if (ValidatorGameLogic.IsValid(numberList, col, row, "6"))
-                            {
-                                markerList[col][row][3][1] = "6";
-                            }
-                        }
-                        if (markerList[col][row][0][2] == "" && numberList[col][row] == "")
-                        {
-                            if (ValidatorGameLogic.IsValid(numberList, col, row, "7"))
-                            {
-                                markerList[col][row][0][2] = "7";
-                            }
-                        }
-                        if (markerList[col][row][1][2] == "" && numberList[col][row] == "")
-                        {
-                            if (ValidatorGameLogic.IsValid(numberList, col, row, "8"))
-                            {
-                                markerList[col][row][1][2] = "8";
-                            }
-                        }
-                        if (markerList[col][row][2][2] == "" && numberList[col][row] == "")
-                        {
-                            if (ValidatorGameLogic.IsValid(numberList, col, row, "9"))
-                            {
-                                markerList[col][row][2][2] = "9";
-                            }
-                        }
-                    }
-                    MarkerList = markerList;
-                }
+                markerList = new MarkerListModel(solverGameLogic.FillAllMarkers(numberList));
+                MarkerList = markerList;                
             }
         }
         private void MenuSettingsSingleSolutionAction()

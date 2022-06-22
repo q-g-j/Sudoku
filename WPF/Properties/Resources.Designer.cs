@@ -115,7 +115,7 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a number:.
+        ///   Looks up a localized string similar to Select a Number:.
         /// </summary>
         public static string LabelSelectNumber {
             get {
