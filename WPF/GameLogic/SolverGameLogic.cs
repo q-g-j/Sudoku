@@ -389,10 +389,11 @@ namespace Sudoku.GameLogic
         internal void SolveWithMarkerList()
         {
             MarkerList = FillAllMarkers(NumberList);
+            List<SingleMarkerStruct> singleMarkerList;
             bool doRun = true;
             while (doRun)
             {
-                List<SingleMarkerStruct> singleMarkerList = GetSingleMarkersInCells();
+                singleMarkerList = GetSingleMarkersInCells();
                 if (singleMarkerList.Count != 0)
                 {
                     SolveWithMarkerListPlaceNumbers(singleMarkerList);
@@ -400,26 +401,26 @@ namespace Sudoku.GameLogic
                 }
                 else
                 {
-                    List<SingleMarkerStruct> SingleMarkerInColList = GetSingleMarkersInColumns();
-                    if (SingleMarkerInColList.Count != 0)
+                    singleMarkerList = GetSingleMarkersInColumns();
+                    if (singleMarkerList.Count != 0)
                     {
-                        SolveWithMarkerListPlaceNumbers(SingleMarkerInColList);
+                        SolveWithMarkerListPlaceNumbers(singleMarkerList);
                         MarkerList = FillAllMarkers(NumberList);
                     }
                     else
                     {
-                        List<SingleMarkerStruct> SingleMarkerInRowList = GetSingleMarkersInRows();
-                        if (SingleMarkerInRowList.Count != 0)
+                        singleMarkerList = GetSingleMarkersInRows();
+                        if (singleMarkerList.Count != 0)
                         {
-                            SolveWithMarkerListPlaceNumbers(SingleMarkerInRowList);
+                            SolveWithMarkerListPlaceNumbers(singleMarkerList);
                             MarkerList = FillAllMarkers(NumberList);
                         }
                         else
                         {
-                            List<SingleMarkerStruct> SingleMarkerInSquareList = GetSingleMarkersInSquares();
-                            if (SingleMarkerInSquareList.Count != 0)
+                            singleMarkerList = GetSingleMarkersInSquares();
+                            if (singleMarkerList.Count != 0)
                             {
-                                SolveWithMarkerListPlaceNumbers(SingleMarkerInSquareList);
+                                SolveWithMarkerListPlaceNumbers(singleMarkerList);
                                 MarkerList = FillAllMarkers(NumberList);
                             }
                             else
