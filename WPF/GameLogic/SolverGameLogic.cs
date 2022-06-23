@@ -37,9 +37,11 @@ namespace Sudoku.GameLogic
                     if (numberList[col][row] == "")
                     {
                         _isFull = false;
+                        goto BreakLoop;
                     }
                 }
             }
+            BreakLoop:
             return _isFull;
         }
 
@@ -199,13 +201,15 @@ namespace Sudoku.GameLogic
                                         tempStruct.InnerRow = j;
                                         tempStruct.Number = MarkerList[col][row][i][j];
                                     }
-                                    else
+                                    else if (count > 1)
                                     {
                                         addToList = false;
+                                        goto BreakLoop;
                                     }
                                 }
                             }
                         }
+                        BreakLoop:
                         if (addToList)
                         {
                             returnList.Add(tempStruct);

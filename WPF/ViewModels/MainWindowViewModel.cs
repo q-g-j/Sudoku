@@ -355,32 +355,26 @@ namespace Sudoku.ViewModels
                     {
                         HideOverlays();
                         LabelSingleSolutionWaitVisibility = "Visible";
-                        bool isEmpty = true;
-                        for (int col = 0; col < 9; col++)
-                        {
-                            if (!isEmpty)
-                            {
-                                break;
-                            }
-                            for (int row = 0; row < 9; row++)
-                            {
-                                if (numberList[col][row] != "")
-                                {
-                                    isEmpty = false;
-                                    break;
-                                }
-                            }
-                        }
+
+                        bool debugMode = false;
+
                         solverGameLogic.SolveWithMarkerList();
-                        numberList = new NumberListModel(solverGameLogic.NumberList);
+                        if (debugMode)
+                        {
+                            numberList = new NumberListModel(solverGameLogic.NumberList);
+                            NumberList = numberList;
+                        }
                         if (SolverGameLogic.IsFull(solverGameLogic.NumberList))
                         {
                             solverGameLogic.NumberListSolved = new NumberListModel(solverGameLogic.NumberList);
                         }
                         else
                         {
-                            Task fillSudokuTask = FillSudokuTask(solverGameLogic);
-                            await fillSudokuTask;
+                            if (!debugMode)
+                            {
+                                Task fillSudokuTask = FillSudokuTask(solverGameLogic);
+                                await fillSudokuTask;
+                            }
                         }
                         LabelSingleSolutionWaitVisibility = "Collapsed";
                         numberColorList = new NumberColorListModel();
@@ -391,10 +385,14 @@ namespace Sudoku.ViewModels
                             numberColorList[coords.Col][coords.Row] = Colors.CellNumberGenerator;
                         }
                         NumberColorList = numberColorList;
-                        if (solverGameLogic.Tries < 700000 && solverGameLogic.NumberListSolved != null)
+
+                        if (!debugMode)
                         {
-                            numberList = new NumberListModel(solverGameLogic.NumberListSolved);
-                            NumberList = numberList;
+                            if (solverGameLogic.Tries < 700000 && solverGameLogic.NumberListSolved != null)
+                            {
+                                numberList = new NumberListModel(solverGameLogic.NumberListSolved);
+                                NumberList = numberList;
+                            }
                         }
                     }
 
