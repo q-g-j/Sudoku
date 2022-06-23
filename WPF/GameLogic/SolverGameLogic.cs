@@ -7,6 +7,16 @@ using Sudoku.Models;
 
 namespace Sudoku.GameLogic
 {
+    internal struct SingleMarkerStruct
+    {
+        public int Col { get; set; }
+        public int Row { get; set; }
+        public int InnerCol { get; set; }
+        public int InnerRow { get; set; }
+        public string Number { get; set; }
+
+        public override string ToString() => Col.ToString() + ", " + Row.ToString() + ", " + InnerCol.ToString() + ", " + InnerRow.ToString() + ", " + Number;
+    }
     public class SolverGameLogic
     {
         #region Constructors
@@ -162,17 +172,7 @@ namespace Sudoku.GameLogic
             }
             return markerList;
         }
-        private struct SingleMarkerStruct
-        {
-            public int Col { get; set; }
-            public int Row { get; set; }
-            public int InnerCol { get; set; }
-            public int InnerRow { get; set; }
-            public string Number { get; set; }
-
-            public override string ToString() => Col.ToString() + ", " + Row.ToString() + ", " + InnerCol.ToString() + ", " + InnerRow.ToString() + ", " + Number;
-        }
-        private List<SingleMarkerStruct> GetSingleMarkerList()
+        private List<SingleMarkerStruct> GetSingleMarkersInCells()
         {
             List<SingleMarkerStruct> returnList = new List<SingleMarkerStruct>();
 
@@ -220,7 +220,7 @@ namespace Sudoku.GameLogic
 
             return returnList;
         }
-        private List<SingleMarkerStruct> GetSingleMarkerInColFromMultipleMarkersList()
+        private List<SingleMarkerStruct> GetSingleMarkersInColumns()
         {
             List<SingleMarkerStruct> returnList = new List<SingleMarkerStruct>();
 
@@ -271,7 +271,7 @@ namespace Sudoku.GameLogic
 
             return returnList;
         }
-        private List<SingleMarkerStruct> GetSingleMarkerInRowFromMultipleMarkersList()
+        private List<SingleMarkerStruct> GetSingleMarkersInRows()
         {
             List<SingleMarkerStruct> returnList = new List<SingleMarkerStruct>();
 
@@ -322,7 +322,7 @@ namespace Sudoku.GameLogic
 
             return returnList;
         }
-        private List<SingleMarkerStruct> GetSingleMarkerInSquareFromMultipleMarkersList()
+        private List<SingleMarkerStruct> GetSingleMarkersInSquares()
         {
             List<SingleMarkerStruct> returnList = new List<SingleMarkerStruct>();
 
@@ -392,7 +392,7 @@ namespace Sudoku.GameLogic
             bool doRun = true;
             while (doRun)
             {
-                List<SingleMarkerStruct> singleMarkerList = GetSingleMarkerList();
+                List<SingleMarkerStruct> singleMarkerList = GetSingleMarkersInCells();
                 if (singleMarkerList.Count != 0)
                 {
                     SolveWithMarkerListPlaceNumbers(singleMarkerList);
@@ -400,7 +400,7 @@ namespace Sudoku.GameLogic
                 }
                 else
                 {
-                    List<SingleMarkerStruct> SingleMarkerInColList = GetSingleMarkerInColFromMultipleMarkersList();
+                    List<SingleMarkerStruct> SingleMarkerInColList = GetSingleMarkersInColumns();
                     if (SingleMarkerInColList.Count != 0)
                     {
                         SolveWithMarkerListPlaceNumbers(SingleMarkerInColList);
@@ -408,7 +408,7 @@ namespace Sudoku.GameLogic
                     }
                     else
                     {
-                        List<SingleMarkerStruct> SingleMarkerInRowList = GetSingleMarkerInRowFromMultipleMarkersList();
+                        List<SingleMarkerStruct> SingleMarkerInRowList = GetSingleMarkersInRows();
                         if (SingleMarkerInRowList.Count != 0)
                         {
                             SolveWithMarkerListPlaceNumbers(SingleMarkerInRowList);
@@ -416,7 +416,7 @@ namespace Sudoku.GameLogic
                         }
                         else
                         {
-                            List<SingleMarkerStruct> SingleMarkerInSquareList = GetSingleMarkerInSquareFromMultipleMarkersList();
+                            List<SingleMarkerStruct> SingleMarkerInSquareList = GetSingleMarkersInSquares();
                             if (SingleMarkerInSquareList.Count != 0)
                             {
                                 SolveWithMarkerListPlaceNumbers(SingleMarkerInSquareList);

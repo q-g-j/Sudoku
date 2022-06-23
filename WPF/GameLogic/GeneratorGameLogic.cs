@@ -126,7 +126,6 @@ namespace Sudoku.GameLogic
                 }
             }
         }
-
         private bool HasCurrentColTooFewNumbers(int currentCol)
         {
             int countNumbers = 0;

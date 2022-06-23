@@ -15,7 +15,6 @@ namespace Sudoku.Models
         internal NumberColorListModel NumberColorsList;
         internal List<string> GeneratorNumberList;
     }
-
     internal class SaveSlotsModel
     {
         #region Constructors
