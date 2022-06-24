@@ -2692,6 +2692,7 @@
                     Visibility="{Binding SelectNumberOrMarkerVisibility}">
                     <Label
                         Margin="0"
+                        HorizontalAlignment="Center"
                         Content="{Binding LabelSelectNumberOrMarker}"
                         FontFamily="{StaticResource MainSemiBold}"
                         FontSize="22">
