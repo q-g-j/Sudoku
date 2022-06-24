@@ -11,7 +11,8 @@ Copyright 2022 Jann Emken
 - mark conflicts in red
 - menu option to only generate Sudokus with a single solution
 - menu action to fill in all markers automatically
-- solve current Sudoku from the menu
+- solve current Sudoku from the menu:</br>
+try to solve the sudoku logically first; if that fails, run a backtracking (brute-force) method
 - 5 save slots *(save files location: %APPDATA%\SudokuGame)*
 - basic printing functionality
 - place up to 9 markers in each square
