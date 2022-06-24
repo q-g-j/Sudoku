@@ -16,6 +16,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
 using Sudoku.Views;
+using System.Linq;
 
 namespace Sudoku.ViewModels
 {
@@ -38,6 +39,7 @@ namespace Sudoku.ViewModels
             markerList = new MarkerListModel();
             numberColorList = new NumberColorListModel();
             buttonBackgroundList = new ButtonBackgroundListModel();
+            buttonSelectNumberOrMarkerBackgroundList = Enumerable.Repeat(Colors.ButtonSelectNumber, 10).ToList();
             numberList.InitializeList();
             markerList.InitializeList();
             numberColorList.InitializeList();
@@ -47,7 +49,6 @@ namespace Sudoku.ViewModels
 
             // initialize property values:
             labelSelectNumberOrMarker = "";
-            buttonSelectNumberOrMarker = Colors.ButtonSelectNumber;
             labelSingleSolutionWaitVisibility = "Hidden";
             validationVisibility = "Collapsed";
             selectDifficultyVisibility = "Visible";
@@ -77,6 +78,8 @@ namespace Sudoku.ViewModels
             ButtonSquareUpCommand = new AsyncRelayCommand<object>(o => ButtonSquareUpAction(o));
             ButtonSquareMouseEnterCommand = new RelayCommand<object>(o => ButtonSquareMouseEnterAction(o));
             ButtonSquareMouseLeaveCommand = new RelayCommand<object>(o => ButtonSquareMouseLeaveAction(o));
+            ButtonSelectNumberOrMarkerMouseEnterCommand = new RelayCommand<object>(o => ButtonSelectNumberOrMarkerMouseEnterAction(o));
+            ButtonSelectNumberOrMarkerMouseLeaveCommand = new RelayCommand<object>(o => ButtonSelectNumberOrMarkerMouseLeaveAction(o));
             KeyboardCommand = new RelayCommand<object>(o => KeyboardAction(o));
 
             // load app settings from file:
@@ -131,6 +134,7 @@ namespace Sudoku.ViewModels
         private MarkerListModel markerList;
         private NumberColorListModel numberColorList;
         private ButtonBackgroundListModel buttonBackgroundList;
+        private List<string> buttonSelectNumberOrMarkerBackgroundList;
 
         private List<string> menuSaveSlotsLoadText;
         private List<string> menuSaveSlotsSaveText;
@@ -139,7 +143,6 @@ namespace Sudoku.ViewModels
         private string trophyWidth;
 
         private string labelSelectNumberOrMarker;
-        private string buttonSelectNumberOrMarker;
         private string labelValidate;
         private string labelValidateBackground;
 
@@ -174,6 +177,8 @@ namespace Sudoku.ViewModels
         public IAsyncRelayCommand ButtonSquareUpCommand { get; }
         public RelayCommand<object> ButtonSquareMouseEnterCommand { get; }
         public RelayCommand<object> ButtonSquareMouseLeaveCommand { get; }
+        public RelayCommand<object> ButtonSelectNumberOrMarkerMouseEnterCommand { get; }
+        public RelayCommand<object> ButtonSelectNumberOrMarkerMouseLeaveCommand { get; }
         public RelayCommand<object> KeyboardCommand { get; }
 
         public string TrophyWidth
@@ -216,15 +221,15 @@ namespace Sudoku.ViewModels
             get => buttonBackgroundList;
             set { buttonBackgroundList = value; OnPropertyChanged(); }
         }
+        public List<string> ButtonSelectNumberOrMarkerBackgroundList
+        {
+            get => buttonSelectNumberOrMarkerBackgroundList;
+            set { buttonSelectNumberOrMarkerBackgroundList = value; OnPropertyChanged(); }
+        }
         public string LabelSelectNumberOrMarker
         {
             get => labelSelectNumberOrMarker;
             set { labelSelectNumberOrMarker = value; OnPropertyChanged(); }
-        }
-        public string ButtonSelectNumberOrMarker
-        {
-            get => buttonSelectNumberOrMarker;
-            set { buttonSelectNumberOrMarker = value; OnPropertyChanged(); }
         }
         public string LabelValidate
         {
@@ -279,9 +284,11 @@ namespace Sudoku.ViewModels
             if (!doBlockInput)
             {
                 currentlySelectedCoords = "";
+                leftOrRightClicked = "";
                 ResetBackground();
                 LabelSelectNumberOrMarker = "";
-                ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
+                buttonSelectNumberOrMarkerBackgroundList = Enumerable.Repeat(Colors.ButtonSelectNumber, 10).ToList<string>();
+                ButtonSelectNumberOrMarkerBackgroundList = buttonSelectNumberOrMarkerBackgroundList;
                 SelectDifficultyVisibility = "Visible";
                 TrophyVisibility = "Collapsed";
             }
@@ -292,9 +299,11 @@ namespace Sudoku.ViewModels
             {
                 HideOverlays();
                 currentlySelectedCoords = "";
+                leftOrRightClicked = "";
                 ResetBackground();
                 LabelSelectNumberOrMarker = "";
-                ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
+                buttonSelectNumberOrMarkerBackgroundList = Enumerable.Repeat(Colors.ButtonSelectNumber, 10).ToList<string>();
+                ButtonSelectNumberOrMarkerBackgroundList = buttonSelectNumberOrMarkerBackgroundList;
                 SelectNumberOrMarkerVisibility = "Visible";
                 ValidationVisibility = "Collapsed";
                 TrophyVisibility = "Collapsed";
@@ -333,7 +342,8 @@ namespace Sudoku.ViewModels
                 doBlockInput = true;
                 bool isValid = true;
                 LabelSelectNumberOrMarker = "";
-                ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
+                buttonSelectNumberOrMarkerBackgroundList = Enumerable.Repeat(Colors.ButtonSelectNumber, 10).ToList<string>();
+                ButtonSelectNumberOrMarkerBackgroundList = buttonSelectNumberOrMarkerBackgroundList;
                 SolverGameLogic solverGameLogic = new SolverGameLogic(numberList);
 
                 if (!SolverGameLogic.IsFull(numberList))
@@ -490,8 +500,10 @@ namespace Sudoku.ViewModels
             if (!doBlockInput)
             {
                 currentlySelectedCoords = "";
+                leftOrRightClicked = "";
                 LabelSelectNumberOrMarker = "";
-                ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
+                buttonSelectNumberOrMarkerBackgroundList = Enumerable.Repeat(Colors.ButtonSelectNumber, 10).ToList<string>();
+                ButtonSelectNumberOrMarkerBackgroundList = buttonSelectNumberOrMarkerBackgroundList;
                 if (numberList != null && markerList != null && numberColorList != null && generatorCoordsList != null)
                 {
                     DateTime now = DateTime.Now;
@@ -514,9 +526,11 @@ namespace Sudoku.ViewModels
             {
                 TrophyVisibility = "Collapsed";
                 currentlySelectedCoords = "";
+                leftOrRightClicked = "";
                 ResetBackground();
                 LabelSelectNumberOrMarker = "";
-                ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
+                buttonSelectNumberOrMarkerBackgroundList = Enumerable.Repeat(Colors.ButtonSelectNumber, 10).ToList<string>();
+                ButtonSelectNumberOrMarkerBackgroundList = buttonSelectNumberOrMarkerBackgroundList;
                 string slotNumber = (string)o;
                 string filename = Path.Combine(folderAppSettings, "slot" + slotNumber + ".json");
                 if (File.Exists(filename))
@@ -661,7 +675,8 @@ namespace Sudoku.ViewModels
                             leftOrRightClicked = "Left";
                             UnhighlightColRowSquare();
                             HighlightColRowSquare(coords);
-                            ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
+                            buttonSelectNumberOrMarkerBackgroundList = Enumerable.Repeat(Colors.ButtonSelectNumber, 10).ToList<string>();
+                            ButtonSelectNumberOrMarkerBackgroundList = buttonSelectNumberOrMarkerBackgroundList;
                             RestoreOldCoordsBackground();
                             currentlySelectedCoords = param;
                             LabelSelectNumberOrMarker = Resources.LabelSelectNumber;
@@ -679,7 +694,8 @@ namespace Sudoku.ViewModels
                         {
                             UnhighlightColRowSquare();
                             buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundMouseOver;
-                            ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
+                            buttonSelectNumberOrMarkerBackgroundList = Enumerable.Repeat(Colors.ButtonSelectNumber, 10).ToList<string>();
+                            ButtonSelectNumberOrMarkerBackgroundList = buttonSelectNumberOrMarkerBackgroundList;
                             LabelSelectNumberOrMarker = "";
                             currentlySelectedCoords = "";
                             leftOrRightClicked = "";
@@ -697,7 +713,8 @@ namespace Sudoku.ViewModels
                             leftOrRightClicked = "Right";
                             UnhighlightColRowSquare();
                             HighlightColRowSquare(coords);
-                            ButtonSelectNumberOrMarker = Colors.ButtonSelectMarker;
+                            buttonSelectNumberOrMarkerBackgroundList = Enumerable.Repeat(Colors.ButtonSelectMarker, 10).ToList<string>();
+                            ButtonSelectNumberOrMarkerBackgroundList = buttonSelectNumberOrMarkerBackgroundList;
                             RestoreOldCoordsBackground();
                             currentlySelectedCoords = param;
                             LabelSelectNumberOrMarker = Resources.LabelSelectMarker;
@@ -710,7 +727,8 @@ namespace Sudoku.ViewModels
                             {
                                 UnhighlightColRowSquare();
                             }
-                            ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
+                            buttonSelectNumberOrMarkerBackgroundList = Enumerable.Repeat(Colors.ButtonSelectNumber, 10).ToList<string>();
+                            ButtonSelectNumberOrMarkerBackgroundList = buttonSelectNumberOrMarkerBackgroundList;
                             LabelSelectNumberOrMarker = "";
                             currentlySelectedCoords = "";
                             leftOrRightClicked = "";
@@ -724,7 +742,8 @@ namespace Sudoku.ViewModels
                                 UnhighlightColRowSquare();
                             }
                             buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundMouseOver;
-                            ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
+                            buttonSelectNumberOrMarkerBackgroundList = Enumerable.Repeat(Colors.ButtonSelectNumber, 10).ToList<string>();
+                            ButtonSelectNumberOrMarkerBackgroundList = buttonSelectNumberOrMarkerBackgroundList;
                             LabelSelectNumberOrMarker = "";
                             currentlySelectedCoords = "";
                             leftOrRightClicked = "";
@@ -749,21 +768,21 @@ namespace Sudoku.ViewModels
             var e = (MouseEventArgs)((CompositeCommandParameter)o).EventArgs;
             if (!doBlockInput)
             {
-                var param = (string)((CompositeCommandParameter)o).Parameter;
-                Coords coords = Coords.StringToCoords(param);
-                if (param == currentlySelectedCoords && leftOrRightClicked == "Left")
+                var stringCoords = (string)((CompositeCommandParameter)o).Parameter;
+                Coords coords = Coords.StringToCoords(stringCoords);
+                if (stringCoords == currentlySelectedCoords && leftOrRightClicked == "Left")
                 {
                     buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftSelectedMouseOver;
                 }
-                else if (param == currentlySelectedCoords && leftOrRightClicked == "Right")
+                else if (stringCoords == currentlySelectedCoords && leftOrRightClicked == "Right")
                 {
                     buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundRightSelectedMouseOver;
                 }
-                else if (highlightedCoordsList.Contains(param) && leftOrRightClicked == "Left")
+                else if (highlightedCoordsList.Contains(stringCoords) && leftOrRightClicked == "Left")
                 {
                     buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftHighlightedMouseOver;
                 }
-                else if (highlightedCoordsList.Contains(param) && leftOrRightClicked == "Right")
+                else if (highlightedCoordsList.Contains(stringCoords) && leftOrRightClicked == "Right")
                 {
                     buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundRightHighlightedMouseOver;
                 }
@@ -783,6 +802,46 @@ namespace Sudoku.ViewModels
             {
                 var param = (string)((CompositeCommandParameter)o).Parameter;
                 RestoreCoordsBackground(param);
+            }
+
+            e.Handled = true;
+        }
+        private void ButtonSelectNumberOrMarkerMouseEnterAction(object o)
+        {
+            var e = (MouseEventArgs)((CompositeCommandParameter)o).EventArgs;
+            if (!doBlockInput)
+            {
+                var param = ((CompositeCommandParameter)o).Parameter;
+                int index = int.Parse(param[0].ToString());
+                if (leftOrRightClicked == "Right")
+                {
+                    buttonSelectNumberOrMarkerBackgroundList[index] = Colors.ButtonSelectMarkerMouseOver;
+                }
+                else
+                {
+                    buttonSelectNumberOrMarkerBackgroundList[index] = Colors.ButtonSelectNumberMouseOver;
+                }
+                ButtonSelectNumberOrMarkerBackgroundList = buttonSelectNumberOrMarkerBackgroundList;
+            }
+
+            e.Handled = true;
+        }
+        private void ButtonSelectNumberOrMarkerMouseLeaveAction(object o)
+        {
+            var e = (MouseEventArgs)((CompositeCommandParameter)o).EventArgs;
+            if (!doBlockInput)
+            {
+                var param = ((CompositeCommandParameter)o).Parameter;
+                int index = int.Parse(param[0].ToString());
+                if (leftOrRightClicked == "Right")
+                {
+                    buttonSelectNumberOrMarkerBackgroundList[index] = Colors.ButtonSelectMarker;
+                }
+                else
+                {
+                    buttonSelectNumberOrMarkerBackgroundList[index] = Colors.ButtonSelectNumber;
+                }
+                ButtonSelectNumberOrMarkerBackgroundList = buttonSelectNumberOrMarkerBackgroundList;
             }
 
             e.Handled = true;

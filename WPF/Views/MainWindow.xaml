@@ -2724,22 +2724,102 @@
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="1" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="1">
+                            <Button Grid.Column="0" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="1" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="1" Background="{Binding ButtonSelectNumberOrMarkerBackgroundList[0]}">
                                 <Button.Resources>
                                     <Style TargetType="Border">
                                         <Setter Property="CornerRadius" Value="3, 0, 0, 3"/>
                                     </Style>
                                 </Button.Resources>
+                                <behaviors:Interaction.Triggers>
+                                    <behaviors:EventTrigger EventName="MouseEnter">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseEnterCommand}" PassEventArgsToCommand="True" CommandParameter="0"/>
+                                    </behaviors:EventTrigger>
+                                    <behaviors:EventTrigger EventName="MouseLeave">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseLeaveCommand}" PassEventArgsToCommand="True" CommandParameter="0"/>
+                                    </behaviors:EventTrigger>
+                                </behaviors:Interaction.Triggers>
                             </Button>
-                            <Button Grid.Column="2"  Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="2" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="2"></Button>
-                            <Button Grid.Column="4"  Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="3" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="3"></Button>
-                            <Button Grid.Column="6"  Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="4" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="4"></Button>
-                            <Button Grid.Column="8"  Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="5" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="5"></Button>
-                            <Button Grid.Column="10" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="6" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="6"></Button>
-                            <Button Grid.Column="12" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="7" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="7"></Button>
-                            <Button Grid.Column="14" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="8" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="8"></Button>
-                            <Button Grid.Column="16" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="9" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="9"></Button>
-                            <Button Grid.Column="18" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="X" x:Name="ButtonTrash">
+                            <Button Grid.Column="2"  Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="2" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="2" Background="{Binding ButtonSelectNumberOrMarkerBackgroundList[1]}">
+                                <behaviors:Interaction.Triggers>
+                                    <behaviors:EventTrigger EventName="MouseEnter">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseEnterCommand}" PassEventArgsToCommand="True" CommandParameter="1"/>
+                                    </behaviors:EventTrigger>
+                                    <behaviors:EventTrigger EventName="MouseLeave">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseLeaveCommand}" PassEventArgsToCommand="True" CommandParameter="1"/>
+                                    </behaviors:EventTrigger>
+                                </behaviors:Interaction.Triggers>
+                            </Button>
+                            <Button Grid.Column="4"  Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="3" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="3" Background="{Binding ButtonSelectNumberOrMarkerBackgroundList[2]}">
+                                <behaviors:Interaction.Triggers>
+                                    <behaviors:EventTrigger EventName="MouseEnter">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseEnterCommand}" PassEventArgsToCommand="True" CommandParameter="2"/>
+                                    </behaviors:EventTrigger>
+                                    <behaviors:EventTrigger EventName="MouseLeave">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseLeaveCommand}" PassEventArgsToCommand="True" CommandParameter="2"/>
+                                    </behaviors:EventTrigger>
+                                </behaviors:Interaction.Triggers>
+                            </Button>
+                            <Button Grid.Column="6"  Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="4" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="4" Background="{Binding ButtonSelectNumberOrMarkerBackgroundList[3]}">
+                                <behaviors:Interaction.Triggers>
+                                    <behaviors:EventTrigger EventName="MouseEnter">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseEnterCommand}" PassEventArgsToCommand="True" CommandParameter="3"/>
+                                    </behaviors:EventTrigger>
+                                    <behaviors:EventTrigger EventName="MouseLeave">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseLeaveCommand}" PassEventArgsToCommand="True" CommandParameter="3"/>
+                                    </behaviors:EventTrigger>
+                                </behaviors:Interaction.Triggers>
+                            </Button>
+                            <Button Grid.Column="8"  Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="5" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="5" Background="{Binding ButtonSelectNumberOrMarkerBackgroundList[4]}">
+                                <behaviors:Interaction.Triggers>
+                                    <behaviors:EventTrigger EventName="MouseEnter">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseEnterCommand}" PassEventArgsToCommand="True" CommandParameter="4"/>
+                                    </behaviors:EventTrigger>
+                                    <behaviors:EventTrigger EventName="MouseLeave">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseLeaveCommand}" PassEventArgsToCommand="True" CommandParameter="4"/>
+                                    </behaviors:EventTrigger>
+                                </behaviors:Interaction.Triggers>
+                            </Button>
+                            <Button Grid.Column="10" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="6" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="6" Background="{Binding ButtonSelectNumberOrMarkerBackgroundList[5]}">
+                                <behaviors:Interaction.Triggers>
+                                    <behaviors:EventTrigger EventName="MouseEnter">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseEnterCommand}" PassEventArgsToCommand="True" CommandParameter="5"/>
+                                    </behaviors:EventTrigger>
+                                    <behaviors:EventTrigger EventName="MouseLeave">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseLeaveCommand}" PassEventArgsToCommand="True" CommandParameter="5"/>
+                                    </behaviors:EventTrigger>
+                                </behaviors:Interaction.Triggers>
+                            </Button>
+                            <Button Grid.Column="12" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="7" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="7" Background="{Binding ButtonSelectNumberOrMarkerBackgroundList[6]}">
+                                <behaviors:Interaction.Triggers>
+                                    <behaviors:EventTrigger EventName="MouseEnter">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseEnterCommand}" PassEventArgsToCommand="True" CommandParameter="6"/>
+                                    </behaviors:EventTrigger>
+                                    <behaviors:EventTrigger EventName="MouseLeave">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseLeaveCommand}" PassEventArgsToCommand="True" CommandParameter="6"/>
+                                    </behaviors:EventTrigger>
+                                </behaviors:Interaction.Triggers>
+                            </Button>
+                            <Button Grid.Column="14" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="8" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="8" Background="{Binding ButtonSelectNumberOrMarkerBackgroundList[7]}">
+                                <behaviors:Interaction.Triggers>
+                                    <behaviors:EventTrigger EventName="MouseEnter">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseEnterCommand}" PassEventArgsToCommand="True" CommandParameter="7"/>
+                                    </behaviors:EventTrigger>
+                                    <behaviors:EventTrigger EventName="MouseLeave">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseLeaveCommand}" PassEventArgsToCommand="True" CommandParameter="7"/>
+                                    </behaviors:EventTrigger>
+                                </behaviors:Interaction.Triggers>
+                            </Button>
+                            <Button Grid.Column="16" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Content="9" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="9" Background="{Binding ButtonSelectNumberOrMarkerBackgroundList[8]}">
+                                <behaviors:Interaction.Triggers>
+                                    <behaviors:EventTrigger EventName="MouseEnter">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseEnterCommand}" PassEventArgsToCommand="True" CommandParameter="8"/>
+                                    </behaviors:EventTrigger>
+                                    <behaviors:EventTrigger EventName="MouseLeave">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseLeaveCommand}" PassEventArgsToCommand="True" CommandParameter="8"/>
+                                    </behaviors:EventTrigger>
+                                </behaviors:Interaction.Triggers>
+                            </Button>
+                            <Button Grid.Column="18" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Style="{StaticResource StyleSelectNumberButton}" Command="{Binding ButtonSelectNumberOrMarkerCommand}" CommandParameter="X" x:Name="ButtonTrash" Background="{Binding ButtonSelectNumberOrMarkerBackgroundList[9]}">
                                 <Image Margin="10" Source="{Binding Source={StaticResource ImageTrash}}"/>
                                 <Button.Resources>
                                     <Style TargetType="Border">
@@ -2747,6 +2827,14 @@
                                         <Setter Property="CornerRadius" Value="0, 3, 3, 0"/>
                                     </Style>
                                 </Button.Resources>
+                                <behaviors:Interaction.Triggers>
+                                    <behaviors:EventTrigger EventName="MouseEnter">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseEnterCommand}" PassEventArgsToCommand="True" CommandParameter="9"/>
+                                    </behaviors:EventTrigger>
+                                    <behaviors:EventTrigger EventName="MouseLeave">
+                                        <helpers:AdvancedInvokeCommandAction Command="{Binding ButtonSelectNumberOrMarkerMouseLeaveCommand}" PassEventArgsToCommand="True" CommandParameter="9"/>
+                                    </behaviors:EventTrigger>
+                                </behaviors:Interaction.Triggers>
                             </Button>
                             <Line Grid.Column="1"  X1="0" X2="0" Y1="0" Y2="1" Style="{StaticResource StyleSelectNumberLineInner}"/>
                             <Line Grid.Column="3"  X1="0" X2="0" Y1="0" Y2="1" Style="{StaticResource StyleSelectNumberLineInner}"/>

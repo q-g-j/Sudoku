@@ -25,6 +25,8 @@ namespace Sudoku
         public static string CellMarker { get => "Black"; }
         public static string ButtonSelectNumber { get => "#9ed7fa"; }
         public static string ButtonSelectMarker { get => "#eda578"; }
+        public static string ButtonSelectNumberMouseOver { get => "#6ec3f7"; }
+        public static string ButtonSelectMarkerMouseOver { get => "#e37835"; }
         public static string ButtonSelectDifficulty { get => "#eda374"; }
         public static string LabelSingleSolutionWait { get => "LightSkyBlue"; }
         public static string LabelValidateHasNoConflicts { get => "#40bf80"; }
