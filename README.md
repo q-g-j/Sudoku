@@ -9,8 +9,8 @@ Copyright 2022 Jann Emken
 - mouse and keyboard input
 - random puzzle generator with 3 difficulties
 - mark conflicts in red
-- menu option to only generate Sudokus with a single solution
 - menu action to fill in all markers automatically
+- menu option to only generate Sudokus with a single solution
 - solve current Sudoku from the menu:</br>
 try to solve the sudoku logically first; if that fails, run a backtracking (brute-force) method
 - 5 save slots *(save files location: %APPDATA%\SudokuGame)*
