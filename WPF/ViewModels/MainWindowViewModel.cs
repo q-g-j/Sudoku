@@ -671,7 +671,7 @@ namespace Sudoku.ViewModels
                             }
                             else
                             {
-                                buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftSelected;
+                                buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftSelectedMouseOver;
                             }
                             ButtonBackgroundList = buttonBackgroundList;
                         }
@@ -701,7 +701,7 @@ namespace Sudoku.ViewModels
                             RestoreOldCoordsBackground();
                             currentlySelectedCoords = param;
                             LabelSelectNumberOrMarker = Resources.LabelSelectMarker;
-                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundRightSelected;
+                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundRightSelectedMouseOver;
                             ButtonBackgroundList = buttonBackgroundList;
                         }
                         else if (!generatorCoordsList.Contains(param) && numberList[coords.Col][coords.Row] != "")
@@ -751,7 +751,26 @@ namespace Sudoku.ViewModels
             {
                 var param = (string)((CompositeCommandParameter)o).Parameter;
                 Coords coords = Coords.StringToCoords(param);
-                buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundMouseOver;
+                if (param == currentlySelectedCoords && leftOrRightClicked == "Left")
+                {
+                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftSelectedMouseOver;
+                }
+                else if (param == currentlySelectedCoords && leftOrRightClicked == "Right")
+                {
+                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundRightSelectedMouseOver;
+                }
+                else if (highlightedCoordsList.Contains(param) && leftOrRightClicked == "Left")
+                {
+                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftHighlightedMouseOver;
+                }
+                else if (highlightedCoordsList.Contains(param) && leftOrRightClicked == "Right")
+                {
+                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundRightHighlightedMouseOver;
+                }
+                else
+                {
+                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundMouseOver;
+                }
                 ButtonBackgroundList = buttonBackgroundList;
             }
 

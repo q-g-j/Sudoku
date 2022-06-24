@@ -11,8 +11,12 @@ namespace Sudoku
         public static string CellBackgroundDefault { get => "White"; }
         public static string CellBackgroundLeftHighlighted { get => "#d0ebfb"; }
         public static string CellBackgroundRightHighlighted { get => "#f9e1d2"; }
-        public static string CellBackgroundLeftSelected { get => "Yellow"; }
-        public static string CellBackgroundRightSelected { get => "Yellow"; }
+        public static string CellBackgroundLeftHighlightedMouseOver { get => "#8acef5"; }
+        public static string CellBackgroundRightHighlightedMouseOver { get => "#eda578"; }
+        public static string CellBackgroundLeftSelected { get => "#ffff00"; }
+        public static string CellBackgroundRightSelected { get => "#ffff00"; }
+        public static string CellBackgroundLeftSelectedMouseOver { get => "#e6e619"; }
+        public static string CellBackgroundRightSelectedMouseOver { get => "#e6e619"; }
         public static string CellBackgroundConflicts { get => "Red"; }
         public static string CellBackgroundConflictsSelected { get => "#ff6666"; }
         public static string CellBackgroundMouseOver { get => "LightBlue"; }
