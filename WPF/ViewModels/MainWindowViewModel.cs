@@ -648,7 +648,8 @@ namespace Sudoku.ViewModels
                 {
                     var param = (string)((CompositeCommandParameter)o).Parameter;
 
-                    if (e.ChangedButton == MouseButton.Left)
+                Coords coords = Coords.StringToCoords(param);
+                if (e.ChangedButton == MouseButton.Left)
                     {
                         if (SelectDifficultyVisibility == "Visible")
                         {
@@ -658,7 +659,6 @@ namespace Sudoku.ViewModels
                         if (!generatorCoordsList.Contains(param))
                         {
                             leftOrRightClicked = "Left";
-                            Coords coords = Coords.StringToCoords(param);
                             UnhighlightColRowSquare();
                             HighlightColRowSquare(coords);
                             ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
@@ -678,6 +678,7 @@ namespace Sudoku.ViewModels
                         else
                         {
                             UnhighlightColRowSquare();
+                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundMouseOver;
                             ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                             LabelSelectNumberOrMarker = "";
                             currentlySelectedCoords = "";
@@ -691,7 +692,6 @@ namespace Sudoku.ViewModels
                             SelectDifficultyVisibility = "Hidden";
                             return;
                         }
-                        Coords coords = Coords.StringToCoords(param);
                         if (!generatorCoordsList.Contains(param) && numberList[coords.Col][coords.Row] == "")
                         {
                             leftOrRightClicked = "Right";
@@ -723,6 +723,7 @@ namespace Sudoku.ViewModels
                             {
                                 UnhighlightColRowSquare();
                             }
+                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundMouseOver;
                             ButtonSelectNumberOrMarker = Colors.ButtonSelectNumber;
                             LabelSelectNumberOrMarker = "";
                             currentlySelectedCoords = "";
