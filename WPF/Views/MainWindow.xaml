@@ -63,6 +63,7 @@
                 <Separator></Separator>
                 <MenuItem Header="{x:Static p:Resources.MenuGameEmptySudoku}" Command="{Binding MenuEmptySudokuCommand}"></MenuItem>
                 <MenuItem Header="{x:Static p:Resources.MenuFillAllMarkers}" Command="{Binding MenuFillAllMarkersCommand}" ></MenuItem>
+                <MenuItem Header="{x:Static p:Resources.MenuRemoveAllMarkers}" Command="{Binding MenuRemoveAllMarkersCommand}" ></MenuItem>
                 <MenuItem Header="{x:Static p:Resources.MenuGameSolveSudoku}" Command="{Binding MenuSolveCommand}" ></MenuItem>
                 <MenuItem Header="{x:Static p:Resources.MenuGameSettings}">
                     <MenuItem Header="{x:Static p:Resources.MenuGameSettingsSingleSolution}" IsCheckable="True" IsChecked="{Binding MenuSingleSolutionCheck}" Command="{Binding MenuSettingsSingleSolutionCommand}" ></MenuItem>

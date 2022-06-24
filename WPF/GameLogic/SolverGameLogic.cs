@@ -29,10 +29,10 @@ namespace Sudoku.GameLogic
         #endregion Constructors
 
         #region Fields
-        internal readonly NumberListModel NumberList;
-        private MarkerListModel MarkerList;
-        internal NumberListModel NumberListSolved;
         private readonly Random random;
+        private MarkerListModel MarkerList;
+        internal readonly NumberListModel NumberList;
+        internal NumberListModel NumberListSolved;
         internal int Tries;
         #endregion Fields
 

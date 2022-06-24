@@ -219,4 +219,7 @@
   <data name="MenuHelpRules" xml:space="preserve">
     <value>Sudoku-Regeln</value>
   </data>
+  <data name="MenuRemoveAllMarkers" xml:space="preserve">
+    <value>Alle Marker löschen</value>
+  </data>
 </root>

@@ -115,7 +115,7 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a Number:.
+        ///   Looks up a localized string similar to Select a number:.
         /// </summary>
         public static string LabelSelectNumber {
             get {
@@ -363,6 +363,15 @@ namespace Sudoku.Properties {
         public static string MenuHelpRules {
             get {
                 return ResourceManager.GetString("MenuHelpRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove all markers.
+        /// </summary>
+        public static string MenuRemoveAllMarkers {
+            get {
+                return ResourceManager.GetString("MenuRemoveAllMarkers", resourceCulture);
             }
         }
     }

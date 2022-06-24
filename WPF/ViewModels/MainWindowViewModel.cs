@@ -61,6 +61,7 @@ namespace Sudoku.ViewModels
             MenuEmptySudokuCommand = new RelayCommand(MenuEmptySudokuAction);
             MenuSolveCommand = new RelayCommand(MenuSolveAction);
             MenuFillAllMarkersCommand = new RelayCommand(MenuFillAllMarkersAction);
+            MenuRemoveAllMarkersCommand = new RelayCommand(MenuRemoveAllMarkersAction);
             MenuSettingsSingleSolutionCommand = new RelayCommand(MenuSettingsSingleSolutionAction);
             MenuSaveToSlotCommand = new RelayCommand<object>(o => MenuSaveToSlotAction(o));
             MenuLoadFromSlotCommand = new RelayCommand<object>(o => MenuLoadFromSlotAction(o));
@@ -156,6 +157,7 @@ namespace Sudoku.ViewModels
         public RelayCommand MenuEmptySudokuCommand { get; }
         public RelayCommand MenuSolveCommand { get; }
         public RelayCommand MenuFillAllMarkersCommand { get; }
+        public RelayCommand MenuRemoveAllMarkersCommand { get; }
         public RelayCommand MenuSettingsCommand { get; }
         public RelayCommand MenuSettingsSingleSolutionCommand { get; }
         public RelayCommand<object> MenuSaveToSlotCommand { get; }
@@ -457,6 +459,16 @@ namespace Sudoku.ViewModels
                 HideOverlays();
                 markerList = new MarkerListModel(solverGameLogic.FillAllMarkers(numberList));
                 MarkerList = markerList;                
+            }
+        }
+        private void MenuRemoveAllMarkersAction()
+        {
+            if (!doBlockInput)
+            {
+                HideOverlays();
+                markerList = new MarkerListModel();
+                markerList.InitializeList();
+                MarkerList = markerList;
             }
         }
         private void MenuSettingsSingleSolutionAction()
