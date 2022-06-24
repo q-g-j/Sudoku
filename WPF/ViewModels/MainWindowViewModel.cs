@@ -31,6 +31,7 @@ namespace Sudoku.ViewModels
             doBlockInput = false;
             doStopTrophy = false;
             currentlySelectedCoords = "";
+            currentMouseOverCoords = "";
 
             // initialize lists:
             saveSlotsModel = new SaveSlotsModel(folderAppSettings);
@@ -124,6 +125,7 @@ namespace Sudoku.ViewModels
         private List<string> generatorCoordsPreloadedEasy;
         private List<string> generatorCoordsPreloadedMedium;
         private List<string> generatorCoordsPreloadedHard;
+        private string currentMouseOverCoords;
         private Task preloadGameEasy;
         private Task preloadGameMedium;
         private Task preloadGameHard;
@@ -682,7 +684,7 @@ namespace Sudoku.ViewModels
                             LabelSelectNumberOrMarker = Resources.LabelSelectNumber;
                             if (conflictCoordsList.Contains(param))
                             {
-                                buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundConflictsSelected;
+                                buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundConflictsMouseOver;
                             }
                             else
                             {
@@ -770,26 +772,39 @@ namespace Sudoku.ViewModels
             {
                 var stringCoords = (string)((CompositeCommandParameter)o).Parameter;
                 Coords coords = Coords.StringToCoords(stringCoords);
-                if (stringCoords == currentlySelectedCoords && leftOrRightClicked == "Left")
+                currentMouseOverCoords = stringCoords;
+
+                if (conflictCoordsList.Contains(stringCoords))
                 {
-                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftSelectedMouseOver;
+                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundConflictsMouseOver;
                 }
-                else if (stringCoords == currentlySelectedCoords && leftOrRightClicked == "Right")
+                else if (stringCoords == currentlySelectedCoords)
                 {
-                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundRightSelectedMouseOver;
+                    if (leftOrRightClicked == "Left")
+                    {
+                        buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftSelectedMouseOver;
+                    }
+                    else
+                    {
+                        buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundRightSelectedMouseOver;
+                    }
                 }
-                else if (highlightedCoordsList.Contains(stringCoords) && leftOrRightClicked == "Left")
+                else if (highlightedCoordsList.Contains(stringCoords))
                 {
-                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftHighlightedMouseOver;
-                }
-                else if (highlightedCoordsList.Contains(stringCoords) && leftOrRightClicked == "Right")
-                {
-                    buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundRightHighlightedMouseOver;
+                    if (leftOrRightClicked == "Left")
+                    {
+                        buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftHighlightedMouseOver;
+                    }
+                    else
+                    {
+                        buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundRightHighlightedMouseOver;
+                    }
                 }
                 else
                 {
                     buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundMouseOver;
                 }
+
                 ButtonBackgroundList = buttonBackgroundList;
             }
 
@@ -802,6 +817,8 @@ namespace Sudoku.ViewModels
             {
                 var param = (string)((CompositeCommandParameter)o).Parameter;
                 RestoreCoordsBackground(param);
+
+                currentMouseOverCoords = "";
             }
 
             e.Handled = true;
@@ -952,6 +969,22 @@ namespace Sudoku.ViewModels
                     ResetBackground();
                     HighlightColRowSquare(coords);
                     ValidateAll(false);
+                    if (stringCoords == currentlySelectedCoords)
+                    {
+                        if (conflictCoordsList.Contains(stringCoords))
+                        {
+                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundConflictsMouseOver;
+                        }
+                        else if (currentMouseOverCoords == stringCoords)
+                        {
+                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftSelectedMouseOver;
+                        }
+                        else
+                        {
+                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftSelected;
+                        }
+                    }
+                    ButtonBackgroundList = buttonBackgroundList;
                     for (int j = 0; j < 3; j++)
                     {
                         for (int i = 0; i < 4; i++)

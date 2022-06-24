@@ -19,6 +19,7 @@ namespace Sudoku
         public static string CellBackgroundRightSelectedMouseOver { get => "#e6e619"; }
         public static string CellBackgroundConflicts { get => "Red"; }
         public static string CellBackgroundConflictsSelected { get => "#ff6666"; }
+        public static string CellBackgroundConflictsMouseOver { get => "#cc0000"; }
         public static string CellBackgroundMouseOver { get => "LightBlue"; }
         public static string CellNumber { get => "#0066ff"; }
         public static string CellNumberGenerator { get => "Black"; }
