@@ -947,6 +947,18 @@ namespace Sudoku.ViewModels
                     ResetBackground();
                     HighlightColRowSquare(coords);
                     ValidateAll(false);
+                    if (stringCoords == currentlySelectedCoords)
+                    {
+                        if (currentMouseOverCoords == stringCoords)
+                        {
+                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftSelectedMouseOver;
+                        }
+                        else
+                        {
+                            buttonBackgroundList[coords.Col][coords.Row] = Colors.CellBackgroundLeftSelected;
+                        }
+                        ButtonBackgroundList = buttonBackgroundList;
+                    }
                     return;
                 }
                 else if (numberList[coords.Col][coords.Row] != number)
@@ -1234,8 +1246,9 @@ namespace Sudoku.ViewModels
         {
             highlightedCoordsList.Clear();
             conflictCoordsList.Clear();
-            ButtonBackgroundList = new ButtonBackgroundListModel();
-            ButtonBackgroundList.InitializeList();
+            buttonBackgroundList = new ButtonBackgroundListModel();
+            buttonBackgroundList.InitializeList();
+            ButtonBackgroundList = buttonBackgroundList;
         }
         private void HighlightColRowSquare(Coords coords)
         {
