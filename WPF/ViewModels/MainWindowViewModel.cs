@@ -368,19 +368,17 @@ namespace Sudoku.ViewModels
                 {
                     for (int col = 0; col < 9; col++)
                     {
-                        if (isValid)
+                        for (int row = 0; row < 9; row++)
                         {
-                            for (int row = 0; row < 9; row++)
+                            string number = numberList[col][row];
+                            if (!ValidatorGameLogic.IsValid(numberList, col, row, number))
                             {
-                                string number = numberList[col][row];
-                                if (!ValidatorGameLogic.IsValid(numberList, col, row, number))
-                                {
-                                    isValid = false;
-                                    break;
-                                }
+                                isValid = false;
+                                goto BreakLoop;
                             }
                         }
                     }
+                    BreakLoop:
                     if (isValid)
                     {
                         HideOverlays();
@@ -389,21 +387,39 @@ namespace Sudoku.ViewModels
                         bool debugMode = false;
 
                         solverGameLogic.SolveWithMarkerList();
-                        if (debugMode)
+
+                        isValid = true;
+                        for (int col = 0; col < 9; col++)
                         {
-                            numberList = new NumberListModel(solverGameLogic.NumberList);
-                            NumberList = numberList;
-                        }
-                        if (SolverGameLogic.IsFull(solverGameLogic.NumberList))
-                        {
-                            solverGameLogic.NumberListSolved = new NumberListModel(solverGameLogic.NumberList);
-                        }
-                        else
-                        {
-                            if (!debugMode)
+                            for (int row = 0; row < 9; row++)
                             {
-                                Task fillSudokuTask = FillSudokuTask(solverGameLogic);
-                                await fillSudokuTask;
+                                string number = solverGameLogic.NumberList[col][row];
+                                if (solverGameLogic.NumberList[col][row] != "" && !ValidatorGameLogic.IsValid(solverGameLogic.NumberList, col, row, number))
+                                {
+                                    isValid = false;
+                                    goto BreakLoop2;
+                                }
+                            }
+                        }
+                        BreakLoop2:
+                        if (isValid)
+                        {
+                            if (debugMode)
+                            {
+                                numberList = new NumberListModel(solverGameLogic.NumberList);
+                                NumberList = numberList;
+                            }
+                            if (SolverGameLogic.IsFull(solverGameLogic.NumberList))
+                            {
+                                solverGameLogic.NumberListSolved = new NumberListModel(solverGameLogic.NumberList);
+                            }
+                            else
+                            {
+                                if (!debugMode)
+                                {
+                                    Task fillSudokuTask = FillSudokuTask(solverGameLogic);
+                                    await fillSudokuTask;
+                                }
                             }
                         }
                         LabelSingleSolutionWaitVisibility = "Collapsed";
