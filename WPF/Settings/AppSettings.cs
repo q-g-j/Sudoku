@@ -13,6 +13,7 @@ namespace Sudoku.Settings
     internal struct AppSettingsStruct
     {
         internal bool SingleSolution;
+        internal bool SolvableLogically;
     }
 
     internal class AppSettings
@@ -40,13 +41,28 @@ namespace Sudoku.Settings
                 {
                     JsonSerializer serializer = new JsonSerializer();
                     Dictionary<string, object> settingsDict = (Dictionary<string, object>)serializer.Deserialize(settingsFile, typeof(Dictionary<string, object>));
-                    if ((bool)settingsDict["SingleSolution"])
+
+                    if (settingsDict.ContainsKey("SingleSolution"))
                     {
-                        appSettingsStruct.SingleSolution = true;
+                        if ((bool)settingsDict["SingleSolution"])
+                        {
+                            appSettingsStruct.SingleSolution = true;
+                        }
+                        else
+                        {
+                            appSettingsStruct.SingleSolution = false;
+                        }
                     }
-                    else
+                    if (settingsDict.ContainsKey("SolvableLogically"))
                     {
-                        appSettingsStruct.SingleSolution = false;
+                        if ((bool)settingsDict["SolvableLogically"])
+                        {
+                            appSettingsStruct.SolvableLogically = true;
+                        }
+                        else
+                        {
+                            appSettingsStruct.SolvableLogically = false;
+                        }
                     }
                 }
             }
@@ -55,6 +71,7 @@ namespace Sudoku.Settings
                 Dictionary<string, object> settingsDict = new Dictionary<string, object>
                 {
                     ["SingleSolution"] = false,
+                    ["SolvableLogically"] = false
                 };
 
                 using (var file = File.CreateText(settingsFilename))
@@ -80,7 +97,10 @@ namespace Sudoku.Settings
                 JsonSerializer serializer = new JsonSerializer();
                 listsDictOld = (Dictionary<string, object>)serializer.Deserialize(fileLoad, typeof(Dictionary<string, object>));
 
-                appSettingsStruct.SingleSolution = (bool)listsDictOld["SingleSolution"];
+                if (listsDictOld.ContainsKey("SingleSolution"))
+                {
+                    appSettingsStruct.SingleSolution = (bool)listsDictOld["SingleSolution"];
+                }
             }
 
             Dictionary<string, object> listsDict = new Dictionary<string, object>(listsDictOld)
@@ -91,7 +111,36 @@ namespace Sudoku.Settings
             using (var fileSave = File.CreateText(@filename))
             {
                 var numberListDictJson = JsonConvert.SerializeObject(listsDict, Formatting.Indented);
-                    fileSave.WriteLine(numberListDictJson);
+                fileSave.WriteLine(numberListDictJson);
+            }
+        }
+        internal void ChangeSolvableLogically(bool action)
+        {
+            string filename = Path.Combine(folderAppSettings, "settings.json");
+
+            AppSettingsStruct appSettingsStruct = new AppSettingsStruct();
+
+            Dictionary<string, object> listsDictOld;
+            using (var fileLoad = File.OpenText(filename))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                listsDictOld = (Dictionary<string, object>)serializer.Deserialize(fileLoad, typeof(Dictionary<string, object>));
+
+                if (listsDictOld.ContainsKey("SolvableLogically"))
+                {
+                    appSettingsStruct.SolvableLogically = (bool)listsDictOld["SolvableLogically"];
+                }
+            }
+
+            Dictionary<string, object> listsDict = new Dictionary<string, object>(listsDictOld)
+            {
+                ["SolvableLogically"] = action
+            };
+
+            using (var fileSave = File.CreateText(@filename))
+            {
+                var numberListDictJson = JsonConvert.SerializeObject(listsDict, Formatting.Indented);
+                fileSave.WriteLine(numberListDictJson);
             }
         }
         #endregion Methods

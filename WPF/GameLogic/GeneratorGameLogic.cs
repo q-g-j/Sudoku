@@ -54,7 +54,7 @@ namespace Sudoku.GameLogic
         #endregion Fields
 
         #region Methods
-        public void GenerateSudoku(string doSingleSolution)
+        public void GenerateSudoku(string doSingleSolution, string doSolvableLogically)
         {
             List<Coords> shuffledCoordsList = coordsList.OrderBy(item => random.Next()).ToList();
             foreach (var coords in shuffledCoordsList)
@@ -87,9 +87,23 @@ namespace Sudoku.GameLogic
                     {
                         checkedList.Add(coords.Col.ToString() + coords.Row.ToString());
                     }
-                    if (Counter < removeNumbers && Tries < 20)
+                    bool hasSolved = false;
+                    if (doSolvableLogically == "True")
                     {
-                        GenerateSudoku(doSingleSolution);
+                        SolverGameLogic solverGameLogic = new SolverGameLogic(NumberList);
+                        solverGameLogic.SolveWithMarkerList();
+                        if (SolverGameLogic.IsFull(solverGameLogic.NumberList))
+                        {
+                            hasSolved = true;
+                        }
+                    }
+                    else
+                    {
+                        hasSolved = true;
+                    }
+                    if (hasSolved && Counter < removeNumbers && Tries < 20)
+                    {
+                        GenerateSudoku(doSingleSolution, doSolvableLogically);
                     }
                     return;
                 }

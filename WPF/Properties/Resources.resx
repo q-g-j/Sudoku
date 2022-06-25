@@ -127,7 +127,7 @@
     <value>Medium</value>
   </data>
   <data name="ButtonNewGame" xml:space="preserve">
-    <value>New Game</value>
+    <value>New game</value>
   </data>
   <data name="LabelOverlaySingleSolutionWait" xml:space="preserve">
     <value>Please wait...</value>
@@ -145,7 +145,7 @@
     <value>No conflicts found!</value>
   </data>
   <data name="LabelValidateUnsolvable" xml:space="preserve">
-    <value>This Sudoku is not solvable!</value>
+    <value>This sudoku is not solvable!</value>
   </data>
   <data name="MenuFillAllMarkers" xml:space="preserve">
     <value>Set all markers automatically</value>
@@ -160,13 +160,13 @@
     <value>New game...</value>
   </data>
   <data name="MenuGamePrint" xml:space="preserve">
-    <value>Print Sudoku</value>
+    <value>Print sudoku</value>
   </data>
   <data name="MenuGameQuitProgram" xml:space="preserve">
     <value>Quit program</value>
   </data>
   <data name="MenuGameSaveSlots" xml:space="preserve">
-    <value>Save Slots</value>
+    <value>Save slots</value>
   </data>
   <data name="MenuGameSaveSlotsDeleteAll" xml:space="preserve">
     <value>Delete all slots</value>
@@ -204,11 +204,14 @@
   <data name="MenuGameSettings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="MenuGameSettingsIsSolvableLogically" xml:space="preserve">
+    <value>Only generate sudokus that are logically solvable</value>
+  </data>
   <data name="MenuGameSettingsSingleSolution" xml:space="preserve">
-    <value>Generate Sudokus with a single solution</value>
+    <value>Only generate sudokus with one solution</value>
   </data>
   <data name="MenuGameSolveSudoku" xml:space="preserve">
-    <value>Solve this Sudoku</value>
+    <value>Solve this sudoku</value>
   </data>
   <data name="MenuHelp" xml:space="preserve">
     <value>Help</value>

@@ -65,6 +65,7 @@ namespace Sudoku.ViewModels
             MenuFillAllMarkersCommand = new RelayCommand(MenuFillAllMarkersAction);
             MenuRemoveAllMarkersCommand = new RelayCommand(MenuRemoveAllMarkersAction);
             MenuSettingsSingleSolutionCommand = new RelayCommand(MenuSettingsSingleSolutionAction);
+            MenuSettingsSolvableLogicallyCommand = new RelayCommand(MenuSettingsSolvableLogicallyAction);
             MenuSaveToSlotCommand = new RelayCommand<object>(o => MenuSaveToSlotAction(o));
             MenuLoadFromSlotCommand = new RelayCommand<object>(o => MenuLoadFromSlotAction(o));
             MenuDeleteAllSlotsCommand = new RelayCommand(MenuDeleteAllSlotsAction);
@@ -91,11 +92,19 @@ namespace Sudoku.ViewModels
             AppSettingsStruct appSettingsStruct = appSettings.LoadSettings();
             if (appSettingsStruct.SingleSolution)
             {
-                menuSingleSolutionCheck = "True";
+                menuSettingsSingleSolutionCheck = "True";
             }
             else
             {
-                menuSingleSolutionCheck = "False";
+                menuSettingsSingleSolutionCheck = "False";
+            }
+            if (appSettingsStruct.SolvableLogically)
+            {
+                menuSettingsSolvableLogicallyCheck = "True";
+            }
+            else
+            {
+                menuSettingsSolvableLogicallyCheck = "False";
             }
             // display each existing save slot's date and time:
             menuSaveSlotsLoadText = saveSlotsModel.GetLoadTexts();
@@ -140,7 +149,8 @@ namespace Sudoku.ViewModels
 
         private List<string> menuSaveSlotsLoadText;
         private List<string> menuSaveSlotsSaveText;
-        private string menuSingleSolutionCheck;
+        private string menuSettingsSingleSolutionCheck;
+        private string menuSettingsSolvableLogicallyCheck;
 
         private string trophyWidth;
 
@@ -165,6 +175,7 @@ namespace Sudoku.ViewModels
         public RelayCommand MenuRemoveAllMarkersCommand { get; }
         public RelayCommand MenuSettingsCommand { get; }
         public RelayCommand MenuSettingsSingleSolutionCommand { get; }
+        public RelayCommand MenuSettingsSolvableLogicallyCommand { get; }
         public RelayCommand<object> MenuSaveToSlotCommand { get; }
         public RelayCommand<object> MenuLoadFromSlotCommand { get; }
         public RelayCommand MenuDeleteAllSlotsCommand { get; }
@@ -198,10 +209,15 @@ namespace Sudoku.ViewModels
             get => menuSaveSlotsSaveText;
             set { menuSaveSlotsSaveText = value; OnPropertyChanged(); }
         }
-        public string MenuSingleSolutionCheck
+        public string MenuSettingsSingleSolutionCheck
         {
-            get => menuSingleSolutionCheck;
-            set { menuSingleSolutionCheck = value; OnPropertyChanged(); }
+            get => menuSettingsSingleSolutionCheck;
+            set { menuSettingsSingleSolutionCheck = value; OnPropertyChanged(); }
+        }
+        public string MenuSettingsSolvableLogicallyCheck
+        {
+            get => menuSettingsSolvableLogicallyCheck;
+            set { menuSettingsSolvableLogicallyCheck = value; OnPropertyChanged(); }
         }
         public NumberListModel NumberList
         {
@@ -487,13 +503,27 @@ namespace Sudoku.ViewModels
         {
             if (!doBlockInput)
             {
-                if (menuSingleSolutionCheck == "True")
+                if (menuSettingsSingleSolutionCheck == "True")
                 {
                     appSettings.ChangeSingleSolution(true);
                 }
                 else
                 {
                     appSettings.ChangeSingleSolution(false);
+                }
+            }
+        }
+        private void MenuSettingsSolvableLogicallyAction()
+        {
+            if (!doBlockInput)
+            {
+                if (menuSettingsSolvableLogicallyCheck == "True")
+                {
+                    appSettings.ChangeSolvableLogically(true);
+                }
+                else
+                {
+                    appSettings.ChangeSolvableLogically(false);
                 }
             }
         }
@@ -1082,6 +1112,54 @@ namespace Sudoku.ViewModels
                 }
             }
         }
+        private List<Coords> GetMarkerNumberConflictList(Coords currentCoords, string marker)
+        {
+            List<Coords> returnList = new List<Coords>();
+
+            // check numbers in same column:
+            for (int row = 0; row < 9; row++)
+            {
+                if (row != currentCoords.Row)
+                {
+                    if (numberList[currentCoords.Col][row] == marker)
+                    {
+                        returnList.Add(new Coords(currentCoords.Col, row));
+                    }
+                }
+            }
+            
+            // check numbers in same row:
+            for (int col = 0; col < 9; col++)
+            {
+                if (col != currentCoords.Col)
+                {
+                    if (numberList[col][currentCoords.Row] == marker)
+                    {
+                        returnList.Add(new Coords(col, currentCoords.Row));
+                    }
+                }
+            }
+
+            // check numbers in same 3x3 square:
+            int squareCol = (currentCoords.Col / 3) * 3;
+            int squareRow = (currentCoords.Row / 3) * 3;
+
+            for (int col = squareCol; col < squareCol + 3; col++)
+            {
+                for (int row = squareRow; row < squareRow + 3; row++)
+                {
+                    if (! (currentCoords.Col == col && currentCoords.Row == row))
+                    {
+                        if (numberList[col][row] == marker)
+                        {
+                            returnList.Add(new Coords(col, row));
+                        }
+                    }
+                }
+            }
+
+            return returnList;
+        }
         private void ChangeMarker(string param)
         {
             InititalizeLists();
@@ -1119,52 +1197,56 @@ namespace Sudoku.ViewModels
                 // 01|11|21|31
                 // 02|12|22|32
 
-                if (number == "1")
+                List<Coords> markerNumberConflictList = GetMarkerNumberConflictList(coords, number);
+                if (markerNumberConflictList.Count == 0)
                 {
-                    if (markerList[coords.Col][coords.Row][0][0] != "") { markerList[coords.Col][coords.Row][0][0] = ""; }
-                    else { markerList[coords.Col][coords.Row][0][0] = "1"; }
+                    if (number == "1")
+                    {
+                        if (markerList[coords.Col][coords.Row][0][0] != "") { markerList[coords.Col][coords.Row][0][0] = ""; }
+                        else { markerList[coords.Col][coords.Row][0][0] = "1"; }
+                    }
+                    else if (number == "2")
+                    {
+                        if (markerList[coords.Col][coords.Row][1][0] != "") { markerList[coords.Col][coords.Row][1][0] = ""; }
+                        else { markerList[coords.Col][coords.Row][1][0] = "2"; }
+                    }
+                    else if (number == "3")
+                    {
+                        if (markerList[coords.Col][coords.Row][2][0] != "") { markerList[coords.Col][coords.Row][2][0] = ""; }
+                        else { markerList[coords.Col][coords.Row][2][0] = "3"; }
+                    }
+                    else if (number == "4")
+                    {
+                        if (markerList[coords.Col][coords.Row][3][0] != "") { markerList[coords.Col][coords.Row][3][0] = ""; }
+                        else { markerList[coords.Col][coords.Row][3][0] = "4"; }
+                    }
+                    else if (number == "5")
+                    {
+                        if (markerList[coords.Col][coords.Row][0][1] != "") { markerList[coords.Col][coords.Row][0][1] = ""; }
+                        else { markerList[coords.Col][coords.Row][0][1] = "5"; }
+                    }
+                    else if (number == "6")
+                    {
+                        if (markerList[coords.Col][coords.Row][3][1] != "") { markerList[coords.Col][coords.Row][3][1] = ""; }
+                        else { markerList[coords.Col][coords.Row][3][1] = "6"; }
+                    }
+                    else if (number == "7")
+                    {
+                        if (markerList[coords.Col][coords.Row][0][2] != "") { markerList[coords.Col][coords.Row][0][2] = ""; }
+                        else { markerList[coords.Col][coords.Row][0][2] = "7"; }
+                    }
+                    else if (number == "8")
+                    {
+                        if (markerList[coords.Col][coords.Row][1][2] != "") { markerList[coords.Col][coords.Row][1][2] = ""; }
+                        else { markerList[coords.Col][coords.Row][1][2] = "8"; }
+                    }
+                    else if (number == "9")
+                    {
+                        if (markerList[coords.Col][coords.Row][2][2] != "") { markerList[coords.Col][coords.Row][2][2] = ""; }
+                        else { markerList[coords.Col][coords.Row][2][2] = "9"; }
+                    }
+                    MarkerList = markerList;
                 }
-                else if (number == "2")
-                {
-                    if (markerList[coords.Col][coords.Row][1][0] != "") { markerList[coords.Col][coords.Row][1][0] = ""; }
-                    else { markerList[coords.Col][coords.Row][1][0] = "2"; }
-                }
-                else if (number == "3")
-                {
-                    if (markerList[coords.Col][coords.Row][2][0] != "") { markerList[coords.Col][coords.Row][2][0] = ""; }
-                    else { markerList[coords.Col][coords.Row][2][0] = "3"; }
-                }
-                else if (number == "4")
-                {
-                    if (markerList[coords.Col][coords.Row][3][0] != "") { markerList[coords.Col][coords.Row][3][0] = ""; }
-                    else { markerList[coords.Col][coords.Row][3][0] = "4"; }
-                }
-                else if (number == "5")
-                {
-                    if (markerList[coords.Col][coords.Row][0][1] != "") { markerList[coords.Col][coords.Row][0][1] = ""; }
-                    else { markerList[coords.Col][coords.Row][0][1] = "5"; }
-                }
-                else if (number == "6")
-                {
-                    if (markerList[coords.Col][coords.Row][3][1] != "") { markerList[coords.Col][coords.Row][3][1] = ""; }
-                    else { markerList[coords.Col][coords.Row][3][1] = "6"; }
-                }
-                else if (number == "7")
-                {
-                    if (markerList[coords.Col][coords.Row][0][2] != "") { markerList[coords.Col][coords.Row][0][2] = ""; }
-                    else { markerList[coords.Col][coords.Row][0][2] = "7"; }
-                }
-                else if (number == "8")
-                {
-                    if (markerList[coords.Col][coords.Row][1][2] != "") { markerList[coords.Col][coords.Row][1][2] = ""; }
-                    else { markerList[coords.Col][coords.Row][1][2] = "8"; }
-                }
-                else if (number == "9")
-                {
-                    if (markerList[coords.Col][coords.Row][2][2] != "") { markerList[coords.Col][coords.Row][2][2] = ""; }
-                    else { markerList[coords.Col][coords.Row][2][2] = "9"; }
-                }
-                MarkerList = markerList;
             }
         }
         private void RestoreCoordsBackground(string stringCoords)
@@ -1377,7 +1459,7 @@ namespace Sudoku.ViewModels
             }
             else if (difficulty == "Hard")
             {
-                if (menuSingleSolutionCheck == "True")
+                if (menuSettingsSingleSolutionCheck == "True")
                 {
                     LabelSingleSolutionWaitVisibility = "Visible";
                 }
@@ -1434,7 +1516,7 @@ namespace Sudoku.ViewModels
                         generatorGameLogic = new GeneratorGameLogic(difficulty, new NumberListModel(solverGameLogic.NumberListSolved));
                     }
 
-                    generatorGameLogic.GenerateSudoku(menuSingleSolutionCheck);
+                    generatorGameLogic.GenerateSudoku(menuSettingsSingleSolutionCheck, menuSettingsSolvableLogicallyCheck);
 
                     if (generatorGameLogic.Counter == generatorGameLogic.removeNumbers)
                     {

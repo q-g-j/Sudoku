@@ -66,7 +66,8 @@
                 <MenuItem Header="{x:Static p:Resources.MenuRemoveAllMarkers}" Command="{Binding MenuRemoveAllMarkersCommand}" ></MenuItem>
                 <MenuItem Header="{x:Static p:Resources.MenuGameSolveSudoku}" Command="{Binding MenuSolveCommand}" ></MenuItem>
                 <MenuItem Header="{x:Static p:Resources.MenuGameSettings}">
-                    <MenuItem Header="{x:Static p:Resources.MenuGameSettingsSingleSolution}" IsCheckable="True" IsChecked="{Binding MenuSingleSolutionCheck}" Command="{Binding MenuSettingsSingleSolutionCommand}" ></MenuItem>
+                    <MenuItem Header="{x:Static p:Resources.MenuGameSettingsSingleSolution}" IsCheckable="True" IsChecked="{Binding MenuSettingsSingleSolutionCheck}" Command="{Binding MenuSettingsSingleSolutionCommand}"></MenuItem>
+                    <MenuItem Header="{x:Static p:Resources.MenuGameSettingsIsSolvableLogically}" IsCheckable="True" IsChecked="{Binding MenuSettingsSolvableLogicallyCheck}" Command="{Binding MenuSettingsSolvableLogicallyCommand}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="{x:Static p:Resources.MenuGamePrint}" Command="{Binding MenuPrintCommand}" CommandParameter="{Binding ElementName=Main, Mode=OneWay}"></MenuItem>
                 <Separator></Separator>

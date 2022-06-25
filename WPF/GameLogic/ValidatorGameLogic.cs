@@ -45,7 +45,7 @@ namespace Sudoku.GameLogic
             {
                 for (int j = col2; j < col2 + 3; j++)
                 {
-                    if (i != row && j != col)
+                    if (! (i == row && j == col))
                     {
                         if (numberList[j][i] == number)
                         {

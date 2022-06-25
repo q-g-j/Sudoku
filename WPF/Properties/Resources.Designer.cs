@@ -88,7 +88,7 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New Game.
+        ///   Looks up a localized string similar to New game.
         /// </summary>
         public static string ButtonNewGame {
             get {
@@ -142,7 +142,7 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This Sudoku is not solvable!.
+        ///   Looks up a localized string similar to This sudoku is not solvable!.
         /// </summary>
         public static string LabelValidateUnsolvable {
             get {
@@ -187,7 +187,7 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Print Sudoku.
+        ///   Looks up a localized string similar to Print sudoku.
         /// </summary>
         public static string MenuGamePrint {
             get {
@@ -205,7 +205,7 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save Slots.
+        ///   Looks up a localized string similar to Save slots.
         /// </summary>
         public static string MenuGameSaveSlots {
             get {
@@ -322,7 +322,16 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Generate Sudokus with a single solution.
+        ///   Looks up a localized string similar to Only generate sudokus that are logically solvable.
+        /// </summary>
+        public static string MenuGameSettingsIsSolvableLogically {
+            get {
+                return ResourceManager.GetString("MenuGameSettingsIsSolvableLogically", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only generate sudokus with one solution.
         /// </summary>
         public static string MenuGameSettingsSingleSolution {
             get {
@@ -331,7 +340,7 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Solve this Sudoku.
+        ///   Looks up a localized string similar to Solve this sudoku.
         /// </summary>
         public static string MenuGameSolveSudoku {
             get {
