@@ -10,7 +10,8 @@ Copyright 2022 Jann Emken
 - random puzzle generator with 3 difficulties
 - mark conflicts in red
 - menu action to fill in all markers automatically
-- menu option to only generate Sudokus with a single solution
+- menu option to only generate sudokus with a single solution
+- menu option to only generate sudokus that are logically solvable
 - solve current Sudoku from the menu:</br>
 try to solve the sudoku logically first; if that fails, run a backtracking (brute-force) method
 - 5 save slots *(save files location: %APPDATA%\SudokuGame)*
