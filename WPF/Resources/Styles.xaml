@@ -24,14 +24,15 @@
         <Setter Property="Focusable" Value="False"/>
     </Style>
     <Style x:Key="StyleLabelMarker" TargetType="Label">
-        <Setter Property="Margin" Value="-5"/>
+        <Setter Property="Margin" Value="-5, -6, -5, -5"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="FontFamily" Value="{StaticResource MainSemiBold}"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
     </Style>
     <Style x:Key="StyleLabelNumber" TargetType="Label">
         <Setter Property="Margin" Value="0, -7, 0, 0"/>

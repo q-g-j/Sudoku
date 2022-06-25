@@ -547,11 +547,6 @@ namespace Sudoku.ViewModels
         {
             if (!doBlockInput)
             {
-                currentlySelectedCoords = "";
-                leftOrRightClicked = "";
-                LabelSelectNumberOrMarker = "";
-                buttonSelectNumberOrMarkerBackgroundList = Enumerable.Repeat(Colors.ButtonSelectNumber, 10).ToList<string>();
-                ButtonSelectNumberOrMarkerBackgroundList = buttonSelectNumberOrMarkerBackgroundList;
                 if (numberList != null && markerList != null && numberColorList != null && generatorCoordsList != null)
                 {
                     DateTime now = DateTime.Now;
@@ -565,7 +560,6 @@ namespace Sudoku.ViewModels
                     else if (slotNumber == "5") tempLoadList[4] = Resources.MenuGameSaveSlotsLoadFromSlot5 + " (" + now + ")";
                     MenuSaveSlotsLoadText = tempLoadList;
                 }
-                ValidateAll(false);
             }
         }
         private void MenuLoadFromSlotAction(object o)
