@@ -13,11 +13,15 @@ Copyright 2022 Jann Emken
 - menu option to only generate sudokus with a single solution
 - menu option to only generate sudokus that are logically solvable
 - solve current Sudoku from the menu:</br>
-try to solve the sudoku logically first; if that fails, run a backtracking (brute-force) method
+try to solve the sudoku logically first (by looking for single markers in cell / column / row / 3x3 square) - if that fails, run a backtracking (brute-force) method
 - 5 save slots *(save files location: %APPDATA%\SudokuGame)*
 - basic printing functionality
 - place up to 9 markers in each square
 - English and German localization (according to the system language)
+
+## TODO:
+- add more strategies to the logical solver and consider them in the generator
+- show hints
 
 ### Controls:
 
