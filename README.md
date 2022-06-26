@@ -19,7 +19,7 @@ try to solve the sudoku logically first (by looking for single markers in cell /
 - place up to 9 markers in each square
 - English and German localization (according to the system language)
 
-## TODO:
+### TODO:
 - add more strategies to the logical solver and consider them in the generator
 - show hints
 
