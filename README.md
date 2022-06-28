@@ -11,9 +11,9 @@ Copyright 2022 Jann Emken
 - mark conflicts in red
 - menu action to fill in all markers automatically
 - menu option to only generate sudokus with a single solution
-- menu option to only generate sudokus that are logically solvable
+- menu option to only generate sudokus that are solvable using the "single-candidate" technique
 - solve current Sudoku from the menu:</br>
-try to solve the sudoku logically first (by looking for single markers in cell / column / row / 3x3 square) - if that fails, run a backtracking (brute-force) method
+try to solve using the "single-candidate" technique - if that fails, run a backtracking (brute-force) method
 - 5 save slots *(save files location: %APPDATA%\SudokuGame)*
 - basic printing functionality
 - place up to 9 markers in each square
