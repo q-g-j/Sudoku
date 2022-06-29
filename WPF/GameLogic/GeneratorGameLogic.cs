@@ -54,32 +54,53 @@ namespace Sudoku.GameLogic
         #endregion Fields
 
         #region Methods
-        public void GenerateSudoku(string doSingleSolution, string doSolvableLogically)
+        public void GenerateSudoku(bool doSingleSolution, bool doLogicallySolvable)
         {
             List<Coords> shuffledCoordsList = coordsList.OrderBy(item => random.Next()).ToList();
             foreach (var coords in shuffledCoordsList)
             {
+                string oldNumber = NumberList[coords.Col][coords.Row];
                 if (NumberList[coords.Col][coords.Row] != "")
                 {
                     if (!HasCurrentColTooFewNumbers(coords.Col) && !HasCurrentRowTooFewNumbers(coords.Row) && !HasCurrentSquareTooFewNumbers(coords.Col, coords.Row) &&
                         !HasAnotherColTooManyNumbers(coords.Col) && !HasAnotherRowTooManyNumbers(coords.Row) && !HasAnotherSquareTooManyNumbers(coords.Col, coords.Row))
                     {
+                        bool hasSolvedLogically = false;
                         SingleSolutionNumberList = new NumberListModel(NumberList);
-                        SingleSolutionNumberList[coords.Col][coords.Row] = "";
-                        SingleSolutionCounter = 0;
-
-                        if (doSingleSolution == "True" && Counter > 25)
+                        if (doSingleSolution || doLogicallySolvable)
                         {
+                            SingleSolutionNumberList[coords.Col][coords.Row] = "";
+                            SingleSolutionCounter = 0;
                             HasSingleSolution();
                         }
                         if (SingleSolutionCounter < 2)
                         {
-                            Counter++;
-                            NumberList[coords.Col][coords.Row] = "";
-                            checkedList.Clear();
+                            NumberListModel logicallySolvableNumberList = new NumberListModel(NumberList);
+                            logicallySolvableNumberList[coords.Col][coords.Row] = "";
+                            SolverGameLogic solverGameLogic = new SolverGameLogic(logicallySolvableNumberList);
+                            solverGameLogic.SolveWithMarkerList();
+
+                            if (SolverGameLogic.IsFull(solverGameLogic.NumberList))
+                            {
+                                hasSolvedLogically = true;
+                            }
+
+                            // For medium or hard difficulty only, make sure the sudoku is NOT solvable with the single candidate technique,
+                            // if doLogicallySolvable == "False" to avoid making it too easy:
+                            if ((doSingleSolution && doLogicallySolvable && hasSolvedLogically) ||
+                                (!doSingleSolution && doLogicallySolvable && hasSolvedLogically) ||
+                                (doSingleSolution && !doLogicallySolvable && !hasSolvedLogically && Counter >= 49) ||
+                                (doSingleSolution && !doLogicallySolvable && Counter < 49) ||
+                                (!doSingleSolution && !doLogicallySolvable && !hasSolvedLogically && Counter >= 41) ||
+                                (!doSingleSolution && !doLogicallySolvable && Counter < 41))
+                            {
+                                Counter++;
+                                NumberList[coords.Col][coords.Row] = "";
+                                checkedList.Clear();
+                            }
                         }
-                        else if (Counter > 25)
-                        {                                
+                        else
+                        {
                             Tries++;
                         }
                     }
@@ -87,23 +108,10 @@ namespace Sudoku.GameLogic
                     {
                         checkedList.Add(coords.Col.ToString() + coords.Row.ToString());
                     }
-                    bool hasSolved = false;
-                    if (doSolvableLogically == "True")
+
+                    if (Counter < removeNumbers && Tries < 20)
                     {
-                        SolverGameLogic solverGameLogic = new SolverGameLogic(NumberList);
-                        solverGameLogic.SolveWithMarkerList();
-                        if (SolverGameLogic.IsFull(solverGameLogic.NumberList))
-                        {
-                            hasSolved = true;
-                        }
-                    }
-                    else
-                    {
-                        hasSolved = true;
-                    }
-                    if (hasSolved && Counter < removeNumbers && Tries < 20)
-                    {
-                        GenerateSudoku(doSingleSolution, doSolvableLogically);
+                        GenerateSudoku(doSingleSolution, doLogicallySolvable);
                     }
                     return;
                 }
@@ -180,8 +188,8 @@ namespace Sudoku.GameLogic
         }
         private bool HasCurrentSquareTooFewNumbers(int currentCol, int currentRow)
         {
-            int squareCol = (int)(currentCol / 3) * 3;
-            int squareRow = (int)(currentRow / 3) * 3;
+            int squareCol = (currentCol / 3) * 3;
+            int squareRow = (currentRow / 3) * 3;
             int countNumbers = 0;
 
             for (int innerCol = squareCol; innerCol < squareCol + 3; innerCol++)
@@ -279,8 +287,8 @@ namespace Sudoku.GameLogic
         }
         private bool HasAnotherSquareTooManyNumbers(int currentCol, int currentRow)
         {
-            int currentSquareCol = (int)(currentCol / 3) * 3;
-            int currentSquareRow = (int)(currentRow / 3) * 3;
+            int currentSquareCol = (currentCol / 3) * 3;
+            int currentSquareRow = (currentRow / 3) * 3;
             int countCurrentSquareNumbers = 0;
 
             for (int col = currentSquareCol; col < currentSquareCol + 3; col++)
@@ -298,8 +306,8 @@ namespace Sudoku.GameLogic
             {
                 for (int row = 0; row < 9; row++)
                 {
-                    int squareCol = (int)(col / 3) * 3;
-                    int squareRow = (int)(row / 3) * 3;
+                    int squareCol = (col / 3) * 3;
+                    int squareRow = (row / 3) * 3;
                     int countNumbers = 0;
 
                     if (squareCol != currentSquareCol && squareRow != currentSquareRow)

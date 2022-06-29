@@ -38,8 +38,8 @@ namespace Sudoku.GameLogic
             }
 
             // validate square:
-            int col2 = (int)(col / 3) * 3;
-            int row2 = (int)(row / 3) * 3;
+            int col2 = (col / 3) * 3;
+            int row2 = (row / 3) * 3;
 
             for (int i = row2; i < row2 + 3; i++)
             {

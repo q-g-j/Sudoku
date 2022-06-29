@@ -204,11 +204,11 @@
   <data name="MenuGameSettings" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="MenuGameSettingsIsSolvableLogically" xml:space="preserve">
-    <value>Only generate sudokus that are logically solvable</value>
+  <data name="MenuGameSettingsIsLogicallySolvable" xml:space="preserve">
+    <value>Generate sudokus that are solvable via the single-candidate technique</value>
   </data>
   <data name="MenuGameSettingsSingleSolution" xml:space="preserve">
-    <value>Only generate sudokus with one solution</value>
+    <value>Generate sudokus with one solution</value>
   </data>
   <data name="MenuGameSolveSudoku" xml:space="preserve">
     <value>Solve this sudoku</value>

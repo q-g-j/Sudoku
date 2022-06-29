@@ -20,9 +20,9 @@ namespace Sudoku.GameLogic
     public class SolverGameLogic
     {
         #region Constructors
-        public SolverGameLogic(NumberListModel list)
+        public SolverGameLogic(NumberListModel numberList)
         {
-            NumberList = new NumberListModel(list);
+            NumberList = new NumberListModel(numberList);
             random = new Random();
             Tries = 0;
         }
@@ -349,8 +349,8 @@ namespace Sudoku.GameLogic
                             foreach (Coords coords in markerCoordsList)
                             {
                                 int count = 0;
-                                int col2 = (int)(col / 3) * 3;
-                                int row2 = (int)(row / 3) * 3;
+                                int col2 = (col / 3) * 3;
+                                int row2 = (row / 3) * 3;
 
                                 for (int i = col2; i < col2 + 3; i++)
                                 {

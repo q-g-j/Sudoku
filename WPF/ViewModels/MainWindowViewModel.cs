@@ -65,7 +65,7 @@ namespace Sudoku.ViewModels
             MenuFillAllMarkersCommand = new RelayCommand(MenuFillAllMarkersAction);
             MenuRemoveAllMarkersCommand = new RelayCommand(MenuRemoveAllMarkersAction);
             MenuSettingsSingleSolutionCommand = new RelayCommand(MenuSettingsSingleSolutionAction);
-            MenuSettingsSolvableLogicallyCommand = new RelayCommand(MenuSettingsSolvableLogicallyAction);
+            MenuSettingsLogicallySolvableCommand = new RelayCommand(MenuSettingsLogicallySolvableAction);
             MenuSaveToSlotCommand = new RelayCommand<object>(o => MenuSaveToSlotAction(o));
             MenuLoadFromSlotCommand = new RelayCommand<object>(o => MenuLoadFromSlotAction(o));
             MenuDeleteAllSlotsCommand = new RelayCommand(MenuDeleteAllSlotsAction);
@@ -93,18 +93,22 @@ namespace Sudoku.ViewModels
             if (appSettingsStruct.SingleSolution)
             {
                 menuSettingsSingleSolutionCheck = "True";
+                wasSingleSolutionChecked = true;
             }
             else
             {
                 menuSettingsSingleSolutionCheck = "False";
+                wasSingleSolutionChecked= false;
             }
-            if (appSettingsStruct.SolvableLogically)
+            if (appSettingsStruct.LogicallySolvable)
             {
-                menuSettingsSolvableLogicallyCheck = "True";
+                menuSettingsLogicallySolvableCheck = "True";
+                menuSettingsSingleSolutionIsEnabled = "False";
             }
             else
             {
-                menuSettingsSolvableLogicallyCheck = "False";
+                menuSettingsLogicallySolvableCheck = "False";
+                menuSettingsSingleSolutionIsEnabled = "True";
             }
             // display each existing save slot's date and time:
             menuSaveSlotsLoadText = saveSlotsModel.GetLoadTexts();
@@ -124,6 +128,7 @@ namespace Sudoku.ViewModels
         private readonly string folderAppSettings;
         private bool doBlockInput;
         private bool doStopTrophy;
+        private bool wasSingleSolutionChecked;
         private string leftOrRightClicked;
         private NumberListModel numberListPreloadedEasy;
         private NumberListModel numberListPreloadedMedium;
@@ -150,7 +155,8 @@ namespace Sudoku.ViewModels
         private List<string> menuSaveSlotsLoadText;
         private List<string> menuSaveSlotsSaveText;
         private string menuSettingsSingleSolutionCheck;
-        private string menuSettingsSolvableLogicallyCheck;
+        private string menuSettingsLogicallySolvableCheck;
+        private string menuSettingsSingleSolutionIsEnabled;
 
         private string trophyWidth;
 
@@ -175,7 +181,7 @@ namespace Sudoku.ViewModels
         public RelayCommand MenuRemoveAllMarkersCommand { get; }
         public RelayCommand MenuSettingsCommand { get; }
         public RelayCommand MenuSettingsSingleSolutionCommand { get; }
-        public RelayCommand MenuSettingsSolvableLogicallyCommand { get; }
+        public RelayCommand MenuSettingsLogicallySolvableCommand { get; }
         public RelayCommand<object> MenuSaveToSlotCommand { get; }
         public RelayCommand<object> MenuLoadFromSlotCommand { get; }
         public RelayCommand MenuDeleteAllSlotsCommand { get; }
@@ -212,12 +218,53 @@ namespace Sudoku.ViewModels
         public string MenuSettingsSingleSolutionCheck
         {
             get => menuSettingsSingleSolutionCheck;
-            set { menuSettingsSingleSolutionCheck = value; OnPropertyChanged(); }
+            set 
+            {
+                menuSettingsSingleSolutionCheck = value;
+                OnPropertyChanged(); 
+            }
         }
-        public string MenuSettingsSolvableLogicallyCheck
+        public string MenuSettingsLogicallySolvableCheck
         {
-            get => menuSettingsSolvableLogicallyCheck;
-            set { menuSettingsSolvableLogicallyCheck = value; OnPropertyChanged(); }
+            get => menuSettingsLogicallySolvableCheck;
+            set
+            {
+                menuSettingsLogicallySolvableCheck = value;
+                if (value == "True")
+                {
+                    if (menuSettingsSingleSolutionCheck == "False")
+                    {
+                        wasSingleSolutionChecked = false;
+                    }
+                    else
+                    {
+                        wasSingleSolutionChecked = true;
+                    }
+                    if (!wasSingleSolutionChecked)
+                    {
+                        MenuSettingsSingleSolutionCheck = "True";
+                    }
+                    MenuSettingsSingleSolutionIsEnabled = "False";
+                }
+                else
+                {
+                    if (wasSingleSolutionChecked)
+                    {
+                        MenuSettingsSingleSolutionCheck = "True";
+                    }
+                    else
+                    {
+                        MenuSettingsSingleSolutionCheck = "False";
+                    }
+                    MenuSettingsSingleSolutionIsEnabled = "True";
+                }
+                OnPropertyChanged();
+            }
+        }
+        public string MenuSettingsSingleSolutionIsEnabled
+        {
+            get => menuSettingsSingleSolutionIsEnabled;
+            set { menuSettingsSingleSolutionIsEnabled = value; OnPropertyChanged(); }
         }
         public NumberListModel NumberList
         {
@@ -527,13 +574,14 @@ namespace Sudoku.ViewModels
                 {
                     appSettings.ChangeSingleSolution(false);
                 }
+                PreloadGames();
             }
         }
-        private void MenuSettingsSolvableLogicallyAction()
+        private void MenuSettingsLogicallySolvableAction()
         {
             if (!doBlockInput)
             {
-                if (menuSettingsSolvableLogicallyCheck == "True")
+                if (menuSettingsLogicallySolvableCheck == "True")
                 {
                     appSettings.ChangeSolvableLogically(true);
                 }
@@ -541,6 +589,7 @@ namespace Sudoku.ViewModels
                 {
                     appSettings.ChangeSolvableLogically(false);
                 }
+                PreloadGames();
             }
         }
         private void MenuSaveToSlotAction(object o)
@@ -1092,8 +1141,8 @@ namespace Sudoku.ViewModels
                         }
                     }
 
-                    int col2 = (int)(coords.Col / 3) * 3;
-                    int row2 = (int)(coords.Row / 3) * 3;
+                    int col2 = (coords.Col / 3) * 3;
+                    int row2 = (coords.Row / 3) * 3;
 
                     for (int i = row2; i < row2 + 3; i++)
                     {
@@ -1387,8 +1436,8 @@ namespace Sudoku.ViewModels
             }
 
             // highlight square:
-            int col = (int)(coords.Col / 3) * 3;
-            int row = (int)(coords.Row / 3) * 3;
+            int col = (coords.Col / 3) * 3;
+            int row = (coords.Row / 3) * 3;
 
             for (int i = row; i < row + 3; i++)
             {
@@ -1526,7 +1575,8 @@ namespace Sudoku.ViewModels
                         generatorGameLogic = new GeneratorGameLogic(difficulty, new NumberListModel(solverGameLogic.NumberListSolved));
                     }
 
-                    generatorGameLogic.GenerateSudoku(menuSettingsSingleSolutionCheck, menuSettingsSolvableLogicallyCheck);
+                    generatorGameLogic.GenerateSudoku(menuSettingsSingleSolutionCheck == "True", menuSettingsLogicallySolvableCheck == "True");
+
 
                     if (generatorGameLogic.Counter == generatorGameLogic.removeNumbers)
                     {

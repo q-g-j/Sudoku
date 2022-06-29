@@ -322,16 +322,16 @@ namespace Sudoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only generate sudokus that are logically solvable.
+        ///   Looks up a localized string similar to Generate sudokus that are solvable via the single-candidate technique.
         /// </summary>
-        public static string MenuGameSettingsIsSolvableLogically {
+        public static string MenuGameSettingsIsLogicallySolvable {
             get {
-                return ResourceManager.GetString("MenuGameSettingsIsSolvableLogically", resourceCulture);
+                return ResourceManager.GetString("MenuGameSettingsIsLogicallySolvable", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only generate sudokus with one solution.
+        ///   Looks up a localized string similar to Generate sudokus with one solution.
         /// </summary>
         public static string MenuGameSettingsSingleSolution {
             get {

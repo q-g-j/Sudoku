@@ -13,7 +13,7 @@ namespace Sudoku.Settings
     internal struct AppSettingsStruct
     {
         internal bool SingleSolution;
-        internal bool SolvableLogically;
+        internal bool LogicallySolvable;
     }
 
     internal class AppSettings
@@ -57,11 +57,11 @@ namespace Sudoku.Settings
                     {
                         if ((bool)settingsDict["SolvableLogically"])
                         {
-                            appSettingsStruct.SolvableLogically = true;
+                            appSettingsStruct.LogicallySolvable = true;
                         }
                         else
                         {
-                            appSettingsStruct.SolvableLogically = false;
+                            appSettingsStruct.LogicallySolvable = false;
                         }
                     }
                 }
@@ -120,27 +120,27 @@ namespace Sudoku.Settings
 
             AppSettingsStruct appSettingsStruct = new AppSettingsStruct();
 
-            Dictionary<string, object> listsDictOld;
+            Dictionary<string, object> listDictOld;
             using (var fileLoad = File.OpenText(filename))
             {
                 JsonSerializer serializer = new JsonSerializer();
-                listsDictOld = (Dictionary<string, object>)serializer.Deserialize(fileLoad, typeof(Dictionary<string, object>));
+                listDictOld = (Dictionary<string, object>)serializer.Deserialize(fileLoad, typeof(Dictionary<string, object>));
 
-                if (listsDictOld.ContainsKey("SolvableLogically"))
+                if (listDictOld.ContainsKey("SolvableLogically"))
                 {
-                    appSettingsStruct.SolvableLogically = (bool)listsDictOld["SolvableLogically"];
+                    appSettingsStruct.LogicallySolvable = (bool)listDictOld["SolvableLogically"];
                 }
             }
 
-            Dictionary<string, object> listsDict = new Dictionary<string, object>(listsDictOld)
+            Dictionary<string, object> listDict = new Dictionary<string, object>(listDictOld)
             {
                 ["SolvableLogically"] = action
             };
 
             using (var fileSave = File.CreateText(@filename))
             {
-                var numberListDictJson = JsonConvert.SerializeObject(listsDict, Formatting.Indented);
-                fileSave.WriteLine(numberListDictJson);
+                var listDictJson = JsonConvert.SerializeObject(listDict, Formatting.Indented);
+                fileSave.WriteLine(listDictJson);
             }
         }
         #endregion Methods
