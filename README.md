@@ -1,4 +1,4 @@
-# Sudoku
+# Sudoku.NET
 
 Copyright 2022 Jann Emken
 
